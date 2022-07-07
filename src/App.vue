@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import WelcomeHeader from "@/components/nav/WelcomeHeader.vue";
+import WelcomeHeader from "./components/nav/WelcomeHeader.vue";
 
 export default {
   name: "App",
@@ -58,5 +58,34 @@ ul {
   list-style: none;
   padding: 0;
   margin: 0;
+}
+
+/* Flex box styles */
+.flex {
+  display: flex;
+}
+
+.flex-fd-c {
+  flex-direction: column;
+}
+
+.flex-jc-c {
+  justify-content: center;
+}
+
+.flex-jc-sb {
+  justify-content: space-between;
+}
+
+.flex-ai-c {
+  align-items: center;
+}
+
+.flex-ai-fe {
+  align-items: flex-end;
+}
+
+.flex-fw-w {
+  flex-wrap: wrap;
 }
 </style>
