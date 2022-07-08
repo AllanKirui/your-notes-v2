@@ -1,5 +1,6 @@
 <template>
   <WelcomeHeader />
+  <router-view name="authn"></router-view>
 </template>
 
 <script>
@@ -19,9 +20,11 @@ export default {
 
 :root {
   /* Colors */
-  --color-pantone-green: #00a82e;
-  --color-cultured: #f7f7f7;
-  --color-eerie-black: #1a1a1a;
+  --color-pantone-green: hsl(136, 100%, 33%);
+  --color-dark-pastel-green: hsl(136, 100%, 38%);
+  --color-cultured: hsl(0, 0%, 97%);
+  --color-eerie-black: hsl(0, 0%, 10%);
+  --color-traffic-grey: hsl(0, 0%, 32%);
 }
 
 html {
@@ -41,6 +44,7 @@ body {
   padding: 0;
   font-family: "Rubik", sans-serif;
   background-color: var(--color-cultured);
+  overflow-x: hidden;
 }
 
 h1,
