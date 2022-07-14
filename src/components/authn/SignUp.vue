@@ -163,7 +163,7 @@
           >
         </div>
         <div class="meta-login">
-          <a href="https://google.com" class="link">Already have an account?</a>
+          <router-link to="/login">Already have an account?</router-link>
         </div>
       </div>
     </div>
