@@ -121,7 +121,7 @@ ul {
 }
 
 .form-wrapper {
-  max-width: 20.625rem;
+  width: 20.625rem;
   margin: 2.5rem auto 0;
   text-align: center;
   z-index: 2;
@@ -298,18 +298,18 @@ ul {
   color: var(--color-traffic-grey);
 }
 
-.meta-login .link,
-.meta-google .link {
+.meta-login a,
+.meta-google a {
   color: inherit;
 }
 
-.meta-login .link:hover,
-.meta-google .link:hover {
+.meta-login a:hover,
+.meta-google a:hover {
   text-decoration: underline;
 }
 
 .meta-google img,
-.meta-google .link {
+.meta-google a {
   margin-left: 0.3125rem;
 }
 
