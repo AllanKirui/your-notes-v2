@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 
-import SignUp from "@/Pages/SignUp.vue";
-import LogIn from "@/Pages/LogIn.vue";
+import SignUp from "@/pages/SignUp.vue";
+import LogIn from "@/pages/LogIn.vue";
 
 export default createRouter({
   history: createWebHistory(),
