@@ -26,7 +26,7 @@
           <label for="username">Username</label>
           <small class="error" v-if="!username.isValid"
             ><img
-              src="../../assets/img/warning.svg"
+              src="@/assets/img/warning.svg"
               alt="warning icon"
               width="14"
             />
@@ -45,7 +45,7 @@
           <label for="email">Email</label>
           <small class="error" v-if="!email.isValid"
             ><img
-              src="../../assets/img/warning.svg"
+              src="@/assets/img/warning.svg"
               alt="warning icon"
               width="14"
             />{{ email.errorMessage }}</small
@@ -85,7 +85,7 @@
           </span>
           <small class="error" v-if="!password.isValid"
             ><img
-              src="../../assets/img/warning.svg"
+              src="@/assets/img/warning.svg"
               alt="warning icon"
               width="14"
             />{{ password.errorMessage }}</small
@@ -127,7 +127,7 @@
           </span>
           <small class="error" v-if="!confirmPassword.isValid"
             ><img
-              src="../../assets/img/warning.svg"
+              src="@/assets/img/warning.svg"
               alt="warning icon"
               width="14"
             />{{ confirmPassword.errorMessage }}</small
