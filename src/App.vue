@@ -25,6 +25,7 @@ export default {
   --color-cultured: hsl(0, 0%, 97%);
   --color-eerie-black: hsl(0, 0%, 10%);
   --color-traffic-grey: hsl(0, 0%, 32%);
+  --color-venetian-red: hsl(349, 100%, 38%);
 }
 
 html {
@@ -177,6 +178,7 @@ ul {
   outline: 1px solid var(--color-eerie-black);
 }
 
+.form-control input:not(:placeholder-shown) + label,
 .form-control input:focus + label,
 .form-control input:valid + label {
   font-size: 0.75rem;
@@ -198,7 +200,30 @@ ul {
   position: absolute;
   left: 16px;
   bottom: -1.125rem;
+  display: flex;
+  justify-content: center;
   font-style: italic;
+}
+
+.form-control small img {
+  margin-right: 5px;
+}
+
+.form-control .password-toggle {
+  position: absolute;
+  top: 50%;
+  right: 16px;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+.invalid label,
+.form-control .error {
+  color: var(--color-venetian-red);
+}
+
+.invalid input {
+  outline: 1px solid var(--color-venetian-red);
 }
 
 .submit-button button {
@@ -264,7 +289,7 @@ ul {
 
 .meta {
   margin-top: 1.875rem;
-  margin-bottom: 1.125rem;
+  margin-bottom: 2.5rem;
   font-size: 0.875rem;
 }
 
