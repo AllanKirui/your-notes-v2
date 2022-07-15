@@ -298,23 +298,35 @@ ul {
   color: var(--color-traffic-grey);
 }
 
-.meta-login a,
-.meta-google a {
-  color: inherit;
-}
-
-.meta-login a:hover,
-.meta-google a:hover {
-  text-decoration: underline;
-}
-
 .meta-google img,
-.meta-google a {
+.meta-google button {
   margin-left: 0.3125rem;
+}
+
+.meta-google button {
+  padding: 3px;
+  border: none;
+  outline: none;
+  background-color: var(--color-cultured);
+  border-bottom: 1px solid var(--color-cultured);
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.meta-google button:hover {
+  border-bottom: 1px solid var(--color-eerie-black);
 }
 
 .meta-login {
   margin-top: 1.125rem;
+}
+
+.meta-login a {
+  color: inherit;
+}
+
+.meta-login a:hover {
+  text-decoration: underline;
 }
 
 .intro-images {
