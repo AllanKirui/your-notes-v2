@@ -207,9 +207,8 @@ export default {
         return;
       }
 
-      this.clearForm();
       this.register();
-      console.log("SignUp error: ", this.$store.getters["auth/error"]);
+      this.clearForm();
     },
     validateInputs() {
       this.formIsValid = true;
@@ -298,7 +297,7 @@ export default {
       });
     },
     registerWithGoogle() {
-      // dispatch an action to register a user with their existing user account
+      // dispatch an action to register a user with their existing Google account
       this.$store.dispatch("auth/createAccountWithGoogle");
     },
   },
