@@ -89,7 +89,7 @@
               alt="google logo"
               width="20"
             />
-            <a href="https://google.com" class="link">Google</a>
+            <button @click="logInWithGoogle">Google</button>
           </p>
         </div>
         <div class="meta-login">
@@ -118,6 +118,11 @@ export default {
       isPwdVisible: false,
     };
   },
+  computed: {
+    error() {
+      return this.$store.getters["auth/error"];
+    },
+  },
   methods: {
     submitForm() {
       this.validateInputs();
@@ -126,7 +131,8 @@ export default {
         return;
       }
 
-      this.isPwdVisible = false;
+      this.login();
+      this.clearForm();
     },
     validateInputs() {
       this.formIsValid = true;
@@ -141,6 +147,14 @@ export default {
 
       if (this.password.val === "") {
         this.password.errorMessage = "Please provide a password";
+        this.setErrorState("password");
+      } else if (!this.isPassword(this.password.val)) {
+        this.password.errorMessage =
+          "Please provide at least 1 number and 1 letter";
+        this.setErrorState("password");
+      } else if (this.password.val.length < 8) {
+        this.password.errorMessage =
+          "Password should be at least 8 characters long";
         this.setErrorState("password");
       }
     },
@@ -161,8 +175,46 @@ export default {
     isEmail(email) {
       return /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/.test(email);
     },
+    isPassword(password) {
+      // check if it has at least 1 letter and 1 number
+      return /^(?=.*[a-zA-Z])(?=.*[0-9])/.test(password);
+    },
     togglePassword() {
       this.isPwdVisible = !this.isPwdVisible;
+    },
+    clearForm() {
+      this.isPwdVisible = false;
+      this.email.val = "";
+      this.password.val = "";
+    },
+    login() {
+      // dispatch an action to sign in an existing user
+      this.$store.dispatch({
+        type: "auth/signIn",
+        email: this.email.val,
+        password: this.password.val,
+      });
+    },
+    logInWithGoogle() {
+      // dispatch an action to register a user with their existing Google account
+      this.$store.dispatch("auth/signInWithGoogle");
+    },
+  },
+  watch: {
+    error(newValue) {
+      // handle errors from Firebase
+      if (newValue) {
+        switch (newValue.field) {
+          case "password":
+            this.password.errorMessage = newValue.message;
+            this.setErrorState("password");
+            break;
+          case "email":
+            this.email.errorMessage = newValue.message;
+            this.setErrorState("email");
+            break;
+        }
+      }
     },
   },
 };
