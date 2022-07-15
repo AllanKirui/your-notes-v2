@@ -150,7 +150,7 @@
               alt="google logo"
               width="20"
             />
-            <a href="https://google.com" class="link">Google</a>
+            <button @click="registerWithGoogle">Google</button>
           </p>
         </div>
         <div class="meta-terms">
@@ -207,8 +207,9 @@ export default {
         return;
       }
 
-      this.isPwdVisible = false;
-      this.isConfirmPwdVisible = false;
+      this.clearForm();
+      this.register();
+      console.log("SignUp error: ", this.$store.getters["auth/error"]);
     },
     validateInputs() {
       this.formIsValid = true;
@@ -279,6 +280,26 @@ export default {
     },
     toggleConfirmPassword() {
       this.isConfirmPwdVisible = !this.isConfirmPwdVisible;
+    },
+    clearForm() {
+      this.isPwdVisible = false;
+      this.isConfirmPwdVisible = false;
+      this.username.val = "";
+      this.email.val = "";
+      this.password.val = "";
+      this.confirmPassword.val = "";
+    },
+    register() {
+      // dispatch an action to register a user
+      this.$store.dispatch({
+        type: "auth/createAccount",
+        email: this.email.val,
+        password: this.password.val,
+      });
+    },
+    registerWithGoogle() {
+      // dispatch an action to register a user with their existing user account
+      this.$store.dispatch("auth/createAccountWithGoogle");
     },
   },
 };
