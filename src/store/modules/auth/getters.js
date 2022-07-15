@@ -1,5 +1,8 @@
 export default {
   error(state) {
-    return state.errorMessage;
+    return state.error;
+  },
+  user(state) {
+    return state.user;
   },
 };

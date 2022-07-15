@@ -1,11 +1,8 @@
 export default {
   setError(state, payload) {
-    state.errorMessage = payload.message;
+    state.error = payload;
   },
   setUser(state, payload) {
-    state.user.email = payload.email;
-    state.user.displayName = payload.displayName;
-    state.user.photoURL = payload.photoURL;
-    state.user.uid = payload.uid;
+    state.user = payload;
   },
 };

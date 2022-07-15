@@ -6,13 +6,8 @@ export default {
   namespaced: true,
   state() {
     return {
-      user: {
-        displayName: null,
-        email: null,
-        photoURL: null,
-        uid: null,
-      },
-      errorMessage: "",
+      user: null,
+      error: null,
     };
   },
   actions,
