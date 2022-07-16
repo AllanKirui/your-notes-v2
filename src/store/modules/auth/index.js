@@ -6,7 +6,6 @@ export default {
   namespaced: true,
   state() {
     return {
-      isAuth: false,
       user: null,
       error: null,
     };
