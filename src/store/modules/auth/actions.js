@@ -42,9 +42,8 @@ export default {
       .then(() => {
         // TODO: redirect the user to the todo page
         // TODO: show loading spinner
-
         // dispatch an action to store an authenticated user's data
-        context.dispatch("createUserProfile", getAuth().currentUser);
+        // context.dispatch("createUserProfile", getAuth().currentUser);
       })
       .catch((error) => {
         switch (error.code) {
@@ -81,13 +80,13 @@ export default {
         }
       });
   },
-  signInWithGoogle(context) {
+  signInWithGoogle() {
     // create a provider when the sign in button is clicked
     const provider = new GoogleAuthProvider();
     signInWithPopup(getAuth(), provider)
       .then(() => {
         // dispatch an action to store an authenticated user's data
-        context.dispatch("createUserProfile", getAuth().currentUser);
+        // context.dispatch("createUserProfile", getAuth().currentUser);
       })
       .catch((error) => {
         console.log(error);
