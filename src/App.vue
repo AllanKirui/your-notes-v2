@@ -1,15 +1,49 @@
 <template>
-  <WelcomeHeader />
-  <router-view name="authn"></router-view>
+  <!-- signup/login pages -->
+  <WelcomeHeader v-if="!isLoggedIn" />
+  <router-view name="authn" v-if="!isLoggedIn"></router-view>
+
+  <!-- home page -->
+  <router-view v-if="isLoggedIn"></router-view>
 </template>
 
 <script>
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+
 import WelcomeHeader from "./components/nav/WelcomeHeader.vue";
+
+let auth;
 
 export default {
   name: "App",
   components: {
     WelcomeHeader,
+  },
+  data() {
+    return {
+      isLoggedIn: false,
+    };
+  },
+  watch: {
+    isLoggedIn(newValue) {
+      if (newValue) {
+        // Redirect users who successfully register to the homepage
+        this.$router.push("/home");
+      }
+    },
+  },
+  mounted() {
+    // check if a user is logged in
+    auth = getAuth();
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        this.isLoggedIn = true;
+        // dispatch an action to store the authenticated user's data
+        this.$store.dispatch("auth/createUserProfile", user);
+      } else {
+        this.isLoggedIn = false;
+      }
+    });
   },
 };
 </script>
