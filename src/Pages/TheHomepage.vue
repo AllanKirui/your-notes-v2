@@ -1,3 +1,13 @@
 <template>
-  <h1>Welcome Home</h1>
+  <the-header></the-header>
 </template>
+
+<script>
+import TheHeader from "@/components/nav/TheHeader.vue";
+
+export default {
+  components: {
+    TheHeader,
+  },
+};
+</script>
