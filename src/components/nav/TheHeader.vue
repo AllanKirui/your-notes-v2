@@ -47,7 +47,7 @@
 <style scoped>
 .header {
   width: 100%;
-  height: 80px;
+  height: 5rem;
   background-color: var(--color-eerie-black);
 }
 
@@ -55,12 +55,12 @@
   padding: 0 1.875rem;
   width: 100%;
   height: 100%;
-  color: var(--color-);
+  color: var(--color-platinum);
 }
 
 .nav-logo {
   position: relative;
-  margin-right: 50px;
+  margin-right: 3.125rem;
   width: 10.5rem;
 }
 
@@ -83,17 +83,17 @@
 .nav-search {
   border-left: 2px solid var(--color-pantone-green);
   font-weight: 400;
-  font-size: 14px;
-  width: 400px;
+  font-size: 0.875rem;
+  width: 25rem;
 }
 
 .nav-search img {
-  margin-left: 12px;
+  margin-left: 0.75rem;
 }
 
 .nav-search input {
   padding: 0 5px;
-  margin-left: 10px;
+  margin-left: 0.625rem;
   width: 100%;
   height: 100%;
   border: none;
@@ -105,7 +105,7 @@
 
 .nav-search input,
 .nav-search input::placeholder {
-  color: var(--color-);
+  color: var(--color-platinum);
   letter-spacing: 0.2px;
 }
 
@@ -115,25 +115,24 @@
 
 .nav-avatar .image-wrapper {
   position: relative;
-  width: 40px;
-  height: 40px;
+  width: 2.5rem;
+  height: 2.5rem;
 }
 
 .nav-avatar .image-wrapper .avatar {
   max-width: 100%;
   border-radius: 50%;
   z-index: 2;
-  outline: 2px solid var(--color-dark-pastel-green);
 }
 
 .nav-avatar .username {
-  margin-left: 18px;
-  font-size: 14px;
+  margin-left: 1.125rem;
+  font-size: 0.875rem;
 }
 
 .nav-menu {
-  width: 20px;
-  height: 20px;
+  width: 1.25rem;
+  height: 1.25rem;
 }
 
 .nav-menu .menu-btn {
