@@ -30,10 +30,16 @@ export default {
 }
 
 .content-items {
-  background-color: teal;
+  background-color: var(--color-cultured);
+  border-right: 1px solid var(--color-platinum);
 }
 
 .content-items-details {
-  background: tomato;
+  background: var(--color-white);
+}
+
+.items-title {
+  font-size: 1.125rem;
+  padding: 0.625rem;
 }
 </style>
