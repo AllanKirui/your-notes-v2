@@ -1,12 +1,13 @@
 <template>
   <section class="content-wrapper">
-    <div class="content-items">
+    <section class="content-items">
       <h3 class="items-title">All Todos</h3>
       <todo-list></todo-list>
-    </div>
-    <div class="content-items-details">
+    </section>
+
+    <section class="content-items-details">
       <todo-details></todo-details>
-    </div>
+    </section>
   </section>
 </template>
 
