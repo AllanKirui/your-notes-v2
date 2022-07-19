@@ -16,10 +16,9 @@
             </div>
           </button>
         </div>
-        <!-- TODO: switch to using router links -->
         <ul class="links">
           <li class="link">
-            <a href="https://google.com" title="Todos">
+            <router-link to="/todos" title="Todos">
               <div class="flex flex-ai-c">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -39,13 +38,14 @@
                 </svg>
                 <div class="text-wrapper flex flex-jc-sb">
                   <span class="link-text">Todos</span>
+                  <!-- TODO: make the counter dynamic -->
                   <span class="link-counter">2</span>
                 </div>
               </div>
-            </a>
+            </router-link>
           </li>
           <li class="link">
-            <a href="https://google.com" title="Notes">
+            <router-link to="/notes" title="Notes">
               <div class="flex flex-ai-c">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -77,7 +77,7 @@
                   <span class="link-counter">5</span>
                 </div>
               </div>
-            </a>
+            </router-link>
           </li>
         </ul>
       </div>
@@ -85,7 +85,7 @@
       <div class="sidebar-bottom">
         <ul class="links">
           <li class="link">
-            <a href="https://google.com" title="Settings">
+            <router-link to="/settings" title="Settings">
               <div class="flex flex-ai-c">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -104,7 +104,7 @@
                   <span class="link-text">Settings</span>
                 </div>
               </div>
-            </a>
+            </router-link>
           </li>
           <li class="link">
             <a href="https://google.com" title="Logout">
