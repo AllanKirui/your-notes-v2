@@ -5,17 +5,19 @@
       <todo-list></todo-list>
     </div>
     <div class="content-items-details">
-      <h3>Todo details</h3>
+      <todo-details></todo-details>
     </div>
   </section>
 </template>
 
 <script>
 import TodoList from "@/components/todos/TodoList.vue";
+import TodoDetails from "@/components/todos/TodoDetails.vue";
 
 export default {
   components: {
     TodoList,
+    TodoDetails,
   },
 };
 </script>
