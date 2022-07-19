@@ -3,8 +3,7 @@
     <nav class="nav flex flex-ai-c flex-jc-sb">
       <div class="nav-left flex">
         <div class="nav-logo">
-          <!-- TODO: activate this link -->
-          <router-link to="/notes">
+          <router-link to="/todos">
             <img
               class="logo"
               src="@/assets/img/logo.min.svg"
