@@ -5,4 +5,7 @@ export default {
   selectedTodo(state) {
     return state.selectedTodo;
   },
+  numOfTodos(state) {
+    return state.todos.length;
+  },
 };

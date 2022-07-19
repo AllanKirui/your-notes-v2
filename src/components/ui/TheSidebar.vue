@@ -38,8 +38,7 @@
                 </svg>
                 <div class="text-wrapper flex flex-jc-sb">
                   <span class="link-text">Todos</span>
-                  <!-- TODO: make the counter dynamic -->
-                  <span class="link-counter">2</span>
+                  <span class="link-counter">{{ numOfTodos }}</span>
                 </div>
               </div>
             </router-link>
@@ -72,6 +71,7 @@
                   <line x1="42.92" y1="42.76" x2="42.92" y2="53.72" />
                   <line x1="37.45" y1="48.24" x2="48.4" y2="48.24" />
                 </svg>
+                <!-- TODO: make the counter dynamic -->
                 <div class="text-wrapper flex flex-jc-sb">
                   <span class="link-text">Notes</span>
                   <span class="link-counter">5</span>
@@ -134,6 +134,16 @@
     </div>
   </aside>
 </template>
+
+<script>
+import { mapGetters } from "vuex";
+
+export default {
+  computed: {
+    ...mapGetters("todos", ["numOfTodos"]),
+  },
+};
+</script>
 
 .<style scoped>
 .wrapper {
