@@ -69,6 +69,7 @@ export default {
   --color-traffic-grey: hsl(0, 0%, 32%);
   --color-venetian-red: hsl(349, 100%, 38%);
   --color-platinum: hsl(142, 39%, 89%);
+  --color-white: hsl(0, 0%, 100%);
 }
 
 html {
@@ -94,6 +95,7 @@ body {
 h1,
 h2,
 h3,
+h4,
 p {
   margin: 0;
 }
