@@ -1,4 +1,6 @@
 import getters from "./getters";
+import actions from "./actions";
+import mutations from "./mutations";
 
 export default {
   namespaced: true,
@@ -25,7 +27,10 @@ export default {
           ],
         },
       ],
+      selectedTodo: null,
     };
   },
   getters,
+  mutations,
+  actions,
 };
