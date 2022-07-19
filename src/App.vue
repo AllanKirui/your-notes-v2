@@ -1,23 +1,31 @@
 <template>
   <!-- signup/login pages -->
-  <WelcomeHeader v-if="!isLoggedIn" />
+  <!-- <WelcomeHeader v-if="!isLoggedIn" /> -->
   <router-view name="authn" v-if="!isLoggedIn"></router-view>
 
   <!-- home page -->
-  <router-view v-if="isLoggedIn"></router-view>
+  <the-header v-if="isLoggedIn"></the-header>
+  <div class="container" v-if="isLoggedIn">
+    <the-sidebar></the-sidebar>
+    <router-view></router-view>
+  </div>
 </template>
 
 <script>
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 
-import WelcomeHeader from "./components/nav/WelcomeHeader.vue";
+// import WelcomeHeader from "./components/nav/WelcomeHeader.vue";
+import TheHeader from "./components/nav/TheHeader.vue";
+import TheSidebar from "./components/ui/TheSidebar.vue";
 
 let auth;
 
 export default {
   name: "App",
   components: {
-    WelcomeHeader,
+    // WelcomeHeader,
+    TheHeader,
+    TheSidebar,
   },
   data() {
     return {
@@ -27,8 +35,8 @@ export default {
   watch: {
     isLoggedIn(newValue) {
       if (newValue) {
-        // Redirect users who successfully register to the homepage
-        this.$router.push("/home");
+        // Redirect users who successfully register to the todos page
+        this.$router.push("/todos");
       }
     },
   },
@@ -60,6 +68,7 @@ export default {
   --color-eerie-black: hsl(0, 0%, 10%);
   --color-traffic-grey: hsl(0, 0%, 32%);
   --color-venetian-red: hsl(349, 100%, 38%);
+  --color-platinum: hsl(142, 39%, 89%);
 }
 
 html {
@@ -376,6 +385,18 @@ ul {
   z-index: 1;
 }
 /* end of sign up, login page styles */
+
+/* start of home page styles */
+.container {
+  display: grid;
+  grid-template-columns: 250px 1fr;
+  grid-template-rows: 1fr;
+}
+
+.content-wrapper {
+  grid-column: 2;
+}
+/* end of home page styles */
 
 /* media queries */
 @media (max-width: 1200px) {
