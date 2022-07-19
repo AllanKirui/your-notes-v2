@@ -1,5 +1,5 @@
 <template>
-  <li class="item-wrapper" :title="hoverTitle">
+  <li class="item-wrapper" @click="setSelectedTodo(id)" :title="hoverTitle">
     <h4 class="item-title">{{ title }}</h4>
     <ul class="item-list">
       <!-- Get the first 3 items of the contents -->
@@ -13,10 +13,19 @@
 
 <script>
 export default {
-  props: ["title", "contents"],
+  props: ["id", "title", "contents"],
   computed: {
     hoverTitle() {
       return "View " + this.title;
+    },
+  },
+  methods: {
+    setSelectedTodo(id) {
+      // dispatch an action to set the id of the selected todo item
+      this.$store.dispatch({
+        type: "todos/setSelectedTodo",
+        todoId: id,
+      });
     },
   },
 };
@@ -33,9 +42,9 @@ export default {
   border-left: 2px solid tomato;
 }
 
-.item-wrapper.inactive {
+/* .item-wrapper.inactive {
   border-left: none;
-}
+} */
 
 .item-list,
 .item-title {

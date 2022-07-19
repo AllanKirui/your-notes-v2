@@ -4,6 +4,7 @@
     <todo-item
       v-for="todo of todoList"
       :key="todo.id"
+      :id="todo.id"
       :title="todo.title"
       :contents="todo.contents"
     ></todo-item>
