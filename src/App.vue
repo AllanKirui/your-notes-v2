@@ -68,8 +68,9 @@ export default {
   --color-eerie-black: hsl(0, 0%, 10%);
   --color-traffic-grey: hsl(0, 0%, 32%);
   --color-venetian-red: hsl(349, 100%, 38%);
-  --color-platinum: hsl(142, 39%, 89%);
+  --color-platinum: rgb(216, 238, 224);
   --color-white: hsl(0, 0%, 100%);
+  --color-honeydew: hsl(116, 71%, 96%);
 }
 
 html {
