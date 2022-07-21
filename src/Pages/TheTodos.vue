@@ -28,6 +28,7 @@ export default {
   display: grid;
   grid-template-columns: minmax(auto, 350px) minmax(350px, 1fr);
   grid-template-rows: 1fr;
+  color: var(--color-eerie-black);
 }
 
 .content-items {
