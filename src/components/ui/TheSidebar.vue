@@ -1,6 +1,7 @@
 <template>
   <aside class="wrapper">
     <div class="sidebar flex flex-fd-c flex-jc-sb">
+      <div class="bg-image"></div>
       <div class="sidebar-top">
         <div class="btn-wrapper">
           <button class="create-btn" title="Create new todo">
@@ -159,6 +160,25 @@ export default {
 .sidebar {
   width: 100%;
   height: 100%;
+  position: relative;
+}
+
+.sidebar-top,
+.sidebar-bottom {
+  position: relative;
+  z-index: 2;
+}
+
+.bg-image {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-image: url("@/assets/img/quill-bg-sidebar.svg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: 190px;
+  background-position: 30px center;
+  z-index: 1;
 }
 
 .btn-wrapper {
