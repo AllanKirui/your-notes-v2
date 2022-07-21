@@ -42,10 +42,6 @@ export default {
   border-left: 2px solid tomato;
 }
 
-/* .item-wrapper.inactive {
-  border-left: none;
-} */
-
 .item-list,
 .item-title {
   font-size: 0.875rem;
@@ -56,7 +52,7 @@ export default {
 }
 
 .item:not(:first-child) {
-  margin-top: 2px;
+  margin-top: 3px;
 }
 
 .item span {
