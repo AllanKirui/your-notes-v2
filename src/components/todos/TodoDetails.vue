@@ -27,7 +27,11 @@
               ></textarea>
               <div class="edit-controls">
                 <button class="btn btn-save" title="Save edits">Save</button>
-                <button class="btn btn-cancel" title="Cancel edits">
+                <button
+                  class="btn btn-cancel"
+                  title="Cancel edits"
+                  @click="cancelEdits"
+                >
                   Cancel
                 </button>
               </div>
@@ -70,6 +74,11 @@ export default {
       // focus on the textare and highlight its contents
       textarea.focus();
       textarea.select();
+    },
+    cancelEdits() {
+      // reset props
+      this.selectedItem = null;
+      this.isEditText = false;
     },
   },
   watch: {
