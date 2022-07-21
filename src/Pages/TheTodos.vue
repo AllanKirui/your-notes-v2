@@ -6,6 +6,7 @@
     </section>
 
     <section class="content-items-details">
+      <div class="bg-images"></div>
       <todo-details></todo-details>
     </section>
   </section>
@@ -37,7 +38,25 @@ export default {
 }
 
 .content-items-details {
+  width: 100%;
+  height: calc(100vh - 80px);
+  position: relative;
   background: var(--color-white);
+}
+
+.content-items-details .bg-images {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("@/assets/img/text-bg.svg"),
+    url("@/assets/img/quill-bg.svg");
+  background-repeat: no-repeat, no-repeat;
+  background-attachment: fixed, fixed;
+  background-size: 88px, 190px;
+  background-position: 630px center, calc(50vw + 200px) center;
+  z-index: 1;
 }
 
 .items-title {
