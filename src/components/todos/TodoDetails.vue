@@ -88,6 +88,8 @@ export default {
   width: 90%;
   margin: 2.5rem auto 0;
   font-size: 0.875rem;
+  position: relative;
+  z-index: 2;
 }
 
 .items {
