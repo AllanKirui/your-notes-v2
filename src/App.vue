@@ -141,6 +141,30 @@ ul {
   flex-wrap: wrap;
 }
 
+/* scrollbar styles */
+::-webkit-scrollbar {
+  width: 0.7em;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-traffic-grey);
+  border-radius: 100vw;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-cultured);
+  border: 0.1em solid var(--color-eerie-black);
+  border-radius: 100vw;
+}
+
+/* for browser support */
+@supports (scrollbar-color: var(--color-cultured) var(--color-traffic-grey)) {
+  * {
+    scrollbar-color: var(--color-cultured) var(--color-traffic-grey);
+    scrollbar-width: auto;
+  }
+}
+
 /* start of sign up, login page styles */
 .intro {
   display: flex;
