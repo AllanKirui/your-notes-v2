@@ -5,7 +5,7 @@
       <!-- Get the first 3 items of the contents -->
       <li class="item flex flex-ai-c" v-for="(_, index) in 3" :key="index">
         <img src="@/assets/img/checkbox-grey.svg" alt=" " width="14" />
-        <span> {{ contents[index] }} </span>
+        <span> {{ contents[index].text }} </span>
       </li>
     </ul>
   </li>
