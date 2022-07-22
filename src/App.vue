@@ -63,7 +63,7 @@ export default {
 :root {
   /* Colors */
   --color-pantone-green: hsl(136, 100%, 33%);
-  --color-dark-pastel-green: #00c234;
+  --color-dark-pastel-green: hsl(136, 100%, 38%);
   --color-cultured: hsl(0, 0%, 97%);
   --color-eerie-black: hsl(0, 0%, 10%);
   --color-traffic-grey: hsl(0, 0%, 32%);
