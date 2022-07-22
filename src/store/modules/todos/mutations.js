@@ -5,4 +5,12 @@ export default {
       (todo) => todo.id === payload.todoId
     )[0];
   },
+  updateCompletionStatus(state, payload) {
+    let parentIdx = payload.parentTodoId;
+    let childIdx = payload.childTodoId;
+    let status = payload.status;
+
+    // update the isCompleted prop
+    state.todos[parentIdx].contents[childIdx].isCompleted = status;
+  },
 };

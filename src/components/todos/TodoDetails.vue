@@ -5,14 +5,21 @@
       <li v-for="(item, index) of selectedTodo.contents" :key="index">
         <div class="item flex">
           <div class="item-checkbox">
-            <input type="checkbox" />
+            <input
+              type="checkbox"
+              v-model="item.isCompleted"
+              @change="checkHandler(index, item.isCompleted)"
+            />
           </div>
 
           <div class="item-text-wrapper">
             <div class="item-text" v-if="selectedItem !== index">
-              <span class="item-details" @click="editText(index)">{{
-                item
-              }}</span>
+              <span
+                class="item-details"
+                :class="{ completed: item.isCompleted }"
+                @click="editText(index)"
+                >{{ item.text }}</span
+              >
             </div>
             <!-- only show for the clicked todo item -->
             <div
@@ -22,7 +29,7 @@
               <textarea
                 class="field"
                 type="text"
-                :value="item"
+                :value="item.text"
                 ref="textarea"
               ></textarea>
               <div class="edit-controls">
@@ -52,6 +59,8 @@ export default {
       hasTodo: false,
       isEditText: false,
       selectedItem: null,
+      isChecked: false,
+      parentTodoId: null,
     };
   },
   computed: {
@@ -80,12 +89,29 @@ export default {
       this.selectedItem = null;
       this.isEditText = false;
     },
+    checkHandler(index, isCompleted) {
+      this.isChecked = isCompleted;
+
+      // dispatch an action to set completed status of a checked todo item
+      this.$store.dispatch({
+        type: "todos/updateCompletionStatus",
+        status: this.isChecked,
+        parentTodoId: this.parentTodoId,
+        childTodoId: index,
+      });
+
+      // reset prop
+      this.isChecked = false;
+    },
   },
   watch: {
-    selectedTodo(newValue) {
-      if (newValue) {
-        this.selectedItem = null; // reset the selectedItem prop
+    selectedTodo(newTodo) {
+      if (newTodo) {
         this.hasTodo = true;
+        this.parentTodoId = newTodo.id;
+
+        // reset prop
+        this.selectedItem = null;
       }
     },
   },
@@ -114,6 +140,38 @@ export default {
   background-color: var(--color-honeydew);
 }
 
+.items .item .item-checkbox input[type="checkbox"] {
+  display: grid;
+  place-content: center;
+  margin: 0;
+  width: 1.1em;
+  height: 1.1em;
+  border: 0.15em solid currentColor;
+  border-radius: 0.15em;
+  /* Add if not using autoprefixer */
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: #fff;
+  font: inherit;
+  color: currentColor;
+  transform: translateY(-0.075em);
+}
+
+.items .item .item-checkbox input[type="checkbox"]::before {
+  content: "";
+  width: 0.65em;
+  height: 0.65em;
+  transform: scale(0);
+  transition: 120ms transform ease-in-out;
+  box-shadow: inset 1em 1em var(--color-eerie-black);
+  transform-origin: bottom left;
+  clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+}
+
+.items .item .item-checkbox input[type="checkbox"]:checked::before {
+  transform: scale(1);
+}
+
 .item-text-wrapper {
   width: 100%;
   margin-left: 0.75rem;
@@ -125,6 +183,11 @@ export default {
   height: 100%;
   cursor: pointer;
   padding-bottom: 0.375rem;
+  line-height: 1.2;
+}
+
+.item-text .item-details.completed {
+  text-decoration: line-through;
 }
 
 .item-edit-field {
