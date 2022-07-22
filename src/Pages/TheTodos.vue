@@ -30,6 +30,8 @@ export default {
   grid-template-columns: minmax(auto, 350px) minmax(350px, 1fr);
   grid-template-rows: 1fr;
   color: var(--color-eerie-black);
+  height: calc(100vh - 80px);
+  overflow: hidden;
 }
 
 .content-items {
