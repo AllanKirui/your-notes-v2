@@ -1,52 +1,88 @@
 <template>
   <div v-if="hasTodo" class="details-wrapper">
-    <h3 class="items-title">{{ selectedTodo.title }}</h3>
-    <ul class="items">
-      <li v-for="(item, index) of selectedTodo.contents" :key="index">
-        <div class="item flex">
-          <div class="item-checkbox">
-            <input
-              type="checkbox"
-              v-model="item.isCompleted"
-              @change="checkHandler(index, item.isCompleted)"
-            />
-          </div>
-
-          <div class="item-text-wrapper">
-            <div class="item-text" v-if="selectedItem !== index">
-              <span
-                class="item-details"
-                :class="{ completed: item.isCompleted }"
-                @click="editText(index)"
-                >{{ item.text }}</span
-              >
+    <!-- list of uncompleted items -->
+    <div class="incomplete-items">
+      <h3 class="items-title">{{ selectedTodo.title }}</h3>
+      <ul class="items">
+        <li v-for="(item, index) of selectedTodo.contents" :key="index">
+          <!-- only shows incomplete items -->
+          <div class="item flex" v-if="!item.isCompleted">
+            <div class="item-checkbox">
+              <input
+                type="checkbox"
+                v-model="item.isCompleted"
+                @change="checkHandler(index, item.isCompleted)"
+              />
             </div>
-            <!-- only show for the clicked todo item -->
-            <div
-              class="item-edit-field"
-              v-if="isEditText && selectedItem === index"
-            >
-              <textarea
-                class="field"
-                type="text"
-                :value="item.text"
-                ref="textarea"
-              ></textarea>
-              <div class="edit-controls">
-                <button class="btn btn-save" title="Save edits">Save</button>
-                <button
-                  class="btn btn-cancel"
-                  title="Cancel edits"
-                  @click="cancelEdits"
+
+            <div class="item-text-wrapper">
+              <div class="item-text" v-if="selectedItem !== index">
+                <span
+                  class="item-details"
+                  :class="{ completed: item.isCompleted }"
+                  @click="editText(index)"
+                  >{{ item.text }}</span
                 >
-                  Cancel
-                </button>
+              </div>
+              <!-- only show for the clicked todo item -->
+              <div
+                class="item-edit-field"
+                v-if="isEditText && selectedItem === index"
+              >
+                <textarea
+                  class="field"
+                  type="text"
+                  :value="item.text"
+                  ref="textarea"
+                ></textarea>
+                <div class="edit-controls">
+                  <button class="btn btn-save" title="Save edits">Save</button>
+                  <button
+                    class="btn btn-cancel"
+                    title="Cancel edits"
+                    @click="cancelEdits"
+                  >
+                    Cancel
+                  </button>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </li>
-    </ul>
+        </li>
+      </ul>
+    </div>
+
+    <!-- list of completed items -->
+    <div class="completed-items">
+      <br />
+      <hr />
+      <p>Completed items</p>
+      <ul class="items">
+        <li v-for="(item, index) of selectedTodo.contents" :key="index">
+          <!-- only shows completed items -->
+          <div class="item flex" v-if="item.isCompleted">
+            <div class="item-checkbox">
+              <input
+                type="checkbox"
+                v-model="item.isCompleted"
+                @change="checkHandler(index, item.isCompleted)"
+              />
+            </div>
+
+            <div class="item-text-wrapper">
+              <div class="item-text" v-if="selectedItem !== index">
+                <span
+                  class="item-details"
+                  :class="{ completed: item.isCompleted }"
+                  @click="editText(index)"
+                  >{{ item.text }}</span
+                >
+              </div>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -120,10 +156,13 @@ export default {
 
 <style scoped>
 .details-wrapper {
-  width: 90%;
-  margin: 2.5rem auto 0;
-  font-size: 0.875rem;
   position: relative;
+  margin: 2.5rem auto 0;
+  padding: 0 0.625rem 2.5rem;
+  width: 90%;
+  height: calc(100vh - 250px);
+  font-size: 0.875rem;
+  overflow-y: auto;
   z-index: 2;
 }
 
@@ -174,7 +213,7 @@ export default {
 
 .item-text-wrapper {
   width: 100%;
-  margin-left: 0.75rem;
+  margin: 0 0.75rem;
 }
 
 .item-text .item-details {
