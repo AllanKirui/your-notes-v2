@@ -36,7 +36,13 @@
                   ref="textarea"
                 ></textarea>
                 <div class="edit-controls">
-                  <button class="btn btn-save" title="Save edits">Save</button>
+                  <button
+                    class="btn btn-save"
+                    title="Save edits"
+                    @click="saveEdits(index)"
+                  >
+                    Save
+                  </button>
                   <button
                     class="btn btn-cancel"
                     title="Cancel edits"
@@ -138,6 +144,19 @@ export default {
 
       // reset prop
       this.isChecked = false;
+    },
+    saveEdits(index) {
+      // dispatch an action to save changes made on a todo item
+      this.$store.dispatch({
+        type: "todos/saveChanges",
+        parentTodoId: this.parentTodoId,
+        childTodoId: index,
+        newText: this.$refs.textarea[0].value,
+      });
+
+      // close the editing window by resetting props
+      this.selectedItem = null;
+      this.isEditText = false;
     },
   },
   watch: {

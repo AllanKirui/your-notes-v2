@@ -10,7 +10,14 @@ export default {
     let childIdx = payload.childTodoId;
     let status = payload.status;
 
-    // update the isCompleted prop
+    // update the 'isCompleted' prop
     state.todos[parentIdx].contents[childIdx].isCompleted = status;
+  },
+  saveChanges(state, payload) {
+    let parentIdx = payload.parentTodoId;
+    let childIdx = payload.childTodoId;
+
+    // update the 'text' prop
+    state.todos[parentIdx].contents[childIdx].text = payload.newText;
   },
 };
