@@ -287,12 +287,13 @@ export default {
 .details-wrapper {
   position: relative;
   margin: 2.5rem auto 0;
-  padding: 0 0.625rem 2.5rem;
+  padding: 0 0.625rem 1rem;
   width: 90%;
   height: calc(100vh - 300px);
   font-size: 0.875rem;
   overflow-y: auto;
   z-index: 2;
+  /* background-color: tomato; */
 }
 
 .items {
