@@ -90,6 +90,36 @@
       </ul>
     </div>
   </div>
+
+  <!-- field to create a new todo -->
+  <div v-if="hasTodo" class="todo-creator-wrapper">
+    <div class="item-create-btn" v-if="!isCreateNewTodo">
+      <button
+        class="btn btn-add"
+        title="Add new todo"
+        @click="showNewTodoField"
+      >
+        Add new todo
+      </button>
+    </div>
+
+    <div class="item-create-field" v-if="isCreateNewTodo">
+      <textarea
+        class="field"
+        type="text"
+        ref="newTodo"
+        placeholder="Add new todo"
+      ></textarea>
+      <div class="create-controls">
+        <button class="btn btn-add" title="Add new todo" @click="addNewTodo">
+          Add new todo
+        </button>
+        <button class="btn btn-cancel" title="Cancel" @click="cancelNewTodo">
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -103,6 +133,9 @@ export default {
       selectedItem: null,
       isChecked: false,
       parentTodoId: null,
+      isCreateNewTodo: false,
+      isCreated: false,
+      hasSwitchedTodos: false,
     };
   },
   computed: {
@@ -110,6 +143,11 @@ export default {
   },
   methods: {
     editText(index) {
+      // close the create new todo field if it's open
+      if (this.isCreateNewTodo) {
+        this.cancelNewTodo();
+      }
+
       this.selectedItem = index;
       this.isEditText = true;
 
@@ -122,7 +160,7 @@ export default {
       let textarea = this.$refs.textarea[0];
       textarea.style.height = textarea.scrollHeight + "px";
 
-      // focus on the textare and highlight its contents
+      // focus on the textarea and highlight its contents
       textarea.focus();
       textarea.select();
     },
@@ -132,6 +170,11 @@ export default {
       this.isEditText = false;
     },
     checkHandler(index, isCompleted) {
+      // close the create new todo field if it's open
+      if (this.isCreateNewTodo) {
+        this.cancelNewTodo();
+      }
+
       this.isChecked = isCompleted;
 
       // dispatch an action to set completed status of a checked todo item
@@ -146,29 +189,96 @@ export default {
       this.isChecked = false;
     },
     saveEdits(index) {
+      let updatedText = this.$refs.textarea[0].value;
+
       // dispatch an action to save changes made on a todo item
       this.$store.dispatch({
         type: "todos/saveChanges",
         parentTodoId: this.parentTodoId,
         childTodoId: index,
-        newText: this.$refs.textarea[0].value,
+        newText: updatedText,
       });
 
       // close the editing window by resetting props
       this.selectedItem = null;
       this.isEditText = false;
     },
+    showNewTodoField() {
+      this.isCreateNewTodo = true;
+
+      // focus on the create new todo textarea after it's shown
+      this.$nextTick(() => {
+        this.$refs.newTodo.focus();
+      });
+    },
+    cancelNewTodo() {
+      // reset props
+      this.isCreateNewTodo = false;
+    },
+    addNewTodo() {
+      // close the edit todo field if it's open
+      if (this.isEditText) {
+        this.cancelEdits();
+      }
+      this.isCreated = false;
+
+      let newTodo = this.$refs.newTodo.value.trim();
+
+      // dispatch an action to add a new todo item
+      if (newTodo) {
+        this.$store.dispatch({
+          type: "todos/addNewTodo",
+          parentTodoId: this.parentTodoId,
+          newTodo: newTodo,
+        });
+      }
+      this.isCreated = true;
+
+      // clear the field and re-focus on it
+      this.$refs.newTodo.value = "";
+      this.$refs.newTodo.focus();
+    },
   },
   watch: {
     selectedTodo(newTodo) {
       if (newTodo) {
+        this.hasSwitchedTodos = true;
         this.hasTodo = true;
         this.parentTodoId = newTodo.id;
 
-        // reset prop
+        // reset props
         this.selectedItem = null;
+        this.isCreateNewTodo = false;
       }
     },
+  },
+  updated() {
+    // scroll a newly created todo into view and animate it
+    if (this.isCreated) {
+      let newTodoEl = document.querySelector(
+        ".incomplete-items .items li:last-child"
+      );
+
+      newTodoEl.scrollIntoView();
+      newTodoEl.className = "animated flash";
+
+      // remove the animation classes
+      setTimeout(() => {
+        newTodoEl.className = "";
+      }, 1500);
+
+      // reset props
+      this.isCreated = false;
+      return;
+    }
+
+    // scroll to the top when switching between different todos
+    if (this.hasSwitchedTodos) {
+      document.querySelector(".details-wrapper").scrollTo(0, 0);
+
+      // reset props
+      this.hasSwitchedTodos = false;
+    }
   },
 };
 </script>
@@ -179,7 +289,7 @@ export default {
   margin: 2.5rem auto 0;
   padding: 0 0.625rem 2.5rem;
   width: 90%;
-  height: calc(100vh - 250px);
+  height: calc(100vh - 300px);
   font-size: 0.875rem;
   overflow-y: auto;
   z-index: 2;
@@ -196,6 +306,31 @@ export default {
 
 .items .item:hover {
   background-color: var(--color-honeydew);
+}
+
+.items li.animated {
+  -webkit-animation-duration: 1.5s;
+  animation-duration: 1.5s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+
+.items li.flash {
+  animation-name: flash;
+}
+
+@keyframes flash {
+  0%,
+  50% {
+    background-color: var(--color-light-green);
+  }
+  100% {
+    background: transparent;
+  }
+  25%,
+  75% {
+    background: transparent;
+  }
 }
 
 .items .item .item-checkbox input[type="checkbox"] {
@@ -252,6 +387,7 @@ export default {
   width: 100%;
 }
 
+.item-create-field .field,
 .item-edit-field .field {
   padding: 0.5rem;
   width: 100%;
@@ -268,10 +404,13 @@ export default {
   resize: none;
 }
 
+.item-create-field .create-controls,
 .item-edit-field .edit-controls {
   margin-top: 0.375rem;
 }
 
+.item-create-btn .btn,
+.item-create-field .create-controls .btn,
 .item-edit-field .edit-controls .btn {
   padding: 0.375rem 0.5rem;
   background: transparent;
@@ -283,15 +422,30 @@ export default {
   font-size: inherit;
 }
 
+.item-create-btn .btn.btn-add,
+.item-create-field .create-controls .btn.btn-add,
 .item-edit-field .edit-controls .btn.btn-save {
   background-color: var(--color-malachite);
 }
 
+.item-create-btn .btn.btn-cancel,
+.item-create-field .create-controls .btn.btn-cancel,
 .item-edit-field .edit-controls .btn.btn-cancel {
   margin-left: 0.3125px;
 }
 
+.item-create-btn .btn.btn-cancel:hover,
+.item-create-field .create-controls .btn.btn-cancel:hover,
 .item-edit-field .edit-controls .btn.btn-cancel:hover {
   background-color: var(--color-platinum);
+}
+
+.todo-creator-wrapper {
+  position: relative;
+  margin: 32px auto 0;
+  padding: 0 0.625rem 0;
+  width: 90%;
+  font-size: 0.875rem;
+  z-index: 2;
 }
 </style>
