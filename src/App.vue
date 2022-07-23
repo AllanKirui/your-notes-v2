@@ -70,8 +70,9 @@ export default {
   --color-venetian-red: hsl(349, 100%, 38%);
   --color-platinum: rgb(216, 238, 224);
   --color-white: hsl(0, 0%, 100%);
-  --color-honeydew: hsl(116, 71%, 96%);
+  --color-honeydew: hsl(116, 70%, 96%);
   --color-malachite: hsl(136, 100%, 44%);
+  --color-light-green: hsl(135, 78%, 70%);
 }
 
 html {
