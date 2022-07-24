@@ -15,4 +15,8 @@ export default {
     // commit a mutation to add a new todo item
     context.commit("addNewTodo", payload);
   },
+  resetSelectedTodo(context) {
+    // commit a mutation to reset the 'selectedTodo' state prop
+    context.commit("resetSelectedTodo");
+  },
 };

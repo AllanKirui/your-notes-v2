@@ -1,5 +1,6 @@
 export default {
   setSelectedTodo(state, payload) {
+    console.log("Mutation id: ", payload.todoId);
     // get the todo whose id matches the payload id
     state.selectedTodo = state.todos.filter(
       (todo) => todo.id === payload.todoId
@@ -29,5 +30,9 @@ export default {
 
     // add a new todo to the 'contents' list
     state.todos[parentIdx].contents.push(newTodo);
+  },
+  resetSelectedTodo(state) {
+    // dispatch an action to clear the 'selectedTodo' state prop
+    state.selectedTodo = null;
   },
 };
