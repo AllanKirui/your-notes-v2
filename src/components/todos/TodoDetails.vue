@@ -325,11 +325,11 @@ export default {
   50% {
     background-color: var(--color-light-green);
   }
-  100% {
-    background: transparent;
-  }
   25%,
   75% {
+    background: transparent;
+  }
+  100% {
     background: transparent;
   }
 }
