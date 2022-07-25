@@ -73,6 +73,7 @@ export default {
   --color-honeydew: hsl(116, 70%, 96%);
   --color-malachite: hsl(136, 100%, 44%);
   --color-light-green: hsl(135, 78%, 70%);
+  --color-clouds: hsl(0, 0%, 94%);
 }
 
 html {
