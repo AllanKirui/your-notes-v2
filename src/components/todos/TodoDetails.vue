@@ -62,7 +62,7 @@
     <div class="completed-items" v-if="hasCompletedItems">
       <br />
       <hr />
-      <p>Completed items</p>
+      <p>{{ completedItemsFieldText }}</p>
       <ul class="items">
         <li v-for="(item, index) of selectedTodo.contents" :key="index">
           <!-- only shows completed items -->
@@ -137,10 +137,16 @@ export default {
       isCreated: false,
       hasSwitchedTodos: false,
       hasCompletedItems: false,
+      numOfCompletedItems: 0,
     };
   },
   computed: {
     ...mapGetters("todos", ["selectedTodo"]),
+    completedItemsFieldText() {
+      return this.numOfCompletedItems > 1
+        ? `${this.numOfCompletedItems} Completed items`
+        : `${this.numOfCompletedItems} Completed item`;
+    },
   },
   methods: {
     editText(index) {
@@ -266,6 +272,7 @@ export default {
       return;
     }
 
+    this.numOfCompletedItems = completedItems.length;
     this.hasCompletedItems = true;
   },
   updated() {
@@ -397,7 +404,9 @@ export default {
 }
 
 .item-text .item-details.completed {
+  font-style: italic;
   text-decoration: line-through;
+  color: var(--color-traffic-grey);
 }
 
 .item-edit-field {
