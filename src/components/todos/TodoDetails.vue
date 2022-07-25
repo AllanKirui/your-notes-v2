@@ -3,6 +3,12 @@
     <!-- list of uncompleted items -->
     <div class="incomplete-items">
       <h3 class="items-title">{{ selectedTodo.title }}</h3>
+      <div class="progress-bar flex flex-ai-c">
+        <span class="percentage">{{ progress }}%</span>
+        <div class="bar-wrapper flex flex-ai-c">
+          <span class="bar" :style="{ width: progress + '%' }"></span>
+        </div>
+      </div>
       <ul class="items">
         <li v-for="(item, index) of selectedTodo.contents" :key="index">
           <!-- only shows incomplete items -->
@@ -138,6 +144,7 @@ export default {
       hasSwitchedTodos: false,
       hasCompletedItems: false,
       numOfCompletedItems: 0,
+      progress: 0,
     };
   },
   computed: {
@@ -244,6 +251,9 @@ export default {
       this.$refs.newTodo.value = "";
       this.$refs.newTodo.focus();
     },
+    setProgress(totalItems, completed) {
+      return Math.round((completed / totalItems) * 100);
+    },
   },
   watch: {
     selectedTodo(newTodo) {
@@ -264,16 +274,21 @@ export default {
   },
   beforeUpdate() {
     const todos = this.$store.getters["todos/selectedTodo"];
+    let numOfItems = todos.contents.length;
     let completedItems = todos.contents.filter((item) => item.isCompleted);
 
     // check if there are any completed todo items
     if (completedItems.length < 1) {
       this.hasCompletedItems = false;
+      this.progress = 0;
       return;
     }
 
     this.numOfCompletedItems = completedItems.length;
     this.hasCompletedItems = true;
+
+    // calculate the progress
+    this.progress = this.setProgress(numOfItems, this.numOfCompletedItems);
   },
   updated() {
     // scroll a newly created todo into view and animate it
@@ -316,7 +331,29 @@ export default {
   font-size: 0.875rem;
   overflow-y: auto;
   z-index: 2;
-  /* background-color: tomato; */
+}
+
+.incomplete-items .progress-bar {
+  position: relative;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.incomplete-items .progress-bar span {
+  display: inline-block;
+}
+
+.incomplete-items .progress-bar .bar-wrapper {
+  background-color: var(--color-clouds);
+  width: 100%;
+  height: 0.7em;
+  border-radius: 50px;
+  overflow: hidden;
+}
+
+.incomplete-items .progress-bar .bar-wrapper .bar {
+  height: 0.7em;
+  background-color: var(--color-dark-pastel-green);
 }
 
 .items {
