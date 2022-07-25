@@ -59,7 +59,7 @@
     </div>
 
     <!-- list of completed items -->
-    <div class="completed-items">
+    <div class="completed-items" v-if="hasCompletedItems">
       <br />
       <hr />
       <p>Completed items</p>
@@ -136,6 +136,7 @@ export default {
       isCreateNewTodo: false,
       isCreated: false,
       hasSwitchedTodos: false,
+      hasCompletedItems: false,
     };
   },
   computed: {
@@ -251,6 +252,18 @@ export default {
         this.isCreateNewTodo = false;
       }
     },
+  },
+  beforeUpdate() {
+    const todos = this.$store.getters["todos/selectedTodo"];
+    let completedItems = todos.contents.filter((item) => item.isCompleted);
+
+    // check if there are any completed todo items
+    if (completedItems.length < 1) {
+      this.hasCompletedItems = false;
+      return;
+    }
+
+    this.hasCompletedItems = true;
   },
   updated() {
     // scroll a newly created todo into view and animate it
