@@ -144,10 +144,10 @@ export default {
   },
   methods: {
     editText(index) {
+      // don't open edit field if todo is marked as completed
+      if (this.selectedTodo.contents[index].isCompleted) return;
       // close the create new todo field if it's open
-      if (this.isCreateNewTodo) {
-        this.cancelNewTodo();
-      }
+      if (this.isCreateNewTodo) this.cancelNewTodo();
 
       this.selectedItem = index;
       this.isEditText = true;
@@ -172,9 +172,8 @@ export default {
     },
     checkHandler(index, isCompleted) {
       // close the create new todo field if it's open
-      if (this.isCreateNewTodo) {
-        this.cancelNewTodo();
-      }
+      if (this.isCreateNewTodo) this.cancelNewTodo();
+      if (this.isEditText) this.cancelEdits();
 
       this.isChecked = isCompleted;
 
@@ -205,6 +204,8 @@ export default {
       this.isEditText = false;
     },
     showNewTodoField() {
+      // close the edit todo field if it's open
+      this.cancelEdits();
       this.isCreateNewTodo = true;
 
       // focus on the create new todo textarea after it's shown
@@ -218,9 +219,7 @@ export default {
     },
     addNewTodo() {
       // close the edit todo field if it's open
-      if (this.isEditText) {
-        this.cancelEdits();
-      }
+      if (this.isEditText) this.cancelEdits();
       this.isCreated = false;
 
       let newTodo = this.$refs.newTodo.value.trim();
