@@ -1,14 +1,18 @@
 <template>
+  <!-- Todo title and progress bar -->
+  <div v-if="hasTodo" class="heading-wrapper">
+    <h3 class="items-title">{{ selectedTodo.title }}</h3>
+    <div class="progress-bar flex flex-ai-c">
+      <span class="percentage">{{ progress }}%</span>
+      <div class="bar-wrapper flex flex-ai-c">
+        <span class="bar" :style="{ width: progress + '%' }"></span>
+      </div>
+    </div>
+  </div>
+
   <div v-if="hasTodo" class="details-wrapper">
     <!-- list of uncompleted items -->
     <div class="incomplete-items">
-      <h3 class="items-title">{{ selectedTodo.title }}</h3>
-      <div class="progress-bar flex flex-ai-c">
-        <span class="percentage">{{ progress }}%</span>
-        <div class="bar-wrapper flex flex-ai-c">
-          <span class="bar" :style="{ width: progress + '%' }"></span>
-        </div>
-      </div>
       <ul class="items">
         <li v-for="(item, index) of selectedTodo.contents" :key="index">
           <!-- only shows incomplete items -->
@@ -69,7 +73,7 @@
       <br />
       <hr />
       <p>{{ completedItemsFieldText }}</p>
-      <ul class="items">
+      <ul class="items completed">
         <li v-for="(item, index) of selectedTodo.contents" :key="index">
           <!-- only shows completed items -->
           <div class="item flex" v-if="item.isCompleted">
@@ -322,28 +326,33 @@ export default {
 </script>
 
 <style scoped>
-.details-wrapper {
+.details-wrapper,
+.heading-wrapper {
   position: relative;
   margin: 2.5rem auto 0;
   padding: 0 0.625rem 1rem;
   width: 90%;
-  height: calc(100vh - 300px);
-  font-size: 0.875rem;
-  overflow-y: auto;
   z-index: 2;
 }
 
-.incomplete-items .progress-bar {
+.details-wrapper {
+  margin: 0 auto;
+  height: calc(100vh - 330px);
+  font-size: 0.875rem;
+  overflow-y: auto;
+}
+
+.heading-wrapper .progress-bar {
   position: relative;
   gap: 10px;
   margin-top: 10px;
 }
 
-.incomplete-items .progress-bar span {
+.heading-wrapper .progress-bar span {
   display: inline-block;
 }
 
-.incomplete-items .progress-bar .bar-wrapper {
+.heading-wrapper .progress-bar .bar-wrapper {
   background-color: var(--color-clouds);
   width: 100%;
   height: 0.7em;
@@ -351,12 +360,16 @@ export default {
   overflow: hidden;
 }
 
-.incomplete-items .progress-bar .bar-wrapper .bar {
+.heading-wrapper .progress-bar .bar-wrapper .bar {
   height: 0.7em;
   background-color: var(--color-dark-pastel-green);
 }
 
 .items {
+  margin-top: 0.25rem;
+}
+
+.items.completed {
   margin-top: 1.125rem;
 }
 
@@ -394,6 +407,10 @@ export default {
   }
 }
 
+.items .item .item-checkbox {
+  height: fit-content;
+}
+
 .items .item .item-checkbox input[type="checkbox"] {
   display: grid;
   place-content: center;
@@ -402,13 +419,13 @@ export default {
   height: 1.1em;
   border: 0.15em solid currentColor;
   border-radius: 0.15em;
-  /* Add if not using autoprefixer */
   -webkit-appearance: none;
   appearance: none;
   background-color: #fff;
   font: inherit;
   color: currentColor;
   transform: translateY(-0.075em);
+  cursor: pointer;
 }
 
 .items .item .item-checkbox input[type="checkbox"]::before {
@@ -424,6 +441,10 @@ export default {
 
 .items .item .item-checkbox input[type="checkbox"]:checked::before {
   transform: scale(1);
+}
+
+.items .item .item-checkbox input[type="checkbox"]:hover {
+  background-color: var(--color-platinum);
 }
 
 .item-text-wrapper {
