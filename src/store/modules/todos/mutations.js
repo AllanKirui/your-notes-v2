@@ -1,6 +1,5 @@
 export default {
   setSelectedTodo(state, payload) {
-    console.log("Mutation id: ", payload.todoId);
     // get the todo whose id matches the payload id
     state.selectedTodo = state.todos.filter(
       (todo) => todo.id === payload.todoId
