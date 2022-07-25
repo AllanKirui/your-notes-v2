@@ -253,6 +253,10 @@ export default {
       }
     },
   },
+  mounted() {
+    // dispatch an action to reset the 'selectedTodo' state prop
+    this.$store.dispatch("todos/resetSelectedTodo");
+  },
   beforeUpdate() {
     const todos = this.$store.getters["todos/selectedTodo"];
     let completedItems = todos.contents.filter((item) => item.isCompleted);
