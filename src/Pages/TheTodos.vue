@@ -21,10 +21,6 @@ export default {
     TodoList,
     TodoDetails,
   },
-  mounted() {
-    // dispatch an action to reset the 'selectedTodo' state prop
-    this.$store.dispatch("todos/resetSelectedTodo");
-  },
 };
 </script>
 
