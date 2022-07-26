@@ -44,6 +44,7 @@
                   type="text"
                   :value="item.text"
                   ref="textarea"
+                  @input="$nextTick(autoResizeEditField)"
                 ></textarea>
                 <div class="edit-controls">
                   <button
@@ -119,6 +120,7 @@
         type="text"
         ref="newTodo"
         placeholder="Add new todo"
+        @input="$nextTick(autoResizeCreateField)"
       ></textarea>
       <div class="create-controls">
         <button class="btn btn-add" title="Add new todo" @click="addNewTodo">
@@ -149,6 +151,7 @@ export default {
       hasCompletedItems: false,
       numOfCompletedItems: 0,
       progress: 0,
+      isHighlighted: false,
     };
   },
   computed: {
@@ -161,6 +164,8 @@ export default {
   },
   methods: {
     editText(index) {
+      // reset props
+      this.isHighlighted = false;
       // don't open edit field if todo is marked as completed
       if (this.selectedTodo.contents[index].isCompleted) return;
       // close the create new todo field if it's open
@@ -171,16 +176,24 @@ export default {
 
       // resize the textarea after it has been rendered
       this.$nextTick(() => {
-        this.autoResizeField();
+        this.autoResizeEditField();
       });
     },
-    autoResizeField() {
+    autoResizeEditField() {
       let textarea = this.$refs.textarea[0];
       textarea.style.height = textarea.scrollHeight + "px";
+
+      // if the textarea is already focused and selected, return
+      if (this.isHighlighted) return;
 
       // focus on the textarea and highlight its contents
       textarea.focus();
       textarea.select();
+      this.isHighlighted = true;
+    },
+    autoResizeCreateField() {
+      let textarea = this.$refs.newTodo;
+      textarea.style.height = textarea.scrollHeight + "px";
     },
     cancelEdits() {
       // reset props
@@ -271,6 +284,11 @@ export default {
         this.isCreateNewTodo = false;
       }
     },
+    isEditText(newValue) {
+      if (!newValue) {
+        this.isHighlighted = false;
+      }
+    },
   },
   mounted() {
     // dispatch an action to reset the 'selectedTodo' state prop
@@ -352,10 +370,14 @@ export default {
   display: inline-block;
 }
 
+.heading-wrapper .progress-bar .percentage {
+  font-size: 0.875rem;
+}
+
 .heading-wrapper .progress-bar .bar-wrapper {
   background-color: var(--color-clouds);
   width: 100%;
-  height: 0.7em;
+  height: 0.6em;
   border-radius: 50px;
   overflow: hidden;
 }
@@ -363,6 +385,7 @@ export default {
 .heading-wrapper .progress-bar .bar-wrapper .bar {
   height: 0.7em;
   background-color: var(--color-dark-pastel-green);
+  transition: width 0.4s ease-in-out;
 }
 
 .items {
@@ -421,7 +444,7 @@ export default {
   border-radius: 0.15em;
   -webkit-appearance: none;
   appearance: none;
-  background-color: #fff;
+  background-color: var(--color-white);
   font: inherit;
   color: currentColor;
   transform: translateY(-0.075em);
@@ -465,6 +488,15 @@ export default {
   font-style: italic;
   text-decoration: line-through;
   color: var(--color-traffic-grey);
+}
+
+.todo-creator-wrapper {
+  position: relative;
+  margin: 2rem auto 0;
+  padding: 0 0.625rem 0;
+  width: 90%;
+  font-size: 0.875rem;
+  z-index: 2;
 }
 
 .item-edit-field {
@@ -522,14 +554,5 @@ export default {
 .item-create-field .create-controls .btn.btn-cancel:hover,
 .item-edit-field .edit-controls .btn.btn-cancel:hover {
   background-color: var(--color-platinum);
-}
-
-.todo-creator-wrapper {
-  position: relative;
-  margin: 32px auto 0;
-  padding: 0 0.625rem 0;
-  width: 90%;
-  font-size: 0.875rem;
-  z-index: 2;
 }
 </style>
