@@ -44,6 +44,7 @@ export default {
   height: calc(100vh - 80px);
   position: relative;
   background: var(--color-white);
+  overflow-y: auto;
 }
 
 .content-items-details .bg-images {
