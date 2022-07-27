@@ -240,4 +240,13 @@ export default {
 .links .link a:hover .link-counter {
   color: var(--color-eerie-black);
 }
+
+.router-link-active {
+  background: var(--color-platinum);
+  color: var(--color-eerie-black) !important;
+}
+
+.router-link-active .link-counter {
+  color: var(--color-eerie-black) !important;
+}
 </style>
