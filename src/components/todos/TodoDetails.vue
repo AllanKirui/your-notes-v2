@@ -1,8 +1,24 @@
 <template>
   <!-- Todo title and progress bar -->
   <div v-if="hasTodo" class="heading-wrapper">
-    <h3 class="items-title">{{ selectedTodo.title }}</h3>
-    <div class="progress-bar flex flex-ai-c">
+    <div class="heading-top flex">
+      <h3 class="items-title">{{ selectedTodo.title }}</h3>
+      <div class="top-controls">
+        <button
+          v-if="hasCompletedItems"
+          @click="toggleCompletedItems"
+          class="btn hide-btn"
+          :title="
+            selectedTodo.isHideCompleted
+              ? 'Hide completed tasks'
+              : 'Show completed tasks'
+          "
+        >
+          {{ selectedTodo.isHideCompleted ? "Hide" : "Show" }} completed
+        </button>
+      </div>
+    </div>
+    <div class="heading-bottom progress-bar flex flex-ai-c">
       <span class="percentage">{{ progress }}%</span>
       <div class="bar-wrapper flex flex-ai-c">
         <span class="bar" :style="{ width: progress + '%' }"></span>
@@ -70,7 +86,10 @@
     </div>
 
     <!-- list of completed items -->
-    <div class="completed-items" v-if="hasCompletedItems">
+    <div
+      class="completed-items"
+      v-if="hasCompletedItems && selectedTodo.isHideCompleted"
+    >
       <br />
       <hr />
       <p>{{ completedItemsFieldText }}</p>
@@ -271,6 +290,13 @@ export default {
     setProgress(totalItems, completed) {
       return Math.round((completed / totalItems) * 100);
     },
+    toggleCompletedItems() {
+      // dispatch an action to set hidden status of completed tasks in a todo
+      this.$store.dispatch({
+        type: "todos/updateHiddenStatus",
+        parentTodoId: this.parentTodoId,
+      });
+    },
   },
   watch: {
     selectedTodo(newTodo) {
@@ -358,6 +384,10 @@ export default {
   height: calc(100vh - 330px);
   font-size: 0.875rem;
   overflow-y: auto;
+}
+
+.heading-wrapper .items-title {
+  margin-right: auto;
 }
 
 .heading-wrapper .progress-bar {
@@ -525,9 +555,7 @@ export default {
   margin-top: 0.375rem;
 }
 
-.item-create-btn .btn,
-.item-create-field .create-controls .btn,
-.item-edit-field .edit-controls .btn {
+.btn {
   padding: 0.375rem 0.5rem;
   background: transparent;
   border: none;
@@ -536,6 +564,11 @@ export default {
   cursor: pointer;
   font-family: inherit;
   font-size: inherit;
+}
+
+.hide-btn {
+  font-size: 0.875rem;
+  transition: all 0.15s ease-in-out;
 }
 
 .item-create-btn .btn.btn-add,
@@ -554,10 +587,11 @@ export default {
 .item-create-btn .btn.btn-cancel,
 .item-create-field .create-controls .btn.btn-cancel,
 .item-edit-field .edit-controls .btn.btn-cancel {
-  margin-left: 0.3125px;
+  margin-left: 0.3125rem;
   transition: all 0.15s ease-in-out;
 }
 
+.hide-btn:hover,
 .item-create-btn .btn.btn-cancel:hover,
 .item-create-field .create-controls .btn.btn-cancel:hover,
 .item-edit-field .edit-controls .btn.btn-cancel:hover {
