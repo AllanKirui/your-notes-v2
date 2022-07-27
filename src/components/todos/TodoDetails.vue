@@ -542,12 +542,20 @@ export default {
 .item-create-field .create-controls .btn.btn-add,
 .item-edit-field .edit-controls .btn.btn-save {
   background-color: var(--color-malachite);
+  transition: all 0.15s ease-in-out;
+}
+
+.item-create-btn .btn.btn-add:hover,
+.item-create-field .create-controls .btn.btn-add:hover,
+.item-edit-field .edit-controls .btn.btn-save:hover {
+  background-color: var(--color-light-green);
 }
 
 .item-create-btn .btn.btn-cancel,
 .item-create-field .create-controls .btn.btn-cancel,
 .item-edit-field .edit-controls .btn.btn-cancel {
   margin-left: 0.3125px;
+  transition: all 0.15s ease-in-out;
 }
 
 .item-create-btn .btn.btn-cancel:hover,
