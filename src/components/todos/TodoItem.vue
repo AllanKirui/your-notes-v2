@@ -82,12 +82,12 @@ export default {
     setTodoItemText(index) {
       let incompleteItems = this.contents.filter((item) => !item.isCompleted);
       // show incomplete tasks if available, show an empty list if there are no more items in the list
+      // show a maximum of 35 characters for the todo item text
       let itemText = incompleteItems[index]
-        ? incompleteItems[index].text
+        ? this.setTodoTextLength(incompleteItems[index].text, 35)
         : incompleteItems[index];
 
-      // show a maximum of 35 characters for the todo item text
-      return this.setTodoTextLength(itemText, 35);
+      return itemText;
     },
   },
   watch: {
