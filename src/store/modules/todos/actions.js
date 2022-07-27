@@ -19,4 +19,8 @@ export default {
     // commit a mutation to reset the 'selectedTodo' state prop
     context.commit("resetSelectedTodo");
   },
+  updateHiddenStatus(context, payload) {
+    // commit a mutation to set hidden status of completed tasks in a todo
+    context.commit("updateHiddenStatus", payload);
+  },
 };

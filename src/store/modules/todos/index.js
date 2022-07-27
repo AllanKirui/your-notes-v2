@@ -17,6 +17,7 @@ export default {
             { text: "Butter", isCompleted: false },
             { text: "Bread", isCompleted: false },
           ],
+          isHideCompleted: false,
         },
         {
           id: 1,
@@ -41,6 +42,7 @@ export default {
             { text: "The Markdown Guide by Mark Cone", isCompleted: false },
             { text: "Heaven is For Real by Todd Burpo", isCompleted: false },
           ],
+          isHideCompleted: false,
         },
       ],
       selectedTodo: null,

@@ -31,7 +31,12 @@ export default {
     state.todos[parentIdx].contents.push(newTodo);
   },
   resetSelectedTodo(state) {
-    // dispatch an action to clear the 'selectedTodo' state prop
     state.selectedTodo = null;
+  },
+  updateHiddenStatus(state, payload) {
+    // toggle the hidden status of the selected todo
+    let parentIdx = payload.parentTodoId;
+    state.todos[parentIdx].isHideCompleted =
+      !state.todos[parentIdx].isHideCompleted;
   },
 };
