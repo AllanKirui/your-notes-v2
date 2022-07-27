@@ -21,7 +21,7 @@
             alt="search icon"
             width="20"
           />
-          <input type="text" placeholder="Search notes" />
+          <input type="text" :placeholder="routeName" />
         </div>
       </div>
 
@@ -42,6 +42,16 @@
     </nav>
   </header>
 </template>
+
+<script>
+export default {
+  computed: {
+    routeName() {
+      return "Search " + this.$route.name;
+    },
+  },
+};
+</script>
 
 <style scoped>
 .header {
