@@ -37,6 +37,7 @@ export default {
 .content-items {
   background-color: var(--color-cultured);
   border-right: 1px solid var(--color-platinum);
+  overflow-y: auto;
 }
 
 .content-items-details {
