@@ -149,13 +149,14 @@ ul {
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--color-traffic-grey);
+  margin-block: 0.625rem;
+  background: var(--color-white);
   border-radius: 100vw;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--color-cultured);
-  border: 0.1em solid var(--color-eerie-black);
+  background: var(--color-eerie-black);
+  border: 0.1em solid var(--color-white);
   border-radius: 100vw;
 }
 
