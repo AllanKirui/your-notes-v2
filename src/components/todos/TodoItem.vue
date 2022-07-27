@@ -16,20 +16,14 @@
       <ul class="item-list">
         <!-- Get the first 3 items of the contents -->
         <li class="item flex flex-ai-c" v-for="(_, index) in 3" :key="index">
+          <!-- only show image for incomplete tasks on a todo -->
           <img
             v-if="displayContent[index]"
             src="@/assets/img/checkbox-grey.svg"
             alt=" "
             width="14"
           />
-          <!-- Only show incomplete tasks   -->
-          <span>
-            {{
-              displayContent[index]
-                ? displayContent[index].text
-                : displayContent[index]
-            }}
-          </span>
+          <span>{{ setTodoItemText(index) }}</span>
         </li>
       </ul>
       <!-- Only show If all tasks in a todo are complete   -->
@@ -75,6 +69,25 @@ export default {
         type: "todos/setSelectedTodo",
         todoId: id,
       });
+    },
+    setTodoTextLength(todoText, size) {
+      if (todoText.length <= size) return todoText;
+
+      let shortText = "";
+      for (let i = 0; i <= size; i++) {
+        shortText += todoText[i];
+      }
+      return shortText + "...";
+    },
+    setTodoItemText(index) {
+      let incompleteItems = this.contents.filter((item) => !item.isCompleted);
+      // show incomplete tasks if available, show an empty list if there are no more items in the list
+      let itemText = incompleteItems[index]
+        ? incompleteItems[index].text
+        : incompleteItems[index];
+
+      // show a maximum of 35 characters for the todo item text
+      return this.setTodoTextLength(itemText, 35);
     },
   },
   watch: {
