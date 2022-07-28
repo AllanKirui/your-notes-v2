@@ -45,4 +45,11 @@ export default {
     // delete the todo whose index matches the parent index
     state.todos.splice(parentIdx, 1);
   },
+  deleteTodoTask(state, payload) {
+    let parentIdx = payload.parentTodoId;
+    let childIdx = payload.childTodoId;
+
+    // delete the task whose index matches the child index
+    state.todos[parentIdx].contents.splice(childIdx, 1);
+  },
 };

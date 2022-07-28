@@ -123,6 +123,26 @@
                 </div>
               </div>
             </div>
+
+            <div class="item-options">
+              <button
+                class="btn delete-item-btn"
+                title="Delete task"
+                @click="deleteTodoTask(index)"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 64 64"
+                  stroke-width="5"
+                  stroke="currentColor"
+                  fill="none"
+                  class="duration-300 transform transition-all"
+                  style="width: 14px; height: 14px"
+                >
+                  <path d="M8.06 8.06l47.35 47.88M55.94 8.06L8.59 55.94"></path>
+                </svg>
+              </button>
+            </div>
           </div>
         </li>
       </ul>
@@ -356,6 +376,14 @@ export default {
       this.$store.dispatch("todos/deleteTodo", this.parentTodoId);
       // reset props
       this.hasTodo = false;
+    },
+    deleteTodoTask(index) {
+      // dispatch an action to delete a task from a todo
+      this.$store.dispatch({
+        type: "todos/deleteTodoTask",
+        parentTodoId: this.parentTodoId,
+        childTodoId: index,
+      });
     },
   },
   watch: {
@@ -635,6 +663,22 @@ export default {
   font-style: italic;
   text-decoration: line-through;
   color: var(--color-traffic-grey);
+}
+
+.item-options .delete-item-btn {
+  padding: 0.375rem 0.375rem 0.2rem !important;
+  border-radius: 50px;
+  opacity: 0;
+  visibility: visible;
+}
+
+.items .item:hover .item-options .delete-item-btn {
+  opacity: 1;
+  visibility: visible;
+}
+
+.item-options .delete-item-btn:hover {
+  background-color: var(--color-platinum);
 }
 
 .todo-creator-wrapper {

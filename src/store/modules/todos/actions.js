@@ -27,4 +27,8 @@ export default {
     // commit a mutation to delete a todo from the list of todos
     context.commit("deleteTodo", payload);
   },
+  deleteTodoTask(context, payload) {
+    // commit a mutation to delete a task from a todo
+    context.commit("deleteTodoTask", payload);
+  },
 };
