@@ -74,6 +74,8 @@ export default {
   --color-malachite: hsl(136, 100%, 44%);
   --color-light-green: hsl(135, 78%, 70%);
   --color-clouds: hsl(0, 0%, 94%);
+  --color-congo-pink: hsl(0, 100%, 76%);
+  --color-crayola: hsl(0, 100%, 67%);
 }
 
 html {
