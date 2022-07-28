@@ -3,6 +3,8 @@ import App from "./App.vue";
 import router from "@/router/index";
 import store from "@/store/index";
 
+import BaseCard from "@/components/ui/BaseCard";
+
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 
@@ -20,6 +22,8 @@ const firebaseConfig = {
 initializeApp(firebaseConfig);
 
 const app = createApp(App);
+
+app.component("base-card", BaseCard);
 
 app.use(router);
 app.use(store);
