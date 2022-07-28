@@ -39,4 +39,10 @@ export default {
     state.todos[parentIdx].isHideCompleted =
       !state.todos[parentIdx].isHideCompleted;
   },
+  deleteTodo(state, payload) {
+    let parentIdx = payload;
+
+    // delete the todo whose index matches the parent index
+    state.todos.splice(parentIdx, 1);
+  },
 };

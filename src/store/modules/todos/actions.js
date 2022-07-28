@@ -23,4 +23,8 @@ export default {
     // commit a mutation to set hidden status of completed tasks in a todo
     context.commit("updateHiddenStatus", payload);
   },
+  deleteTodo(context, payload) {
+    // commit a mutation to delete a todo from the list of todos
+    context.commit("deleteTodo", payload);
+  },
 };

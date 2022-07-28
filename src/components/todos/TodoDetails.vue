@@ -57,7 +57,11 @@
           <p class="message">
             Deleting a todo is a permanent action which cannot be undone.
           </p>
-          <button class="btn delete-btn" title="Delete todo">
+          <button
+            class="btn delete-btn"
+            title="Delete todo"
+            @click="deleteTodo"
+          >
             Delete todo
           </button>
         </div>
@@ -346,6 +350,12 @@ export default {
     },
     hideDeleteWindow() {
       this.isShowDeleteWindow = false;
+    },
+    deleteTodo() {
+      // dispatch an action to delete a todo from the list of todos
+      this.$store.dispatch("todos/deleteTodo", this.parentTodoId);
+      // reset props
+      this.hasTodo = false;
     },
   },
   watch: {
