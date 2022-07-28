@@ -21,6 +21,22 @@ export default {
     TodoList,
     TodoDetails,
   },
+  methods: {
+    setTodoTextLength(todoText, size) {
+      if (todoText.length <= size) return todoText;
+
+      let shortText = "";
+      for (let i = 0; i <= size; i++) {
+        shortText += todoText[i];
+      }
+      return shortText + "...";
+    },
+  },
+  provide() {
+    return {
+      setTodoTextLength: this.setTodoTextLength,
+    };
+  },
 };
 </script>
 
