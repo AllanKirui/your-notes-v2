@@ -37,6 +37,7 @@
 <script>
 export default {
   props: ["id", "title", "contents"],
+  inject: ["setTodoTextLength"],
   data() {
     return {
       selectedTodoId: null,
@@ -69,15 +70,6 @@ export default {
         type: "todos/setSelectedTodo",
         todoId: id,
       });
-    },
-    setTodoTextLength(todoText, size) {
-      if (todoText.length <= size) return todoText;
-
-      let shortText = "";
-      for (let i = 0; i <= size; i++) {
-        shortText += todoText[i];
-      }
-      return shortText + "...";
     },
     setTodoItemText(index) {
       let incompleteItems = this.contents.filter((item) => !item.isCompleted);
