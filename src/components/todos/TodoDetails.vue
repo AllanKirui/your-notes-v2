@@ -16,13 +16,52 @@
         >
           {{ selectedTodo.isHideCompleted ? "Hide" : "Show" }} completed
         </button>
+        <button
+          class="btn delete-todo-btn"
+          title="Delete todo"
+          @click="showDeleteWindow"
+        >
+          Delete
+        </button>
       </div>
     </div>
+
     <div class="heading-bottom progress-bar flex flex-ai-c">
       <span class="percentage">{{ progress }}%</span>
       <div class="bar-wrapper flex flex-ai-c">
         <span class="bar" :style="{ width: progress + '%' }"></span>
       </div>
+    </div>
+
+    <div class="confirm-delete" v-if="isShowDeleteWindow">
+      <base-card>
+        <div class="confirm-delete-title flex flex-ai-c flex-jc-sb">
+          <span class="title"
+            >Delete {{ setTodoTextLength(selectedTodo.title, 20) }}</span
+          >
+          <button class="btn close-btn" title="Close" @click="hideDeleteWindow">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 64 64"
+              stroke-width="4.5"
+              stroke="currentColor"
+              fill="none"
+              class="duration-300 transform transition-all"
+              style="width: 14px; height: 14px"
+            >
+              <path d="M8.06 8.06l47.35 47.88M55.94 8.06L8.59 55.94"></path>
+            </svg>
+          </button>
+        </div>
+        <div class="confirm-delete-contents">
+          <p class="message">
+            Deleting a todo is a permanent action which cannot be undone.
+          </p>
+          <button class="btn delete-btn" title="Delete todo">
+            Delete todo
+          </button>
+        </div>
+      </base-card>
     </div>
   </div>
 
@@ -157,6 +196,7 @@
 import { mapGetters } from "vuex";
 
 export default {
+  inject: ["setTodoTextLength"],
   data() {
     return {
       hasTodo: false,
@@ -171,6 +211,7 @@ export default {
       numOfCompletedItems: 0,
       progress: 0,
       isHighlighted: false,
+      isShowDeleteWindow: false,
     };
   },
   computed: {
@@ -185,6 +226,7 @@ export default {
     editText(index) {
       // reset props
       this.isHighlighted = false;
+      this.isShowDeleteWindow = false;
       // don't open edit field if todo is marked as completed
       if (this.selectedTodo.contents[index].isCompleted) return;
       // close the create new todo field if it's open
@@ -297,6 +339,14 @@ export default {
         parentTodoId: this.parentTodoId,
       });
     },
+    showDeleteWindow() {
+      this.cancelEdits();
+      this.cancelNewTodo();
+      this.isShowDeleteWindow = true;
+    },
+    hideDeleteWindow() {
+      this.isShowDeleteWindow = false;
+    },
   },
   watch: {
     selectedTodo(newTodo) {
@@ -306,8 +356,9 @@ export default {
         this.parentTodoId = newTodo.id;
 
         // reset props
-        this.selectedItem = null;
-        this.isCreateNewTodo = false;
+        this.cancelEdits();
+        this.cancelNewTodo();
+        this.hideDeleteWindow();
       }
     },
     isEditText(newValue) {
@@ -376,7 +427,10 @@ export default {
   margin: 2.5rem auto 0;
   padding: 0 0.625rem 1rem;
   width: 90%;
-  z-index: 2;
+}
+
+.heading-wrapper {
+  z-index: 3;
 }
 
 .details-wrapper {
@@ -384,6 +438,7 @@ export default {
   height: calc(100vh - 330px);
   font-size: 0.875rem;
   overflow-y: auto;
+  z-index: 2;
 }
 
 .heading-wrapper .items-title {
@@ -416,6 +471,58 @@ export default {
   height: 0.7em;
   background-color: var(--color-dark-pastel-green);
   transition: width 0.4s ease-in-out;
+}
+
+.heading-wrapper .confirm-delete {
+  position: absolute;
+  top: 2.5rem;
+  right: 0.625rem;
+  max-width: 18.75rem;
+  font-size: 0.875rem;
+  animation: fadeIn 0.3s ease forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.heading-wrapper .confirm-delete-title {
+  position: relative;
+  padding-bottom: 0.5rem;
+  text-align: center;
+  border-bottom: 1px solid var(--color-traffic-grey);
+}
+
+.heading-wrapper .confirm-delete-title .title {
+  display: block;
+  width: 100%;
+}
+
+.heading-wrapper .confirm-delete-title .close-btn {
+  padding: 0.375rem 0.375rem 0.2rem !important;
+}
+
+.heading-wrapper .confirm-delete-title .close-btn:hover {
+  background-color: var(--color-clouds);
+}
+
+.heading-wrapper .confirm-delete-contents {
+  margin-top: 0.5rem;
+}
+
+.heading-wrapper .confirm-delete-contents .delete-btn {
+  margin-top: 0.5rem;
+  width: 100%;
+  background-color: var(--color-congo-pink) !important;
+}
+
+.heading-wrapper .confirm-delete-contents .delete-btn:hover {
+  background-color: var(--color-crayola) !important;
 }
 
 .items {
@@ -563,19 +670,18 @@ export default {
   border-radius: 4px;
   cursor: pointer;
   font-family: inherit;
-  font-size: inherit;
-}
-
-.hide-btn {
   font-size: 0.875rem;
   transition: all 0.15s ease-in-out;
+}
+
+.top-controls .delete-todo-btn:hover {
+  background-color: var(--color-congo-pink);
 }
 
 .item-create-btn .btn.btn-add,
 .item-create-field .create-controls .btn.btn-add,
 .item-edit-field .edit-controls .btn.btn-save {
   background-color: var(--color-malachite);
-  transition: all 0.15s ease-in-out;
 }
 
 .item-create-btn .btn.btn-add:hover,
@@ -584,11 +690,11 @@ export default {
   background-color: var(--color-light-green);
 }
 
+.top-controls .delete-todo-btn,
 .item-create-btn .btn.btn-cancel,
 .item-create-field .create-controls .btn.btn-cancel,
 .item-edit-field .edit-controls .btn.btn-cancel {
   margin-left: 0.3125rem;
-  transition: all 0.15s ease-in-out;
 }
 
 .hide-btn:hover,
