@@ -746,18 +746,6 @@ export default {
   margin-top: 0.375rem;
 }
 
-.btn {
-  padding: 0.375rem 0.5rem;
-  background: transparent;
-  border: none;
-  outline: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-family: inherit;
-  font-size: 0.875rem;
-  transition: all 0.15s ease-in-out;
-}
-
 .top-controls .delete-todo-btn:hover {
   background-color: var(--color-congo-pink);
 }
