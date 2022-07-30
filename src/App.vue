@@ -6,8 +6,11 @@
   <!-- home page -->
   <the-header v-if="isLoggedIn"></the-header>
   <div class="container" v-if="isLoggedIn">
-    <the-sidebar></the-sidebar>
-    <router-view></router-view>
+    <the-sidebar @show-modal="showInputModal"></the-sidebar>
+    <router-view
+      :is-modal="isShowInputModal"
+      @close-modal="closeInputModal"
+    ></router-view>
   </div>
 </template>
 
@@ -30,7 +33,16 @@ export default {
   data() {
     return {
       isLoggedIn: false,
+      isShowInputModal: false,
     };
+  },
+  methods: {
+    showInputModal() {
+      this.isShowInputModal = true;
+    },
+    closeInputModal() {
+      this.isShowInputModal = false;
+    },
   },
   watch: {
     isLoggedIn(newValue) {
@@ -239,7 +251,6 @@ ul {
 }
 
 .form-control input {
-  font-size: 1rem;
   width: 100%;
   padding: 0.625rem 1rem;
   background: transparent;
@@ -248,6 +259,7 @@ ul {
   outline: none;
   color: var(--color-eerie-black);
   font-family: inherit;
+  font-size: 1rem;
 }
 
 .form-control input:focus {
