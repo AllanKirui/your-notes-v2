@@ -28,9 +28,10 @@
       <div class="nav-right flex flex-ai-c">
         <div class="nav-avatar flex flex-ai-c flex-jc-c">
           <div class="image-wrapper">
-            <img class="avatar" src="@/assets/img/avatar.png" alt=" " />
+            <img class="avatar" :src="user.photoURL" alt=" " />
+            <span class="initials">{{ setInitials(user.displayName) }}</span>
           </div>
-          <p class="username">John Doe</p>
+          <p class="username">{{ user.displayName }}</p>
         </div>
         <div class="nav-menu">
           <button class="menu-btn" title="show menu">
@@ -48,6 +49,31 @@ export default {
   computed: {
     routeName() {
       return "Search " + this.$route.name;
+    },
+    user() {
+      return this.$store.getters["auth/user"];
+    },
+  },
+  methods: {
+    setInitials(name) {
+      if (!name) {
+        return "You";
+      }
+
+      let initials = "";
+      let wordsInName = name.split(" ");
+
+      // check if the username is multi-worded
+      if (wordsInName.length > 1) {
+        let firstWord = wordsInName[0];
+        let secondWord = wordsInName[1];
+
+        // return the first letter of the first two words
+        initials = firstWord.split("")[0] + secondWord.split("")[0];
+        return initials;
+      }
+      // return the first letter of the only available word
+      return wordsInName[0].split("")[0];
     },
   },
 };
@@ -126,12 +152,26 @@ export default {
   position: relative;
   width: 2.5rem;
   height: 2.5rem;
+  border-radius: 50%;
+  background-color: var(--color-traffic-grey);
+  overflow: hidden;
 }
 
 .nav-avatar .image-wrapper .avatar {
+  position: relative;
   max-width: 100%;
-  border-radius: 50%;
   z-index: 2;
+}
+
+.nav-avatar .image-wrapper .initials {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.125rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  z-index: 1;
 }
 
 .nav-avatar .username {
