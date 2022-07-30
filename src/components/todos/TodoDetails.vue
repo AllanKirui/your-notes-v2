@@ -1,4 +1,16 @@
 <template>
+  <div v-if="!hasTodo" class="intro-wrapper">
+    <h3 class="intro-title">{{ greeting }}</h3>
+    <p class="intro-message-1">
+      Please select a todo from the <b>All Todos</b> panel to continue working
+      on an existing todo
+    </p>
+    <p class="intro-message-2">
+      Or click the <b>Create New Todo</b> button on the sidebar to create a new
+      todo
+    </p>
+  </div>
+
   <!-- Todo title and progress bar -->
   <div v-if="hasTodo" class="heading-wrapper">
     <div class="heading-top flex">
@@ -240,6 +252,7 @@ export default {
   },
   computed: {
     ...mapGetters("todos", ["selectedTodo"]),
+    ...mapGetters(["greeting"]),
     completedItemsFieldText() {
       return this.numOfCompletedItems > 1
         ? `${this.numOfCompletedItems} Completed items`
@@ -405,6 +418,10 @@ export default {
       }
     },
   },
+  beforeMount() {
+    // dispatch an action to set the greeting
+    this.$store.dispatch("setGreeting");
+  },
   mounted() {
     // dispatch an action to reset the 'selectedTodo' state prop
     this.$store.dispatch("todos/resetSelectedTodo");
@@ -459,15 +476,29 @@ export default {
 </script>
 
 <style scoped>
+.intro-wrapper,
 .details-wrapper,
 .heading-wrapper {
   position: relative;
   margin: 2.5rem auto 0;
   padding: 0 0.625rem 1rem;
   width: 90%;
+  z-index: 2;
 }
 
-.heading-wrapper {
+.intro-wrapper {
+  position: relative;
+  top: 30%;
+  text-align: center;
+}
+
+.intro-message-1,
+.intro-message-2 {
+  margin-top: 1rem;
+  font-size: 0.875rem;
+}
+
+.intro-message .heading-wrapper {
   z-index: 3;
 }
 
@@ -476,7 +507,6 @@ export default {
   height: calc(100vh - 330px);
   font-size: 0.875rem;
   overflow-y: auto;
-  z-index: 2;
 }
 
 .heading-wrapper .items-title {
