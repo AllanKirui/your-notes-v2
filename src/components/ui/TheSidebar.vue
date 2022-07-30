@@ -4,7 +4,11 @@
       <div class="bg-image"></div>
       <div class="sidebar-top">
         <div class="btn-wrapper">
-          <button class="create-btn" title="Create new todo">
+          <button
+            class="create-btn"
+            :title="`Create ${btnText}`"
+            @click="$emit('show-modal')"
+          >
             <div class="flex flex-ai-c">
               <img
                 class="btn-img"
@@ -12,8 +16,7 @@
                 alt="create new icon"
                 width="18"
               />
-              <!-- TODO: use dynamic text and title -->
-              <span class="btn-text">New Todo</span>
+              <span class="btn-text">{{ btnText }}</span>
             </div>
           </button>
         </div>
@@ -140,8 +143,23 @@
 import { mapGetters } from "vuex";
 
 export default {
+  emits: ["show-modal"],
   computed: {
     ...mapGetters("todos", ["numOfTodos"]),
+    routeName() {
+      return this.$route.name;
+    },
+    btnText() {
+      let buttonText = "";
+      if (this.routeName === "todos") {
+        buttonText = "New Todo";
+      } else if (this.routeName === "notes") {
+        buttonText = "New Note";
+      } else {
+        buttonText = "New Todo";
+      }
+      return buttonText;
+    },
   },
 };
 </script>
