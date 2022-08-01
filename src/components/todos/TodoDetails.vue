@@ -321,7 +321,7 @@ export default {
       this.isChecked = false;
     },
     saveEdits(index) {
-      let updatedText = this.$refs.textarea[0].value;
+      let updatedText = this.$refs.editTask[0].value;
 
       // dispatch an action to save changes made on a todo item
       this.$store.dispatch({
@@ -354,21 +354,21 @@ export default {
       if (this.isEditText) this.cancelEdits();
       this.isCreated = false;
 
-      let newTodo = this.$refs.newTodo.value.trim();
+      let newTask = this.$refs.newTask.value.trim();
 
       // dispatch an action to add a new todo item
-      if (newTodo) {
+      if (newTask) {
         this.$store.dispatch({
           type: "todos/addNewTodoTask",
           parentTodoId: this.parentTodoId,
-          newTodo: newTodo,
+          newTask: newTask,
         });
       }
       this.isCreated = true;
 
       // clear the field and re-focus on it
-      this.$refs.newTodo.value = "";
-      this.$refs.newTodo.focus();
+      this.$refs.newTask.value = "";
+      this.$refs.newTask.focus();
     },
     setProgress(totalItems, completed) {
       return Math.round((completed / totalItems) * 100);
