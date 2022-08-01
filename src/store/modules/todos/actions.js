@@ -11,6 +11,10 @@ export default {
     // commit a mutation to save changes made on a todo item
     context.commit("saveChanges", payload);
   },
+  addNewTodo(context, payload) {
+    // commit a mutation to add a new todo to the list of todos
+    context.commit("addNewTodo", payload);
+  },
   addNewTodoTask(context, payload) {
     // commit a mutation to add a new todo task
     context.commit("addNewTodoTask", payload);

@@ -23,16 +23,17 @@
                 <input
                   type="text"
                   name="title"
-                  ref="title"
                   placeholder="Title"
+                  ref="title"
                 />
               </div>
 
               <div class="input-wrapper">
                 <textarea
-                  ref="newTodo"
+                  type="text"
                   name="content"
                   placeholder="Enter the first task"
+                  ref="newTodo"
                   @input="$nextTick(autoResizeCreateField)"
                 ></textarea>
               </div>
@@ -69,6 +70,11 @@ export default {
     TodoList,
     TodoDetails,
   },
+  computed: {
+    numOfTodos() {
+      return this.$store.getters["todos/numOfTodos"];
+    },
+  },
   methods: {
     setTodoTextLength(todoText, size) {
       if (todoText.length <= size) return todoText;
@@ -83,7 +89,29 @@ export default {
       this.$emit("close-modal");
     },
     addNewTodo() {
-      // TODO: dispatch action here
+      // TODO: close any open edit/create menus in TodoDetails
+
+      let todoTitle = this.$refs.title.value.trim();
+      let todoTask = this.$refs.newTodo.value.trim();
+      let newTodo = {
+        id: this.numOfTodos,
+        title: todoTitle,
+        contents: [],
+        isHideCompleted: false,
+      };
+
+      // add the new task to the contents list
+      newTodo.contents.push({ text: todoTask, isCompleted: false });
+
+      // dispatch an action to add the new todo to the todos list
+      this.$store.dispatch("todos/addNewTodo", newTodo);
+
+      // close new todo modal
+      this.closeModal();
+
+      // TODO: open the newly created todo
+
+      // TODO: show success notification
     },
     cancelNewTodo() {
       this.closeModal();
