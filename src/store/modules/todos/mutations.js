@@ -20,14 +20,14 @@ export default {
     // update the 'text' prop
     state.todos[parentIdx].contents[childIdx].text = payload.newText;
   },
-  addNewTodo(state, payload) {
+  addNewTodoTask(state, payload) {
     let parentIdx = payload.parentTodoId;
     let newTodo = {
       text: payload.newTodo,
       isCompleted: false,
     };
 
-    // add a new todo to the 'contents' list
+    // add a new todo task to the 'contents' list
     state.todos[parentIdx].contents.push(newTodo);
   },
   resetSelectedTodo(state) {

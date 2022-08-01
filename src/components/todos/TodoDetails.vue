@@ -114,7 +114,7 @@
                   class="field"
                   type="text"
                   :value="item.text"
-                  ref="textarea"
+                  ref="editTask"
                   @input="$nextTick(autoResizeEditField)"
                 ></textarea>
                 <div class="edit-controls">
@@ -198,27 +198,31 @@
 
   <!-- field to create a new todo -->
   <div v-if="hasTodo" class="todo-creator-wrapper">
-    <div class="item-create-btn" v-if="!isCreateNewTodo">
+    <div class="item-create-btn" v-if="!isCreateNewTask">
       <button
         class="btn btn-add"
-        title="Add new todo"
-        @click="showNewTodoField"
+        title="Add new task"
+        @click="showNewTaskField"
       >
-        Add new todo
+        Add new task
       </button>
     </div>
 
-    <div class="item-create-field" v-if="isCreateNewTodo">
+    <div class="item-create-field" v-if="isCreateNewTask">
       <textarea
         class="field"
         type="text"
-        ref="newTodo"
-        placeholder="Add new todo"
+        ref="newTask"
+        placeholder="Add new todo task"
         @input="$nextTick(autoResizeCreateField)"
       ></textarea>
       <div class="create-controls">
-        <button class="btn btn-add" title="Add new todo" @click="addNewTodo">
-          Add new todo
+        <button
+          class="btn btn-add"
+          title="Add new task"
+          @click="addNewTodoTask"
+        >
+          Add new task
         </button>
         <button class="btn btn-cancel" title="Cancel" @click="cancelNewTodo">
           Cancel
@@ -240,7 +244,7 @@ export default {
       selectedItem: null,
       isChecked: false,
       parentTodoId: null,
-      isCreateNewTodo: false,
+      isCreateNewTask: false,
       isCreated: false,
       hasSwitchedTodos: false,
       hasCompletedItems: false,
@@ -267,7 +271,7 @@ export default {
       // don't open edit field if todo is marked as completed
       if (this.selectedTodo.contents[index].isCompleted) return;
       // close the create new todo field if it's open
-      if (this.isCreateNewTodo) this.cancelNewTodo();
+      if (this.isCreateNewTask) this.cancelNewTodo();
 
       this.selectedItem = index;
       this.isEditText = true;
@@ -278,7 +282,7 @@ export default {
       });
     },
     autoResizeEditField() {
-      let textarea = this.$refs.textarea[0];
+      let textarea = this.$refs.editTask[0];
       textarea.style.height = textarea.scrollHeight + "px";
 
       // if the textarea is already focused and selected, return
@@ -290,7 +294,7 @@ export default {
       this.isHighlighted = true;
     },
     autoResizeCreateField() {
-      let textarea = this.$refs.newTodo;
+      let textarea = this.$refs.newTask;
       textarea.style.height = textarea.scrollHeight + "px";
     },
     cancelEdits() {
@@ -300,7 +304,7 @@ export default {
     },
     checkHandler(index, isCompleted) {
       // close the create new todo field if it's open
-      if (this.isCreateNewTodo) this.cancelNewTodo();
+      if (this.isCreateNewTask) this.cancelNewTodo();
       if (this.isEditText) this.cancelEdits();
 
       this.isChecked = isCompleted;
@@ -331,21 +335,21 @@ export default {
       this.selectedItem = null;
       this.isEditText = false;
     },
-    showNewTodoField() {
+    showNewTaskField() {
       // close the edit todo field if it's open
       this.cancelEdits();
-      this.isCreateNewTodo = true;
+      this.isCreateNewTask = true;
 
       // focus on the create new todo textarea after it's shown
       this.$nextTick(() => {
-        this.$refs.newTodo.focus();
+        this.$refs.newTask.focus();
       });
     },
     cancelNewTodo() {
       // reset props
-      this.isCreateNewTodo = false;
+      this.isCreateNewTask = false;
     },
-    addNewTodo() {
+    addNewTodoTask() {
       // close the edit todo field if it's open
       if (this.isEditText) this.cancelEdits();
       this.isCreated = false;
@@ -355,7 +359,7 @@ export default {
       // dispatch an action to add a new todo item
       if (newTodo) {
         this.$store.dispatch({
-          type: "todos/addNewTodo",
+          type: "todos/addNewTodoTask",
           parentTodoId: this.parentTodoId,
           newTodo: newTodo,
         });
