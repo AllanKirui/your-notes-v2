@@ -56,4 +56,7 @@ export default {
     // delete the task whose index matches the child index
     state.todos[parentIdx].contents.splice(childIdx, 1);
   },
+  closeOpenFields(state, payload) {
+    state.isCloseOpenFields = payload;
+  },
 };

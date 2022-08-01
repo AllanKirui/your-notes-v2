@@ -46,6 +46,7 @@ export default {
         },
       ],
       selectedTodo: null,
+      isCloseOpenFields: false,
     };
   },
   getters,

@@ -35,4 +35,8 @@ export default {
     // commit a mutation to delete a task from a todo
     context.commit("deleteTodoTask", payload);
   },
+  closeOpenFields(context, payload) {
+    // commit a mutation to close any open fields in TodoDetails
+    context.commit("closeOpenFields", payload);
+  },
 };

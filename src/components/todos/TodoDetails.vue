@@ -224,7 +224,11 @@
         >
           Add new task
         </button>
-        <button class="btn btn-cancel" title="Cancel" @click="cancelNewTodo">
+        <button
+          class="btn btn-cancel"
+          title="Cancel"
+          @click="cancelNewTodoTask"
+        >
           Cancel
         </button>
       </div>
@@ -255,7 +259,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters("todos", ["selectedTodo"]),
+    ...mapGetters("todos", ["selectedTodo", "isCloseOpenFields"]),
     ...mapGetters(["greeting"]),
     completedItemsFieldText() {
       return this.numOfCompletedItems > 1
@@ -271,7 +275,7 @@ export default {
       // don't open edit field if todo is marked as completed
       if (this.selectedTodo.contents[index].isCompleted) return;
       // close the create new todo field if it's open
-      if (this.isCreateNewTask) this.cancelNewTodo();
+      if (this.isCreateNewTask) this.cancelNewTodoTask();
 
       this.selectedItem = index;
       this.isEditText = true;
@@ -304,7 +308,7 @@ export default {
     },
     checkHandler(index, isCompleted) {
       // close the create new todo field if it's open
-      if (this.isCreateNewTask) this.cancelNewTodo();
+      if (this.isCreateNewTask) this.cancelNewTodoTask();
       if (this.isEditText) this.cancelEdits();
 
       this.isChecked = isCompleted;
@@ -345,7 +349,7 @@ export default {
         this.$refs.newTask.focus();
       });
     },
-    cancelNewTodo() {
+    cancelNewTodoTask() {
       // reset props
       this.isCreateNewTask = false;
     },
@@ -382,7 +386,7 @@ export default {
     },
     showDeleteWindow() {
       this.cancelEdits();
-      this.cancelNewTodo();
+      this.cancelNewTodoTask();
       this.isShowDeleteWindow = true;
     },
     hideDeleteWindow() {
@@ -412,13 +416,19 @@ export default {
 
         // reset props
         this.cancelEdits();
-        this.cancelNewTodo();
+        this.cancelNewTodoTask();
         this.hideDeleteWindow();
       }
     },
     isEditText(newValue) {
       if (!newValue) {
         this.isHighlighted = false;
+      }
+    },
+    isCloseOpenFields(newValue) {
+      if (newValue) {
+        this.cancelEdits();
+        this.cancelNewTodoTask();
       }
     },
   },

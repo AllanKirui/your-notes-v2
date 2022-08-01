@@ -87,10 +87,11 @@ export default {
     },
     closeModal() {
       this.$emit("close-modal");
+
+      // dispatch an action to reset the isCloseOpenField state prop
+      this.$store.dispatch("todos/closeOpenFields", false);
     },
     addNewTodo() {
-      // TODO: close any open edit/create menus in TodoDetails
-
       let todoTitle = this.$refs.title.value.trim();
       let todoTask = this.$refs.newTodo.value.trim();
       let newTodo = {
@@ -128,6 +129,8 @@ export default {
         this.$nextTick(() => {
           this.$refs.title.focus();
         });
+        // dispatch an action to close any open edit/create menus in TodoDetails
+        this.$store.dispatch("todos/closeOpenFields", true);
       }
     },
   },

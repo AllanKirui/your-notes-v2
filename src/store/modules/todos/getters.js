@@ -8,4 +8,7 @@ export default {
   numOfTodos(state) {
     return state.todos.length;
   },
+  isCloseOpenFields(state) {
+    return state.isCloseOpenFields;
+  },
 };
