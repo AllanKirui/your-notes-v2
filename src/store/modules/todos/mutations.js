@@ -59,4 +59,7 @@ export default {
   closeOpenFields(state, payload) {
     state.isCloseOpenFields = payload;
   },
+  setOpenTodoId(state, payload) {
+    state.openTodoId = payload;
+  },
 };

@@ -11,4 +11,7 @@ export default {
   isCloseOpenFields(state) {
     return state.isCloseOpenFields;
   },
+  openTodoId(state) {
+    return state.openTodoId;
+  },
 };

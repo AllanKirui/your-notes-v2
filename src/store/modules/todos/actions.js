@@ -39,4 +39,8 @@ export default {
     // commit a mutation to close any open fields in TodoDetails
     context.commit("closeOpenFields", payload);
   },
+  setOpenTodoId(context, payload) {
+    // commit a mutation to set the open todo id
+    context.commit("setOpenTodoId", payload);
+  },
 };

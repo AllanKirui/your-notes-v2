@@ -441,9 +441,12 @@ export default {
     this.$store.dispatch("todos/resetSelectedTodo");
   },
   beforeUpdate() {
-    const todos = this.$store.getters["todos/selectedTodo"];
-    let numOfItems = todos.contents.length;
-    let completedItems = todos.contents.filter((item) => item.isCompleted);
+    const todo = this.$store.getters["todos/selectedTodo"];
+    let numOfItems = todo.contents.length;
+    let completedItems = todo.contents.filter((item) => item.isCompleted);
+
+    // dispatch an action to set the open todo id
+    this.$store.dispatch("todos/setOpenTodoId", todo.id);
 
     // check if there are any completed todo items
     if (completedItems.length < 1) {

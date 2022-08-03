@@ -47,6 +47,7 @@ export default {
       ],
       selectedTodo: null,
       isCloseOpenFields: false,
+      openTodoId: null,
     };
   },
   getters,
