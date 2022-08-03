@@ -13,6 +13,7 @@
       @show-notification="showNotification"
     ></router-view>
 
+    <!-- use the transition component to animate the notification card -->
     <transition name="notification">
       <div class="notification-wrapper" v-if="isShowNotification">
         <base-card>
