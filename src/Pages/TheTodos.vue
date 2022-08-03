@@ -110,7 +110,8 @@ export default {
       // close new todo modal
       this.closeModal();
 
-      // TODO: open the newly created todo
+      // open the newly created todo
+      this.openNewTodo(newTodo.id);
 
       // TODO: show success notification
     },
@@ -120,6 +121,13 @@ export default {
     autoResizeCreateField() {
       let textarea = this.$refs.newTodo;
       textarea.style.height = textarea.scrollHeight + "px";
+    },
+    openNewTodo(id) {
+      // dispatch an action to set the newly created todo as the selected todo
+      this.$store.dispatch({
+        type: "todos/setSelectedTodo",
+        todoId: id,
+      });
     },
   },
   watch: {
