@@ -1,6 +1,6 @@
 <template>
   <li
-    :class="[selectedTodoId === id ? 'active' : '', 'item-wrapper flex']"
+    :class="[openTodoId === id ? 'active' : '', 'item-wrapper flex']"
     @click="setSelectedTodo(id)"
     :title="hoverTitle"
   >
@@ -38,11 +38,6 @@
 export default {
   props: ["id", "title", "contents"],
   inject: ["setTodoTextLength"],
-  data() {
-    return {
-      selectedTodoId: null,
-    };
-  },
   computed: {
     hoverTitle() {
       return "View " + this.title;
@@ -53,6 +48,9 @@ export default {
     },
     selectedTodo() {
       return this.$store.getters["todos/selectedTodo"];
+    },
+    openTodoId() {
+      return this.$store.getters["todos/openTodoId"];
     },
     status() {
       // return items which are checked over the total items
@@ -80,13 +78,6 @@ export default {
         : incompleteItems[index];
 
       return itemText;
-    },
-  },
-  watch: {
-    selectedTodo(newValue) {
-      if (newValue) {
-        this.selectedTodoId = newValue.id;
-      }
     },
   },
 };
