@@ -72,6 +72,12 @@ export default {
         this.$router.push("/todos");
       }
     },
+    $route(newRoute) {
+      if (newRoute) {
+        // reset props
+        this.isShowInputModal = false;
+      }
+    },
   },
   mounted() {
     // check if a user is logged in
