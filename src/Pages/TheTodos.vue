@@ -65,7 +65,7 @@ import TodoDetails from "@/components/todos/TodoDetails.vue";
 
 export default {
   props: ["isModal"],
-  emits: ["close-modal"],
+  emits: ["close-modal", "show-notification"],
   components: {
     TodoList,
     TodoDetails,
@@ -113,7 +113,9 @@ export default {
       // open the newly created todo
       this.openNewTodo(newTodo.id);
 
-      // TODO: show success notification
+      // show success notification
+      let message = "Added todo successfully";
+      this.$emit("show-notification", message);
     },
     cancelNewTodo() {
       this.closeModal();

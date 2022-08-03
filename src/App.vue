@@ -10,7 +10,16 @@
     <router-view
       :is-modal="isShowInputModal"
       @close-modal="closeInputModal"
+      @show-notification="showNotification"
     ></router-view>
+
+    <transition name="notification">
+      <div class="notification-wrapper" v-if="isShowNotification">
+        <base-card>
+          <p class="message">{{ notificationMessage }}</p>
+        </base-card>
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -34,6 +43,8 @@ export default {
     return {
       isLoggedIn: false,
       isShowInputModal: false,
+      isShowNotification: false,
+      notificationMessage: "",
     };
   },
   methods: {
@@ -42,6 +53,15 @@ export default {
     },
     closeInputModal() {
       this.isShowInputModal = false;
+    },
+    showNotification(message) {
+      this.notificationMessage = message;
+      this.isShowNotification = !this.isShowNotification;
+
+      // remove the notification after 3 seconds
+      setTimeout(() => {
+        this.isShowNotification = false;
+      }, 3000);
     },
   },
   watch: {
@@ -448,6 +468,44 @@ ul {
   display: grid;
   grid-template-columns: 250px 1fr;
   grid-template-rows: 1fr;
+  position: relative;
+}
+
+.notification-wrapper {
+  position: absolute;
+  left: 0;
+  bottom: 20px;
+  font-size: 0.875rem;
+}
+
+.notification-enter-active {
+  animation: notification 0.15s ease-out;
+}
+
+.notification-leave-active {
+  animation: notification 0.15s ease-in reverse;
+}
+
+@keyframes notification {
+  0% {
+    opacity: 0;
+    bottom: 0px;
+    transform: scale(0.8);
+  }
+  75% {
+    opacity: 0.7;
+    bottom: 10px;
+    transform: scale(1);
+  }
+  99% {
+    opacity: 0.9;
+    transform: scale(1.2);
+  }
+  100% {
+    opacity: 1;
+    bottom: 20px;
+    transform: scale(1) rotate(0);
+  }
 }
 
 .content-wrapper {
