@@ -59,10 +59,10 @@ export default {
       this.notificationMessage = message;
       this.isShowNotification = !this.isShowNotification;
 
-      // remove the notification after 3 seconds
+      // remove the notification after 3.5 seconds
       setTimeout(() => {
         this.isShowNotification = false;
-      }, 3000);
+      }, 3500);
     },
   },
   watch: {
@@ -477,6 +477,7 @@ ul {
   left: 0;
   bottom: 20px;
   font-size: 0.875rem;
+  z-index: 6;
 }
 
 .notification-enter-active {
