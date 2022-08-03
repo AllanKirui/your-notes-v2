@@ -19,7 +19,7 @@
             class="search"
             src="@/assets/img/search.min.svg"
             alt="search icon"
-            width="20"
+            width="18"
           />
           <input type="text" :placeholder="routeName" />
         </div>
