@@ -7,9 +7,7 @@
 
     <section class="content-items-details">
       <div class="bg-images"></div>
-      <todo-details
-        @show-notification="showNotification"
-      ></todo-details>
+      <todo-details @show-notification="showNotification"></todo-details>
     </section>
 
     <!-- use the transition component to animate the modal -->
@@ -96,6 +94,13 @@ export default {
     addNewTodo() {
       let todoTitle = this.$refs.title.value.trim();
       let todoTask = this.$refs.newTodo.value.trim();
+      if (!todoTitle || !todoTask) {
+        // show notification if the title or task field is empty
+        let message = "Please provide a title and one todo task";
+        this.showNotification(message);
+        return;
+      }
+
       let newTodo = {
         id: this.numOfTodos,
         title: todoTitle,
@@ -117,7 +122,7 @@ export default {
 
       // show success notification
       let message = "Added todo successfully";
-      this.showNotification(message)
+      this.showNotification(message);
     },
     cancelNewTodo() {
       this.closeModal();
@@ -134,8 +139,8 @@ export default {
       });
     },
     showNotification(message) {
-      this.$emit("show-notification", message)
-    }
+      this.$emit("show-notification", message);
+    },
   },
   watch: {
     isModal(newValue) {
