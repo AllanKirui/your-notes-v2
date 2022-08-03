@@ -247,6 +247,7 @@
 import { mapGetters } from "vuex";
 
 export default {
+  emits: ["show-notification"],
   inject: ["setTodoTextLength"],
   data() {
     return {
@@ -402,6 +403,11 @@ export default {
     deleteTodo() {
       // dispatch an action to delete a todo from the list of todos
       this.$store.dispatch("todos/deleteTodo", this.parentTodoId);
+
+      // emit an event to show notification message
+      let message = "Todo deleted successfully";
+      this.$emit("show-notification", message);
+
       // reset props
       this.hasTodo = false;
     },

@@ -7,7 +7,9 @@
 
     <section class="content-items-details">
       <div class="bg-images"></div>
-      <todo-details></todo-details>
+      <todo-details
+        @show-notification="showNotification"
+      ></todo-details>
     </section>
 
     <!-- use the transition component to animate the modal -->
@@ -115,7 +117,7 @@ export default {
 
       // show success notification
       let message = "Added todo successfully";
-      this.$emit("show-notification", message);
+      this.showNotification(message)
     },
     cancelNewTodo() {
       this.closeModal();
@@ -131,6 +133,9 @@ export default {
         todoId: id,
       });
     },
+    showNotification(message) {
+      this.$emit("show-notification", message)
+    }
   },
   watch: {
     isModal(newValue) {
