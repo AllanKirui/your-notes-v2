@@ -45,40 +45,47 @@
       </div>
     </div>
 
-    <div class="confirm-delete" v-if="isShowDeleteWindow">
-      <base-card>
-        <div class="confirm-delete-title flex flex-ai-c flex-jc-sb">
-          <span class="title"
-            >Delete {{ setTodoTextLength(selectedTodo.title, 20) }}</span
-          >
-          <button class="btn close-btn" title="Close" @click="hideDeleteWindow">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 64 64"
-              stroke-width="4.5"
-              stroke="currentColor"
-              fill="none"
-              class="duration-300 transform transition-all"
-              style="width: 14px; height: 14px"
+    <!-- use the transition component to animate the delete window-->
+    <transition name="delete">
+      <div class="confirm-delete" v-if="isShowDeleteWindow">
+        <base-card>
+          <div class="confirm-delete-title flex flex-ai-c flex-jc-sb">
+            <span class="title"
+              >Delete {{ setTodoTextLength(selectedTodo.title, 20) }}</span
             >
-              <path d="M8.06 8.06l47.35 47.88M55.94 8.06L8.59 55.94"></path>
-            </svg>
-          </button>
-        </div>
-        <div class="confirm-delete-contents">
-          <p class="message">
-            Deleting a todo is a permanent action which cannot be undone.
-          </p>
-          <button
-            class="btn delete-btn"
-            title="Delete todo"
-            @click="deleteTodo"
-          >
-            Delete todo
-          </button>
-        </div>
-      </base-card>
-    </div>
+            <button
+              class="btn close-btn"
+              title="Close"
+              @click="hideDeleteWindow"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 64 64"
+                stroke-width="4.5"
+                stroke="currentColor"
+                fill="none"
+                class="duration-300 transform transition-all"
+                style="width: 14px; height: 14px"
+              >
+                <path d="M8.06 8.06l47.35 47.88M55.94 8.06L8.59 55.94"></path>
+              </svg>
+            </button>
+          </div>
+          <div class="confirm-delete-contents">
+            <p class="message">
+              Deleting a todo is a permanent action which cannot be undone.
+            </p>
+            <button
+              class="btn delete-btn"
+              title="Delete todo"
+              @click="deleteTodo"
+            >
+              Delete todo
+            </button>
+          </div>
+        </base-card>
+      </div>
+    </transition>
   </div>
 
   <div v-if="hasTodo" class="details-wrapper">
@@ -196,7 +203,7 @@
     </div>
   </div>
 
-  <!-- field to create a new todo -->
+  <!-- field to create a new todo task -->
   <div v-if="hasTodo" class="todo-creator-wrapper">
     <div class="item-create-btn" v-if="!isCreateNewTask">
       <button
@@ -504,7 +511,6 @@ export default {
 }
 
 .intro-wrapper {
-  position: relative;
   top: 30%;
   text-align: center;
 }
@@ -524,6 +530,7 @@ export default {
   height: calc(100vh - 330px);
   font-size: 0.875rem;
   overflow-y: auto;
+  z-index: 1;
 }
 
 .heading-wrapper .items-title {
@@ -564,15 +571,28 @@ export default {
   right: 0.625rem;
   max-width: 18.75rem;
   font-size: 0.875rem;
-  animation: fadeIn 0.3s ease forwards;
 }
 
-@keyframes fadeIn {
-  from {
+.delete-enter-active {
+  animation: deleteWindow 0.3s ease-out;
+}
+
+.delete-leave-active {
+  animation: deleteWindow 0.3s ease-in reverse;
+}
+
+@keyframes deleteWindow {
+  0% {
     opacity: 0;
+    transform: scale(0.8);
   }
-  to {
+  75% {
     opacity: 1;
+    transform: scale(1.1);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
   }
 }
 
