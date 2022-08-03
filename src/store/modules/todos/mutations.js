@@ -36,6 +36,7 @@ export default {
   },
   resetSelectedTodo(state) {
     state.selectedTodo = null;
+    state.openTodoId = null;
   },
   updateHiddenStatus(state, payload) {
     // toggle the hidden status of the selected todo
