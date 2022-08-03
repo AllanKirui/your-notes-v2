@@ -27,7 +27,7 @@
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 64 64"
-                  stroke-width="3"
+                  stroke-width="4"
                   stroke="currentColor"
                   fill="none"
                   width="20"
@@ -53,7 +53,7 @@
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 64 64"
-                  stroke-width="3"
+                  stroke-width="4"
                   stroke="currentColor"
                   fill="none"
                   width="20"
@@ -94,7 +94,7 @@
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 64 64"
-                  stroke-width="3"
+                  stroke-width="4"
                   stroke="currentColor"
                   fill="none"
                   width="20"
@@ -116,7 +116,7 @@
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 64 64"
-                  stroke-width="3"
+                  stroke-width="4"
                   stroke="currentColor"
                   fill="none"
                   width="20"
