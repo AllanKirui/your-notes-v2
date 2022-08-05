@@ -13,14 +13,21 @@
       @show-notification="showNotification"
     ></router-view>
 
-    <!-- use the transition component to animate the notification card -->
-    <transition name="notification">
-      <div class="notification-wrapper" v-if="isShowNotification">
-        <base-card>
-          <p class="message">{{ notificationMessage }}</p>
-        </base-card>
-      </div>
-    </transition>
+    <!-- use the transition-group component to animate the notifications -->
+    <div class="notification-wrapper">
+      <transition-group tag="ul" name="notification">
+        <li
+          class="notification-item"
+          v-for="(notification, index) in notificationQueue"
+          :key="index"
+          :style="`position: absolute; bottom: ${index * 50}px`"
+        >
+          <base-card>
+            <p class="message">{{ notification.message }}</p>
+          </base-card>
+        </li>
+      </transition-group>
+    </div>
   </div>
 </template>
 
@@ -44,8 +51,9 @@ export default {
     return {
       isLoggedIn: false,
       isShowInputModal: false,
-      isShowNotification: false,
-      notificationMessage: "",
+      notificationQueue: [],
+      newNotification: null,
+      counter: 0,
     };
   },
   methods: {
@@ -56,13 +64,11 @@ export default {
       this.isShowInputModal = false;
     },
     showNotification(message) {
-      this.notificationMessage = message;
-      this.isShowNotification = !this.isShowNotification;
-
-      // remove the notification after 3.5 seconds
-      setTimeout(() => {
-        this.isShowNotification = false;
-      }, 3500);
+      this.newNotification = {
+        id: this.counter,
+        message: message,
+        isHidden: false,
+      };
     },
   },
   watch: {
@@ -77,6 +83,20 @@ export default {
         // reset props
         this.isShowInputModal = false;
       }
+    },
+    newNotification(newValue) {
+      if (!newValue) return;
+
+      // add a new notification to the notification queue
+      this.notificationQueue.unshift(newValue);
+      this.counter++;
+
+      // remove the new notification after 3.8 seconds
+      setTimeout(() => {
+        this.notificationQueue = this.notificationQueue.filter(
+          (msg) => msg.id !== newValue.id
+        );
+      }, 3800);
     },
   },
   mounted() {
@@ -134,7 +154,7 @@ body {
   margin: 0;
   padding: 0;
   background-color: var(--color-cultured);
-  overflow-x: hidden;
+  overflow: hidden;
 }
 
 h1,
@@ -482,38 +502,38 @@ ul {
   position: absolute;
   left: 0;
   bottom: 20px;
+  width: 100%;
   font-size: 0.875rem;
   z-index: 6;
+  background-color: transparent;
+}
+
+.notification-enter-from {
+  opacity: 0;
+  transform: translateX(-30px);
 }
 
 .notification-enter-active {
-  animation: notification 0.15s ease-out;
+  transition: all 0.2s ease-out;
+}
+
+.notification-leave-from,
+.notification-enter-to {
+  opacity: 1;
+  transform: translateX(0);
 }
 
 .notification-leave-active {
-  animation: notification 0.15s ease-in reverse;
+  transition: all 0.2s ease-in;
 }
 
-@keyframes notification {
-  0% {
-    opacity: 0;
-    bottom: 0px;
-    transform: scale(0.8);
-  }
-  75% {
-    opacity: 0.7;
-    bottom: 10px;
-    transform: scale(1);
-  }
-  99% {
-    opacity: 0.9;
-    transform: scale(1.2);
-  }
-  100% {
-    opacity: 1;
-    bottom: 20px;
-    transform: scale(1) rotate(0);
-  }
+.notification-leave-to {
+  opacity: 0;
+  transform: translateX(-30px);
+}
+
+.notification-move {
+  transition: transform 0.5s ease;
 }
 
 .content-wrapper {
