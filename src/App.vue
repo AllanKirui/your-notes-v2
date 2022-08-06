@@ -541,6 +541,87 @@ ul {
 }
 /* end of home page styles */
 
+/* start of global component styles */
+.content-wrapper {
+  display: grid;
+  grid-template-columns: minmax(auto, 350px) minmax(350px, 1fr);
+  grid-template-rows: 1fr;
+  color: var(--color-eerie-black);
+  width: 100%;
+  height: calc(100vh - 80px);
+  overflow: hidden;
+  position: relative;
+}
+
+.content-intro-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--color-white);
+  font-size: 0.875rem;
+  text-align: center;
+  z-index: 1;
+}
+
+.content-intro-wrapper .text {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  padding: 0 0.625rem 1rem;
+  width: 100%;
+  transform: translateX(-50%);
+  z-index: 2;
+}
+
+.intro-message-1 {
+  margin-top: 1rem;
+  font-size: 0.875rem;
+}
+
+.content-items {
+  background-color: var(--color-cultured);
+  border-right: 1px solid var(--color-platinum);
+  overflow-y: auto;
+}
+
+.content-items-details {
+  width: 100%;
+  height: calc(100vh - 80px);
+  position: relative;
+  background: var(--color-white);
+  overflow-y: auto;
+}
+
+.content-intro-wrapper .bg-images,
+.content-items-details .bg-images {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-repeat: no-repeat, no-repeat;
+  background-attachment: fixed, fixed;
+  z-index: 1;
+}
+
+.content-items-details .bg-images {
+  background-image: url("@/assets/img/text-bg.svg"),
+    url("@/assets/img/quill-bg.svg");
+  background-size: 88px, 190px;
+  background-position: 630px center, calc(50vw + 200px) center;
+}
+
+.content-intro-wrapper .bg-images {
+  background-image: url("@/assets/img/text-bg-horizontal.svg"),
+    url("@/assets/img/quill-bg.svg");
+  background-size: 507px, 190px;
+  background-position: calc(50% + 120px) calc(50% + 170px),
+    calc(50% + 100px) center;
+}
+/* end of global component styles */
+
 /* media queries */
 @media (max-width: 1200px) {
   .intro-images {
