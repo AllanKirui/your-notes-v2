@@ -86,6 +86,11 @@
         </base-card>
       </div>
     </transition>
+
+    <!-- show this if there are no tasks in a todo -->
+    <div v-if="!selectedTodo.contents.length" class="contents-info">
+      <p>This todo is empty, please add some new tasks</p>
+    </div>
   </div>
 
   <div v-if="hasTodo" class="details-wrapper">
@@ -539,6 +544,10 @@ export default {
   z-index: 1;
 }
 
+.heading-wrapper {
+  font-size: 0.875rem;
+}
+
 .heading-wrapper .items-title {
   margin-right: auto;
 }
@@ -546,7 +555,7 @@ export default {
 .heading-wrapper .progress-bar {
   position: relative;
   gap: 10px;
-  margin-top: 10px;
+  margin-top: 0.625rem;
 }
 
 .heading-wrapper .progress-bar span {
@@ -577,6 +586,11 @@ export default {
   right: 0.625rem;
   max-width: 18.75rem;
   font-size: 0.875rem;
+}
+
+.heading-wrapper .contents-info {
+  position: absolute;
+  bottom: -10px;
 }
 
 .delete-enter-active {

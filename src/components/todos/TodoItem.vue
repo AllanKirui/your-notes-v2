@@ -26,9 +26,19 @@
           <span>{{ setTodoItemText(index) }}</span>
         </li>
       </ul>
-      <!-- Only show If all tasks in a todo are complete   -->
-      <p class="completion-message" v-if="!displayContent.length">
+      <!-- Only show if all tasks in a todo are complete   -->
+      <p
+        class="completion-message"
+        v-if="!displayContent.length && contents.length"
+      >
         Woohoo! All tasks in this todo are done.
+      </p>
+      <!-- Only show if there are no tasks in a todo   -->
+      <p
+        class="completion-message"
+        v-if="!displayContent.length && !contents.length"
+      >
+        This todo is empty.
       </p>
     </div>
   </li>
