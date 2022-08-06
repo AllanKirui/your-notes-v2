@@ -14,7 +14,8 @@
             <h3 class="logo-text">Your Notes <i>v2</i></h3>
           </router-link>
         </div>
-        <div class="nav-search flex flex-jc-c">
+        <!-- TODO show if there are Todos or Notes -->
+        <div class="nav-search flex flex-jc-c" v-if="numOfTodos">
           <img
             class="search"
             src="@/assets/img/search.min.svg"
@@ -52,6 +53,9 @@ export default {
     },
     user() {
       return this.$store.getters["auth/user"];
+    },
+    numOfTodos() {
+      return this.$store.getters["todos/numOfTodos"];
     },
   },
   methods: {
