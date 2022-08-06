@@ -2,11 +2,13 @@ import { createStore } from "vuex";
 
 import authModule from "@/store/modules/auth/index";
 import todoModule from "@/store/modules/todos/index";
+import notesModule from "@/store/modules/notes/index";
 
 export default createStore({
   modules: {
     auth: authModule,
     todos: todoModule,
+    notes: notesModule,
   },
   state() {
     return {
