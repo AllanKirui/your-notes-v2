@@ -1,11 +1,22 @@
 <template>
   <section class="content-wrapper">
-    <section class="content-items">
+    <div v-if="!numOfTodos" class="intro-wrapper">
+      <div class="bg-images"></div>
+      <div class="text">
+        <h3 class="intro-title">{{ greeting }}</h3>
+        <p class="intro-message-1">
+          Please click on the <b>Create New Todo</b> button on the sidebar to
+          create a new todo
+        </p>
+      </div>
+    </div>
+
+    <section class="content-items" v-if="numOfTodos">
       <h3 class="items-title">All Todos</h3>
       <todo-list></todo-list>
     </section>
 
-    <section class="content-items-details">
+    <section class="content-items-details" v-if="numOfTodos">
       <div class="bg-images"></div>
       <todo-details @show-notification="showNotification"></todo-details>
     </section>
@@ -73,6 +84,9 @@ export default {
   computed: {
     numOfTodos() {
       return this.$store.getters["todos/numOfTodos"];
+    },
+    greeting() {
+      return this.$store.getters.greeting;
     },
   },
   methods: {
@@ -174,6 +188,31 @@ export default {
   position: relative;
 }
 
+.intro-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--color-white);
+  font-size: 0.875rem;
+  text-align: center;
+  z-index: 1;
+}
+
+.intro-wrapper .text {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+}
+
+.intro-message-1 {
+  margin-top: 1rem;
+  font-size: 0.875rem;
+}
+
 .content-items {
   background-color: var(--color-cultured);
   border-right: 1px solid var(--color-platinum);
@@ -188,19 +227,31 @@ export default {
   overflow-y: auto;
 }
 
+.intro-wrapper .bg-images,
 .content-items-details .bg-images {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: url("@/assets/img/text-bg.svg"),
-    url("@/assets/img/quill-bg.svg");
   background-repeat: no-repeat, no-repeat;
   background-attachment: fixed, fixed;
+  z-index: 1;
+}
+
+.content-items-details .bg-images {
+  background-image: url("@/assets/img/text-bg.svg"),
+    url("@/assets/img/quill-bg.svg");
   background-size: 88px, 190px;
   background-position: 630px center, calc(50vw + 200px) center;
-  z-index: 1;
+}
+
+.intro-wrapper .bg-images {
+  background-image: url("@/assets/img/text-bg-horizontal.svg"),
+    url("@/assets/img/quill-bg.svg");
+  background-size: 507px, 190px;
+  background-position: calc(50% + 120px) calc(50% + 170px),
+    calc(50% + 100px) center;
 }
 
 .items-title {
