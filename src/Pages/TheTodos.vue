@@ -204,6 +204,8 @@ export default {
   position: absolute;
   top: 30%;
   left: 50%;
+  padding: 0 0.625rem 1rem;
+  width: 100%;
   transform: translateX(-50%);
   z-index: 2;
 }
