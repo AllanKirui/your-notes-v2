@@ -70,6 +70,15 @@ export default {
         isHidden: false,
       };
     },
+    setTextLength(text, size) {
+      if (text.length <= size) return text;
+
+      let shortText = "";
+      for (let i = 0; i <= size; i++) {
+        shortText += text[i];
+      }
+      return shortText + "...";
+    },
   },
   watch: {
     isLoggedIn(newValue) {
@@ -98,6 +107,11 @@ export default {
         );
       }, 3800);
     },
+  },
+  provide() {
+    return {
+      setTextLength: this.setTextLength,
+    };
   },
   mounted() {
     // check if a user is logged in
@@ -155,6 +169,7 @@ body {
   padding: 0;
   background-color: var(--color-cultured);
   overflow: hidden;
+  /* TODO: set a global font size here */
 }
 
 h1,
@@ -624,6 +639,40 @@ ul {
 .items-title {
   font-size: 1.125rem;
   padding: 0.625rem;
+}
+
+.item-wrapper {
+  gap: 10px;
+  padding: 0.5rem;
+  outline: 1px solid var(--color-clouds);
+  cursor: pointer;
+}
+
+.item-wrapper.active {
+  background-color: var(--color-white);
+}
+
+.item-wrapper.active .indicator span.active {
+  display: inline-block;
+  width: 0.375rem;
+  height: 100%;
+  border-radius: 10px;
+  background: rgb(0, 224, 60);
+  background: linear-gradient(
+    0deg,
+    rgba(0, 168, 45, 1) 0%,
+    rgba(0, 224, 60, 1) 100%
+  );
+}
+
+.text-wrapper {
+  width: 100%;
+}
+
+.item-wrapper:hover {
+  background-color: var(--color-clouds);
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+    rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
 }
 
 .modal-wrapper {
