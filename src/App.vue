@@ -637,6 +637,7 @@ ul {
     calc(50% + 100px) center;
 }
 
+/* ---> start of Todo/Notes list styles */
 .items-title {
   font-size: 1.125rem;
   padding: 0.625rem;
@@ -684,7 +685,37 @@ ul {
 .item-list {
   margin-top: 0.5rem;
 }
+/* ---> end of Todo/Notes list styles */
 
+/* ---> start of Todo/Notes details styles */
+.intro-wrapper,
+.details-wrapper,
+.heading-wrapper {
+  position: relative;
+  margin: 2.5rem auto 0;
+  padding: 0 0.625rem 1rem;
+  width: 90%;
+  z-index: 2;
+}
+
+.intro-wrapper {
+  top: 30%;
+  text-align: center;
+}
+
+.intro-message-1,
+.intro-message-2 {
+  margin-top: 1rem;
+  font-size: 0.875rem;
+}
+
+.intro-message .heading-wrapper {
+  z-index: 3;
+}
+
+/* ---> end of Todo/Notes details styles */
+
+/* ---> start of Modal styles */
 .modal-wrapper {
   display: flex;
   justify-content: center;
@@ -791,6 +822,7 @@ ul {
     transform: scale(1);
   }
 }
+/* ---> end of Modal styles */
 /* end of global component styles */
 
 /* media queries */
