@@ -170,6 +170,7 @@ body {
   background-color: var(--color-cultured);
   overflow: hidden;
   /* TODO: set a global font size here */
+  font-size: 0.875rem;
 }
 
 h1,
