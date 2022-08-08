@@ -10,16 +10,16 @@
         </p>
       </div>
     </div>
-  </section>
 
-  <section class="content-items" v-if="numOfNotes">
-    <h3 class="items-title">All Notes</h3>
-    <notes-list></notes-list>
-  </section>
+    <section class="content-items" v-if="numOfNotes">
+      <h3 class="items-title">All Notes</h3>
+      <notes-list></notes-list>
+    </section>
 
-  <section class="content-items-details" v-if="numOfNotes">
-    <div class="bg-images"></div>
-    <notes-details @show-notification="showNotification"></notes-details>
+    <section class="content-items-details" v-if="numOfNotes">
+      <div class="bg-images"></div>
+      <notes-details @show-notification="showNotification"></notes-details>
+    </section>
   </section>
 </template>
 
@@ -55,6 +55,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-</style>
