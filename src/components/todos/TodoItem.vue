@@ -94,43 +94,10 @@ export default {
 </script>
 
 <style scoped>
-.item-wrapper {
-  gap: 10px;
-  padding: 0.5rem;
-  outline: 1px solid var(--color-clouds);
-  cursor: pointer;
-}
-
-.item-wrapper:hover {
-  background-color: var(--color-clouds);
-  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
-    rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
-}
-
-.item-wrapper.active {
-  background-color: var(--color-white);
-}
-
-.item-wrapper.active .indicator span.active {
-  display: inline-block;
-  width: 0.375rem;
-  height: 100%;
-  border-radius: 10px;
-  background: rgb(0, 224, 60);
-  background: linear-gradient(
-    0deg,
-    rgba(0, 168, 45, 1) 0%,
-    rgba(0, 224, 60, 1) 100%
-  );
-}
-
-.text-wrapper {
-  width: 100%;
-}
-
 .completion-message,
 .item-list,
 .text-wrapper {
+  /* TODO: set a global font size */
   font-size: 0.875rem;
 }
 
