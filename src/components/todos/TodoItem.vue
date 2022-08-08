@@ -47,7 +47,7 @@
 <script>
 export default {
   props: ["id", "title", "contents"],
-  inject: ["setTodoTextLength"],
+  inject: ["setTextLength"],
   computed: {
     hoverTitle() {
       return "View " + this.title;
@@ -84,7 +84,7 @@ export default {
       // show incomplete tasks if available, show an empty list if there are no more items in the list
       // show a maximum of 35 characters for the todo item text
       let itemText = incompleteItems[index]
-        ? this.setTodoTextLength(incompleteItems[index].text, 35)
+        ? this.setTextLength(incompleteItems[index].text, 35)
         : incompleteItems[index];
 
       return itemText;
