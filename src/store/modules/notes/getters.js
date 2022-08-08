@@ -5,4 +5,10 @@ export default {
   numOfNotes(state) {
     return state.notes.length;
   },
+  selectedNote(state) {
+    return state.selectedNote;
+  },
+  openNoteId(state) {
+    return state.openNoteId;
+  },
 };
