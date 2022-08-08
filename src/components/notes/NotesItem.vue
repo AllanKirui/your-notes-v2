@@ -1,5 +1,5 @@
 <template>
-  <li class="item-wrapper flex">
+  <li class="item-wrapper flex" :title="hoverTitle">
     <div class="indicator">
       <span class="active"></span>
     </div>
@@ -19,5 +19,10 @@
 export default {
   props: ["id", "title", "content"],
   inject: ["setTextLength"],
+  computed: {
+    hoverTitle() {
+      return "View " + this.title;
+    },
+  },
 };
 </script>
