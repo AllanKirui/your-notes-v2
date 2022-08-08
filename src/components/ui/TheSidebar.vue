@@ -75,10 +75,9 @@
                   <line x1="42.92" y1="42.76" x2="42.92" y2="53.72" />
                   <line x1="37.45" y1="48.24" x2="48.4" y2="48.24" />
                 </svg>
-                <!-- TODO: make the counter dynamic -->
                 <div class="text-wrapper flex flex-jc-sb">
                   <span class="link-text">Notes</span>
-                  <span class="link-counter">5</span>
+                  <span class="link-counter">{{ numOfNotes }}</span>
                 </div>
               </div>
             </router-link>
@@ -146,6 +145,7 @@ export default {
   emits: ["show-modal"],
   computed: {
     ...mapGetters("todos", ["numOfTodos"]),
+    ...mapGetters("notes", ["numOfNotes"]),
     routeName() {
       return this.$route.name;
     },
