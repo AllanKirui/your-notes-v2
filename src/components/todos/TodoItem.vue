@@ -101,16 +101,8 @@ export default {
   font-size: 0.875rem;
 }
 
-.title-wrapper {
-  width: 100%;
-}
-
 .item-status {
   font-weight: 500;
-}
-
-.item-list {
-  margin-top: 0.5rem;
 }
 
 .item:not(:first-child) {
