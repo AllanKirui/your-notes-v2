@@ -36,6 +36,12 @@ export default {
           sit sunt esse sed magni, laudantium optio assumenda quae cumque enim odit
           eveniet provident inventore, excepturi earum eaque?`,
         },
+        {
+          id: 2,
+          title: "The Progressive JavaScript Framework",
+          content: `
+          VueJS An approachable, performant and versatile framework for building web user interfaces.`,
+        },
       ],
     };
   },
