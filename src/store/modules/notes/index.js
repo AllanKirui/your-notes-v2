@@ -26,6 +26,16 @@ export default {
           vel ut quidem quas. Aliquid vitae exercitationem, omnis officiis cupiditate
           consequatur adipisci, a voluptas, quia pariatur nemo. Numquam!`,
         },
+        {
+          id: 1,
+          title: "My Thoughts",
+          content: `Thoughts be mine. Mine be the thoughts. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Cumque aut officia
+          distinctio libero modi, debitis consectetur aliquid nobis aspernatur optio
+          quisquam minus aliquam magnam ratione suscipit culpa repudiandae, asperiores
+          quaerat magni minima sint, iste soluta praesentium. Quam recusandae nostrum,
+          sit sunt esse sed magni, laudantium optio assumenda quae cumque enim odit
+          eveniet provident inventore, excepturi earum eaque?`,
+        },
       ],
     };
   },
