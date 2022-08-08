@@ -51,7 +51,7 @@
         <base-card>
           <div class="confirm-delete-title flex flex-ai-c flex-jc-sb">
             <span class="title"
-              >Delete {{ setTodoTextLength(selectedTodo.title, 20) }}</span
+              >Delete {{ setTextLength(selectedTodo.title, 20) }}</span
             >
             <button
               class="btn close-btn"
@@ -253,7 +253,7 @@ import { mapGetters } from "vuex";
 
 export default {
   emits: ["show-notification"],
-  inject: ["setTodoTextLength"],
+  inject: ["setTextLength"],
   data() {
     return {
       hasTodo: false,
