@@ -511,31 +511,6 @@ export default {
 </script>
 
 <style scoped>
-.intro-wrapper,
-.details-wrapper,
-.heading-wrapper {
-  position: relative;
-  margin: 2.5rem auto 0;
-  padding: 0 0.625rem 1rem;
-  width: 90%;
-  z-index: 2;
-}
-
-.intro-wrapper {
-  top: 30%;
-  text-align: center;
-}
-
-.intro-message-1,
-.intro-message-2 {
-  margin-top: 1rem;
-  font-size: 0.875rem;
-}
-
-.intro-message .heading-wrapper {
-  z-index: 3;
-}
-
 .details-wrapper {
   margin: 0 auto;
   height: calc(100vh - 330px);
