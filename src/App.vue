@@ -676,6 +676,15 @@ ul {
     rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
 }
 
+.title-wrapper {
+  width: 100%;
+}
+
+.item-text,
+.item-list {
+  margin-top: 0.5rem;
+}
+
 .modal-wrapper {
   display: flex;
   justify-content: center;
