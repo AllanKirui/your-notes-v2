@@ -90,15 +90,6 @@ export default {
     },
   },
   methods: {
-    setTodoTextLength(todoText, size) {
-      if (todoText.length <= size) return todoText;
-
-      let shortText = "";
-      for (let i = 0; i <= size; i++) {
-        shortText += todoText[i];
-      }
-      return shortText + "...";
-    },
     closeModal() {
       this.$emit("close-modal");
 
@@ -167,11 +158,6 @@ export default {
         this.$store.dispatch("todos/closeOpenFields", true);
       }
     },
-  },
-  provide() {
-    return {
-      setTodoTextLength: this.setTodoTextLength,
-    };
   },
 };
 </script>
