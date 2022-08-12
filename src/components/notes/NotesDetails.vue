@@ -166,7 +166,8 @@ export default {
 
 .edit-controls {
   position: relative;
-  margin: 0.625rem 2.5rem 0;
+  margin: 0.625rem auto 0;
+  width: 90%;
   z-index: 2;
 }
 
