@@ -511,37 +511,21 @@ export default {
 </script>
 
 <style scoped>
-.details-wrapper {
-  margin: 0 auto;
-  height: calc(100vh - 330px);
-  font-size: 0.875rem;
-  overflow-y: auto;
-  z-index: 1;
-}
-
-.heading-wrapper {
-  font-size: 0.875rem;
-}
-
-.heading-wrapper .items-title {
-  margin-right: auto;
-}
-
-.heading-wrapper .progress-bar {
+.progress-bar {
   position: relative;
   gap: 10px;
   margin-top: 0.625rem;
 }
 
-.heading-wrapper .progress-bar span {
+.progress-bar span {
   display: inline-block;
 }
 
-.heading-wrapper .progress-bar .percentage {
+.progress-bar .percentage {
   font-size: 0.875rem;
 }
 
-.heading-wrapper .progress-bar .bar-wrapper {
+.progress-bar .bar-wrapper {
   background-color: var(--color-clouds);
   width: 100%;
   height: 0.6em;
@@ -549,80 +533,15 @@ export default {
   overflow: hidden;
 }
 
-.heading-wrapper .progress-bar .bar-wrapper .bar {
+.progress-bar .bar-wrapper .bar {
   height: 0.7em;
   background-color: var(--color-dark-pastel-green);
   transition: width 0.4s ease-in-out;
 }
 
-.heading-wrapper .confirm-delete {
-  position: absolute;
-  top: 2.5rem;
-  right: 0.625rem;
-  max-width: 18.75rem;
-  font-size: 0.875rem;
-}
-
 .heading-wrapper .contents-info {
   position: absolute;
   bottom: -10px;
-}
-
-.delete-enter-active {
-  animation: deleteWindow 0.3s ease-out;
-}
-
-.delete-leave-active {
-  animation: deleteWindow 0.3s ease-in reverse;
-}
-
-@keyframes deleteWindow {
-  0% {
-    opacity: 0;
-    transform: scale(0.8);
-  }
-  75% {
-    opacity: 1;
-    transform: scale(1.1);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-.heading-wrapper .confirm-delete-title {
-  position: relative;
-  padding-bottom: 0.5rem;
-  text-align: center;
-  border-bottom: 1px solid var(--color-traffic-grey);
-}
-
-.heading-wrapper .confirm-delete-title .title {
-  display: block;
-  width: 100%;
-}
-
-.heading-wrapper .confirm-delete-title .close-btn {
-  padding: 0.375rem 0.375rem 0.2rem !important;
-}
-
-.heading-wrapper .confirm-delete-title .close-btn:hover {
-  background-color: var(--color-clouds);
-}
-
-.heading-wrapper .confirm-delete-contents {
-  margin-top: 0.5rem;
-}
-
-.heading-wrapper .confirm-delete-contents .delete-btn {
-  margin-top: 0.5rem;
-  width: 100%;
-  background-color: var(--color-congo-pink) !important;
-}
-
-.heading-wrapper .confirm-delete-contents .delete-btn:hover {
-  background-color: var(--color-crayola) !important;
 }
 
 .items {
@@ -776,10 +695,6 @@ export default {
 .item-create-field .create-controls,
 .item-edit-field .edit-controls {
   margin-top: 0.375rem;
-}
-
-.top-controls .delete-todo-btn:hover {
-  background-color: var(--color-congo-pink);
 }
 
 .item-create-btn .btn.btn-add,
