@@ -29,8 +29,8 @@
         <textarea
           class="field"
           :value="selectedNote.content"
+          style="max-height: calc(100vh - 250px)"
           ref="editNote"
-          @input="$nextTick(autoResizeEditField)"
         ></textarea>
       </div>
     </div>
@@ -140,7 +140,7 @@ export default {
 
 .details-wrapper {
   margin: 0 auto;
-  height: calc(100vh - 250px);
+  height: calc(100vh - 230px);
   overflow-y: auto;
 }
 
@@ -154,15 +154,15 @@ export default {
   outline-color: var(--color-dark-pastel-green);
   font-family: inherit;
   font-size: inherit;
-  background-color: var(--color-honeydew);
-  overflow: hidden;
+  background: transparent;
+  overflow-y: auto;
   overflow-wrap: break-word;
   resize: none;
 }
 
 .edit-controls {
   position: relative;
-  margin: 0 40px;
+  margin: 0.625rem 2.5rem 0;
   z-index: 2;
 }
 
@@ -185,11 +185,11 @@ export default {
 }
 
 .buttons-enter-active {
-  animation: fadePop 0.2s ease-out;
+  animation: fadePop 0.15s ease-out;
 }
 
 .buttons-leave-active {
-  animation: fadePop 0.2s ease-in reverse;
+  animation: fadePop 0.15s ease-in reverse;
 }
 
 @keyframes fadePop {
