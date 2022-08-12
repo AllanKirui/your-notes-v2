@@ -17,6 +17,44 @@
       <h3 class="items-title">{{ selectedNote.title }}</h3>
     </div>
   </div>
+
+  <!-- Notes content -->
+  <div v-if="hasNote" class="details-wrapper">
+    <div class="item-text-wrapper">
+      <div v-if="!isEditText" class="item-text">
+        <span class="item-details">{{ selectedNote.content }}</span>
+      </div>
+
+      <div v-if="isEditText" class="item-edit-field">
+        <textarea
+          class="field"
+          :value="selectedNote.content"
+          ref="editNote"
+          @input="$nextTick(autoResizeEditField)"
+        ></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- edit controls -->
+  <div v-if="hasNote" class="edit-controls flex flex-jc-sb">
+    <button
+      v-if="!isEditText"
+      class="btn btn-edit"
+      title="Edit note"
+      @click="editText"
+    >
+      Edit
+    </button>
+    <div v-if="isEditText">
+      <button class="btn btn-save" title="Save edits" @click="cancelEdits">
+        Save
+      </button>
+      <button class="btn btn-cancel" title="Cancel edits" @click="cancelEdits">
+        Cancel
+      </button>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -27,16 +65,55 @@ export default {
   data() {
     return {
       hasNote: false,
+      isEditText: false,
+      isHighlighted: false,
     };
   },
   computed: {
     ...mapGetters("notes", ["selectedNote"]),
     ...mapGetters(["greeting"]),
   },
+  methods: {
+    editText() {
+      // TODO: reset props as in TodoDetails
+      this.isHighlighted = false;
+
+      this.isEditText = true;
+
+      // resize the textarea after it has been rendered
+      this.$nextTick(() => {
+        this.autoResizeEditField();
+      });
+    },
+    cancelEdits() {
+      this.isEditText = false;
+    },
+    autoResizeEditField() {
+      let textarea = this.$refs.editNote;
+      textarea.style.height = textarea.scrollHeight + "px";
+
+      // if the textarea is already focused and selected, return
+      if (this.isHighlighted) return;
+
+      // focus on the textarea and highlight its contents
+      textarea.focus();
+      textarea.select();
+      this.isHighlighted = true;
+    },
+  },
   watch: {
     selectedNote(newNote) {
       if (newNote) {
+        // TODO: add similar steps as in TodoDetails
         this.hasNote = true;
+
+        // reset props
+        this.cancelEdits();
+      }
+    },
+    isEditText(newValue) {
+      if (!newValue) {
+        this.isHighlighted = false;
       }
     },
   },
@@ -48,3 +125,60 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.item-text-wrapper {
+  line-height: 1.4;
+}
+
+.details-wrapper {
+  margin: 0 auto;
+  height: calc(100vh - 250px);
+  /* background-color: #ececec; */
+  overflow-y: auto;
+}
+
+.item-edit-field .field {
+  padding: 0.5rem;
+  width: 100%;
+  height: auto;
+  min-height: 3.125rem;
+  border-radius: 5px;
+  border: 2px solid var(--color-dark-pastel-green);
+  outline-color: var(--color-dark-pastel-green);
+  font-family: inherit;
+  font-size: inherit;
+  background-color: var(--color-honeydew);
+  overflow: hidden;
+  overflow-wrap: break-word;
+  resize: none;
+}
+
+.edit-controls {
+  position: relative;
+  margin: 0 40px;
+  z-index: 2;
+}
+
+.btn.btn-cancel {
+  margin-left: 0.3125rem;
+}
+
+.btn.btn-edit,
+.btn.btn-save {
+  background-color: var(--color-malachite);
+}
+
+/* background-color: var(--color-clouds);
+} */
+
+.btn.btn-edit:hover,
+.btn.btn-save:hover {
+  background-color: var(--color-light-green);
+}
+
+/* .btn.btn-edit:hover, */
+.btn.btn-cancel:hover {
+  background-color: var(--color-platinum);
+}
+</style>
