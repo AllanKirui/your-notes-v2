@@ -12,7 +12,7 @@
       <div class="title-wrapper">
         <h4 class="item-title">{{ title }}</h4>
       </div>
-      <div class="item-text">
+      <div class="text-wrapper-notes">
         <p class="text-contents">{{ setTextLength(content, 200) }}</p>
       </div>
     </div>
