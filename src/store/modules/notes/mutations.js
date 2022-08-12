@@ -8,4 +8,8 @@ export default {
   setOpenNoteId(state, payload) {
     state.openNoteId = payload;
   },
+  resetSelectedNote(state) {
+    state.selectedNote = null;
+    state.openNoteId = null;
+  },
 };

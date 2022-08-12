@@ -124,6 +124,10 @@ export default {
       }
     },
   },
+  mounted() {
+    // dispatch an action to reset the 'selectedNote' state prop
+    this.$store.dispatch("notes/resetSelectedNote");
+  },
   beforeUpdate() {
     const note = this.$store.getters["notes/selectedNote"];
 

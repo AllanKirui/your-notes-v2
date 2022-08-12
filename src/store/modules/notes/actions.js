@@ -7,4 +7,8 @@ export default {
     // commit a mutation to set the open note id
     context.commit("setOpenNoteId", payload);
   },
+  resetSelectedNote(context) {
+    // commit a mutation to reset the 'selectedNote' state prop
+    context.commit("resetSelectedNote");
+  },
 };
