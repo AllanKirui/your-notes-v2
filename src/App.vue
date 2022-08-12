@@ -681,7 +681,7 @@ ul {
   width: 100%;
 }
 
-.item-text,
+.text-wrapper-notes,
 .item-list {
   margin-top: 0.5rem;
 }
