@@ -15,7 +15,58 @@
   <div v-if="hasNote" class="heading-wrapper">
     <div class="heading-top flex">
       <h3 class="items-title">{{ selectedNote.title }}</h3>
+      <div class="top-controls">
+        <button
+          class="btn delete-note-btn"
+          title="Delete note"
+          @click="showDeleteWindow"
+        >
+          Delete
+        </button>
+      </div>
     </div>
+
+    <!-- use the transition component to animate the delete window-->
+    <transition name="delete">
+      <div class="confirm-delete" v-if="isShowDeleteWindow">
+        <base-card>
+          <div class="confirm-delete-title flex flex-ai-c flex-jc-sb">
+            <span class="title"
+              >Delete {{ setTextLength(selectedNote.title, 20) }}</span
+            >
+            <button
+              class="btn close-btn"
+              title="Close"
+              @click="hideDeleteWindow"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 64 64"
+                stroke-width="4.5"
+                stroke="currentColor"
+                fill="none"
+                class="duration-300 transform transition-all"
+                style="width: 14px; height: 14px"
+              >
+                <path d="M8.06 8.06l47.35 47.88M55.94 8.06L8.59 55.94"></path>
+              </svg>
+            </button>
+          </div>
+          <div class="confirm-delete-contents">
+            <p class="message">
+              Deleting a note is a permanent action which cannot be undone.
+            </p>
+            <button
+              class="btn delete-btn"
+              title="Delete note"
+              @click="deleteNote"
+            >
+              Delete note
+            </button>
+          </div>
+        </base-card>
+      </div>
+    </transition>
   </div>
 
   <!-- Notes content -->
@@ -69,12 +120,14 @@ import { mapGetters } from "vuex";
 
 export default {
   emits: ["show-notification"],
+  inject: ["setTextLength"],
   data() {
     return {
       hasNote: false,
       isEditText: false,
       isHighlighted: false,
       noteId: null,
+      isShowDeleteWindow: false,
     };
   },
   computed: {
@@ -109,6 +162,24 @@ export default {
     cancelEdits() {
       this.isEditText = false;
     },
+    showDeleteWindow() {
+      this.cancelEdits();
+      this.isShowDeleteWindow = true;
+    },
+    hideDeleteWindow() {
+      this.isShowDeleteWindow = false;
+    },
+    deleteNote() {
+      // dispatch an action to delete a noet from the list of notes
+      this.$store.dispatch("notes/deleteNote", this.noteId);
+
+      // emit an event to show notification message
+      let message = "Note deleted successfully";
+      this.$emit("show-notification", message);
+
+      // reset props
+      this.hasNote = false;
+    },
     autoResizeEditField() {
       let textarea = this.$refs.editNote;
       textarea.style.height = textarea.scrollHeight + "px";
@@ -131,6 +202,7 @@ export default {
 
         // reset props
         this.cancelEdits();
+        this.hideDeleteWindow();
       }
     },
     isEditText(newValue) {
@@ -158,9 +230,7 @@ export default {
 }
 
 .details-wrapper {
-  margin: 0 auto;
   height: calc(100vh - 230px);
-  overflow-y: auto;
 }
 
 .item-edit-field .field {

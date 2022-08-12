@@ -47,7 +47,7 @@ export default {
   deleteTodo(state, payload) {
     let parentId = payload;
 
-    // filter out the todo whose index matches the parent id
+    // filter out the todo whose id matches the parent id
     state.todos = state.todos.filter((todo) => todo.id !== parentId);
   },
   deleteTodoTask(state, payload) {

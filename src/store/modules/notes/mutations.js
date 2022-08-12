@@ -18,4 +18,10 @@ export default {
     // update the 'text' prop
     state.notes[parentIdx].content = payload.newText;
   },
+  deleteNote(state, payload) {
+    let parentId = payload;
+
+    // filter out the note whose id matches the parent id
+    state.notes = state.notes.filter((note) => note.id !== parentId);
+  },
 };
