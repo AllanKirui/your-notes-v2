@@ -49,7 +49,7 @@
         Edit
       </button>
       <div v-else-if="isEditText">
-        <button class="btn btn-save" title="Save edits" @click="cancelEdits">
+        <button class="btn btn-save" title="Save edits" @click="saveEdits">
           Save
         </button>
         <button
@@ -74,6 +74,7 @@ export default {
       hasNote: false,
       isEditText: false,
       isHighlighted: false,
+      noteId: null,
     };
   },
   computed: {
@@ -91,6 +92,19 @@ export default {
       this.$nextTick(() => {
         this.autoResizeEditField();
       });
+    },
+    saveEdits() {
+      let updatedText = this.$refs.editNote.value;
+
+      // dispatch an action to save changes made on a todo item
+      this.$store.dispatch({
+        type: "notes/saveChanges",
+        noteId: this.noteId,
+        newText: updatedText,
+      });
+
+      // close the editing window by resetting props
+      this.isEditText = false;
     },
     cancelEdits() {
       this.isEditText = false;
@@ -113,6 +127,7 @@ export default {
       if (newNote) {
         // TODO: add similar steps as in TodoDetails
         this.hasNote = true;
+        this.noteId = newNote.id;
 
         // reset props
         this.cancelEdits();

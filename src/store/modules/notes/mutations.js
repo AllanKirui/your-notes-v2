@@ -12,4 +12,10 @@ export default {
     state.selectedNote = null;
     state.openNoteId = null;
   },
+  saveChanges(state, payload) {
+    let parentIdx = payload.noteId;
+
+    // update the 'text' prop
+    state.notes[parentIdx].content = payload.newText;
+  },
 };

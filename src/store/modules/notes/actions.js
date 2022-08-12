@@ -11,4 +11,8 @@ export default {
     // commit a mutation to reset the 'selectedNote' state prop
     context.commit("resetSelectedNote");
   },
+  saveChanges(context, payload) {
+    // commit a mutation to save changes made on a note
+    context.commit("saveChanges", payload);
+  },
 };
