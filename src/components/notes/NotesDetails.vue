@@ -38,22 +38,29 @@
 
   <!-- edit controls -->
   <div v-if="hasNote" class="edit-controls flex flex-jc-sb">
-    <button
-      v-if="!isEditText"
-      class="btn btn-edit"
-      title="Edit note"
-      @click="editText"
-    >
-      Edit
-    </button>
-    <div v-if="isEditText">
-      <button class="btn btn-save" title="Save edits" @click="cancelEdits">
-        Save
+    <!-- use the transition component to animate the switching of buttons -->
+    <transition name="buttons" mode="out-in">
+      <button
+        v-if="!isEditText"
+        class="btn btn-edit"
+        title="Edit note"
+        @click="editText"
+      >
+        Edit
       </button>
-      <button class="btn btn-cancel" title="Cancel edits" @click="cancelEdits">
-        Cancel
-      </button>
-    </div>
+      <div v-else-if="isEditText">
+        <button class="btn btn-save" title="Save edits" @click="cancelEdits">
+          Save
+        </button>
+        <button
+          class="btn btn-cancel"
+          title="Cancel edits"
+          @click="cancelEdits"
+        >
+          Cancel
+        </button>
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -134,7 +141,6 @@ export default {
 .details-wrapper {
   margin: 0 auto;
   height: calc(100vh - 250px);
-  /* background-color: #ececec; */
   overflow-y: auto;
 }
 
@@ -169,16 +175,35 @@ export default {
   background-color: var(--color-malachite);
 }
 
-/* background-color: var(--color-clouds);
-} */
-
 .btn.btn-edit:hover,
 .btn.btn-save:hover {
   background-color: var(--color-light-green);
 }
 
-/* .btn.btn-edit:hover, */
 .btn.btn-cancel:hover {
   background-color: var(--color-platinum);
+}
+
+.buttons-enter-active {
+  animation: fadePop 0.2s ease-out;
+}
+
+.buttons-leave-active {
+  animation: fadePop 0.2s ease-in reverse;
+}
+
+@keyframes fadePop {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  75% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 </style>
