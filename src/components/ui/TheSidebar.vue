@@ -7,7 +7,7 @@
           <button
             class="create-btn"
             :title="`Create ${btnText}`"
-            @click="$emit('show-modal')"
+            @click="$emit('show-modal', btnText)"
           >
             <div class="flex flex-ai-c">
               <img

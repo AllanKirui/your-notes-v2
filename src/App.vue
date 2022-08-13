@@ -9,6 +9,7 @@
     <the-sidebar @show-modal="showInputModal"></the-sidebar>
     <router-view
       :is-modal="isShowInputModal"
+      :active-side="activeSide"
       @close-modal="closeInputModal"
       @show-notification="showNotification"
     ></router-view>
@@ -54,11 +55,13 @@ export default {
       notificationQueue: [],
       newNotification: null,
       counter: 0,
+      activeSide: null,
     };
   },
   methods: {
-    showInputModal() {
+    showInputModal(side) {
       this.isShowInputModal = true;
+      this.activeSide = side;
     },
     closeInputModal() {
       this.isShowInputModal = false;

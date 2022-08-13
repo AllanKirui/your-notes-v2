@@ -23,7 +23,11 @@
 
     <!-- use the transition component to animate the modal -->
     <transition name="modal">
-      <div class="modal-wrapper" v-if="isModal" @click="closeModal">
+      <div
+        class="modal-wrapper"
+        v-if="isModal && activeSide === 'New Todo'"
+        @click="closeModal"
+      >
         <!-- stop the event propagation from clicking on the modal backdrop -->
         <base-card @click.stop>
           <div class="modal-container">
@@ -75,7 +79,7 @@ import TodoList from "@/components/todos/TodoList.vue";
 import TodoDetails from "@/components/todos/TodoDetails.vue";
 
 export default {
-  props: ["isModal"],
+  props: ["isModal", "activeSide"],
   emits: ["close-modal", "show-notification"],
   components: {
     TodoList,
