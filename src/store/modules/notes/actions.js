@@ -19,4 +19,8 @@ export default {
     // commit a mutation to delete a note from the list of notes
     context.commit("deleteNote", payload);
   },
+  closeOpenFields(context, payload) {
+    // commit a mutation to close any open fields in NotesDetails
+    context.commit("closeOpenFields", payload);
+  },
 };

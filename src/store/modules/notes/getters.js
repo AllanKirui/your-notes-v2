@@ -8,6 +8,9 @@ export default {
   selectedNote(state) {
     return state.selectedNote;
   },
+  isCloseOpenFields(state) {
+    return state.isCloseOpenFields;
+  },
   openNoteId(state) {
     return state.openNoteId;
   },

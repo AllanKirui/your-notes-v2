@@ -131,13 +131,14 @@ export default {
     };
   },
   computed: {
-    ...mapGetters("notes", ["selectedNote"]),
+    ...mapGetters("notes", ["selectedNote", "isCloseOpenFields"]),
     ...mapGetters(["greeting"]),
   },
   methods: {
     editText() {
       // TODO: reset props as in TodoDetails
       this.isHighlighted = false;
+      this.isShowDeleteWindow = false;
 
       this.isEditText = true;
 
@@ -196,7 +197,6 @@ export default {
   watch: {
     selectedNote(newNote) {
       if (newNote) {
-        // TODO: add similar steps as in TodoDetails
         this.hasNote = true;
         this.noteId = newNote.id;
 
@@ -208,6 +208,11 @@ export default {
     isEditText(newValue) {
       if (!newValue) {
         this.isHighlighted = false;
+      }
+    },
+    isCloseOpenFields(newValue) {
+      if (newValue) {
+        this.cancelEdits();
       }
     },
   },

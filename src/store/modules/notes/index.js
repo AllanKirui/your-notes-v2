@@ -44,6 +44,7 @@ export default {
         },
       ],
       selectedNote: null,
+      isCloseOpenFields: false,
       openNoteId: null,
     };
   },
