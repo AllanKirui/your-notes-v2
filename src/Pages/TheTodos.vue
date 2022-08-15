@@ -103,8 +103,9 @@ export default {
     addNewTodo() {
       let todoTitle = this.$refs.title.value.trim();
       let todoTask = this.$refs.newTodo.value.trim();
+
+      // show notification if the title or task field is empty
       if (!todoTitle || !todoTask) {
-        // show notification if the title or task field is empty
         let message = "Please provide a title and one todo task";
         this.showNotification(message);
         return;
