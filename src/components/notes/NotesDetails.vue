@@ -82,6 +82,7 @@
           :value="selectedNote.content"
           style="max-height: calc(100vh - 250px)"
           ref="editNote"
+          @input="$nextTick(autoResizeEditField)"
         ></textarea>
       </div>
     </div>
