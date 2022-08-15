@@ -94,6 +94,13 @@ export default {
       if (newRoute) {
         // reset props
         this.isShowInputModal = false;
+
+        // facilitate the user clicking on the create new todo button
+        // from the settings route
+        if (this.activeSide === "newTodoFromSettings") {
+          this.isShowInputModal = true;
+          this.activeSide = "New Todo";
+        }
       }
     },
     newNotification(newValue) {

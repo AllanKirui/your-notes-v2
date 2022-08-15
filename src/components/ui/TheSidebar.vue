@@ -7,7 +7,7 @@
           <button
             class="create-btn"
             :title="`Create ${btnText}`"
-            @click="$emit('show-modal', btnText)"
+            @click="create"
           >
             <div class="flex flex-ai-c">
               <img
@@ -159,6 +159,21 @@ export default {
         buttonText = "New Todo";
       }
       return buttonText;
+    },
+  },
+  methods: {
+    create() {
+      // if route is not notes or todos, switch to todos route
+      if (this.$route.name !== "notes" && this.$route.name !== "todos") {
+        this.$router.push("/todos");
+
+        // show modal for creating todos
+        this.$emit("show-modal", "newTodoFromSettings");
+        return;
+      }
+
+      // show modal for the specified button i.e notes/todos
+      this.$emit("show-modal", this.btnText);
     },
   },
 };
