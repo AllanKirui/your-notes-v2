@@ -15,6 +15,10 @@ export default {
     // commit a mutation to save changes made on a note
     context.commit("saveChanges", payload);
   },
+  addNewNote(context, payload) {
+    // commit a mutation to add a new note to the list of notes
+    context.commit("addNewNote", payload);
+  },
   deleteNote(context, payload) {
     // commit a mutation to delete a note from the list of notes
     context.commit("deleteNote", payload);

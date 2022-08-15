@@ -49,8 +49,8 @@
                   name="content"
                   placeholder="Enter note"
                   ref="newNote"
+                  @input="$nextTick(autoResizeCreateField)"
                 ></textarea>
-                <!-- @input="$nextTick(autoResizeCreateField)" -->
               </div>
 
               <div class="create-controls">
@@ -103,8 +103,49 @@ export default {
     showNotification(message) {
       this.$emit("show-notification", message);
     },
+    addNewNote() {
+      let noteTitle = this.$refs.title.value.trim();
+      let noteContent = this.$refs.newNote.value.trim();
+
+      // show notification if the title or task field is empty
+      if (!noteTitle || !noteContent) {
+        let message = "Please provide a title and content for the note";
+        this.showNotification(message);
+        return;
+      }
+
+      let newNote = {
+        id: this.numOfNotes,
+        title: noteTitle,
+        content: noteContent,
+      };
+
+      // dispatch an action to add the new note to the notes list
+      this.$store.dispatch("notes/addNewNote", newNote);
+
+      // close new note modal
+      this.closeModal();
+
+      // open the newly created note
+      this.openNewNote(newNote.id);
+
+      // show success notification
+      let message = "Added note successfully";
+      this.showNotification(message);
+    },
     cancelNewNote() {
       this.closeModal();
+    },
+    openNewNote(id) {
+      // dispatch an action to set the newly created note as the selected note
+      this.$store.dispatch({
+        type: "notes/setSelectedNote",
+        noteId: id,
+      });
+    },
+    autoResizeCreateField() {
+      let textarea = this.$refs.newNote;
+      textarea.style.height = textarea.scrollHeight + "px";
     },
   },
   watch: {

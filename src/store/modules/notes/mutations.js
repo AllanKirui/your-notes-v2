@@ -18,6 +18,10 @@ export default {
     // update the 'text' prop
     state.notes[parentIdx].content = payload.newText;
   },
+  addNewNote(state, payload) {
+    // add a new note to the list of notes
+    state.notes.push(payload);
+  },
   deleteNote(state, payload) {
     let parentId = payload;
 
