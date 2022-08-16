@@ -480,6 +480,14 @@ export default {
     this.progress = this.setProgress(numOfItems, this.numOfCompletedItems);
   },
   updated() {
+    // scroll the item selected for edit into view
+    if (this.isEditText) {
+      let itemSelectedForEdit = document.querySelector(
+        `.incomplete-items .items li:nth-child(${this.selectedItem + 1})`
+      );
+      itemSelectedForEdit.scrollIntoView();
+    }
+
     // scroll a newly created todo into view and animate it
     if (this.isCreated) {
       let newTodoEl = document.querySelector(
@@ -553,7 +561,8 @@ export default {
 }
 
 .items .item {
-  margin-bottom: 0.5rem;
+  padding-top: 3px;
+  margin-bottom: 5px;
   width: 100%;
 }
 
