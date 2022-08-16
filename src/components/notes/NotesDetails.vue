@@ -217,6 +217,10 @@ export default {
       }
     },
   },
+  beforeMount() {
+    // dispatch an action to set the greeting
+    this.$store.dispatch("setGreeting");
+  },
   mounted() {
     // dispatch an action to reset the 'selectedNote' state prop
     this.$store.dispatch("notes/resetSelectedNote");
