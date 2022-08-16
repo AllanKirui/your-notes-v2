@@ -423,6 +423,9 @@ export default {
         parentTodoId: this.parentTodoId,
         childTodoId: index,
       });
+
+      // close any open edit fields
+      this.cancelEdits();
     },
   },
   watch: {
