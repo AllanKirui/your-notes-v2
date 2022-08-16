@@ -85,7 +85,17 @@ export default {
   },
   watch: {
     isLoggedIn(newValue) {
+      // TODO: refine this logic - defect, causes reload to push to "/todos"
       if (newValue) {
+        // push to todos route if logged in and going to "/signup" or "/login"
+        if (this.$route.name === "signup" || this.$route.name === "login") {
+          this.$router.push("/todos");
+          return;
+        }
+
+        // don't push users who are already logged in to the todos page
+        if (this.$route.name !== "todos") return;
+
         // Redirect users who successfully register to the todos page
         this.$router.push("/todos");
       }
