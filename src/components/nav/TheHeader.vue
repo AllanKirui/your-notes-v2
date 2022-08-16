@@ -14,15 +14,18 @@
             <h3 class="logo-text">Your Notes <i>v2</i></h3>
           </router-link>
         </div>
-        <!-- TODO show if there are Todos or Notes -->
-        <div class="nav-search flex flex-jc-c" v-if="numOfTodos">
+        <!-- search bar visible only for routes with searchable content -->
+        <div
+          class="nav-search flex flex-jc-c"
+          v-if="search.isVisible && search.placeholderName === routeName"
+        >
           <img
             class="search"
             src="@/assets/img/search.min.svg"
             alt="search icon"
             width="18"
           />
-          <input type="text" :placeholder="routeName" />
+          <input type="text" :placeholder="'Search ' + routeName" />
         </div>
       </div>
 
@@ -49,13 +52,30 @@
 export default {
   computed: {
     routeName() {
-      return "Search " + this.$route.name;
+      return this.$route.name;
     },
     user() {
       return this.$store.getters["auth/user"];
     },
     numOfTodos() {
       return this.$store.getters["todos/numOfTodos"];
+    },
+    numOfNotes() {
+      return this.$store.getters["notes/numOfNotes"];
+    },
+    search() {
+      let isSearch = false;
+      let name = "";
+
+      if (this.routeName === "todos" && this.numOfTodos) {
+        isSearch = true;
+        name = this.routeName;
+      } else if (this.routeName === "notes" && this.numOfNotes) {
+        isSearch = true;
+        name = this.routeName;
+      }
+
+      return { isVisible: isSearch, placeholderName: name };
     },
   },
   methods: {
