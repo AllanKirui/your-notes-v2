@@ -1,9 +1,7 @@
 <template>
-  <li
-    :class="[openTodoId === id ? 'active' : '', 'item-wrapper flex']"
-    @click="setSelectedTodo(id)"
-    :title="hoverTitle"
-  >
+  <li :class="todoClasses" @click="setSelectedTodo(id)" :title="hoverTitle">
+    <div class="bg-image"></div>
+
     <div class="indicator">
       <span class="active"></span>
     </div>
@@ -46,7 +44,7 @@
 
 <script>
 export default {
-  props: ["id", "title", "contents"],
+  props: ["id", "title", "contents", "isDefault"],
   inject: ["setTextLength"],
   computed: {
     hoverTitle() {
@@ -69,6 +67,23 @@ export default {
         "/" +
         this.contents.length
       );
+    },
+    todoClasses() {
+      let classes = "";
+
+      // add a default class for the default todo item
+      if (this.isDefault) {
+        classes = "item-wrapper flex default-item";
+      } else {
+        classes = "item-wrapper flex";
+      }
+
+      // add the 'active' class for the opened todo item
+      if (this.openTodoId === this.id) {
+        classes += " active";
+      }
+
+      return classes;
     },
   },
   methods: {

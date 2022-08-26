@@ -7,6 +7,7 @@
       :id="todo.id"
       :title="todo.title"
       :contents="todo.contents"
+      :is-default="todo.isDefault"
     ></todo-item>
   </ul>
 </template>
