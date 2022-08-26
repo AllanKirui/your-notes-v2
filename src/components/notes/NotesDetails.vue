@@ -73,7 +73,7 @@
   <div v-if="hasNote" class="details-wrapper">
     <div class="item-text-wrapper">
       <div v-if="!isEditText" class="item-text">
-        <span class="item-details">{{ selectedNote.content }}</span>
+        <span class="item-details" ref="noteContent"></span>
       </div>
 
       <div v-if="isEditText" class="item-edit-field">
@@ -158,6 +158,8 @@ export default {
         newText: updatedText,
       });
 
+      this.preserveLineBreaks();
+
       // close the editing window by resetting props
       this.isEditText = false;
     },
@@ -194,12 +196,21 @@ export default {
       textarea.select();
       this.isHighlighted = true;
     },
+    preserveLineBreaks() {
+      // set the innerText value of the 'noteContent' ref in order
+      // to preserve any line breaks entered in the textarea field
+      this.$nextTick(() => {
+        this.$refs.noteContent.innerText = this.selectedNote.content;
+      });
+    },
   },
   watch: {
     selectedNote(newNote) {
       if (newNote) {
         this.hasNote = true;
         this.noteId = newNote.id;
+
+        this.preserveLineBreaks();
 
         // reset props
         this.cancelEdits();
