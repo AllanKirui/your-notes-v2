@@ -9,6 +9,38 @@ export default {
       todos: [
         {
           id: 0,
+          title: "Welcome to Todos",
+          contents: [
+            {
+              text: 'Add a new todo task by clicking the "Add new task" button below',
+              isCompleted: false,
+            },
+            {
+              text: "Edit a todo task by clicking on it to open the edit field",
+              isCompleted: false,
+            },
+            {
+              text: 'Delete a todo task by clicking the "X" (cross) at the end of the task',
+              isCompleted: false,
+            },
+            {
+              text: 'Create a new todo by clicking the "New Todo" button on the sidebar',
+              isCompleted: false,
+            },
+            {
+              text: 'Delete a todo by clicking the "Delete" button on top',
+              isCompleted: false,
+            },
+            {
+              text: "Note! If you choose to delete this Welcome todo or any task in it, you can restore it at any time from the Settings page",
+              isCompleted: false,
+            },
+          ],
+          isHideCompleted: false,
+          isDefault: true,
+        },
+        {
+          id: 1,
           title: "Shopping list",
           contents: [
             { text: "Milk", isCompleted: false },
@@ -20,7 +52,7 @@ export default {
           isHideCompleted: false,
         },
         {
-          id: 1,
+          id: 2,
           title: "Book reading list",
           contents: [
             { text: "Atomic Habits by James Clear", isCompleted: false },
