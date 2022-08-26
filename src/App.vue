@@ -665,10 +665,13 @@ ul {
 }
 
 .item-wrapper {
+  position: relative;
   gap: 10px;
   padding: 0.5rem;
   outline: 1px solid var(--color-clouds);
+  transition: all 0.15s ease-in-out;
   cursor: pointer;
+  overflow: hidden;
 }
 
 .item-wrapper.active {
@@ -698,8 +701,38 @@ ul {
     rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
 }
 
+.item-wrapper.default-item {
+  background-color: var(--color-eerie-black);
+  color: var(--color-honeydew);
+}
+
+.item-wrapper .bg-image {
+  position: absolute;
+  width: 100%;
+  height: 80%;
+}
+
+.item-wrapper.default-item .bg-image {
+  background-image: url("@/assets/img/quill-bg-sidebar.svg");
+  background-repeat: no-repeat;
+  background-size: 80px;
+  background-position: right center;
+  z-index: 1;
+}
+
+.item-wrapper.default-item:hover {
+  background-color: var(--color-eerie-black);
+  box-shadow: none;
+}
+
+.item-wrapper.default-item .text-wrapper {
+  position: relative;
+  z-index: 2;
+}
+
 .title-wrapper {
   width: 100%;
+  letter-spacing: 0.5px;
 }
 
 .text-wrapper-notes,
