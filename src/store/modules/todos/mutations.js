@@ -45,7 +45,13 @@ export default {
       !state.todos[parentIdx].isHideCompleted;
   },
   deleteTodo(state, payload) {
-    let parentId = payload;
+    let parentId = payload.id;
+
+    // if todo is the default welcome todo, make a copy of it
+    // allowing user to restore it later
+    if (payload.isDefault) {
+      state.defaultTodo = state.todos[parentId];
+    }
 
     // filter out the todo whose id matches the parent id
     state.todos = state.todos.filter((todo) => todo.id !== parentId);

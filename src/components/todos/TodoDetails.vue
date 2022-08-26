@@ -407,7 +407,10 @@ export default {
     },
     deleteTodo() {
       // dispatch an action to delete a todo from the list of todos
-      this.$store.dispatch("todos/deleteTodo", this.parentTodoId);
+      this.$store.dispatch("todos/deleteTodo", {
+        id: this.parentTodoId,
+        isDefault: this.selectedTodo.isDefault,
+      });
 
       // emit an event to show notification message
       let message = "Todo deleted successfully";

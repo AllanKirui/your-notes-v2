@@ -38,6 +38,7 @@ export default {
           ],
           isHideCompleted: false,
           isDefault: true,
+          isHidden: false,
         },
         {
           id: 1,
@@ -77,6 +78,7 @@ export default {
           isHideCompleted: false,
         },
       ],
+      defaultTodo: null,
       selectedTodo: null,
       isCloseOpenFields: false,
       openTodoId: null,
