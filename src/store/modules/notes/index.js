@@ -55,6 +55,7 @@ export default {
           VueJS An approachable, performant and versatile framework for building web user interfaces.`,
         },
       ],
+      defaultNote: null,
       selectedNote: null,
       isCloseOpenFields: false,
       openNoteId: null,

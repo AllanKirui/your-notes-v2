@@ -173,8 +173,11 @@ export default {
       this.isShowDeleteWindow = false;
     },
     deleteNote() {
-      // dispatch an action to delete a noet from the list of notes
-      this.$store.dispatch("notes/deleteNote", this.noteId);
+      // dispatch an action to delete a note from the list of notes
+      this.$store.dispatch("notes/deleteNote", {
+        id: this.noteId,
+        isDefault: this.selectedNote.isDefault,
+      });
 
       // emit an event to show notification message
       let message = "Note deleted successfully";

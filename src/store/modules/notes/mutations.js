@@ -23,10 +23,18 @@ export default {
     state.notes.push(payload);
   },
   deleteNote(state, payload) {
-    let parentId = payload;
+    let parentId = payload.id;
+
+    // if note is the default welcome note, make a copy of it
+    // allowing user to restore it later
+    if (payload.isDefault) {
+      state.defaultNote = state.notes[parentId];
+    }
 
     // filter out the note whose id matches the parent id
     state.notes = state.notes.filter((note) => note.id !== parentId);
+
+    console.log("mutations state.defaultNote: ", state.defaultNote);
   },
   closeOpenFields(state, payload) {
     state.isCloseOpenFields = payload;
