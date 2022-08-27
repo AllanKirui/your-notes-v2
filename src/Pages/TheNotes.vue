@@ -85,6 +85,11 @@ export default {
     NotesList,
     NotesDetails,
   },
+  data() {
+    return {
+      isCreated: false,
+    };
+  },
   computed: {
     numOfNotes() {
       return this.$store.getters["notes/numOfNotes"];
@@ -104,6 +109,9 @@ export default {
       this.$emit("show-notification", message);
     },
     addNewNote() {
+      // reset props
+      this.isCreated = false;
+
       let noteTitle = this.$refs.title.value.trim();
       let noteContent = this.$refs.newNote.value.trim();
 
@@ -122,6 +130,8 @@ export default {
 
       // dispatch an action to add the new note to the notes list
       this.$store.dispatch("notes/addNewNote", newNote);
+
+      this.isCreated = true;
 
       // close new note modal
       this.closeModal();
@@ -159,6 +169,17 @@ export default {
         this.$store.dispatch("notes/closeOpenFields", true);
       }
     },
+  },
+  updated() {
+    // scroll a newly created todo into view
+    if (this.isCreated) {
+      let newNoteEl = document.querySelector(".content-items li:last-child");
+
+      newNoteEl.scrollIntoView();
+
+      // reset props
+      this.isCreated = false;
+    }
   },
 };
 </script>
