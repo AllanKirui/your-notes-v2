@@ -12,7 +12,7 @@
     </div>
 
     <section class="content-items" v-if="numOfNotes">
-      <h3 class="items-title">All Notes</h3>
+      <h3 class="items-title">Notes</h3>
       <notes-list></notes-list>
     </section>
 

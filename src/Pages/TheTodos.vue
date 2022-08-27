@@ -12,7 +12,7 @@
     </div>
 
     <section class="content-items" v-if="numOfTodos">
-      <h3 class="items-title">All Todos</h3>
+      <h3 class="items-title">Todos</h3>
       <todo-list></todo-list>
     </section>
 
