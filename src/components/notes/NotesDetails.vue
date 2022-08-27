@@ -202,7 +202,9 @@ export default {
       // set the innerText value of the 'noteContent' ref in order
       // to preserve any line breaks entered in the textarea field
       await this.$nextTick();
-      this.$refs.noteContent.innerText = this.selectedNote.content;
+      if (this.selectedNote) {
+        this.$refs.noteContent.innerText = this.selectedNote.content;
+      }
     },
   },
   watch: {
