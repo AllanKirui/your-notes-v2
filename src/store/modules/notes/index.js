@@ -9,6 +9,17 @@ export default {
       notes: [
         {
           id: 0,
+          title: "Welcome to Notes",
+          content:
+            "Here are some 'notable' tips for you.\n\n" +
+            "Pressing Enter while creating or editing a note will create a new line hence you can have notes with multiple paragraphs.\n\n" +
+            'To add a new note, simply click the "New Note" button on the Sidebar. You can also delete an existing note by clicking the "Delete" button at the top right of an open notes window, and all you have to do to edit an existing note is to click the "Edit" button below to bring up the edit field.\n\n' +
+            "If you choose to delete or edit this note, you can restore it from the Settings page.\n\n\n\n\n" +
+            "Marking my spot in the world of web development,\n" +
+            "Allan Kirui.",
+        },
+        {
+          id: 1,
           title: "Lorem Text",
           content: `Lorem ipsum, dolor sit amet consectetur adipisicing elit. Cumque aut officia
           distinctio libero modi, debitis consectetur aliquid nobis aspernatur optio
@@ -27,7 +38,7 @@ export default {
           consequatur adipisci, a voluptas, quia pariatur nemo. Numquam!`,
         },
         {
-          id: 1,
+          id: 2,
           title: "My Thoughts",
           content: `Thoughts be mine. Mine be the thoughts. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Cumque aut officia
           distinctio libero modi, debitis consectetur aliquid nobis aspernatur optio
@@ -37,7 +48,7 @@ export default {
           eveniet provident inventore, excepturi earum eaque?`,
         },
         {
-          id: 2,
+          id: 3,
           title: "The Progressive JavaScript Framework",
           content: `
           VueJS An approachable, performant and versatile framework for building web user interfaces.`,
