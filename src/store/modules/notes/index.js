@@ -17,6 +17,7 @@ export default {
             "If you choose to delete or edit this note, you can restore it from the Settings page.\n\n\n\n\n" +
             "Marking my spot in the world of web development,\n" +
             "Allan Kirui.",
+          isDefault: true,
         },
         {
           id: 1,

@@ -6,6 +6,7 @@
       :id="note.id"
       :title="note.title"
       :content="note.content"
+      :is-default="note.isDefault"
     ></notes-item>
   </ul>
 </template>

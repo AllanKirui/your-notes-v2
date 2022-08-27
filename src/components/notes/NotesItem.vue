@@ -1,9 +1,7 @@
 <template>
-  <li
-    :class="[openNoteId === id ? 'active' : '', 'item-wrapper flex']"
-    :title="hoverTitle"
-    @click="setSelectedNote(id)"
-  >
+  <li :class="noteClasses" :title="hoverTitle" @click="setSelectedNote(id)">
+    <div class="bg-image"></div>
+
     <div class="indicator">
       <span class="active"></span>
     </div>
@@ -21,7 +19,7 @@
 
 <script>
 export default {
-  props: ["id", "title", "content"],
+  props: ["id", "title", "content", "isDefault"],
   inject: ["setTextLength"],
   computed: {
     hoverTitle() {
@@ -29,6 +27,23 @@ export default {
     },
     openNoteId() {
       return this.$store.getters["notes/openNoteId"];
+    },
+    noteClasses() {
+      let classes = "";
+
+      // add a default class for the default note item
+      if (this.isDefault) {
+        classes = "item-wrapper flex default-item";
+      } else {
+        classes = "item-wrapper flex";
+      }
+
+      // add the 'active' class for the opened note item
+      if (this.openNoteId === this.id) {
+        classes += " active";
+      }
+
+      return classes;
     },
   },
   methods: {
