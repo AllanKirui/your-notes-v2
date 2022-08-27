@@ -158,13 +158,12 @@ export default {
         newText: updatedText,
       });
 
-      this.preserveLineBreaks();
-
       // close the editing window by resetting props
-      this.isEditText = false;
+      this.cancelEdits();
     },
     cancelEdits() {
       this.isEditText = false;
+      this.preserveLineBreaks();
     },
     showDeleteWindow() {
       this.cancelEdits();
@@ -196,12 +195,11 @@ export default {
       textarea.select();
       this.isHighlighted = true;
     },
-    preserveLineBreaks() {
+    async preserveLineBreaks() {
       // set the innerText value of the 'noteContent' ref in order
       // to preserve any line breaks entered in the textarea field
-      this.$nextTick(() => {
-        this.$refs.noteContent.innerText = this.selectedNote.content;
-      });
+      await this.$nextTick();
+      this.$refs.noteContent.innerText = this.selectedNote.content;
     },
   },
   watch: {
@@ -209,8 +207,6 @@ export default {
       if (newNote) {
         this.hasNote = true;
         this.noteId = newNote.id;
-
-        this.preserveLineBreaks();
 
         // reset props
         this.cancelEdits();
