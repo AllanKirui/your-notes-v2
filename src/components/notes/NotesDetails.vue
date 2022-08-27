@@ -149,7 +149,7 @@ export default {
       });
     },
     saveEdits() {
-      let updatedText = this.$refs.editNote.value;
+      let updatedText = this.$refs.editNote.value.trim();
 
       // dispatch an action to save changes made on a todo item
       this.$store.dispatch({
