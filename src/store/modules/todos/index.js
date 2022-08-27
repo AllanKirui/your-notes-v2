@@ -32,7 +32,7 @@ export default {
               isCompleted: false,
             },
             {
-              text: "Note! If you choose to delete this Welcome todo or any task in it, you can restore it at any time from the Settings page",
+              text: "Please note: If you choose to delete or edit this Welcome todo or any task in it, you can restore it at any time from the Settings page",
               isCompleted: false,
             },
           ],
