@@ -661,7 +661,7 @@ ul {
 /* ---> start of Todo/Notes list styles */
 .items-title {
   font-size: 1.125rem;
-  padding: 0.625rem;
+  padding: 0.625rem 0.875rem;
 }
 
 .item-wrapper {
