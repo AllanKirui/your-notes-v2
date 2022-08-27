@@ -85,6 +85,11 @@ export default {
     TodoList,
     TodoDetails,
   },
+  data() {
+    return {
+      isCreated: false,
+    };
+  },
   computed: {
     numOfTodos() {
       return this.$store.getters["todos/numOfTodos"];
@@ -101,6 +106,9 @@ export default {
       this.$store.dispatch("todos/closeOpenFields", false);
     },
     addNewTodo() {
+      // reset props
+      this.isCreated = false;
+
       let todoTitle = this.$refs.title.value.trim();
       let todoTask = this.$refs.newTodo.value.trim();
 
@@ -123,6 +131,8 @@ export default {
 
       // dispatch an action to add the new todo to the todos list
       this.$store.dispatch("todos/addNewTodo", newTodo);
+
+      this.isCreated = true;
 
       // close new todo modal
       this.closeModal();
@@ -163,6 +173,19 @@ export default {
         this.$store.dispatch("todos/closeOpenFields", true);
       }
     },
+  },
+  updated() {
+    // scroll a newly created todo into view
+    if (this.isCreated) {
+      let newTodoEl = document.querySelector(
+        ".content-items .item-wrapper:last-child"
+      );
+
+      newTodoEl.scrollIntoView();
+
+      // reset props
+      this.isCreated = false;
+    }
   },
 };
 </script>
