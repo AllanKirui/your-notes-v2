@@ -5,8 +5,8 @@
       <div class="text">
         <h3 class="intro-title">{{ greeting }}</h3>
         <p class="intro-message-1">
-          Please click on the <b>Create New Todo</b> button on the sidebar to
-          create a new todo
+          Please click the <b>New Todo</b> button on the sidebar to create a new
+          todo
         </p>
       </div>
     </div>

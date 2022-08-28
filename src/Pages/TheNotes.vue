@@ -5,8 +5,8 @@
       <div class="text">
         <h3 class="intro-title">{{ greeting }}</h3>
         <p class="intro-message-1">
-          Please click on the <b>Create New Note</b> button on the sidebar to
-          create a new note
+          Please click the <b>New Note</b> button on the sidebar to create a new
+          note
         </p>
       </div>
     </div>
