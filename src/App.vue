@@ -932,12 +932,22 @@ ul {
   background-color: var(--color-platinum);
 }
 
+.modal-form .create-controls .btn.btn-cancel:focus {
+  outline: 1px solid var(--color-traffic-grey);
+  outline-offset: 3px;
+}
+
 .modal-form .create-controls .btn.btn-add {
   background-color: var(--color-malachite);
 }
 
 .modal-form .create-controls .btn.btn-add:hover {
   background-color: var(--color-light-green);
+}
+
+.modal-form .create-controls .btn.btn-add:focus {
+  outline: 1px solid var(--color-traffic-grey);
+  outline-offset: 3px;
 }
 
 .modal-enter-active {

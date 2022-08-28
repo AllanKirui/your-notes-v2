@@ -239,6 +239,11 @@ export default {
   background: var(--color-platinum);
 }
 
+.btn-wrapper .create-btn:focus {
+  outline: 1px solid var(--color-platinum);
+  outline-offset: 3px;
+}
+
 .btn-wrapper .create-btn .btn-text {
   margin-left: 0.625rem;
 }

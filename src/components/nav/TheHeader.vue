@@ -218,4 +218,9 @@ export default {
 .nav-menu .menu-btn:hover {
   outline: 1px solid var(--color-traffic-grey);
 }
+
+.nav-menu .menu-btn:focus {
+  outline: 1px solid var(--color-traffic-grey);
+  outline-offset: 5px;
+}
 </style>
