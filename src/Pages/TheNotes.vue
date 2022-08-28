@@ -171,7 +171,7 @@ export default {
     },
   },
   updated() {
-    // scroll a newly created todo into view
+    // scroll a newly created note into view
     if (this.isCreated) {
       let newNoteEl = document.querySelector(".content-items li:last-child");
 

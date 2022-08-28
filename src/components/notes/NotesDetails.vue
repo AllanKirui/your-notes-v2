@@ -151,7 +151,7 @@ export default {
     saveEdits() {
       let updatedText = this.$refs.editNote.value.trim();
 
-      // dispatch an action to save changes made on a todo item
+      // dispatch an action to save changes made on a note
       this.$store.dispatch({
         type: "notes/saveChanges",
         noteId: this.noteId,

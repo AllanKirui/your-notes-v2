@@ -494,7 +494,7 @@ export default {
       itemSelectedForEdit.scrollIntoView();
     }
 
-    // scroll a newly created todo into view and animate it
+    // scroll a newly created todo task into view and animate it
     if (this.isCreated) {
       let newTodoEl = document.querySelector(
         ".incomplete-items .items li:last-child"

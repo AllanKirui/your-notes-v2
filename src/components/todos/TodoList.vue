@@ -1,5 +1,4 @@
 <template>
-  <!-- TODO: only show this if there are todos -->
   <ul>
     <todo-item
       v-for="todo of todoList"
