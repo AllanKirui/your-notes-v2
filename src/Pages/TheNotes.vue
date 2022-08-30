@@ -40,6 +40,7 @@
                   name="title"
                   placeholder="Title"
                   ref="title"
+                  :style="{ 'font-size': setFontSize() }"
                 />
               </div>
 
@@ -81,6 +82,7 @@ import NotesDetails from "@/components/notes/NotesDetails.vue";
 export default {
   props: ["isModal", "activeSide"],
   emits: ["close-modal", "show-notification"],
+  inject: ["globalFontSize"],
   components: {
     NotesList,
     NotesDetails,
@@ -156,6 +158,26 @@ export default {
     autoResizeCreateField() {
       let textarea = this.$refs.newNote;
       textarea.style.height = textarea.scrollHeight + "px";
+    },
+    setFontSize() {
+      let size;
+
+      switch (this.globalFontSize) {
+        case 14: // for 14px set title font size to 16px
+          size = 16;
+          break;
+        case 16: // 16px set title font size to 18px
+          size = 18;
+          break;
+        case 18: // 18px set title font size to 20px
+          size = 20;
+          break;
+        default:
+          size = 16;
+          break;
+      }
+
+      return size / 16 + "rem";
     },
   },
   watch: {

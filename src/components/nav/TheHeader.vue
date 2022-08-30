@@ -1,5 +1,5 @@
 <template>
-  <header class="header">
+  <header class="header" :style="{ 'font-size': fontSize / 16 + 'rem' }">
     <nav class="nav flex flex-ai-c flex-jc-sb">
       <div class="nav-left flex">
         <div class="nav-logo">
@@ -50,6 +50,7 @@
 
 <script>
 export default {
+  props: ["fontSize"],
   computed: {
     routeName() {
       return this.$route.name;
@@ -142,7 +143,6 @@ export default {
 .nav-search {
   border-left: 2px solid var(--color-pantone-green);
   font-weight: 400;
-  font-size: 0.875rem;
   width: 25rem;
 }
 
@@ -200,7 +200,6 @@ export default {
 
 .nav-avatar .username {
   margin-left: 1.125rem;
-  font-size: 0.875rem;
 }
 
 .nav-menu {

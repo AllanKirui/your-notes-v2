@@ -45,7 +45,7 @@
 <script>
 export default {
   props: ["id", "title", "contents", "isDefault"],
-  inject: ["setTextLength"],
+  inject: ["setTextLength", "globalFontSize"],
   computed: {
     hoverTitle() {
       return "View " + this.title;
@@ -96,26 +96,39 @@ export default {
     },
     setTodoItemText(index) {
       let incompleteItems = this.contents.filter((item) => !item.isCompleted);
-      // show incomplete tasks if available, show an empty list if there are no more items in the list
-      // show a maximum of 35 characters for the todo item text
+      // show incomplete tasks if available, show an empty list
+      // if there are no more items in the list
       let itemText = incompleteItems[index]
-        ? this.setTextLength(incompleteItems[index].text, 35)
+        ? this.setTextBasedOnFontSize(incompleteItems, index)
         : incompleteItems[index];
 
       return itemText;
+    },
+    setTextBasedOnFontSize(incompleteItems, index) {
+      let trimmedText = "";
+
+      switch (this.globalFontSize) {
+        case 14: // for 14px set a 40 character length limit
+          trimmedText = this.setTextLength(incompleteItems[index].text, 40);
+          break;
+        case 16: // 16px set a 35 character length limit
+          trimmedText = this.setTextLength(incompleteItems[index].text, 35);
+          break;
+        case 18: // 18px set a 30 character length limit
+          trimmedText = this.setTextLength(incompleteItems[index].text, 30);
+          break;
+        default:
+          trimmedText = this.setTextLength(incompleteItems[index].text, 40);
+          break;
+      }
+
+      return trimmedText;
     },
   },
 };
 </script>
 
 <style scoped>
-.completion-message,
-.item-list,
-.text-wrapper {
-  /* TODO: set a global font size */
-  font-size: 0.875rem;
-}
-
 .item-status {
   font-weight: 500;
 }

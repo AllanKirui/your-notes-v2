@@ -4,8 +4,13 @@
   <router-view name="authn" v-if="!isLoggedIn"></router-view>
 
   <!-- home page -->
-  <the-header v-if="isLoggedIn"></the-header>
-  <div class="container" v-if="isLoggedIn">
+  <the-header v-if="isLoggedIn" :font-size="globalFontSize"></the-header>
+  <div
+    class="container"
+    v-if="isLoggedIn"
+    :style="{ 'font-size': globalFontSize / 16 + 'rem' }"
+  >
+    <!-- TODO: convert font sizes to rem -->
     <the-sidebar @show-modal="showInputModal"></the-sidebar>
     <router-view
       :is-modal="isShowInputModal"
@@ -56,6 +61,7 @@ export default {
       newNotification: null,
       counter: 0,
       activeSide: null,
+      globalFontSize: 18,
     };
   },
   methods: {
@@ -131,6 +137,7 @@ export default {
   provide() {
     return {
       setTextLength: this.setTextLength,
+      globalFontSize: this.globalFontSize,
     };
   },
   mounted() {
@@ -189,8 +196,6 @@ body {
   padding: 0;
   background-color: var(--color-cultured);
   overflow: hidden;
-  /* TODO: set a global font size here */
-  font-size: 0.875rem;
 }
 
 h1,
@@ -248,7 +253,7 @@ ul {
   border-radius: 4px;
   cursor: pointer;
   font-family: inherit;
-  font-size: 0.875rem;
+  font-size: inherit;
   transition: all 0.15s ease-in-out;
 }
 
@@ -271,14 +276,22 @@ ul {
 .content-wrapper
   .content-items-details
   .details-wrapper:hover::-webkit-scrollbar-track,
-.content-wrapper .content-items:hover::-webkit-scrollbar-track {
+.content-wrapper .content-items:hover::-webkit-scrollbar-track,
+.content-wrapper
+  .content-items-details
+  .todo-creator-wrapper
+  .field:focus::-webkit-scrollbar-track {
   background: var(--color-white);
 }
 
 .content-wrapper
   .content-items-details
   .details-wrapper:hover::-webkit-scrollbar-thumb,
-.content-wrapper .content-items:hover::-webkit-scrollbar-thumb {
+.content-wrapper .content-items:hover::-webkit-scrollbar-thumb,
+.content-wrapper
+  .content-items-details
+  .todo-creator-wrapper
+  .field:focus::-webkit-scrollbar-thumb {
   background: var(--color-eerie-black);
   border: 0.1em solid var(--color-white);
 }
@@ -553,7 +566,6 @@ ul {
   left: 0;
   bottom: 20px;
   width: 100%;
-  font-size: 0.875rem;
   z-index: 6;
   background-color: transparent;
 }
@@ -625,11 +637,6 @@ ul {
   z-index: 2;
 }
 
-.intro-message-1 {
-  margin-top: 1rem;
-  font-size: 0.875rem;
-}
-
 .content-items {
   background-color: var(--color-cultured);
   border-right: 1px solid var(--color-platinum);
@@ -674,7 +681,6 @@ ul {
 
 /* ---> start of Todo/Notes list styles */
 .items-title {
-  font-size: 1.125rem;
   padding: 0.625rem 0.875rem;
 }
 
@@ -774,7 +780,7 @@ ul {
 .intro-message-1,
 .intro-message-2 {
   margin-top: 1rem;
-  font-size: 0.875rem;
+  line-height: 1.4;
 }
 
 .intro-message .heading-wrapper {
@@ -783,14 +789,9 @@ ul {
 
 .details-wrapper {
   margin: 0 auto;
-  height: calc(100vh - 330px);
-  font-size: 0.875rem;
-  overflow-y: auto;
+  height: calc(100vh - 360px);
+  overflow-y: scroll;
   z-index: 1;
-}
-
-.heading-wrapper {
-  font-size: 0.875rem;
 }
 
 .heading-wrapper .confirm-delete {
@@ -798,7 +799,6 @@ ul {
   top: 2.5rem;
   right: 0.625rem;
   max-width: 18.75rem;
-  font-size: 0.875rem;
 }
 
 .heading-wrapper .confirm-delete-title {
@@ -823,6 +823,10 @@ ul {
 
 .heading-wrapper .confirm-delete-contents {
   margin-top: 0.5rem;
+}
+
+.heading-wrapper .confirm-delete-contents .message {
+  padding-bottom: 0.5rem;
 }
 
 .heading-wrapper .confirm-delete-contents .delete-btn {
@@ -889,7 +893,6 @@ ul {
 }
 
 .modal-title {
-  font-size: 1.125rem;
   text-align: center;
 }
 
@@ -900,7 +903,6 @@ ul {
 .modal-form .input-wrapper {
   position: relative;
   width: 100%;
-  font-size: 0.875rem;
   color: var(--color-eerie-black);
 }
 
@@ -911,12 +913,13 @@ ul {
   border: none;
   outline: none;
   font-family: inherit;
-  font-size: 1rem;
+  font-weight: 600;
 }
 
 .modal-form .input-wrapper textarea::placeholder,
 .modal-form .input-wrapper input::placeholder {
   color: var(--color-traffic-grey);
+  font-weight: 400;
 }
 
 .modal-form .input-wrapper textarea {

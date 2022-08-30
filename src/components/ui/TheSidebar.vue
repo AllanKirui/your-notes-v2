@@ -229,7 +229,7 @@ export default {
   background-color: var(--color-dark-pastel-green);
   text-align: left;
   font-family: inherit;
-  font-size: 0.875rem;
+  font-size: inherit;
   color: var(--color-eerie-black);
   cursor: pointer;
   transition: all 0.15s ease-in-out;
@@ -249,7 +249,7 @@ export default {
 }
 
 .links .link {
-  font-size: 0.875rem;
+  font-size: inherit;
 }
 
 .links .link a {

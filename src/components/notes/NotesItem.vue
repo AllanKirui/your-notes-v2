@@ -11,7 +11,7 @@
         <h4 class="item-title">{{ title }}</h4>
       </div>
       <div class="text-wrapper-notes">
-        <p class="text-contents">{{ setTextLength(content, 200) }}</p>
+        <p class="text-contents">{{ setTextBasedOnFontSize(content) }}</p>
       </div>
     </div>
   </li>
@@ -20,7 +20,7 @@
 <script>
 export default {
   props: ["id", "title", "content", "isDefault"],
-  inject: ["setTextLength"],
+  inject: ["setTextLength", "globalFontSize"],
   computed: {
     hoverTitle() {
       return "View " + this.title;
@@ -53,6 +53,26 @@ export default {
         type: "notes/setSelectedNote",
         noteId: id,
       });
+    },
+    setTextBasedOnFontSize(text) {
+      let trimmedText = "";
+
+      switch (this.globalFontSize) {
+        case 14: // for 14px set a 200 character length limit
+          trimmedText = this.setTextLength(text, 200);
+          break;
+        case 16: // 16px set a 175 character length limit
+          trimmedText = this.setTextLength(text, 175);
+          break;
+        case 18: // 18px set a 150 character length limit
+          trimmedText = this.setTextLength(text, 150);
+          break;
+        default:
+          trimmedText = this.setTextLength(text, 200);
+          break;
+      }
+
+      return trimmedText;
     },
   },
 };

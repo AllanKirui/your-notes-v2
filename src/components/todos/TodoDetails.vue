@@ -15,7 +15,7 @@
   <div v-if="hasTodo" class="heading-wrapper">
     <div class="heading-top flex">
       <h3 class="items-title">{{ selectedTodo.title }}</h3>
-      <div class="top-controls">
+      <div class="top-controls flex flex-ai-c">
         <button
           v-if="hasCompletedItems"
           @click="toggleCompletedItems"
@@ -51,7 +51,7 @@
         <base-card>
           <div class="confirm-delete-title flex flex-ai-c flex-jc-sb">
             <span class="title"
-              >Delete {{ setTextLength(selectedTodo.title, 20) }}</span
+              >Delete {{ setTextBasedOnFontSize(selectedTodo.title) }}</span
             >
             <button
               class="btn close-btn"
@@ -226,7 +226,6 @@
         type="text"
         ref="newTask"
         placeholder="Add new todo task"
-        @input="$nextTick(autoResizeCreateField)"
       ></textarea>
       <div class="create-controls">
         <button
@@ -253,7 +252,7 @@ import { mapGetters } from "vuex";
 
 export default {
   emits: ["show-notification"],
-  inject: ["setTextLength"],
+  inject: ["setTextLength", "globalFontSize"],
   data() {
     return {
       hasTodo: false,
@@ -309,10 +308,6 @@ export default {
       textarea.focus();
       textarea.select();
       this.isHighlighted = true;
-    },
-    autoResizeCreateField() {
-      let textarea = this.$refs.newTask;
-      textarea.style.height = textarea.scrollHeight + "px";
     },
     cancelEdits() {
       // reset props
@@ -430,6 +425,26 @@ export default {
       // close any open edit fields
       this.cancelEdits();
     },
+    setTextBasedOnFontSize(text) {
+      let trimmedText = "";
+
+      switch (this.globalFontSize) {
+        case 14: // for 14px set a 20 character length limit
+          trimmedText = this.setTextLength(text, 20);
+          break;
+        case 16: // 16px set a 15 character length limit
+          trimmedText = this.setTextLength(text, 15);
+          break;
+        case 18: // 18px set a 10 character length limit
+          trimmedText = this.setTextLength(text, 10);
+          break;
+        default:
+          trimmedText = this.setTextLength(text, 20);
+          break;
+      }
+
+      return trimmedText;
+    },
   },
   watch: {
     selectedTodo(newTodo) {
@@ -533,10 +548,6 @@ export default {
 
 .progress-bar span {
   display: inline-block;
-}
-
-.progress-bar .percentage {
-  font-size: 0.875rem;
 }
 
 .progress-bar .bar-wrapper {
@@ -680,9 +691,8 @@ export default {
 .todo-creator-wrapper {
   position: relative;
   margin: 2rem auto 0;
-  padding: 0 0.625rem 0;
+  padding: 0 0.625rem;
   width: 90%;
-  font-size: 0.875rem;
   z-index: 2;
 }
 
@@ -702,7 +712,7 @@ export default {
   font-family: inherit;
   font-size: inherit;
   background-color: var(--color-honeydew);
-  overflow: hidden;
+  overflow-y: auto;
   overflow-wrap: break-word;
   resize: none;
 }

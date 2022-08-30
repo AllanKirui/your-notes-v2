@@ -252,7 +252,8 @@ export default {
 }
 
 .details-wrapper {
-  height: calc(100vh - 230px);
+  padding-top: 0.625rem;
+  height: calc(100vh - 250px);
 }
 
 .item-edit-field .field {
@@ -273,7 +274,7 @@ export default {
 
 .edit-controls {
   position: relative;
-  margin: 0.625rem auto 0;
+  margin: 0.875rem auto 0;
   width: 90%;
   z-index: 2;
 }
