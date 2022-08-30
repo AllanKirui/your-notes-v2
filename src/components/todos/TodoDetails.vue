@@ -399,6 +399,10 @@ export default {
             let completedItems = document.querySelector(".completed-items");
             completedItems.scrollIntoView();
           });
+        } else {
+          // scroll incomplete items into view
+          let incompleteItems = document.querySelector(".incomplete-items");
+          incompleteItems.scrollIntoView();
         }
       }
     },
