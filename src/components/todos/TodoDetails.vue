@@ -18,7 +18,7 @@
       <div class="top-controls flex flex-ai-c">
         <button
           v-if="hasCompletedItems"
-          @click="toggleCompletedItems"
+          @click="toggleCompletedItems(selectedTodo.isHideCompleted)"
           class="btn hide-btn"
           :title="
             selectedTodo.isHideCompleted
@@ -385,12 +385,22 @@ export default {
     setProgress(totalItems, completed) {
       return Math.round((completed / totalItems) * 100);
     },
-    toggleCompletedItems() {
+    toggleCompletedItems(isHidden) {
       // dispatch an action to set hidden status of completed tasks in a todo
       this.$store.dispatch({
         type: "todos/updateHiddenStatus",
         parentTodoId: this.parentTodoId,
       });
+
+      if (this.hasCompletedItems) {
+        if (!isHidden) {
+          // scroll completed items into view when 'show completed' button is clicked
+          this.$nextTick(() => {
+            let completedItems = document.querySelector(".completed-items");
+            completedItems.scrollIntoView();
+          });
+        }
+      }
     },
     showDeleteWindow() {
       this.cancelEdits();
