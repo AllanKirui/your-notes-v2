@@ -33,8 +33,6 @@ export default {
 
     // filter out the note whose id matches the parent id
     state.notes = state.notes.filter((note) => note.id !== parentId);
-
-    console.log("mutations state.defaultNote: ", state.defaultNote);
   },
   closeOpenFields(state, payload) {
     state.isCloseOpenFields = payload;
