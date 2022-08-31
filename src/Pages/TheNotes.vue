@@ -93,6 +93,9 @@ export default {
     };
   },
   computed: {
+    notesList() {
+      return this.$store.getters["notes/notesList"];
+    },
     numOfNotes() {
       return this.$store.getters["notes/numOfNotes"];
     },
@@ -125,7 +128,7 @@ export default {
       }
 
       let newNote = {
-        id: this.numOfNotes,
+        id: this.setId(),
         title: noteTitle,
         content: noteContent,
       };
@@ -144,6 +147,19 @@ export default {
       // show success notification
       let message = "Added note successfully";
       this.showNotification(message);
+    },
+    setId() {
+      // set id to be the current length of the notes list
+      let newId = this.numOfNotes;
+
+      // loop through each note item and check for duplicate IDs
+      this.notesList.forEach((note) => {
+        if (note.id === newId) {
+          newId++;
+        }
+      });
+
+      return newId;
     },
     cancelNewNote() {
       this.closeModal();

@@ -93,6 +93,9 @@ export default {
     };
   },
   computed: {
+    todoList() {
+      return this.$store.getters["todos/todoList"];
+    },
     numOfTodos() {
       return this.$store.getters["todos/numOfTodos"];
     },
@@ -122,7 +125,7 @@ export default {
       }
 
       let newTodo = {
-        id: this.numOfTodos,
+        id: this.setId(),
         title: todoTitle,
         contents: [],
         isHideCompleted: false,
@@ -145,6 +148,19 @@ export default {
       // show success notification
       let message = "Added todo successfully";
       this.showNotification(message);
+    },
+    setId() {
+      // set id to be the current length of the todos list
+      let newId = this.numOfTodos;
+
+      // loop through each todo item and check for duplicate IDs
+      this.todoList.forEach((todo) => {
+        if (todo.id === newId) {
+          newId++;
+        }
+      });
+
+      return newId;
     },
     cancelNewTodo() {
       this.closeModal();
