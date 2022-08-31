@@ -1,5 +1,5 @@
 <template>
-  <ul>
+  <ul class="notes-wrapper">
     <notes-item
       v-for="note of notesList"
       :key="note.id"

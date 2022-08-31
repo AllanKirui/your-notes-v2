@@ -45,6 +45,9 @@ export default {
 
       return classes;
     },
+    notesList() {
+      return this.$store.getters["notes/notesList"];
+    },
   },
   methods: {
     setSelectedNote(id) {
@@ -53,6 +56,21 @@ export default {
         type: "notes/setSelectedNote",
         noteId: id,
       });
+
+      // get the selected note element
+      let [selectedNote] = this.notesList.filter((note) => note.id === id);
+      let index = this.notesList.indexOf(selectedNote) + 1; // plus 1 since :nth-child() is not zero indexed
+      let noteEl = document.querySelector(`.item-wrapper:nth-child(${index})`);
+
+      // scroll selected note item into view
+      // for the first 3 elements, scroll the parent's sibling into view
+      if (index < 4) {
+        let notesWrapperEl = document.querySelector(".notes-wrapper");
+        let prevSibling = notesWrapperEl.previousElementSibling;
+        prevSibling.scrollIntoView();
+        return;
+      }
+      noteEl.scrollIntoView();
     },
     setTextBasedOnFontSize(text) {
       let trimmedText = "";
