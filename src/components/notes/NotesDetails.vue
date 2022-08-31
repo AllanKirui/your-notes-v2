@@ -179,6 +179,9 @@ export default {
         isDefault: this.selectedNote.isDefault,
       });
 
+      // dispatch an action to reset the 'selectedNote' state prop
+      this.$store.dispatch("notes/resetSelectedNote");
+
       // emit an event to show notification message
       let message = "Note deleted successfully";
       this.$emit("show-notification", message);
@@ -240,8 +243,10 @@ export default {
   beforeUpdate() {
     const note = this.$store.getters["notes/selectedNote"];
 
-    // dispatch an action to set the open note id
-    this.$store.dispatch("notes/setOpenNoteId", note.id);
+    if (note) {
+      // dispatch an action to set the open note id
+      this.$store.dispatch("notes/setOpenNoteId", note.id);
+    }
   },
 };
 </script>
