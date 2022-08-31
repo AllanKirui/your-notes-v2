@@ -57,6 +57,9 @@ export default {
     selectedTodo() {
       return this.$store.getters["todos/selectedTodo"];
     },
+    todoList() {
+      return this.$store.getters["todos/todoList"];
+    },
     openTodoId() {
       return this.$store.getters["todos/openTodoId"];
     },
@@ -93,6 +96,22 @@ export default {
         type: "todos/setSelectedTodo",
         todoId: id,
       });
+
+      // get the selected todo element
+      let [selectedTodo] = this.todoList.filter((todo) => todo.id === id);
+      let index = this.todoList.indexOf(selectedTodo) + 1; // plus 1 since :nth-child() is not zero indexed
+      let todoEl = document.querySelector(`.item-wrapper:nth-child(${index})`);
+
+      // for the first 3 elements, scroll the parent's sibling into view
+      if (index < 4) {
+        let todosWrapperEl = document.querySelector(".todos-wrapper");
+        let prevSibling = todosWrapperEl.previousElementSibling;
+        prevSibling.scrollIntoView();
+        return;
+      }
+
+      // for other elements, scroll selected todo item into view
+      todoEl.scrollIntoView();
     },
     setTodoItemText(index) {
       let incompleteItems = this.contents.filter((item) => !item.isCompleted);

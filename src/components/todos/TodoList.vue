@@ -1,5 +1,5 @@
 <template>
-  <ul>
+  <ul class="todos-wrapper">
     <todo-item
       v-for="todo of todoList"
       :key="todo.id"
