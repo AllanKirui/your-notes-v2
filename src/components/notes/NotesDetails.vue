@@ -2,12 +2,11 @@
   <div v-if="!hasNote" class="intro-wrapper">
     <h3 class="intro-title">{{ greeting }}</h3>
     <p class="intro-message-1">
-      Please select a note from the <b>All Notes</b> panel to continue working
-      on an existing note
+      Please select a note from the <b>Notes</b> panel to continue working on an
+      existing note
     </p>
     <p class="intro-message-2">
-      Or click the <b>Create New Note</b> button on the sidebar to create a new
-      note
+      Or click the <b>New Note</b> button on the sidebar to create a new note
     </p>
   </div>
 

@@ -622,7 +622,6 @@ ul {
   width: 100%;
   height: 100%;
   background-color: var(--color-white);
-  font-size: 0.875rem;
   text-align: center;
   z-index: 1;
 }

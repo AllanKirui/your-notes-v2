@@ -2,12 +2,11 @@
   <div v-if="!hasTodo" class="intro-wrapper">
     <h3 class="intro-title">{{ greeting }}</h3>
     <p class="intro-message-1">
-      Please select a todo from the <b>All Todos</b> panel to continue working
-      on an existing todo
+      Please select a todo from the <b>Todos</b> panel to continue working on an
+      existing todo
     </p>
     <p class="intro-message-2">
-      Or click the <b>Create New Todo</b> button on the sidebar to create a new
-      todo
+      Or click the <b>New Todo</b> button on the sidebar to create a new todo
     </p>
   </div>
 
