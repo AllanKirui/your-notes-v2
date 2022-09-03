@@ -13,11 +13,15 @@ export default createStore({
   state() {
     return {
       greeting: "",
+      theme: null,
     };
   },
   mutations: {
     setGreeting(state, payload) {
       state.greeting = payload;
+    },
+    setTheme(state, payload) {
+      state.theme = payload;
     },
   },
   actions: {
@@ -45,10 +49,16 @@ export default createStore({
       // commit a mutation to set the greeting
       context.commit("setGreeting", greeting);
     },
+    setTheme(context, payload) {
+      context.commit("setTheme", payload);
+    },
   },
   getters: {
     greeting(state) {
       return state.greeting;
+    },
+    theme(state) {
+      return state.theme;
     },
   },
 });
