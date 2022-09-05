@@ -6,11 +6,11 @@
   <!-- home page -->
   <the-header v-if="isLoggedIn" :font-size="globalFontSize"></the-header>
   <div
-    class="container"
+    :class="themeClasses"
     v-if="isLoggedIn"
     :style="{ 'font-size': globalFontSize / 16 + 'rem' }"
   >
-    <!-- TODO: convert font sizes to rem -->
+    <!-- TODO: settings page and menu should handle theme switching -->
     <the-sidebar @show-modal="showInputModal"></the-sidebar>
     <router-view
       :is-modal="isShowInputModal"
@@ -28,7 +28,7 @@
           :key="index"
           :style="`position: absolute; bottom: ${index * 50}px`"
         >
-          <base-card>
+          <base-card :mode="cardStyle">
             <p class="message">{{ notification.message }}</p>
           </base-card>
         </li>
@@ -61,8 +61,43 @@ export default {
       newNotification: null,
       counter: 0,
       activeSide: null,
-      globalFontSize: 18,
+      globalFontSize: 14,
     };
+  },
+  computed: {
+    theme() {
+      return this.$store.getters.theme;
+    },
+    cardStyle() {
+      let mode = "";
+
+      // for default theme
+      if (!this.theme) {
+        mode = "default-theme";
+      }
+
+      // for purplish theme
+      if (this.theme === "purplish") {
+        mode = "purplish-theme";
+      }
+
+      return mode;
+    },
+    themeClasses() {
+      let classes = "container ";
+
+      // for default theme
+      if (!this.theme) {
+        classes += "default-theme";
+      }
+
+      // for purplish theme
+      if (this.theme === "purplish") {
+        classes += "purplish-theme";
+      }
+
+      return classes;
+    },
   },
   methods: {
     showInputModal(side) {
@@ -176,6 +211,14 @@ export default {
   --color-clouds: hsl(0, 0%, 94%);
   --color-congo-pink: hsl(0, 100%, 76%);
   --color-crayola: hsl(0, 100%, 67%);
+  --color-graphite-black: hsl(0, 0%, 17%);
+
+  /* start of colors for 'purplish' theme */
+  --color-black-blue: hsl(266, 63%, 12%);
+  --color-spanish-pink: hsl(9, 94%, 87%);
+  --color-tickle-me-pink: hsl(336, 100%, 76%);
+  --color-russian-violet: hsl(267, 53%, 17%);
+  /* end of theme 2 colors */
 }
 
 html {
@@ -254,7 +297,17 @@ ul {
   cursor: pointer;
   font-family: inherit;
   font-size: inherit;
+  color: inherit;
   transition: all 0.15s ease-in-out;
+}
+
+/* themes */
+.default-theme {
+  color: var(--color-eerie-black);
+}
+
+.purplish-theme {
+  color: var(--color-spanish-pink);
 }
 
 /* scrollbar styles */
@@ -273,27 +326,58 @@ ul {
   border-radius: 100vw;
 }
 
-.content-wrapper
+.default-theme
+  .content-wrapper
   .content-items-details
   .details-wrapper:hover::-webkit-scrollbar-track,
-.content-wrapper .content-items:hover::-webkit-scrollbar-track,
-.content-wrapper
+.default-theme .content-wrapper .content-items:hover::-webkit-scrollbar-track,
+.default-theme
+  .content-wrapper
   .content-items-details
   .todo-creator-wrapper
   .field:focus::-webkit-scrollbar-track {
   background: var(--color-white);
 }
 
-.content-wrapper
+.purplish-theme
+  .content-wrapper
+  .content-items-details
+  .details-wrapper:hover::-webkit-scrollbar-track,
+.purplish-theme .content-wrapper .content-items:hover::-webkit-scrollbar-track,
+.purplish-theme
+  .content-wrapper
+  .content-items-details
+  .todo-creator-wrapper
+  .field:focus::-webkit-scrollbar-track {
+  background: var(--color-black-blue);
+}
+
+.default-theme
+  .content-wrapper
   .content-items-details
   .details-wrapper:hover::-webkit-scrollbar-thumb,
-.content-wrapper .content-items:hover::-webkit-scrollbar-thumb,
-.content-wrapper
+.default-theme .content-wrapper .content-items:hover::-webkit-scrollbar-thumb,
+.default-theme
+  .content-wrapper
   .content-items-details
   .todo-creator-wrapper
   .field:focus::-webkit-scrollbar-thumb {
   background: var(--color-eerie-black);
   border: 0.1em solid var(--color-white);
+}
+
+.purplish-theme
+  .content-wrapper
+  .content-items-details
+  .details-wrapper:hover::-webkit-scrollbar-thumb,
+.purplish-theme .content-wrapper .content-items:hover::-webkit-scrollbar-thumb,
+.purplish-theme
+  .content-wrapper
+  .content-items-details
+  .todo-creator-wrapper
+  .field:focus::-webkit-scrollbar-thumb {
+  background: var(--color-tickle-me-pink);
+  border: 0.12em solid var(--color-russian-violet);
 }
 
 /* for browser support */
@@ -570,6 +654,14 @@ ul {
   background-color: transparent;
 }
 
+.default-theme .notification-wrapper {
+  color: var(--color-eerie-black);
+}
+
+.purplish-theme .notification-wrapper {
+  color: var(--color-spanish-pink);
+}
+
 .notification-enter-from {
   opacity: 0;
   transform: translateX(-30px);
@@ -608,11 +700,18 @@ ul {
   display: grid;
   grid-template-columns: minmax(auto, 350px) minmax(350px, 1fr);
   grid-template-rows: 1fr;
-  color: var(--color-eerie-black);
   width: 100%;
   height: calc(100vh - 80px);
   overflow: hidden;
   position: relative;
+}
+
+.content-wrapper.default-theme {
+  color: var(--color-eerie-black);
+}
+
+.content-wrapper.purplish-theme {
+  color: var(--color-spanish-pink);
 }
 
 .content-intro-wrapper {
@@ -621,9 +720,17 @@ ul {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: var(--color-white);
   text-align: center;
   z-index: 1;
+}
+
+.default-theme .content-intro-wrapper {
+  background-color: var(--color-white);
+}
+
+.purplish-theme .content-intro-wrapper {
+  background-color: var(--color-black-blue);
+  border: 1px dotted var(--color-tickle-me-pink);
 }
 
 .content-intro-wrapper .text {
@@ -637,18 +744,34 @@ ul {
 }
 
 .content-items {
+  overflow-y: auto;
+}
+
+.default-theme .content-items {
   background-color: var(--color-cultured);
   border-right: 1px solid var(--color-platinum);
-  overflow-y: auto;
+}
+
+.purplish-theme .content-items {
+  background-color: var(--color-black-blue);
+  border: 1px dotted var(--color-tickle-me-pink);
 }
 
 .content-items-details {
   width: 100%;
   height: calc(100vh - 80px);
   position: relative;
-  background: var(--color-white);
   overflow: hidden;
   overflow-y: auto;
+}
+
+.default-theme .content-items-details {
+  background: var(--color-white);
+}
+
+.purplish-theme .content-items-details {
+  background: var(--color-black-blue);
+  border: 1px dotted var(--color-tickle-me-pink);
 }
 
 .content-intro-wrapper .bg-images,
@@ -664,18 +787,34 @@ ul {
 }
 
 .content-items-details .bg-images {
-  background-image: url("@/assets/img/text-bg.svg"),
-    url("@/assets/img/quill-bg.svg");
   background-size: 88px, 190px;
   background-position: 630px center, calc(50vw + 200px) center;
 }
 
 .content-intro-wrapper .bg-images {
-  background-image: url("@/assets/img/text-bg-horizontal.svg"),
-    url("@/assets/img/quill-bg.svg");
   background-size: 507px, 190px;
   background-position: calc(50% + 120px) calc(50% + 170px),
     calc(50% + 100px) center;
+}
+
+.default-theme .content-items-details .bg-images {
+  background-image: url("@/assets/img/text-bg.svg"),
+    url("@/assets/img/quill-bg.svg");
+}
+
+.purplish-theme .content-items-details .bg-images {
+  background-image: url("@/assets/img/text-bg-vertical-purplish.svg"),
+    url("@/assets/img/quill-bg-purplish.svg");
+}
+
+.default-theme .content-intro-wrapper .bg-images {
+  background-image: url("@/assets/img/text-bg-horizontal.svg"),
+    url("@/assets/img/quill-bg.svg");
+}
+
+.purplish-theme .content-intro-wrapper .bg-images {
+  background-image: url("@/assets/img/text-bg-horizontal-purplish.svg"),
+    url("@/assets/img/quill-bg-purplish.svg");
 }
 
 /* ---> start of Todo/Notes list styles */
@@ -687,14 +826,25 @@ ul {
   position: relative;
   gap: 10px;
   padding: 0.5rem;
-  outline: 1px solid var(--color-clouds);
   transition: all 0.15s ease-in-out;
   cursor: pointer;
   overflow: hidden;
 }
 
-.item-wrapper.active {
+.default-theme .item-wrapper {
+  outline: 1px solid var(--color-clouds);
+}
+
+.purplish-theme .item-wrapper {
+  outline: 1px dotted var(--color-tickle-me-pink);
+}
+
+.default-theme .item-wrapper.active {
   background-color: var(--color-white);
+}
+
+.purplish-theme .item-wrapper.active {
+  background-color: var(--color-russian-violet);
 }
 
 .item-wrapper.active .indicator span.active {
@@ -702,6 +852,9 @@ ul {
   width: 0.375rem;
   height: 100%;
   border-radius: 10px;
+}
+
+.default-theme .item-wrapper.active .indicator span.active {
   background: rgb(0, 224, 60);
   background: linear-gradient(
     0deg,
@@ -710,19 +863,43 @@ ul {
   );
 }
 
+.purplish-theme .item-wrapper.active .indicator span.active {
+  background: #ff7aaf;
+  background: linear-gradient(
+    0deg,
+    rgb(255, 122, 175, 1) 0%,
+    rgb(253, 199, 189, 1) 100%
+  );
+}
+
 .text-wrapper {
   width: 100%;
 }
 
-.item-wrapper:hover {
+.default-theme .item-wrapper:hover {
   background-color: var(--color-clouds);
   box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
     rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
 }
 
-.item-wrapper.default-item {
+.purplish-theme .item-wrapper:hover {
+  background-color: var(--color-russian-violet);
+  box-shadow: rgb(253, 199, 189, 0.3) 0px 1px 2px 0px,
+    rgb(253, 199, 189, 0.15) 0px 2px 6px 2px;
+}
+
+.default-theme .item-wrapper.default-item {
   background-color: var(--color-eerie-black);
   color: var(--color-honeydew);
+}
+
+.purplish-theme .item-wrapper.default-item {
+  background-color: var(--color-tickle-me-pink);
+  color: var(--color-black-blue);
+}
+
+.purplish-theme .item-wrapper.default-item.active .indicator span.active {
+  background: var(--color-spanish-pink);
 }
 
 .item-wrapper .bg-image {
@@ -732,14 +909,21 @@ ul {
 }
 
 .item-wrapper.default-item .bg-image {
-  background-image: url("@/assets/img/quill-bg-sidebar.svg");
   background-repeat: no-repeat;
   background-size: 80px;
   background-position: right center;
   z-index: 1;
 }
 
-.item-wrapper.default-item:hover {
+.default-theme .item-wrapper.default-item .bg-image {
+  background-image: url("@/assets/img/quill-bg-sidebar.svg");
+}
+
+.purplish-theme .item-wrapper.default-item .bg-image {
+  background-image: url("@/assets/img/quill-bg-sidebar-purplish-alt.svg");
+}
+
+.default-theme .item-wrapper.default-item:hover {
   background-color: var(--color-eerie-black);
   box-shadow: none;
 }
@@ -831,11 +1015,23 @@ ul {
 .heading-wrapper .confirm-delete-contents .delete-btn {
   margin-top: 0.5rem;
   width: 100%;
+}
+
+.default-theme .heading-wrapper .confirm-delete-contents .delete-btn {
   background-color: var(--color-congo-pink) !important;
 }
 
-.heading-wrapper .confirm-delete-contents .delete-btn:hover {
+.default-theme .heading-wrapper .confirm-delete-contents .delete-btn:hover {
   background-color: var(--color-crayola) !important;
+}
+
+.purplish-theme .heading-wrapper .confirm-delete-contents .delete-btn {
+  background-color: var(--color-tickle-me-pink) !important;
+  color: var(--color-black-blue);
+}
+
+.purplish-theme .heading-wrapper .confirm-delete-contents .delete-btn:hover {
+  background-color: var(--color-spanish-pink) !important;
 }
 
 .delete-enter-active {
@@ -865,9 +1061,15 @@ ul {
   margin-right: auto;
 }
 
-.top-controls .delete-todo-btn:hover,
-.top-controls .delete-note-btn:hover {
+.default-theme .top-controls .delete-todo-btn:hover,
+.default-theme .top-controls .delete-note-btn:hover {
   background-color: var(--color-congo-pink);
+}
+
+.purplish-theme .top-controls .delete-todo-btn:hover,
+.purplish-theme .top-controls .delete-note-btn:hover {
+  background-color: var(--color-tickle-me-pink);
+  color: var(--color-black-blue);
 }
 
 /* ---> end of Todo/Notes details styles */
@@ -902,7 +1104,14 @@ ul {
 .modal-form .input-wrapper {
   position: relative;
   width: 100%;
+}
+
+.default-theme .modal-form .input-wrapper {
   color: var(--color-eerie-black);
+}
+
+.purplish-theme .modal-form .input-wrapper {
+  color: inherit;
 }
 
 .modal-form .input-wrapper input {
@@ -913,12 +1122,19 @@ ul {
   outline: none;
   font-family: inherit;
   font-weight: 600;
+  color: inherit;
 }
 
-.modal-form .input-wrapper textarea::placeholder,
-.modal-form .input-wrapper input::placeholder {
-  color: var(--color-traffic-grey);
+.default-theme .modal-form .input-wrapper textarea::placeholder,
+.default-theme .modal-form .input-wrapper input::placeholder {
   font-weight: 400;
+  color: var(--color-traffic-grey);
+}
+
+.purplish-theme .modal-form .input-wrapper textarea::placeholder,
+.purplish-theme .modal-form .input-wrapper input::placeholder {
+  font-weight: 400;
+  color: rgba(253, 199, 189, 0.8);
 }
 
 .modal-form .input-wrapper textarea {
@@ -934,6 +1150,8 @@ ul {
   overflow: hidden;
   overflow-wrap: break-word;
   resize: none;
+  background: transparent;
+  color: inherit;
 }
 
 .modal-form .create-controls {
@@ -944,26 +1162,41 @@ ul {
   margin-left: 0.3125rem;
 }
 
-.modal-form .create-controls .btn.btn-cancel:hover {
+.default-theme .modal-form .create-controls .btn.btn-cancel:hover {
   background-color: var(--color-platinum);
 }
 
-.modal-form .create-controls .btn.btn-cancel:focus {
+.purplish-theme .modal-form .create-controls .btn.btn-cancel:hover {
+  background-color: var(--color-russian-violet);
+}
+
+.default-theme .modal-form .create-controls .btn.btn-add:focus,
+.default-theme .modal-form .create-controls .btn.btn-cancel:focus {
   outline: 1px solid var(--color-traffic-grey);
   outline-offset: 3px;
 }
 
-.modal-form .create-controls .btn.btn-add {
+.default-theme .modal-form .create-controls .btn.btn-add:focus,
+.purplish-theme .modal-form .create-controls .btn.btn-cancel:focus {
+  outline: 1px solid var(--color-tickle-me-pink);
+  outline-offset: 3px;
+}
+
+.default-theme .modal-form .create-controls .btn.btn-add {
   background-color: var(--color-malachite);
 }
 
-.modal-form .create-controls .btn.btn-add:hover {
+.default-theme .modal-form .create-controls .btn.btn-add:hover {
   background-color: var(--color-light-green);
 }
 
-.modal-form .create-controls .btn.btn-add:focus {
-  outline: 1px solid var(--color-traffic-grey);
-  outline-offset: 3px;
+.purplish-theme .modal-form .create-controls .btn.btn-add {
+  background-color: var(--color-tickle-me-pink);
+  color: var(--color-black-blue);
+}
+
+.purplish-theme .modal-form .create-controls .btn.btn-add:hover {
+  background-color: var(--color-spanish-pink);
 }
 
 .modal-enter-active {

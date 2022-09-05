@@ -1,5 +1,5 @@
 <template>
-  <aside class="wrapper">
+  <aside :class="themeClasses">
     <div class="sidebar flex flex-fd-c flex-jc-sb">
       <div class="bg-image"></div>
       <div class="sidebar-top">
@@ -10,6 +10,7 @@
             @click="create"
           >
             <div class="flex flex-ai-c">
+              <!-- TODO: switch to using an svg to make use currentColor for the stroke-->
               <img
                 class="btn-img"
                 src="@/assets/img/add-icon.svg"
@@ -146,6 +147,7 @@ export default {
   computed: {
     ...mapGetters("todos", ["numOfTodos"]),
     ...mapGetters("notes", ["numOfNotes"]),
+    ...mapGetters(["theme"]),
     routeName() {
       return this.$route.name;
     },
@@ -159,6 +161,21 @@ export default {
         buttonText = "New Todo";
       }
       return buttonText;
+    },
+    themeClasses() {
+      let classes = "wrapper ";
+
+      // for default theme
+      if (!this.theme) {
+        return (classes += "default-theme");
+      }
+
+      // for purplish theme
+      if (this.theme === "purplish") {
+        return (classes += "purplish-theme");
+      }
+
+      return classes;
     },
   },
   methods: {
@@ -187,7 +204,14 @@ export default {
   grid-column: 1;
   width: 100%;
   height: calc(100vh - 80px);
+}
+
+.wrapper.default-theme {
   background-color: var(--color-eerie-black);
+}
+
+.wrapper.purplish-theme {
+  background-color: var(--color-black-blue);
 }
 
 .sidebar {
@@ -206,12 +230,19 @@ export default {
   position: absolute;
   width: 100%;
   height: 100%;
-  background-image: url("@/assets/img/quill-bg-sidebar.svg");
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: 190px;
   background-position: 30px center;
   z-index: 1;
+}
+
+.wrapper.default-theme .bg-image {
+  background-image: url("@/assets/img/quill-bg-sidebar.svg");
+}
+
+.wrapper.purplish-theme .bg-image {
+  background-image: url("@/assets/img/quill-bg-sidebar-purplish.svg");
 }
 
 .btn-wrapper {
@@ -226,39 +257,71 @@ export default {
   border: none;
   outline: none;
   border-radius: 5px;
-  background-color: var(--color-dark-pastel-green);
   text-align: left;
   font-family: inherit;
   font-size: inherit;
-  color: var(--color-eerie-black);
   cursor: pointer;
   transition: all 0.15s ease-in-out;
 }
 
-.btn-wrapper .create-btn:hover {
+.wrapper.default-theme .btn-wrapper .create-btn {
+  background-color: var(--color-dark-pastel-green);
+  color: var(--color-eerie-black);
+}
+
+.wrapper.purplish-theme .btn-wrapper .create-btn {
+  background-color: var(--color-tickle-me-pink);
+  color: var(--color-black-blue);
+}
+
+.wrapper.default-theme .btn-wrapper .create-btn:hover {
   background: var(--color-platinum);
 }
 
-.btn-wrapper .create-btn:focus {
-  outline: 1px solid var(--color-platinum);
+.wrapper.purplish-theme .btn-wrapper .create-btn:hover {
+  background-color: var(--color-spanish-pink);
+}
+
+.wrapper.default-theme .btn-wrapper .create-btn:focus {
+  outline: 2px solid var(--color-platinum);
+  outline-offset: 3px;
+}
+
+.wrapper.purplish-theme .btn-wrapper .create-btn:focus {
+  outline: 2px solid var(--color-spanish-pink);
   outline-offset: 3px;
 }
 
 .btn-wrapper .create-btn .btn-text {
   margin-left: 0.625rem;
+  font-weight: 500;
 }
 
 .links .link {
   font-size: inherit;
+  margin-right: 0.3125rem;
 }
 
 .links .link a {
   display: inline-block;
-  padding: 1.125rem 1.875rem;
+  padding: 1rem 1.875rem;
   width: 100%;
   height: 100%;
-  color: var(--color-cultured);
   transition: all 0.15s ease-in-out;
+  border-top-right-radius: 50px;
+  border-bottom-right-radius: 50px;
+}
+
+.links .link:not(:first-child) a {
+  margin-top: 0.5rem;
+}
+
+.wrapper.default-theme .links .link a {
+  color: var(--color-cultured);
+}
+
+.wrapper.purplish-theme .links .link a {
+  color: var(--color-tickle-me-pink);
 }
 
 .links .link a .text-wrapper {
@@ -266,25 +329,37 @@ export default {
   width: 100%;
 }
 
-.links .link a .link-counter {
+.wrapper.default-theme .links .link a .link-counter {
   color: var(--color-dark-pastel-green);
 }
 
-.links .link a:hover {
+.wrapper.purplish-theme .links .link a .link-counter {
+  color: var(--color-spanish-pink);
+}
+
+.wrapper.default-theme .links .link a:hover {
   background-color: var(--color-platinum);
   color: var(--color-eerie-black);
 }
 
-.links .link a:hover .link-counter {
+.wrapper.default-theme .links .link a:hover .link-counter {
   color: var(--color-eerie-black);
 }
 
-.router-link-active {
-  background: var(--color-platinum);
-  color: var(--color-eerie-black) !important;
+.wrapper.purplish-theme .links .link a:hover {
+  background-color: var(--color-spanish-pink);
+  color: var(--color-black-blue);
 }
 
-.router-link-active .link-counter {
-  color: var(--color-eerie-black) !important;
+.wrapper.purplish-theme .links .link a:hover .link-counter {
+  color: var(--color-black-blue);
+}
+
+.wrapper.default-theme .router-link-active {
+  background: var(--color-graphite-black);
+}
+
+.wrapper.purplish-theme .router-link-active {
+  background: var(--color-russian-violet);
 }
 </style>

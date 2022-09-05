@@ -1,12 +1,21 @@
 <template>
-  <header class="header" :style="{ 'font-size': fontSize / 16 + 'rem' }">
+  <header :class="themeClasses" :style="{ 'font-size': fontSize / 16 + 'rem' }">
     <nav class="nav flex flex-ai-c flex-jc-sb">
       <div class="nav-left flex">
         <div class="nav-logo">
-          <router-link to="/todos">
+          <router-link to="/todos" title="Home">
             <img
+              v-if="!theme"
               class="logo"
               src="@/assets/img/logo.min.svg"
+              alt="your notes v2 logo"
+              width="168"
+              height="27.6"
+            />
+            <img
+              v-else-if="theme === 'purplish'"
+              class="logo"
+              src="@/assets/img/logo.min-purplish.svg"
               alt="your notes v2 logo"
               width="168"
               height="27.6"
@@ -20,8 +29,16 @@
           v-if="search.isVisible && search.placeholderName === routeName"
         >
           <img
+            v-if="!theme"
             class="search"
             src="@/assets/img/search.min.svg"
+            alt="search icon"
+            width="18"
+          />
+          <img
+            v-else-if="theme === 'purplish'"
+            class="search"
+            src="@/assets/img/search.min-purplish.svg"
             alt="search icon"
             width="18"
           />
@@ -39,7 +56,12 @@
         </div>
         <div class="nav-menu">
           <button class="menu-btn" title="show menu">
-            <img src="@/assets/img/dropdown.min.svg" alt=" " />
+            <img v-if="!theme" src="@/assets/img/dropdown.min.svg" alt=" " />
+            <img
+              v-else-if="theme === 'purplish'"
+              src="@/assets/img/dropdown.min-purplish.svg"
+              alt=" "
+            />
           </button>
           <!-- TODO: menu goes here-->
         </div>
@@ -63,6 +85,24 @@ export default {
     },
     numOfNotes() {
       return this.$store.getters["notes/numOfNotes"];
+    },
+    theme() {
+      return this.$store.getters.theme;
+    },
+    themeClasses() {
+      let classes = "header ";
+
+      // for default theme
+      if (!this.theme) {
+        classes += "default-theme";
+      }
+
+      // for purplish theme
+      if (this.theme === "purplish") {
+        classes += "purplish-theme";
+      }
+
+      return classes;
     },
     search() {
       let isSearch = false;
@@ -108,7 +148,14 @@ export default {
 .header {
   width: 100%;
   height: 5rem;
+}
+
+.default-theme.header {
   background-color: var(--color-eerie-black);
+}
+
+.purplish-theme.header {
+  background-color: var(--color-black-blue);
 }
 
 .nav {
@@ -141,9 +188,16 @@ export default {
 }
 
 .nav-search {
-  border-left: 2px solid var(--color-pantone-green);
   font-weight: 400;
   width: 25rem;
+}
+
+.default-theme .nav-search {
+  border-left: 2px solid var(--color-pantone-green);
+}
+
+.purplish-theme .nav-search {
+  border-left: 2px solid var(--color-tickle-me-pink);
 }
 
 .nav-search img {
@@ -162,9 +216,15 @@ export default {
   font-size: inherit;
 }
 
-.nav-search input,
-.nav-search input::placeholder {
+.default-theme .nav-search input,
+.default-theme .nav-search input::placeholder {
   color: var(--color-platinum);
+  letter-spacing: 0.2px;
+}
+
+.purplish-theme .nav-search input,
+.purplish-theme .nav-search input::placeholder {
+  color: rgba(253, 199, 189, 0.8);
   letter-spacing: 0.2px;
 }
 
@@ -177,8 +237,23 @@ export default {
   width: 2.5rem;
   height: 2.5rem;
   border-radius: 50%;
-  background-color: var(--color-traffic-grey);
   overflow: hidden;
+}
+
+.default-theme .nav-avatar {
+  color: var(--color-platinum);
+}
+
+.purplish-theme .nav-avatar {
+  color: var(--color-spanish-pink);
+}
+
+.default-theme .nav-avatar .image-wrapper {
+  background-color: var(--color-traffic-grey);
+}
+
+.purplish-theme .nav-avatar .image-wrapper {
+  background-color: var(--color-russian-violet);
 }
 
 .nav-avatar .image-wrapper .avatar {
@@ -214,12 +289,21 @@ export default {
   cursor: pointer;
 }
 
-.nav-menu .menu-btn:hover {
+.default-theme .nav-menu .menu-btn:hover {
   outline: 1px solid var(--color-traffic-grey);
 }
 
-.nav-menu .menu-btn:focus {
+.default-theme .nav-menu .menu-btn:focus {
   outline: 1px solid var(--color-traffic-grey);
+  outline-offset: 5px;
+}
+
+.purplish-theme .nav-menu .menu-btn:hover {
+  outline: 1px solid var(--color-tickle-me-pink);
+}
+
+.purplish-theme .nav-menu .menu-btn:focus {
+  outline: 1px solid var(--color-spanish-pink);
   outline-offset: 5px;
 }
 </style>

@@ -47,7 +47,7 @@
     <!-- use the transition component to animate the delete window-->
     <transition name="delete">
       <div class="confirm-delete" v-if="isShowDeleteWindow">
-        <base-card>
+        <base-card :mode="cardStyle">
           <div class="confirm-delete-title flex flex-ai-c flex-jc-sb">
             <span class="title"
               >Delete {{ setTextBasedOnFontSize(selectedTodo.title) }}</span
@@ -177,7 +177,7 @@
       v-if="hasCompletedItems && selectedTodo.isHideCompleted"
     >
       <br />
-      <hr />
+      <hr :style="hrStyle" />
       <p>{{ completedItemsFieldText }}</p>
       <ul class="items completed">
         <li v-for="(item, index) of selectedTodo.contents" :key="index">
@@ -272,10 +272,41 @@ export default {
   computed: {
     ...mapGetters("todos", ["selectedTodo", "isCloseOpenFields"]),
     ...mapGetters(["greeting"]),
+    ...mapGetters(["theme"]),
     completedItemsFieldText() {
       return this.numOfCompletedItems > 1
         ? `${this.numOfCompletedItems} Completed items`
         : `${this.numOfCompletedItems} Completed item`;
+    },
+    cardStyle() {
+      let mode = "";
+
+      // for default theme
+      if (!this.theme) {
+        mode = "default-theme";
+      }
+
+      // for purplish theme
+      if (this.theme === "purplish") {
+        mode = "purplish-theme";
+      }
+
+      return mode;
+    },
+    hrStyle() {
+      let style = "";
+
+      // for default theme
+      if (!this.theme) {
+        style = "border-color: green";
+      }
+
+      // for purplish theme
+      if (this.theme === "purplish") {
+        style = "border-color: #ff7aaf";
+      }
+
+      return style;
     },
   },
   methods: {
@@ -564,17 +595,31 @@ export default {
 }
 
 .progress-bar .bar-wrapper {
-  background-color: var(--color-clouds);
   width: 100%;
   height: 0.6em;
   border-radius: 50px;
   overflow: hidden;
 }
 
+.default-theme .progress-bar .bar-wrapper {
+  background-color: var(--color-clouds);
+}
+
+.purplish-theme .progress-bar .bar-wrapper {
+  background-color: var(--color-russian-violet);
+}
+
 .progress-bar .bar-wrapper .bar {
   height: 0.7em;
-  background-color: var(--color-dark-pastel-green);
   transition: width 0.4s ease-in-out;
+}
+
+.default-theme .progress-bar .bar-wrapper .bar {
+  background-color: var(--color-dark-pastel-green);
+}
+
+.purplish-theme .progress-bar .bar-wrapper .bar {
+  background-color: var(--color-tickle-me-pink);
 }
 
 .heading-wrapper .contents-info {
@@ -596,8 +641,12 @@ export default {
   width: 100%;
 }
 
-.items .item:hover {
+.default-theme .item:hover {
   background-color: var(--color-honeydew);
+}
+
+.purplish-theme .item:hover {
+  background-color: var(--color-russian-violet);
 }
 
 .items li.animated {
@@ -607,14 +656,32 @@ export default {
   animation-fill-mode: both;
 }
 
-.items li.flash {
+.default-theme .items li.flash {
   animation-name: flash;
+}
+
+.purplish-theme .items li.flash {
+  animation-name: flashPurplish;
 }
 
 @keyframes flash {
   0%,
   50% {
     background-color: var(--color-light-green);
+  }
+  25%,
+  75% {
+    background: transparent;
+  }
+  100% {
+    background: transparent;
+  }
+}
+
+@keyframes flashPurplish {
+  0%,
+  50% {
+    background-color: var(--color-tickle-me-pink);
   }
   25%,
   75% {
@@ -639,11 +706,18 @@ export default {
   border-radius: 0.15em;
   -webkit-appearance: none;
   appearance: none;
-  background-color: var(--color-white);
   font: inherit;
   color: currentColor;
   transform: translateY(-0.075em);
   cursor: pointer;
+}
+
+.default-theme .items .item .item-checkbox input[type="checkbox"] {
+  background-color: var(--color-white);
+}
+
+.purplish-theme .items .item .item-checkbox input[type="checkbox"] {
+  background-color: transparent;
 }
 
 .items .item .item-checkbox input[type="checkbox"]::before {
@@ -652,16 +726,25 @@ export default {
   height: 0.65em;
   transform: scale(0);
   transition: 120ms transform ease-in-out;
-  box-shadow: inset 1em 1em var(--color-eerie-black);
   transform-origin: bottom left;
   clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+}
+
+.default-theme .items .item .item-checkbox input[type="checkbox"]::before {
+  /* use box-shadow to color the tick inside the checkbox */
+  box-shadow: inset 1em 1em var(--color-eerie-black);
+}
+
+.purplish-theme .items .item .item-checkbox input[type="checkbox"]::before {
+  /* use box-shadow to color the tick inside the checkbox */
+  box-shadow: inset 1em 1em var(--color-spanish-pink);
 }
 
 .items .item .item-checkbox input[type="checkbox"]:checked::before {
   transform: scale(1);
 }
 
-.items .item .item-checkbox input[type="checkbox"]:hover {
+.default-theme .items .item .item-checkbox input[type="checkbox"]:hover {
   background-color: var(--color-platinum);
 }
 
@@ -682,7 +765,14 @@ export default {
 .item-text .item-details.completed {
   font-style: italic;
   text-decoration: line-through;
+}
+
+.default-theme .item-text .item-details.completed {
   color: var(--color-traffic-grey);
+}
+
+.purplish-theme .item-text .item-details.completed {
+  color: var(--color-spanish-pink);
 }
 
 .item-options .delete-item-btn {
@@ -697,8 +787,16 @@ export default {
   visibility: visible;
 }
 
-.item-options .delete-item-btn:hover {
+.default-theme .item-options .delete-item-btn:hover {
   background-color: var(--color-platinum);
+}
+
+.purplish-theme .item-options .delete-item-btn:hover {
+  background-color: var(--color-tickle-me-pink);
+}
+
+.purplish-theme .item-options .delete-item-btn:hover svg {
+  stroke: var(--color-black-blue);
 }
 
 .todo-creator-wrapper {
@@ -720,14 +818,30 @@ export default {
   height: auto;
   min-height: 3.125rem;
   border-radius: 5px;
-  border: 2px solid var(--color-dark-pastel-green);
-  outline-color: var(--color-dark-pastel-green);
   font-family: inherit;
   font-size: inherit;
-  background-color: var(--color-honeydew);
   overflow-y: auto;
   overflow-wrap: break-word;
   resize: none;
+}
+
+.purplish-theme .item-create-field .field::placeholder {
+  color: rgba(253, 199, 189, 0.8);
+}
+
+.default-theme .item-create-field .field,
+.default-theme .item-edit-field .field {
+  border: 2px solid var(--color-dark-pastel-green);
+  outline-color: var(--color-dark-pastel-green);
+  background-color: var(--color-honeydew);
+}
+
+.purplish-theme .item-create-field .field,
+.purplish-theme .item-edit-field .field {
+  border: 2px solid var(--color-tickle-me-pink);
+  outline-color: var(--color-tickle-me-pink);
+  background-color: var(--color-russian-violet);
+  color: var(--color-spanish-pink);
 }
 
 .item-create-field .create-controls,
@@ -735,16 +849,29 @@ export default {
   margin-top: 0.375rem;
 }
 
-.item-create-btn .btn.btn-add,
-.item-create-field .create-controls .btn.btn-add,
-.item-edit-field .edit-controls .btn.btn-save {
+.default-theme .item-create-btn .btn.btn-add,
+.default-theme .item-create-field .create-controls .btn.btn-add,
+.default-theme .item-edit-field .edit-controls .btn.btn-save {
   background-color: var(--color-malachite);
 }
 
-.item-create-btn .btn.btn-add:hover,
-.item-create-field .create-controls .btn.btn-add:hover,
-.item-edit-field .edit-controls .btn.btn-save:hover {
+.purplish-theme .item-create-field .create-controls .btn.btn-add,
+.purplish-theme .item-edit-field .edit-controls .btn.btn-save,
+.purplish-theme .item-create-btn .btn.btn-add {
+  background-color: var(--color-tickle-me-pink);
+  color: var(--color-black-blue);
+}
+
+.default-theme .item-create-btn .btn.btn-add:hover,
+.default-theme .item-create-field .create-controls .btn.btn-add:hover,
+.default-theme .item-edit-field .edit-controls .btn.btn-save:hover {
   background-color: var(--color-light-green);
+}
+
+.purplish-theme .item-create-field .create-controls .btn.btn-add:hover,
+.purplish-theme .item-edit-field .edit-controls .btn.btn-save:hover,
+.purplish-theme .item-create-btn .btn.btn-add:hover {
+  background-color: var(--color-spanish-pink);
 }
 
 .top-controls .delete-todo-btn,
@@ -754,10 +881,20 @@ export default {
   margin-left: 0.3125rem;
 }
 
-.hide-btn:hover,
-.item-create-btn .btn.btn-cancel:hover,
-.item-create-field .create-controls .btn.btn-cancel:hover,
-.item-edit-field .edit-controls .btn.btn-cancel:hover {
+.default-theme .hide-btn:hover,
+.default-theme .item-create-btn .btn.btn-cancel:hover,
+.default-theme .item-create-field .create-controls .btn.btn-cancel:hover,
+.default-theme .item-edit-field .edit-controls .btn.btn-cancel:hover {
   background-color: var(--color-platinum);
+}
+
+.purplish-theme .item-create-btn .btn.btn-cancel:hover,
+.purplish-theme .item-edit-field .edit-controls .btn.btn-cancel:hover {
+  background-color: var(--color-black-blue);
+}
+
+.purplish-theme .item-create-field .create-controls .btn.btn-cancel:hover,
+.purplish-theme .hide-btn:hover {
+  background-color: var(--color-russian-violet);
 }
 </style>

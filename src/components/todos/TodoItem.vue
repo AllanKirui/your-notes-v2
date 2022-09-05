@@ -16,8 +16,22 @@
         <li class="item flex flex-ai-c" v-for="(_, index) in 3" :key="index">
           <!-- only show image for incomplete tasks on a todo -->
           <img
-            v-if="displayContent[index]"
+            v-if="displayContent[index] && !theme"
             src="@/assets/img/checkbox-grey.svg"
+            alt=" "
+            width="14"
+          />
+          <img
+            v-else-if="
+              displayContent[index] && theme === 'purplish' && isDefault
+            "
+            src="@/assets/img/checkbox-black-blue.svg"
+            alt=" "
+            width="14"
+          />
+          <img
+            v-else-if="displayContent[index] && theme === 'purplish'"
+            src="@/assets/img/checkbox-purplish.svg"
             alt=" "
             width="14"
           />
@@ -62,6 +76,9 @@ export default {
     },
     openTodoId() {
       return this.$store.getters["todos/openTodoId"];
+    },
+    theme() {
+      return this.$store.getters.theme;
     },
     status() {
       // return items which are checked over the total items

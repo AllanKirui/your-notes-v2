@@ -1,8 +1,14 @@
 <template>
-  <div class="card">
+  <div class="card" :class="mode">
     <slot></slot>
   </div>
 </template>
+
+<script>
+export default {
+  props: ["mode"],
+};
+</script>
 
 <style scoped>
 .card {
@@ -11,7 +17,15 @@
   width: 100%;
   max-width: 35rem;
   border-radius: 8px;
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.default-theme {
   background-color: var(--color-white);
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.purplish-theme {
+  background-color: var(--color-black-blue);
+  box-shadow: rgba(255, 122, 175, 0.3) 0px 3px 8px;
 }
 </style>

@@ -28,7 +28,7 @@
     <!-- use the transition component to animate the delete window-->
     <transition name="delete">
       <div class="confirm-delete" v-if="isShowDeleteWindow">
-        <base-card>
+        <base-card :mode="cardStyle">
           <div class="confirm-delete-title flex flex-ai-c flex-jc-sb">
             <span class="title"
               >Delete {{ setTextLength(selectedNote.title, 20) }}</span
@@ -133,6 +133,22 @@ export default {
   computed: {
     ...mapGetters("notes", ["selectedNote", "isCloseOpenFields"]),
     ...mapGetters(["greeting"]),
+    ...mapGetters(["theme"]),
+    cardStyle() {
+      let mode = "";
+
+      // for default theme
+      if (!this.theme) {
+        mode = "default-theme";
+      }
+
+      // for purplish theme
+      if (this.theme === "purplish") {
+        mode = "purplish-theme";
+      }
+
+      return mode;
+    },
   },
   methods: {
     editText() {
@@ -266,14 +282,23 @@ export default {
   height: auto;
   min-height: 3.125rem;
   border-radius: 5px;
-  border: 2px solid var(--color-dark-pastel-green);
-  outline-color: var(--color-dark-pastel-green);
   font-family: inherit;
   font-size: inherit;
   background: transparent;
   overflow-y: auto;
   overflow-wrap: break-word;
   resize: none;
+}
+
+.default-theme .item-edit-field .field {
+  border: 2px solid var(--color-dark-pastel-green);
+  outline-color: var(--color-dark-pastel-green);
+}
+
+.purplish-theme .item-edit-field .field {
+  border: 2px solid var(--color-tickle-me-pink);
+  outline-color: var(--color-tickle-me-pink);
+  color: var(--color-spanish-pink);
 }
 
 .edit-controls {
@@ -287,18 +312,33 @@ export default {
   margin-left: 0.3125rem;
 }
 
-.btn.btn-edit,
-.btn.btn-save {
+.default-theme .btn.btn-edit,
+.default-theme .btn.btn-save {
   background-color: var(--color-malachite);
 }
 
-.btn.btn-edit:hover,
-.btn.btn-save:hover {
+.default-theme .btn.btn-edit:hover,
+.default-theme .btn.btn-save:hover {
   background-color: var(--color-light-green);
 }
 
-.btn.btn-cancel:hover {
+.default-theme .btn.btn-cancel:hover {
   background-color: var(--color-platinum);
+}
+
+.purplish-theme .btn.btn-edit,
+.purplish-theme .btn.btn-save {
+  background-color: var(--color-tickle-me-pink);
+  color: var(--color-black-blue);
+}
+
+.purplish-theme .btn.btn-edit:hover,
+.purplish-theme .btn.btn-save:hover {
+  background-color: var(--color-spanish-pink);
+}
+
+.purplish-theme .btn.btn-cancel:hover {
+  background-color: var(--color-russian-violet);
 }
 
 .buttons-enter-active {

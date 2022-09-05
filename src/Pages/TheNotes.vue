@@ -29,7 +29,7 @@
         @click="closeModal"
       >
         <!-- stop the event propagation from clicking on the modal backdrop -->
-        <base-card @click.stop>
+        <base-card :mode="cardStyle" @click.stop>
           <div class="modal-container">
             <h3 class="modal-title">Add a New Note</h3>
 
@@ -101,6 +101,24 @@ export default {
     },
     greeting() {
       return this.$store.getters.greeting;
+    },
+    theme() {
+      return this.$store.getters.theme;
+    },
+    cardStyle() {
+      let mode = "";
+
+      // for default theme
+      if (!this.theme) {
+        mode = "default-theme";
+      }
+
+      // for purplish theme
+      if (this.theme === "purplish") {
+        mode = "purplish-theme";
+      }
+
+      return mode;
     },
   },
   methods: {
