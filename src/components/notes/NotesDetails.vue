@@ -234,6 +234,8 @@ export default {
         // reset props
         this.cancelEdits();
         this.hideDeleteWindow();
+      } else {
+        this.hasNote = false;
       }
     },
     isEditText(newValue) {

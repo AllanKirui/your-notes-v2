@@ -153,8 +153,10 @@ export default {
       // replacing the Notes and the Todos title
 
       // TODO: cancel search on route change
+      // TODO: when new note/todo button is clicked, cancelSearch
 
-      // TODO: close todo details on search?
+      // close any open notes while searching
+      this.$store.dispatch("notes/resetSelectedNote");
 
       let query = this.$refs.search.value.trim().toLowerCase();
       let notesListElements = document.querySelectorAll(
