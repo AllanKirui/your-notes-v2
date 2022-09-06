@@ -42,7 +42,12 @@
             alt="search icon"
             width="18"
           />
-          <input type="text" :placeholder="'Search ' + routeName" />
+          <input
+            type="text"
+            ref="search"
+            @keyup="runSearch"
+            :placeholder="'Search ' + routeName"
+          />
         </div>
       </div>
 
@@ -85,6 +90,9 @@ export default {
     },
     numOfNotes() {
       return this.$store.getters["notes/numOfNotes"];
+    },
+    notesList() {
+      return this.$store.getters["notes/notesList"];
     },
     theme() {
       return this.$store.getters.theme;
@@ -139,6 +147,64 @@ export default {
       }
       // return the first letter of the only available word
       return wordsInName[0].split("")[0];
+    },
+    runNotesSearch() {
+      // TODO: don't forget to indicate that you're running a search
+      // replacing the Notes and the Todos title
+
+      // TODO: cancel search on route change
+
+      // TODO: close todo details on search?
+
+      let query = this.$refs.search.value.trim().toLowerCase();
+      let notesListElements = document.querySelectorAll(
+        ".notes-wrapper li.item-wrapper"
+      );
+
+      // loop through all list elements
+      notesListElements.forEach((el, index) => {
+        // grab the title's string
+        let titleElText = el
+          .querySelector(".text-wrapper .title-wrapper .item-title")
+          .textContent.toLowerCase();
+
+        // get the note content string from the store element with a matching index
+        let notesContent = this.notesList[index].content.toLowerCase();
+
+        // concatenate the note title and contents to get a string that includes both
+        let allWordsInNote = titleElText + " " + notesContent;
+
+        // search the concatenated string for the query
+        if (allWordsInNote.includes(query)) {
+          // show the matching element by doing nothing
+          el.style.display = "";
+        } else {
+          // hide the elements that don't match
+          el.style.display = "none";
+        }
+      });
+    },
+    runTodosSearch() {
+      console.log("Todos coming soon!");
+    },
+    runSearch() {
+      if (this.routeName === "todos") {
+        this.runTodosSearch();
+      } else if (this.routeName === "notes") {
+        this.runNotesSearch();
+      }
+    },
+    cancelSearch() {
+      // clear the search field
+      this.$refs.search.value = "";
+    },
+  },
+  watch: {
+    $route(newRoute) {
+      // if there's a new route, clear the search field
+      if (newRoute) {
+        this.cancelSearch();
+      }
     },
   },
 };
