@@ -153,11 +153,6 @@ export default {
       return wordsInName[0].split("")[0];
     },
     runNotesSearch() {
-      // TODO: don't forget to indicate that you're running a search
-      // replacing the Notes and the Todos title
-
-      // TODO: show message for no search results
-
       // close any open notes while searching
       this.$store.dispatch("notes/resetSelectedNote");
 
