@@ -77,7 +77,8 @@
 
 <script>
 export default {
-  props: ["fontSize"],
+  props: ["fontSize", "clearSearch"],
+  emits: ["reset-cancel"],
   computed: {
     routeName() {
       return this.$route.name;
@@ -155,7 +156,6 @@ export default {
       // TODO: don't forget to indicate that you're running a search
       // replacing the Notes and the Todos title
 
-      // TODO: cancel search on route change
       // TODO: when new note/todo button is clicked, cancelSearch
 
       // close any open notes while searching
@@ -250,6 +250,27 @@ export default {
       // if there's a new route, clear the search field
       if (newRoute) {
         this.cancelSearch();
+      }
+    },
+    clearSearch(newValue) {
+      if (newValue) {
+        this.cancelSearch();
+
+        // set the display property of todos/notes list elements
+        if (this.routeName === "todos") {
+          let todoListElements = document.querySelectorAll(
+            ".todos-wrapper li.item-wrapper"
+          );
+          todoListElements.forEach((el) => (el.style.display = ""));
+        } else if (this.routeName === "notes") {
+          let notesListElements = document.querySelectorAll(
+            ".notes-wrapper li.item-wrapper"
+          );
+          notesListElements.forEach((el) => (el.style.display = ""));
+        }
+
+        // reset the isCancelSearch prop in App
+        this.$emit("reset-cancel");
       }
     },
   },

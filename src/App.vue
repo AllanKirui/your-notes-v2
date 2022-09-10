@@ -4,7 +4,12 @@
   <router-view name="authn" v-if="!isLoggedIn"></router-view>
 
   <!-- home page -->
-  <the-header v-if="isLoggedIn" :font-size="globalFontSize"></the-header>
+  <the-header
+    v-if="isLoggedIn"
+    :font-size="globalFontSize"
+    :clear-search="isCancelSearch"
+    @resetCancel="resetCancelProp"
+  ></the-header>
   <div
     :class="themeClasses"
     v-if="isLoggedIn"
@@ -62,6 +67,7 @@ export default {
       counter: 0,
       activeSide: null,
       globalFontSize: 14,
+      isCancelSearch: false,
     };
   },
   computed: {
@@ -103,6 +109,9 @@ export default {
     showInputModal(side) {
       this.isShowInputModal = true;
       this.activeSide = side;
+
+      // clear search field in TheHeader
+      this.isCancelSearch = true;
     },
     closeInputModal() {
       this.isShowInputModal = false;
@@ -122,6 +131,9 @@ export default {
         shortText += text[i];
       }
       return shortText + "...";
+    },
+    resetCancelProp() {
+      this.isCancelSearch = false;
     },
   },
   watch: {
