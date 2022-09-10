@@ -12,7 +12,8 @@
     </div>
 
     <section class="content-items" v-if="numOfNotes">
-      <h3 class="items-title">Notes</h3>
+      <h3 v-if="!isSearching" class="items-title">Notes</h3>
+      <h4 v-if="isSearching" class="items-title">{{ searchMessage }}</h4>
       <notes-list></notes-list>
     </section>
 
@@ -80,7 +81,7 @@ import NotesList from "@/components/notes/NotesList.vue";
 import NotesDetails from "@/components/notes/NotesDetails.vue";
 
 export default {
-  props: ["isModal", "activeSide"],
+  props: ["isModal", "activeSide", "isSearching", "searchMessage"],
   emits: ["close-modal", "show-notification"],
   inject: ["globalFontSize"],
   components: {

@@ -8,6 +8,9 @@
     v-if="isLoggedIn"
     :font-size="globalFontSize"
     :clear-search="isCancelSearch"
+    @is-searching="setSearchingStatus"
+    @set-message="setSearchMessage"
+    @remove-message="resetSearchingStatus"
     @resetCancel="resetCancelProp"
   ></the-header>
   <div
@@ -20,6 +23,8 @@
     <router-view
       :is-modal="isShowInputModal"
       :active-side="activeSide"
+      :is-searching="isSearching"
+      :search-message="searchMessage"
       @close-modal="closeInputModal"
       @show-notification="showNotification"
     ></router-view>
@@ -68,6 +73,8 @@ export default {
       activeSide: null,
       globalFontSize: 14,
       isCancelSearch: false,
+      isSearching: false,
+      searchMessage: "",
     };
   },
   computed: {
@@ -112,6 +119,7 @@ export default {
 
       // clear search field in TheHeader
       this.isCancelSearch = true;
+      this.isSearching = false;
     },
     closeInputModal() {
       this.isShowInputModal = false;
@@ -135,6 +143,15 @@ export default {
     resetCancelProp() {
       this.isCancelSearch = false;
     },
+    setSearchingStatus() {
+      this.isSearching = true;
+    },
+    resetSearchingStatus() {
+      this.isSearching = false;
+    },
+    setSearchMessage(msg) {
+      this.searchMessage = `Searching for "${msg}"`;
+    },
   },
   watch: {
     isLoggedIn(newValue) {
@@ -157,6 +174,7 @@ export default {
       if (newRoute) {
         // reset props
         this.isShowInputModal = false;
+        this.resetSearchingStatus();
 
         // facilitate the user clicking on the create new todo button
         // from the settings route

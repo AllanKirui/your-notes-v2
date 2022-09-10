@@ -12,7 +12,8 @@
     </div>
 
     <section class="content-items" v-if="numOfTodos">
-      <h3 class="items-title">Todos</h3>
+      <h3 v-if="!isSearching" class="items-title">Todos</h3>
+      <h4 v-if="isSearching" class="items-title">{{ searchMessage }}</h4>
       <todo-list></todo-list>
     </section>
 
@@ -80,7 +81,7 @@ import TodoList from "@/components/todos/TodoList.vue";
 import TodoDetails from "@/components/todos/TodoDetails.vue";
 
 export default {
-  props: ["isModal", "activeSide"],
+  props: ["isModal", "activeSide", "isSearching", "searchMessage"],
   emits: ["close-modal", "show-notification"],
   inject: ["globalFontSize"],
   components: {

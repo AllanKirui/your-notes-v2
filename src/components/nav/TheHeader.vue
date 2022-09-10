@@ -78,7 +78,7 @@
 <script>
 export default {
   props: ["fontSize", "clearSearch"],
-  emits: ["reset-cancel"],
+  emits: ["reset-cancel", "is-searching", "set-message", "remove-message"],
   computed: {
     routeName() {
       return this.$route.name;
@@ -156,7 +156,7 @@ export default {
       // TODO: don't forget to indicate that you're running a search
       // replacing the Notes and the Todos title
 
-      // TODO: when new note/todo button is clicked, cancelSearch
+      // TODO: show message for no search results
 
       // close any open notes while searching
       this.$store.dispatch("notes/resetSelectedNote");
@@ -165,6 +165,9 @@ export default {
       let notesListElements = document.querySelectorAll(
         ".notes-wrapper li.item-wrapper"
       );
+
+      // remove search message if query is empty
+      if (!query) this.$emit("remove-message");
 
       // loop through all list elements
       notesListElements.forEach((el, index) => {
@@ -198,6 +201,9 @@ export default {
         ".todos-wrapper li.item-wrapper"
       );
       let todosIncludingTitle = [];
+
+      // remove search message if query is empty
+      if (!query) this.$emit("remove-message");
 
       // loop through all list elements
       todoListElements.forEach((el, index) => {
@@ -234,6 +240,10 @@ export default {
       });
     },
     runSearch() {
+      // emit an event to set searching status and search message
+      this.$emit("is-searching");
+      this.$emit("set-message", this.$refs.search.value.trim().toLowerCase());
+
       if (this.routeName === "todos") {
         this.runTodosSearch();
       } else if (this.routeName === "notes") {
