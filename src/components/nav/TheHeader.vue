@@ -246,8 +246,10 @@ export default {
       }
     },
     cancelSearch() {
-      // clear the search field
-      this.$refs.search.value = "";
+      // clear the search field if it is shown
+      if (this.$refs.search) {
+        this.$refs.search.value = "";
+      }
     },
   },
   watch: {
