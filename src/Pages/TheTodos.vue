@@ -14,6 +14,7 @@
     <section class="content-items" v-if="numOfTodos">
       <h3 v-if="!isSearching" class="items-title">Todos</h3>
       <h4 v-if="isSearching" class="items-title">{{ searchMessage }}</h4>
+      <p class="no-results">Nothing found!</p>
       <todo-list></todo-list>
     </section>
 

@@ -774,7 +774,15 @@ ul {
 }
 
 .content-items {
+  position: relative;
   overflow-y: auto;
+}
+
+.content-items .no-results {
+  position: absolute;
+  top: 50px;
+  left: 1rem;
+  z-index: 1;
 }
 
 .default-theme .content-items {
@@ -863,10 +871,14 @@ ul {
 
 .default-theme .item-wrapper {
   outline: 1px solid var(--color-clouds);
+  background-color: var(--color-cultured);
+  z-index: 2;
 }
 
 .purplish-theme .item-wrapper {
   outline: 1px dotted var(--color-tickle-me-pink);
+  background-color: var(--color-black-blue);
+  z-index: 2;
 }
 
 .default-theme .item-wrapper.active {

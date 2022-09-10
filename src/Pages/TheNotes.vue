@@ -14,6 +14,7 @@
     <section class="content-items" v-if="numOfNotes">
       <h3 v-if="!isSearching" class="items-title">Notes</h3>
       <h4 v-if="isSearching" class="items-title">{{ searchMessage }}</h4>
+      <p class="no-results">Nothing found!</p>
       <notes-list></notes-list>
     </section>
 
