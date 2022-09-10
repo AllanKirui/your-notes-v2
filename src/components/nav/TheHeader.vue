@@ -88,6 +88,9 @@ export default {
     numOfTodos() {
       return this.$store.getters["todos/numOfTodos"];
     },
+    todoList() {
+      return this.$store.getters["todos/todoList"];
+    },
     numOfNotes() {
       return this.$store.getters["notes/numOfNotes"];
     },
@@ -187,7 +190,45 @@ export default {
       });
     },
     runTodosSearch() {
-      console.log("Todos coming soon!");
+      let query = this.$refs.search.value.trim().toLowerCase();
+      let todoListElements = document.querySelectorAll(
+        ".todos-wrapper li.item-wrapper"
+      );
+      let todosIncludingTitle = [];
+
+      // loop through all list elements
+      todoListElements.forEach((el, index) => {
+        // grab the title's string
+        let titleElText = el
+          .querySelector(".text-wrapper .title-wrapper .item-title")
+          .textContent.toLowerCase();
+
+        // map through each todo and return the text of each todo task
+        let tasksList = [];
+        tasksList = this.todoList[index].contents.map((task) =>
+          task.text.toLowerCase()
+        );
+
+        // add the todo title to the list of todo tasks
+        tasksList.push(titleElText);
+
+        // add the tasksList to the list of todos that include the title
+        todosIncludingTitle.push(tasksList);
+      });
+
+      // join the todos
+      todosIncludingTitle = todosIncludingTitle.map((todo) => todo.join(" "));
+
+      // search through the joined todos for the query
+      todosIncludingTitle.forEach((todo, index) => {
+        if (todo.includes(query)) {
+          // show the matching element by doing nothing
+          todoListElements[index].style.display = "";
+        } else {
+          // hide the elements that don't match
+          todoListElements[index].style.display = "none";
+        }
+      });
     },
     runSearch() {
       if (this.routeName === "todos") {
