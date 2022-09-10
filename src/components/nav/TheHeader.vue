@@ -190,6 +190,9 @@ export default {
       });
     },
     runTodosSearch() {
+      // close any open todos while searching
+      this.$store.dispatch("todos/resetSelectedTodo");
+
       let query = this.$refs.search.value.trim().toLowerCase();
       let todoListElements = document.querySelectorAll(
         ".todos-wrapper li.item-wrapper"

@@ -501,6 +501,8 @@ export default {
         this.cancelEdits();
         this.cancelNewTodoTask();
         this.hideDeleteWindow();
+      } else {
+        this.hasTodo = false;
       }
     },
     isEditText(newValue) {
@@ -525,6 +527,8 @@ export default {
   },
   beforeUpdate() {
     const todo = this.$store.getters["todos/selectedTodo"];
+    if (!todo) return;
+
     let numOfItems = todo.contents.length;
     let completedItems = todo.contents.filter((item) => item.isCompleted);
 
