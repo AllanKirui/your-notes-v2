@@ -17,6 +17,7 @@ export default {
   width: 100%;
   max-width: 35rem;
   border-radius: 8px;
+  overflow: hidden;
 }
 
 .default-theme {
