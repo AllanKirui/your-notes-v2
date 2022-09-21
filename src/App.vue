@@ -675,6 +675,12 @@ ul {
   position: relative;
 }
 
+@media (max-width: 1024px) {
+  .container {
+    grid-template-columns: 60px 1fr;
+  }
+}
+
 .notification-wrapper {
   position: absolute;
   left: 0;
@@ -833,6 +839,18 @@ ul {
   background-size: 507px, 190px;
   background-position: calc(50% + 120px) calc(50% + 170px),
     calc(50% + 100px) center;
+}
+
+@media (max-width: 1024px) {
+  .content-items-details .bg-images {
+    background-size: 70px, 152px;
+    background-position: 420px center, calc(50vw + 140px) center;
+  }
+
+  .content-intro-wrapper .bg-images {
+    background-position: calc(50% + 30px) calc(50% + 170px),
+      calc(50% + 60px) center;
+  }
 }
 
 .default-theme .content-items-details .bg-images {
