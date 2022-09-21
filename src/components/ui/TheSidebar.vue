@@ -24,7 +24,7 @@
         <ul class="links">
           <li class="link">
             <router-link to="/todos" title="Todos">
-              <div class="flex flex-ai-c">
+              <div class="flex flex-ai-c flex-jc-c">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 64 64"
@@ -50,7 +50,7 @@
           </li>
           <li class="link">
             <router-link to="/notes" title="Notes">
-              <div class="flex flex-ai-c">
+              <div class="flex flex-ai-c flex-jc-c">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 64 64"
@@ -90,7 +90,7 @@
         <ul class="links">
           <li class="link">
             <router-link to="/settings" title="Settings">
-              <div class="flex flex-ai-c">
+              <div class="flex flex-ai-c flex-jc-c">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 64 64"
@@ -111,8 +111,14 @@
             </router-link>
           </li>
           <li class="link">
+            <!-- TODO: clear google token from local storage is not removed automatically
+	window.localStorage.removeItem("token")
+	this.$router.push("/signup")
+
+check localStorage in canIuse 
+-->
             <a href="https://google.com" title="Logout">
-              <div class="flex flex-ai-c">
+              <div class="flex flex-ai-c flex-jc-c">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 64 64"
@@ -256,7 +262,7 @@ export default {
   width: 12.5rem;
   border: none;
   outline: none;
-  border-radius: 5px;
+  border-radius: 50px;
   text-align: left;
   font-family: inherit;
   font-size: inherit;
@@ -361,5 +367,42 @@ export default {
 
 .wrapper.purplish-theme .router-link-active {
   background: var(--color-russian-violet);
+}
+
+@media (max-width: 1024px) {
+  .bg-image {
+    background-size: 60px;
+    background-position: 5px center;
+  }
+
+  .btn-wrapper .create-btn {
+    position: relative;
+    width: 2.5rem;
+    height: 2.5rem;
+    padding: 0;
+  }
+
+  .btn-wrapper .create-btn .btn-img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .btn-wrapper .create-btn .btn-text {
+    display: none;
+  }
+
+  .links .link {
+    margin-right: 0;
+  }
+
+  .links .link a {
+    padding: 1rem 0;
+  }
+
+  .links .link a .text-wrapper {
+    display: none;
+  }
 }
 </style>
