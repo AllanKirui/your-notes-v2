@@ -2,6 +2,18 @@
   <header :class="themeClasses" :style="{ 'font-size': fontSize / 16 + 'rem' }">
     <nav class="nav flex flex-ai-c flex-jc-sb">
       <div class="nav-left">
+        <div class="nav-burger">
+          <button
+            :class="[isSidebarOpen ? 'open' : '', 'burger']"
+            :title="isSidebarOpen ? 'Hide Options' : 'Show Options'"
+            @click="toggleSidebar"
+          >
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        </div>
+
         <div class="nav-logo">
           <router-link to="/todos" title="Home">
             <img
@@ -79,6 +91,11 @@
 export default {
   props: ["fontSize", "clearSearch"],
   emits: ["reset-cancel", "is-searching", "set-message", "remove-message"],
+  data() {
+    return {
+      isSidebarOpen: false,
+    };
+  },
   computed: {
     routeName() {
       return this.$route.name;
@@ -132,6 +149,9 @@ export default {
     },
   },
   methods: {
+    toggleSidebar() {
+      this.isSidebarOpen = !this.isSidebarOpen;
+    },
     setInitials(name) {
       if (!name) {
         return "You";
@@ -490,6 +510,61 @@ export default {
 
   .nav-left .nav-logo {
     display: none;
+  }
+
+  .nav-left .nav-burger {
+    grid-column: 1;
+  }
+
+  .nav-left .nav-burger .burger {
+    width: fit-content;
+    padding: 0;
+    border: none;
+    outline: none;
+    background-color: transparent;
+    cursor: pointer;
+    z-index: 2;
+  }
+
+  .nav-left .nav-burger .burger span {
+    display: block;
+    position: relative;
+    top: 0;
+    width: 24px;
+    height: 2px;
+    transition: 0.3s ease transform, 0.3s ease top, 0.3s ease width,
+      0.3s ease right;
+    border-radius: 2px;
+  }
+
+  .default-theme .nav-left .nav-burger .burger span {
+    background-color: var(--color-pantone-green);
+  }
+
+  .nav-left .nav-burger .burger span:not(:last-child) {
+    margin-bottom: 5px;
+  }
+
+  .nav-left .nav-burger .burger span:nth-child(odd) {
+    width: 12px;
+  }
+
+  .nav-left .nav-burger .burger span:last-child {
+    transform: translateX(100%);
+  }
+
+  .nav-left .nav-burger .burger.open span:nth-child(even) {
+    transform: rotateZ(-45deg);
+  }
+
+  .nav-left .nav-burger .burger.open span:first-child {
+    transform: rotateZ(45deg);
+    transform-origin: 3px 5px;
+  }
+
+  .nav-left .nav-burger .burger.open span:last-child {
+    transform: rotateZ(45deg);
+    transform-origin: 14px 12px;
   }
 
   .nav-search img {
