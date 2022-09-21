@@ -1,7 +1,7 @@
 <template>
   <header :class="themeClasses" :style="{ 'font-size': fontSize / 16 + 'rem' }">
     <nav class="nav flex flex-ai-c flex-jc-sb">
-      <div class="nav-left flex">
+      <div class="nav-left">
         <div class="nav-logo">
           <router-link to="/todos" title="Home">
             <img
@@ -51,8 +51,8 @@
         </div>
       </div>
 
-      <div class="nav-right flex flex-ai-c">
-        <div class="nav-avatar flex flex-ai-c flex-jc-c">
+      <div class="nav-right">
+        <div class="nav-avatar">
           <div class="image-wrapper">
             <img class="avatar" :src="user.photoURL" alt=" " />
             <span class="initials">{{ setInitials(user.displayName) }}</span>
@@ -286,6 +286,7 @@ export default {
 
 <style scoped>
 .header {
+  position: relative;
   width: 100%;
   height: 5rem;
 }
@@ -302,13 +303,19 @@ export default {
   padding: 0 1.875rem;
   width: 100%;
   height: 100%;
+  gap: 1.25rem;
   color: var(--color-platinum);
+}
+
+.nav-left {
+  display: grid;
+  grid-template-columns: 10.5rem minmax(auto, 25rem);
+  grid-template-rows: 1fr;
+  gap: 3.125rem;
 }
 
 .nav-logo {
   position: relative;
-  margin-right: 3.125rem;
-  width: 10.5rem;
 }
 
 .logo {
@@ -329,7 +336,7 @@ export default {
 
 .nav-search {
   font-weight: 400;
-  width: 25rem;
+  padding: 5px 0;
 }
 
 .default-theme .nav-search {
@@ -369,13 +376,27 @@ export default {
 }
 
 .nav-right {
-  gap: 20px;
+  display: grid;
+  grid-template-columns: 1fr 1.25rem;
+  grid-template-rows: 1fr;
+  gap: 0.625rem;
+  align-items: center;
+}
+
+.nav-avatar {
+  grid-column: 1;
+  display: grid;
+  grid-template-columns: auto minmax(5rem, auto);
+  grid-template-rows: 1fr;
+  gap: 0.875rem;
+  align-items: center;
 }
 
 .nav-avatar .image-wrapper {
+  grid-column: 1;
   position: relative;
-  width: 2.5rem;
-  height: 2.5rem;
+  width: 2rem;
+  height: 2rem;
   border-radius: 50%;
   overflow: hidden;
 }
@@ -398,7 +419,6 @@ export default {
 
 .nav-avatar .image-wrapper .avatar {
   position: relative;
-  max-width: 100%;
   z-index: 2;
 }
 
@@ -407,17 +427,18 @@ export default {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 1.125rem;
+  font-size: 1rem;
   font-weight: 500;
   text-transform: uppercase;
   z-index: 1;
 }
 
 .nav-avatar .username {
-  margin-left: 1.125rem;
+  grid-column: 2;
 }
 
 .nav-menu {
+  grid-column: 2;
   width: 1.25rem;
   height: 1.25rem;
 }
@@ -430,7 +451,7 @@ export default {
 }
 
 .default-theme .nav-menu .menu-btn:hover {
-  outline: 1px solid var(--color-traffic-grey);
+  outline: 2px solid var(--color-traffic-grey);
 }
 
 .default-theme .nav-menu .menu-btn:focus {
@@ -445,5 +466,57 @@ export default {
 .purplish-theme .nav-menu .menu-btn:focus {
   outline: 1px solid var(--color-spanish-pink);
   outline-offset: 5px;
+}
+
+/* media queries */
+@media (max-width: 768px) {
+  .nav {
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 98%;
+    height: 70%;
+    padding: 1.125rem;
+    border-radius: 50px;
+    background-color: var(--color-graphite-black);
+  }
+
+  .nav-left {
+    grid-template-columns: auto minmax(auto, 25rem);
+    gap: 0.875rem;
+    align-items: center;
+  }
+
+  .nav-left .nav-logo {
+    display: none;
+  }
+
+  .nav-search img {
+    margin-left: 0;
+  }
+
+  .default-theme .nav-search {
+    border: none;
+  }
+
+  .nav-right {
+    grid-template-columns: 1fr;
+  }
+
+  .nav-right .nav-avatar {
+    grid-template-columns: 1fr;
+  }
+
+  .nav-right .nav-menu,
+  .nav-right .nav-avatar .username {
+    display: none;
+  }
+}
+
+@media (min-width: 769px) {
+  .nav-left .nav-burger {
+    display: none;
+  }
 }
 </style>
