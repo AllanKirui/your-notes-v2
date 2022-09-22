@@ -12,7 +12,18 @@
     </div>
 
     <section class="content-items" v-if="numOfNotes">
-      <h3 v-if="!isSearching" class="items-title">Notes</h3>
+      <div
+        v-if="!isSearching && isShowMobileCounter"
+        class="flex flex-ai-c flex-jc-sb"
+      >
+        <h3 class="items-title">Notes</h3>
+        <div class="counter-wrapper">
+          <span class="items-title-counter"> {{ numOfNotes }} </span>
+        </div>
+      </div>
+      <h3 v-if="!isSearching && !isShowMobileCounter" class="items-title">
+        Notes
+      </h3>
       <h4 v-if="isSearching" class="items-title">{{ searchMessage }}</h4>
       <p class="no-results">Nothing found!</p>
       <notes-list></notes-list>
@@ -92,6 +103,8 @@ export default {
   data() {
     return {
       isCreated: false,
+      screenSize: null,
+      isShowMobileCounter: false,
     };
   },
   computed: {
@@ -215,6 +228,12 @@ export default {
 
       return size / 16 + "rem";
     },
+    checkWindowSize() {
+      // listen to the resize event
+      window.addEventListener("resize", () => {
+        this.screenSize = window.innerWidth;
+      });
+    },
   },
   watch: {
     isModal(newValue) {
@@ -227,12 +246,25 @@ export default {
         this.$store.dispatch("notes/closeOpenFields", true);
       }
     },
+    screenSize(newSize) {
+      if (newSize && newSize >= 1025) {
+        this.isShowMobileCounter = false;
+      }
+      if (newSize && newSize <= 1024) {
+        this.isShowMobileCounter = true;
+      }
+    },
+  },
+  beforeMount() {
+    this.screenSize = window.innerWidth;
+  },
+  mounted() {
+    this.checkWindowSize();
   },
   updated() {
     // scroll a newly created note into view
     if (this.isCreated) {
       let newNoteEl = document.querySelector(".content-items li:last-child");
-
       newNoteEl.scrollIntoView();
 
       // reset props

@@ -878,6 +878,24 @@ ul {
   padding: 0.625rem 0.875rem;
 }
 
+.counter-wrapper {
+  position: relative;
+  width: 25px;
+  height: 25px;
+  margin-right: 0.875rem;
+  border-radius: 50px;
+  background-color: var(--color-graphite-black);
+  color: var(--color-clouds);
+}
+
+.items-title-counter {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-weight: 500;
+}
+
 .item-wrapper {
   position: relative;
   gap: 10px;
