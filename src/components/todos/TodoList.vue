@@ -7,6 +7,7 @@
       :title="todo.title"
       :contents="todo.contents"
       :is-default="todo.isDefault"
+      :screen-size="screenSize"
     ></todo-item>
   </ul>
 </template>
@@ -17,6 +18,7 @@ import { mapGetters } from "vuex";
 import TodoItem from "@/components/todos/TodoItem.vue";
 
 export default {
+  props: ["screenSize"],
   components: {
     TodoItem,
   },

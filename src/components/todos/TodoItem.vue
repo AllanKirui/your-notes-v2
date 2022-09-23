@@ -58,7 +58,7 @@
 
 <script>
 export default {
-  props: ["id", "title", "contents", "isDefault"],
+  props: ["id", "title", "contents", "isDefault", "screenSize"],
   inject: ["setTextLength", "globalFontSize"],
   computed: {
     hoverTitle() {
@@ -144,14 +144,26 @@ export default {
       let trimmedText = "";
 
       switch (this.globalFontSize) {
-        case 14: // for 14px set a 40 character length limit
-          trimmedText = this.setTextLength(incompleteItems[index].text, 40);
+        case 14: // for 14px set a 40 character length limit, increase limit for screen less than 768px
+          if (this.screenSize <= 768) {
+            trimmedText = this.setTextLength(incompleteItems[index].text, 80);
+          } else {
+            trimmedText = this.setTextLength(incompleteItems[index].text, 40);
+          }
           break;
-        case 16: // 16px set a 35 character length limit
-          trimmedText = this.setTextLength(incompleteItems[index].text, 35);
+        case 16: // 16px set a 35 character length limit, increase limit for screen less than 768px
+          if (this.screenSize <= 768) {
+            trimmedText = this.setTextLength(incompleteItems[index].text, 70);
+          } else {
+            trimmedText = this.setTextLength(incompleteItems[index].text, 35);
+          }
           break;
-        case 18: // 18px set a 30 character length limit
-          trimmedText = this.setTextLength(incompleteItems[index].text, 30);
+        case 18: // 18px set a 30 character length limit, increase limit for screen less than 768px
+          if (this.screenSize <= 768) {
+            trimmedText = this.setTextLength(incompleteItems[index].text, 60);
+          } else {
+            trimmedText = this.setTextLength(incompleteItems[index].text, 30);
+          }
           break;
         default:
           trimmedText = this.setTextLength(incompleteItems[index].text, 40);

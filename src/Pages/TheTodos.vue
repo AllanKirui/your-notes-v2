@@ -26,7 +26,7 @@
       </h3>
       <h4 v-if="isSearching" class="items-title">{{ searchMessage }}</h4>
       <p class="no-results">Nothing found!</p>
-      <todo-list></todo-list>
+      <todo-list :screen-size="screenSize"></todo-list>
     </section>
 
     <section
