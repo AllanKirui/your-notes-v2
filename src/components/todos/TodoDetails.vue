@@ -276,6 +276,7 @@ export default {
       progress: 0,
       isHighlighted: false,
       isShowDeleteWindow: false,
+      isMobileView: false,
     };
   },
   computed: {
@@ -454,10 +455,16 @@ export default {
       this.isShowDeleteWindow = false;
     },
     deleteTodo() {
+      // check if current screen size is for small devices
+      if (this.screenSize <= 768) {
+        this.isMobileView = true;
+      }
+
       // dispatch an action to delete a todo from the list of todos
       this.$store.dispatch("todos/deleteTodo", {
         id: this.parentTodoId,
         isDefault: this.selectedTodo.isDefault,
+        isMobileView: this.isMobileView,
       });
 
       // emit an event to show notification message

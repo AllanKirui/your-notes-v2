@@ -45,6 +45,12 @@ export default {
       !state.todos[parentIdx].isHideCompleted;
   },
   deleteTodo(state, payload) {
+    // if a todo is deleted while in mobile view reset the following state props
+    if (payload.isMobileView) {
+      state.selectedTodo = null;
+      state.openTodoId = null;
+    }
+
     let parentId = payload.id;
 
     // if todo is the default welcome todo, make a copy of it
