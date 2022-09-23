@@ -12,7 +12,15 @@
 
   <!-- Todo title and progress bar -->
   <div v-if="hasTodo" class="heading-wrapper">
-    <div class="heading-top flex">
+    <div class="heading-top flex flex-ai-c">
+      <button
+        class="back-btn"
+        title="Back to list of todos"
+        v-if="screenSize <= 768"
+        @click="resetSelectedTodo"
+      >
+        <span class="head"></span>
+      </button>
       <h3 class="items-title">{{ selectedTodo.title }}</h3>
       <div class="top-controls flex flex-ai-c">
         <button
@@ -251,6 +259,7 @@ import { mapGetters } from "vuex";
 
 export default {
   emits: ["show-notification"],
+  props: ["screenSize"],
   inject: ["setTextLength", "globalFontSize"],
   data() {
     return {
@@ -489,6 +498,10 @@ export default {
 
       return trimmedText;
     },
+    resetSelectedTodo() {
+      // dispatch an action to reset the 'selectedTodo' state prop
+      this.$store.dispatch("todos/resetSelectedTodo");
+    },
   },
   watch: {
     selectedTodo(newTodo) {
@@ -588,6 +601,39 @@ export default {
 </script>
 
 <style scoped>
+.back-btn {
+  position: relative;
+  width: 1.5rem;
+  height: 1.5rem;
+  background: transparent;
+  border: none;
+  border-radius: 50px;
+  outline: none;
+  transition: all 0.15s ease-in-out;
+  cursor: pointer;
+}
+
+.back-btn .head {
+  position: absolute;
+  top: 33%;
+  left: 38%;
+  display: block;
+  width: 0.675rem;
+  height: 0.675rem;
+  border: 2px solid var(--color-eerie-black);
+  border-top: none;
+  border-right: none;
+  transform: rotate(45deg);
+}
+
+.default-theme .back-btn:hover {
+  background-color: var(--color-platinum);
+}
+
+.back-btn:hover {
+  background-color: var(--color-platinum);
+}
+
 .progress-bar {
   position: relative;
   gap: 10px;

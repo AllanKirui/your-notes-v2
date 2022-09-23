@@ -29,9 +29,16 @@
       <todo-list></todo-list>
     </section>
 
-    <section class="content-items-details" v-if="numOfTodos">
+    <section
+      class="content-items-details"
+      v-if="numOfTodos"
+      :style="mobileFlowStyle"
+    >
       <div class="bg-images"></div>
-      <todo-details @show-notification="showNotification"></todo-details>
+      <todo-details
+        :screen-size="screenSize"
+        @show-notification="showNotification"
+      ></todo-details>
     </section>
 
     <!-- use the transition component to animate the modal -->
@@ -105,6 +112,7 @@ export default {
       isCreated: false,
       screenSize: null,
       isShowMobileCounter: false,
+      isShowMobileFlow: false,
     };
   },
   computed: {
@@ -113,6 +121,9 @@ export default {
     },
     numOfTodos() {
       return this.$store.getters["todos/numOfTodos"];
+    },
+    selectedTodo() {
+      return this.$store.getters["todos/selectedTodo"];
     },
     greeting() {
       return this.$store.getters.greeting;
@@ -134,6 +145,19 @@ export default {
       }
 
       return mode;
+    },
+    mobileFlowStyle() {
+      let style = "";
+
+      if (this.selectedTodo && this.isShowMobileFlow) {
+        style = "display: initial";
+      }
+
+      if (!this.selectedTodo && this.isShowMobileFlow) {
+        style = "display: none";
+      }
+
+      return style;
     },
   },
   methods: {
@@ -254,8 +278,17 @@ export default {
       if (newSize && newSize >= 1025) {
         this.isShowMobileCounter = false;
       }
+
       if (newSize && newSize <= 1024) {
         this.isShowMobileCounter = true;
+      }
+
+      if (newSize && newSize >= 769) {
+        this.isShowMobileFlow = false;
+      }
+
+      if (newSize && newSize <= 768) {
+        this.isShowMobileFlow = true;
       }
     },
   },
