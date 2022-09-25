@@ -608,39 +608,6 @@ export default {
 </script>
 
 <style scoped>
-.back-btn {
-  position: relative;
-  width: 1.5rem;
-  height: 1.5rem;
-  background: transparent;
-  border: none;
-  border-radius: 50px;
-  outline: none;
-  transition: all 0.15s ease-in-out;
-  cursor: pointer;
-}
-
-.back-btn .head {
-  position: absolute;
-  top: 33%;
-  left: 38%;
-  display: block;
-  width: 0.675rem;
-  height: 0.675rem;
-  border: 2px solid var(--color-eerie-black);
-  border-top: none;
-  border-right: none;
-  transform: rotate(45deg);
-}
-
-.default-theme .back-btn:hover {
-  background-color: var(--color-platinum);
-}
-
-.back-btn:hover {
-  background-color: var(--color-platinum);
-}
-
 .progress-bar {
   position: relative;
   gap: 10px;
