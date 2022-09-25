@@ -29,9 +29,16 @@
       <notes-list></notes-list>
     </section>
 
-    <section class="content-items-details" v-if="numOfNotes">
+    <section
+      class="content-items-details"
+      v-if="numOfNotes"
+      :style="mobileFlowStyle"
+    >
       <div class="bg-images"></div>
-      <notes-details @show-notification="showNotification"></notes-details>
+      <notes-details
+        :screenSize="screenSize"
+        @show-notification="showNotification"
+      ></notes-details>
     </section>
 
     <!-- use the transition component to animate the modal -->
@@ -105,6 +112,7 @@ export default {
       isCreated: false,
       screenSize: null,
       isShowMobileCounter: false,
+      isShowMobileFlow: false,
     };
   },
   computed: {
@@ -113,6 +121,9 @@ export default {
     },
     numOfNotes() {
       return this.$store.getters["notes/numOfNotes"];
+    },
+    selectedNote() {
+      return this.$store.getters["notes/selectedNote"];
     },
     greeting() {
       return this.$store.getters.greeting;
@@ -134,6 +145,19 @@ export default {
       }
 
       return mode;
+    },
+    mobileFlowStyle() {
+      let style = "";
+
+      if (this.selectedNote && this.isShowMobileFlow) {
+        style = "display: initial";
+      }
+
+      if (!this.selectedNote && this.isShowMobileFlow) {
+        style = "display: none";
+      }
+
+      return style;
     },
   },
   methods: {
@@ -250,8 +274,17 @@ export default {
       if (newSize && newSize >= 1025) {
         this.isShowMobileCounter = false;
       }
+
       if (newSize && newSize <= 1024) {
         this.isShowMobileCounter = true;
+      }
+
+      if (newSize && newSize >= 769) {
+        this.isShowMobileFlow = false;
+      }
+
+      if (newSize && newSize <= 768) {
+        this.isShowMobileFlow = true;
       }
     },
   },

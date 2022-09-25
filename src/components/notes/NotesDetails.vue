@@ -12,7 +12,15 @@
 
   <!-- Notes title -->
   <div v-if="hasNote" class="heading-wrapper">
-    <div class="heading-top flex">
+    <div class="heading-top flex flex-ai-c">
+      <button
+        class="back-btn"
+        title="Back to list of notes"
+        v-if="screenSize <= 768"
+        @click="resetSelectedNote"
+      >
+        <span class="head"></span>
+      </button>
       <h3 class="items-title">{{ selectedNote.title }}</h3>
       <div class="top-controls">
         <button
@@ -119,6 +127,7 @@
 import { mapGetters } from "vuex";
 
 export default {
+  props: ["screenSize"],
   emits: ["show-notification"],
   inject: ["setTextLength"],
   data() {
@@ -223,6 +232,10 @@ export default {
       if (this.selectedNote) {
         this.$refs.noteContent.innerText = this.selectedNote.content;
       }
+    },
+    resetSelectedNote() {
+      // dispatch an action to reset the 'selectedNote' state prop
+      this.$store.dispatch("notes/resetSelectedNote");
     },
   },
   watch: {
