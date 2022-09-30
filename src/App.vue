@@ -675,12 +675,6 @@ ul {
   position: relative;
 }
 
-@media (max-width: 1024px) {
-  .container {
-    grid-template-columns: 60px 1fr;
-  }
-}
-
 .notification-wrapper {
   position: absolute;
   left: 0;
@@ -728,6 +722,23 @@ ul {
 
 .content-wrapper {
   grid-column: 2;
+}
+
+@media (max-width: 1024px) {
+  .container {
+    grid-template-columns: 60px 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    grid-template-columns: 1fr;
+  }
+
+  .content-wrapper {
+    grid-column: 1;
+    z-index: 1;
+  }
 }
 /* end of home page styles */
 

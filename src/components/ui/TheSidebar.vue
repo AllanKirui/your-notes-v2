@@ -298,8 +298,11 @@ export default {
   outline-offset: 3px;
 }
 
+.btn-wrapper .create-btn div {
+  gap: 0.625rem;
+}
+
 .btn-wrapper .create-btn .btn-text {
-  margin-left: 0.625rem;
   font-weight: 500;
 }
 
@@ -382,11 +385,10 @@ export default {
     padding: 0;
   }
 
-  .btn-wrapper .create-btn .btn-img {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+  .btn-wrapper .create-btn div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .btn-wrapper .create-btn .btn-text {
@@ -403,6 +405,48 @@ export default {
 
   .links .link a .text-wrapper {
     display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 250px;
+    z-index: 2;
+  }
+
+  .bg-image {
+    background-size: 190px;
+    background-position: 30px center;
+  }
+
+  .btn-wrapper .create-btn {
+    width: 12.5rem;
+    height: auto;
+    padding: 0.75rem;
+  }
+
+  .btn-wrapper .create-btn div {
+    justify-content: left;
+  }
+
+  .btn-wrapper .create-btn .btn-text {
+    display: initial;
+  }
+
+  .links .link {
+    margin-right: 0.3125rem;
+  }
+
+  .links .link a {
+    padding: 1rem 1.875rem;
+  }
+
+  .links .link a .text-wrapper {
+    display: flex;
+    justify-content: space-between;
   }
 }
 </style>
