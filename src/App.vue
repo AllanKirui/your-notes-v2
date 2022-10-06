@@ -8,10 +8,12 @@
     v-if="isLoggedIn"
     :font-size="globalFontSize"
     :clear-search="isCancelSearch"
+    :isOverlayVisible="isOverlayVisible"
     @is-searching="setSearchingStatus"
     @set-message="setSearchMessage"
     @remove-message="resetSearchingStatus"
-    @resetCancel="resetCancelProp"
+    @reset-cancel="resetCancelProp"
+    @toggle-overlay="toggleOverlay"
   ></the-header>
   <div
     :class="themeClasses"
@@ -44,6 +46,15 @@
         </li>
       </transition-group>
     </div>
+
+    <!-- use the teleport component to render the overlay in the body tag -->
+    <teleport to="body">
+      <div
+        :class="[isOverlayVisible ? 'active' : '', 'overlay']"
+        title="Hide Options"
+        @click="hideOverlay"
+      ></div>
+    </teleport>
   </div>
 </template>
 
@@ -75,6 +86,7 @@ export default {
       isCancelSearch: false,
       isSearching: false,
       searchMessage: "",
+      isOverlayVisible: false,
     };
   },
   computed: {
@@ -151,6 +163,12 @@ export default {
     },
     setSearchMessage(msg) {
       this.searchMessage = `Searching for "${msg}"`;
+    },
+    toggleOverlay(status) {
+      this.isOverlayVisible = status;
+    },
+    hideOverlay() {
+      this.isOverlayVisible = false;
     },
   },
   watch: {
@@ -329,6 +347,21 @@ ul {
   font-size: inherit;
   color: inherit;
   transition: all 0.15s ease-in-out;
+}
+
+/* overlay styles */
+@media (max-width: 768px) {
+  .overlay.active {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(26, 26, 26, 0.8);
+    backdrop-filter: blur(10px);
+    cursor: pointer;
+    z-index: 1;
+  }
 }
 
 /* themes */

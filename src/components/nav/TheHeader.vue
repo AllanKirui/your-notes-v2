@@ -89,11 +89,18 @@
 
 <script>
 export default {
-  props: ["fontSize", "clearSearch"],
-  emits: ["reset-cancel", "is-searching", "set-message", "remove-message"],
+  props: ["fontSize", "clearSearch", "isOverlayVisible"],
+  emits: [
+    "reset-cancel",
+    "is-searching",
+    "set-message",
+    "remove-message",
+    "toggle-overlay",
+  ],
   data() {
     return {
       isSidebarOpen: false,
+      isOverlay: false,
     };
   },
   computed: {
@@ -120,6 +127,11 @@ export default {
     },
     themeClasses() {
       let classes = "header ";
+
+      // add 'overlay-active' class if overlay is active
+      if (this.isOverlay) {
+        classes += "overlay-active ";
+      }
 
       // for default theme
       if (!this.theme) {
@@ -151,6 +163,10 @@ export default {
   methods: {
     toggleSidebar() {
       this.isSidebarOpen = !this.isSidebarOpen;
+      this.isOverlay = !this.isOverlay;
+
+      // emit a custom event to show the overlay
+      this.$emit("toggle-overlay", this.isOverlay);
     },
     setInitials(name) {
       if (!name) {
@@ -298,6 +314,13 @@ export default {
 
         // reset the isCancelSearch prop in App
         this.$emit("reset-cancel");
+      }
+    },
+    isOverlayVisible(newValue) {
+      if (!newValue) {
+        // reset props
+        this.isOverlay = false;
+        this.isSidebarOpen = false;
       }
     },
   },
@@ -490,6 +513,10 @@ export default {
 
 /* media queries */
 @media (max-width: 768px) {
+  header {
+    z-index: 2;
+  }
+
   .nav {
     position: relative;
     top: 50%;
