@@ -96,6 +96,7 @@ export default {
     "set-message",
     "remove-message",
     "toggle-overlay",
+    "cancel-search",
   ],
   data() {
     return {
@@ -162,6 +163,9 @@ export default {
   },
   methods: {
     toggleSidebar() {
+      // emit a custom event to clear active search field
+      if (this.$refs.search.value) this.$emit("cancel-search");
+
       this.isSidebarOpen = !this.isSidebarOpen;
       this.isOverlay = !this.isOverlay;
 

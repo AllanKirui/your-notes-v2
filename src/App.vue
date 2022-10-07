@@ -14,6 +14,7 @@
     @remove-message="resetSearchingStatus"
     @reset-cancel="resetCancelProp"
     @toggle-overlay="toggleOverlay"
+    @cancel-search="cancelSearch"
   ></the-header>
   <div
     :class="themeClasses"
@@ -32,7 +33,7 @@
       :search-message="searchMessage"
       @close-modal="closeInputModal"
       @show-notification="showNotification"
-      @cancelSearch="cancelSearch"
+      @cancel-search="cancelSearch"
     ></router-view>
 
     <!-- use the transition-group component to animate the notifications -->
