@@ -32,6 +32,7 @@
       :search-message="searchMessage"
       @close-modal="closeInputModal"
       @show-notification="showNotification"
+      @cancelSearch="cancelSearch"
     ></router-view>
 
     <!-- use the transition-group component to animate the notifications -->
@@ -131,10 +132,7 @@ export default {
     showInputModal(side) {
       this.isShowInputModal = true;
       this.activeSide = side;
-
-      // clear search field in TheHeader
-      this.isCancelSearch = true;
-      this.isSearching = false;
+      this.cancelSearch();
     },
     closeInputModal() {
       this.isShowInputModal = false;
@@ -177,6 +175,11 @@ export default {
     },
     hideOverlay() {
       this.isOverlayVisible = false;
+    },
+    cancelSearch() {
+      // clear search field in TheHeader
+      this.isCancelSearch = true;
+      this.isSearching = false;
     },
   },
   watch: {
@@ -836,6 +839,33 @@ ul {
   grid-column: 1;
   position: relative;
   overflow-y: auto;
+}
+
+.content-items .results-wrapper {
+  padding: 0.375rem 0.875rem;
+}
+
+.content-items .results-wrapper .items-title {
+  padding: 0;
+}
+
+.content-items .results-wrapper .cancel-search-btn {
+  padding: 0;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50px;
+}
+
+.default-theme .content-items .results-wrapper .cancel-search-btn:hover {
+  background-color: var(--color-platinum);
+}
+
+.purplish-theme .content-items .results-wrapper .cancel-search-btn:hover {
+  background-color: var(--color-tickle-me-pink);
+}
+
+.purplish-theme .content-items .results-wrapper .cancel-search-btn:hover svg {
+  stroke: var(--color-black-blue);
 }
 
 .content-items .no-results {

@@ -24,7 +24,26 @@
       <h3 v-if="!isSearching && !isShowMobileCounter" class="items-title">
         Todos
       </h3>
-      <h4 v-if="isSearching" class="items-title">{{ searchMessage }}</h4>
+      <div class="results-wrapper flex flex-ai-c flex-jc-sb" v-if="isSearching">
+        <h4 class="items-title">{{ searchMessage }}</h4>
+        <button
+          class="btn cancel-search-btn flex flex-ai-c flex-jc-c"
+          title="Cancel search"
+          @click="cancelSearch"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 64 64"
+            stroke-width="5"
+            stroke="currentColor"
+            fill="none"
+            class="duration-300 transform transition-all"
+            style="width: 14px; height: 14px"
+          >
+            <path d="M8.06 8.06l47.35 47.88M55.94 8.06L8.59 55.94"></path>
+          </svg>
+        </button>
+      </div>
       <p class="no-results">Nothing found!</p>
       <todo-list :screen-size="screenSize"></todo-list>
     </section>
@@ -101,7 +120,7 @@ import TodoDetails from "@/components/todos/TodoDetails.vue";
 
 export default {
   props: ["isModal", "activeSide", "isSearching", "searchMessage"],
-  emits: ["close-modal", "show-notification"],
+  emits: ["close-modal", "show-notification", "cancel-search"],
   inject: ["globalFontSize"],
   components: {
     TodoList,
@@ -261,6 +280,9 @@ export default {
       window.addEventListener("resize", () => {
         this.screenSize = window.innerWidth;
       });
+    },
+    cancelSearch() {
+      this.$emit("cancel-search");
     },
   },
   watch: {
