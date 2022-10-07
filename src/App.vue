@@ -21,7 +21,10 @@
     :style="{ 'font-size': globalFontSize / 16 + 'rem' }"
   >
     <!-- TODO: settings page and menu should handle theme switching -->
-    <the-sidebar @show-modal="showInputModal"></the-sidebar>
+    <the-sidebar
+      :class="isOverlayVisible ? 'sidebar-shown' : ''"
+      @show-modal="showInputModal"
+    ></the-sidebar>
     <router-view
       :is-modal="isShowInputModal"
       :active-side="activeSide"

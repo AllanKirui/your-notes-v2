@@ -412,9 +412,14 @@ export default {
   .wrapper {
     position: absolute;
     top: 0;
-    left: 0;
+    left: -255px;
     width: 250px;
     z-index: 2;
+    transition: left 0.3s ease-in;
+  }
+
+  .wrapper.sidebar-shown {
+    left: 0;
   }
 
   .bg-image {
