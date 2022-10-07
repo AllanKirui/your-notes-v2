@@ -34,6 +34,7 @@
       @close-modal="closeInputModal"
       @show-notification="showNotification"
       @cancel-search="cancelSearch"
+      @close-sidebar="hideOverlay"
     ></router-view>
 
     <!-- use the transition-group component to animate the notifications -->

@@ -120,7 +120,7 @@ import NotesDetails from "@/components/notes/NotesDetails.vue";
 
 export default {
   props: ["isModal", "activeSide", "isSearching", "searchMessage"],
-  emits: ["close-modal", "show-notification", "cancel-search"],
+  emits: ["close-modal", "show-notification", "cancel-search", "close-sidebar"],
   inject: ["globalFontSize"],
   components: {
     NotesList,
@@ -303,6 +303,8 @@ export default {
 
       if (newSize && newSize >= 769) {
         this.isShowMobileFlow = false;
+        // close the sidebar for large screens
+        this.$emit("close-sidebar");
       }
 
       if (newSize && newSize <= 768) {

@@ -120,7 +120,7 @@ import TodoDetails from "@/components/todos/TodoDetails.vue";
 
 export default {
   props: ["isModal", "activeSide", "isSearching", "searchMessage"],
-  emits: ["close-modal", "show-notification", "cancel-search"],
+  emits: ["close-modal", "show-notification", "cancel-search", "close-sidebar"],
   inject: ["globalFontSize"],
   components: {
     TodoList,
@@ -307,6 +307,8 @@ export default {
 
       if (newSize && newSize >= 769) {
         this.isShowMobileFlow = false;
+        // close the sidebar for large screens
+        this.$emit("close-sidebar");
       }
 
       if (newSize && newSize <= 768) {
