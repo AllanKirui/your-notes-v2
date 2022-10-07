@@ -160,6 +160,11 @@ export default {
     },
     setSearchingStatus() {
       this.isSearching = true;
+
+      // close the sidebar and overlay if they are visible
+      if (this.isOverlayVisible) {
+        this.isOverlayVisible = false;
+      }
     },
     resetSearchingStatus() {
       this.isSearching = false;
@@ -196,6 +201,7 @@ export default {
         // reset props
         this.isShowInputModal = false;
         this.resetSearchingStatus();
+        this.hideOverlay();
 
         // facilitate the user clicking on the create new todo button
         // from the settings route
