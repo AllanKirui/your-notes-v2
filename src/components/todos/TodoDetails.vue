@@ -803,7 +803,7 @@ export default {
   padding: 0.375rem 0.375rem 0.2rem !important;
   border-radius: 50px;
   opacity: 0;
-  visibility: visible;
+  visibility: hidden;
 }
 
 .items .item:hover .item-options .delete-item-btn {
