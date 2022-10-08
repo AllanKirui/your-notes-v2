@@ -291,6 +291,12 @@ export default {
   height: calc(100vh - 250px);
 }
 
+@media (max-width: 640px) {
+  .details-wrapper {
+    padding-top: 0;
+  }
+}
+
 .item-edit-field .field {
   padding: 0.5rem;
   width: 100%;
