@@ -26,6 +26,7 @@
     <the-sidebar
       :class="isOverlayVisible ? 'sidebar-shown' : ''"
       @show-modal="showInputModal"
+      @close-sidebar="hideOverlay"
     ></the-sidebar>
     <router-view
       :is-modal="isShowInputModal"

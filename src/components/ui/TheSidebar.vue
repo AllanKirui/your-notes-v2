@@ -149,7 +149,7 @@ check localStorage in canIuse
 import { mapGetters } from "vuex";
 
 export default {
-  emits: ["show-modal"],
+  emits: ["show-modal", "close-sidebar"],
   computed: {
     ...mapGetters("todos", ["numOfTodos"]),
     ...mapGetters("notes", ["numOfNotes"]),
@@ -186,6 +186,9 @@ export default {
   },
   methods: {
     create() {
+      // emit a custom event to close the sidebar
+      this.$emit("close-sidebar");
+
       // if route is not notes or todos, switch to todos route
       if (this.$route.name !== "notes" && this.$route.name !== "todos") {
         this.$router.push("/todos");
