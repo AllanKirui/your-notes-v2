@@ -189,6 +189,15 @@ export default {
       // emit a custom event to close the sidebar
       this.$emit("close-sidebar");
 
+      // dispatch an action to reset the 'selectedNote' and 'selectedTodo' state prop
+      if (this.$route.name === "notes") {
+        this.$store.dispatch("notes/resetSelectedNote");
+      }
+
+      if (this.$route.name === "todos") {
+        this.$store.dispatch("todos/resetSelectedTodo");
+      }
+
       // if route is not notes or todos, switch to todos route
       if (this.$route.name !== "notes" && this.$route.name !== "todos") {
         this.$router.push("/todos");
