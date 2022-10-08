@@ -1182,6 +1182,17 @@ ul {
   z-index: 1;
 }
 
+@media (max-width: 640px) {
+  .heading-wrapper {
+    margin-top: 1.5rem;
+  }
+
+  .details-wrapper {
+    margin: 0 0.875rem;
+    padding: 0 0.375rem 1rem;
+  }
+}
+
 .heading-wrapper .back-btn {
   position: relative;
   width: 1.5rem;
