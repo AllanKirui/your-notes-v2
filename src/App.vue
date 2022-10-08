@@ -959,6 +959,25 @@ ul {
     background-size: 88px, 190px;
     background-position: 80px center, calc(50vw - 60px) center;
   }
+
+  .content-intro-wrapper .bg-images {
+    background-size: calc(((100vw - 200px)) - 48px),
+      calc(((100vw - 300px) / 2) - 32px), cover;
+    background-position: center calc(50% + 170px), center center;
+  }
+}
+
+@media (max-width: 640px) {
+  .content-items-details .bg-images {
+    background-size: 70px, 152px;
+    background-position: 40px center, calc(50vw - 60px) center;
+  }
+
+  .content-intro-wrapper .bg-images {
+    background-size: calc((100vw) - 48px), calc(((100vw - 100px) / 2) - 32px),
+      cover;
+    background-position: center calc(50% + 170px), center center;
+  }
 }
 
 .default-theme .content-items-details .bg-images {
