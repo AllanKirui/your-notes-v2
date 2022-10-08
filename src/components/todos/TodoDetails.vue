@@ -155,7 +155,12 @@
               </div>
             </div>
 
-            <div class="item-options">
+            <div
+              :class="[
+                isEditText && selectedItem === index ? 'visible' : '',
+                'item-options',
+              ]"
+            >
               <button
                 class="btn delete-item-btn"
                 title="Delete task"
@@ -809,6 +814,13 @@ export default {
 .items .item:hover .item-options .delete-item-btn {
   opacity: 1;
   visibility: visible;
+}
+
+@media (max-width: 768px) {
+  .item-options.visible .delete-item-btn {
+    opacity: 1;
+    visibility: visible;
+  }
 }
 
 .default-theme .item-options .delete-item-btn:hover {
