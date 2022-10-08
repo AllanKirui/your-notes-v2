@@ -1249,7 +1249,7 @@ ul {
 .heading-wrapper .confirm-delete {
   position: absolute;
   top: 2.5rem;
-  right: 0.625rem;
+  right: calc(2% + 10px);
   max-width: 18.75rem;
 }
 
