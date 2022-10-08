@@ -8,6 +8,7 @@
     v-if="isLoggedIn"
     :font-size="globalFontSize"
     :clear-search="isCancelSearch"
+    :is-searching="isSearching"
     :isOverlayVisible="isOverlayVisible"
     @is-searching="setSearchingStatus"
     @set-message="setSearchMessage"

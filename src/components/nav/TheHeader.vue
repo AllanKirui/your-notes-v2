@@ -89,7 +89,7 @@
 
 <script>
 export default {
-  props: ["fontSize", "clearSearch", "isOverlayVisible"],
+  props: ["fontSize", "clearSearch", "isOverlayVisible", "isSearching"],
   emits: [
     "reset-cancel",
     "is-searching",
@@ -163,8 +163,13 @@ export default {
   },
   methods: {
     toggleSidebar() {
-      // emit a custom event to clear active search field
-      if (this.$refs.search.value) this.$emit("cancel-search");
+      // emit a custom event to clear search field if it's active
+      if (this.isSearching) {
+        let searchTerm = this.$refs.search ? this.$refs.search.value : null;
+        if (searchTerm) {
+          this.$emit("cancel-search");
+        }
+      }
 
       this.isSidebarOpen = !this.isSidebarOpen;
       this.isOverlay = !this.isOverlay;
