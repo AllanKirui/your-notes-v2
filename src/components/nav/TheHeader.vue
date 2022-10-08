@@ -535,7 +535,14 @@ export default {
     height: 70%;
     padding: 1.125rem;
     border-radius: 50px;
+  }
+
+  .default-theme .nav {
     background-color: var(--color-graphite-black);
+  }
+
+  .purplish-theme .nav {
+    background-color: var(--color-russian-violet);
   }
 
   .nav-left {
@@ -577,6 +584,10 @@ export default {
     background-color: var(--color-pantone-green);
   }
 
+  .purplish-theme .nav-left .nav-burger .burger span {
+    background-color: var(--color-tickle-me-pink);
+  }
+
   .nav-left .nav-burger .burger span:not(:last-child) {
     margin-bottom: 5px;
   }
@@ -607,6 +618,7 @@ export default {
     margin-left: 0;
   }
 
+  .purplish-theme .nav-search,
   .default-theme .nav-search {
     border: none;
   }

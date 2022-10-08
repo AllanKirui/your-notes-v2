@@ -1012,8 +1012,16 @@ ul {
   height: 25px;
   margin-right: 0.875rem;
   border-radius: 50px;
+}
+
+.default-theme .counter-wrapper {
   background-color: var(--color-graphite-black);
   color: var(--color-clouds);
+}
+
+.purplish-theme .counter-wrapper {
+  background-color: var(--color-tickle-me-pink);
+  color: var(--color-black-blue);
 }
 
 .items-title-counter {
@@ -1213,18 +1221,29 @@ ul {
   display: block;
   width: 0.675rem;
   height: 0.675rem;
-  border: 2px solid var(--color-eerie-black);
-  border-top: none;
-  border-right: none;
+  border-top: none !important;
+  border-right: none !important;
   transform: rotate(45deg);
+}
+
+.default-theme .heading-wrapper .back-btn .head {
+  border: 2px solid var(--color-eerie-black);
+}
+
+.purplish-theme .heading-wrapper .back-btn .head {
+  border: 2px solid var(--color-spanish-pink);
 }
 
 .default-theme .heading-wrapper .back-btn:hover {
   background-color: var(--color-platinum);
 }
 
-.heading-wrapper .back-btn:hover {
-  background-color: var(--color-platinum);
+.purplish-theme .heading-wrapper .back-btn:hover {
+  background-color: var(--color-tickle-me-pink);
+}
+
+.purplish-theme .heading-wrapper .back-btn:hover .head {
+  border: 2px solid var(--color-black-blue);
 }
 
 .heading-wrapper .confirm-delete {
