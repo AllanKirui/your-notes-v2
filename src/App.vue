@@ -1202,6 +1202,7 @@ ul {
   }
 }
 
+.settings-wrapper .title .back-btn,
 .heading-wrapper .back-btn {
   position: relative;
   width: 1.5rem;
@@ -1214,6 +1215,7 @@ ul {
   cursor: pointer;
 }
 
+.settings-wrapper .title .back-btn .head,
 .heading-wrapper .back-btn .head {
   position: absolute;
   top: 33%;
@@ -1226,12 +1228,28 @@ ul {
   transform: rotate(45deg);
 }
 
+.default-theme .settings-wrapper .title .back-btn .head {
+  border: 2px solid var(--color-pantone-green);
+}
+
 .default-theme .heading-wrapper .back-btn .head {
   border: 2px solid var(--color-eerie-black);
 }
 
+.purplish-theme .settings-wrapper .title .back-btn .head {
+  border: 2px solid var(--color-spanish-pink);
+}
+
 .purplish-theme .heading-wrapper .back-btn .head {
   border: 2px solid var(--color-spanish-pink);
+}
+
+.default-theme .settings-wrapper .title .back-btn:hover {
+  background-color: var(--color-graphite-black);
+}
+
+.purplish-theme .settings-wrapper .title .back-btn:hover {
+  background-color: var(--color-tickle-me-pink);
 }
 
 .default-theme .heading-wrapper .back-btn:hover {

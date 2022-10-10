@@ -1,8 +1,16 @@
 <template>
   <section class="settings-wrapper flex flex-jc-c">
     <base-card :mode="cardStyle">
-      <div class="title">
+      <div class="title flex flex-ai-c flex-jc-sb">
         <h2 class="title-text">Settings</h2>
+        <button
+          class="back-btn"
+          title="All settings"
+          v-if="screenSize <= 768 && isMobileView && activeSide"
+          @click="removeActiveSide"
+        >
+          <span class="head"></span>
+        </button>
       </div>
 
       <div class="options">
@@ -13,19 +21,92 @@
               title="Change appearance"
               @click="setActiveSide('appearance')"
             >
-              Appearance
+              <div class="flex flex-ai-c">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 64 64"
+                  stroke-width="3"
+                  stroke="currentColor"
+                  fill="none"
+                  width="25"
+                >
+                  <path
+                    d="M34.07,50.93S53.86,44.38,45.68,26.6c0,0-4.8-11.46-19.31-13.27S8.3,20.8,8.3,20.8,1.81,33.68,13.1,35c1.62.19,5-.56,6.4,1.33s.29,4.2,0,8.8C19.34,47.69,21.27,53.87,34.07,50.93Z"
+                    stroke-linecap="round"
+                  />
+                  <circle
+                    cx="17.2"
+                    cy="24.01"
+                    r="3.59"
+                    stroke-linecap="round"
+                  />
+                  <circle
+                    cx="38.02"
+                    cy="28.02"
+                    r="2.43"
+                    stroke-linecap="round"
+                  />
+                  <circle
+                    cx="38.02"
+                    cy="39.04"
+                    r="2.43"
+                    stroke-linecap="round"
+                  />
+                  <circle
+                    cx="28.14"
+                    cy="44.38"
+                    r="2.43"
+                    stroke-linecap="round"
+                  />
+                  <path
+                    d="M54,12.62c-.69,3.31-2.07,10.9-2.18,27a.41.41,0,0,0,.41.41h4.91a.41.41,0,0,0,.41-.42c-.1-2.82-.74-18.12-2.75-27A.41.41,0,0,0,54,12.62Z"
+                    stroke-linecap="round"
+                  />
+                  <path
+                    d="M57.48,43.8c0,1.53-1.92,7.37-2.78,7.37s-2.78-5.84-2.78-7.37a2.78,2.78,0,1,1,5.56,0Z"
+                    stroke-linecap="round"
+                  />
+                </svg>
+                <span class="link-text">Appearance</span>
+              </div>
             </li>
             <li
               :class="[activeSide === 'passwords' ? 'active' : '', 'link']"
               title="Change password"
               @click="setActiveSide('passwords')"
             >
-              Passwords
+              <div class="flex flex-ai-c">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 64 64"
+                  stroke-width="3"
+                  stroke="currentColor"
+                  fill="none"
+                  width="25"
+                >
+                  <rect
+                    x="12.34"
+                    y="25.5"
+                    width="39.32"
+                    height="30.95"
+                    rx="1.5"
+                  />
+                  <path
+                    d="M32,7.55h0A11.29,11.29,0,0,1,43.29,18.84V25.5a0,0,0,0,1,0,0H20.71a0,0,0,0,1,0,0V18.84A11.29,11.29,0,0,1,32,7.55Z"
+                  />
+                  <circle cx="32" cy="42.83" r="3.76" />
+                  <line x1="32" y1="46.6" x2="32" y2="51.83" />
+                </svg>
+                <span class="link-text">Passwords</span>
+              </div>
             </li>
           </ul>
         </div>
 
-        <div class="options-contents">
+        <div
+          class="options-contents"
+          :style="{ display: activeSide ? 'initial' : 'none' }"
+        >
           <!-- appearance settings -->
           <div class="content" v-if="activeSide === 'appearance'">
             <h3 class="content-title">Choose Your Theme</h3>
@@ -70,6 +151,8 @@ export default {
   data() {
     return {
       activeSide: "appearance",
+      screenSize: null,
+      isMobileView: false,
     };
   },
   computed: {
@@ -106,13 +189,46 @@ export default {
       // dispatch an action to set any other selected theme
       this.$store.dispatch("setTheme", theme);
     },
+    checkWindowSize() {
+      // listen to the resize event
+      window.addEventListener("resize", () => {
+        this.screenSize = window.innerWidth;
+      });
+    },
+    removeActiveSide() {
+      this.activeSide = null;
+    },
+  },
+  watch: {
+    screenSize(newSize) {
+      if (newSize && newSize >= 769) {
+        this.isMobileView = false;
+
+        if (!this.activeSide) this.activeSide = "appearance";
+      }
+
+      if (newSize && newSize <= 768) {
+        this.isMobileView = true;
+      }
+    },
+  },
+  beforeMount() {
+    this.screenSize = window.innerWidth;
+  },
+  mounted() {
+    this.checkWindowSize();
+
+    if (this.screenSize <= 768) {
+      this.isMobileView = true;
+      this.activeSide = null;
+    }
   },
 };
 </script>
 
 <style scoped>
 .settings-wrapper {
-  padding-top: 3.75rem;
+  padding-top: 1.875rem;
 }
 
 .settings-wrapper .card {
@@ -174,9 +290,42 @@ export default {
   background-color: var(--color-russian-violet);
 }
 
+.options-links .link div {
+  gap: 0.675rem;
+}
+
 .options-contents {
   grid-column: 2;
   grid-row: 1;
+  max-height: 470px;
+  overflow-y: scroll;
+}
+
+@media (max-width: 768px) {
+  .settings-wrapper {
+    padding-top: 0;
+  }
+
+  .settings-wrapper .card {
+    margin: 0;
+    border-radius: 0;
+    height: calc(100vh - 80px);
+  }
+
+  .options {
+    min-height: 100%;
+    grid-template-columns: 1fr;
+  }
+
+  .options-links-wrapper {
+    grid-column: 1;
+  }
+
+  .options-contents {
+    grid-column: 1;
+    display: none;
+    max-height: calc(100vh - 57px - 80px);
+  }
 }
 
 .default-theme .options-contents {
@@ -189,6 +338,7 @@ export default {
 
 .content {
   text-align: center;
+  margin-bottom: 1.875rem;
 }
 
 .content .content-title {
@@ -202,6 +352,7 @@ export default {
 .content .themes-wrapper {
   gap: 1.25rem;
   margin-top: 1.875rem;
+  padding: 0.625rem;
   width: 100%;
 }
 
