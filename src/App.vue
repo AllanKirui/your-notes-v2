@@ -278,7 +278,7 @@ export default {
   --color-graphite-black: hsl(0, 0%, 17%);
 
   /* start of colors for 'purplish' theme */
-  --color-black-blue: hsl(266, 63%, 12%);
+  --color-black-blue: hsl(266, 64%, 12%);
   --color-spanish-pink: hsl(9, 94%, 87%);
   --color-tickle-me-pink: hsl(336, 100%, 76%);
   --color-russian-violet: hsl(267, 53%, 17%);
@@ -373,10 +373,17 @@ ul {
     left: 0;
     width: 100vw;
     height: 100vh;
-    background-color: rgba(26, 26, 26, 0.8);
     backdrop-filter: blur(10px);
     cursor: pointer;
     z-index: 1;
+  }
+
+  .default-theme .overlay.active {
+    background-color: rgba(26, 26, 26, 0.8);
+  }
+
+  .purplish-theme .overlay.active {
+    background-color: rgba(28, 11, 50, 0.8);
   }
 }
 
