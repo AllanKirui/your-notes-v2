@@ -179,6 +179,16 @@
             <div class="content-btns-wrapper flex flex-ai-c flex-jc-c">
               <button
                 :class="[
+                  defaultTodo ? 'enabled' : 'disabled',
+                  'btn btn-restore-todo',
+                ]"
+                title="Restore deleted todo"
+                @click="restoreDefaults('todos')"
+              >
+                Restore Todo
+              </button>
+              <button
+                :class="[
                   defaultNote ? 'enabled' : 'disabled',
                   'btn btn-restore-note',
                 ]"
@@ -224,6 +234,9 @@ export default {
 
       return mode;
     },
+    defaultTodo() {
+      return this.$store.getters["todos/defaultTodo"];
+    },
     defaultNote() {
       return this.$store.getters["notes/defaultNote"];
     },
@@ -256,6 +269,10 @@ export default {
         if (!this.defaultNote) return;
         this.restoreWelcomeNote();
       }
+      if (item === "todos") {
+        if (!this.defaultTodo) return;
+        this.restoreWelcomeTodo();
+      }
     },
     restoreWelcomeNote() {
       // dispatch an action to restore the Welcome Note
@@ -266,6 +283,17 @@ export default {
 
       // show a notification message
       let message = "Welcome Note successfully restored";
+      this.$emit("show-notification", message);
+    },
+    restoreWelcomeTodo() {
+      // dispatch an action to restore the Welcome Todo
+      this.$store.dispatch("todos/restoreWelcomeTodo", this.defaultTodo);
+
+      // dispatch an action to reset the 'defaultTodo' state prop
+      this.$store.dispatch("todos/resetDefaultTodo");
+
+      // show a notification message
+      let message = "Welcome Todo successfully restored";
       this.$emit("show-notification", message);
     },
   },
