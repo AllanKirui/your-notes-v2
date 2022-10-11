@@ -14,4 +14,7 @@ export default {
   openNoteId(state) {
     return state.openNoteId;
   },
+  defaultNote(state) {
+    return state.defaultNote;
+  },
 };

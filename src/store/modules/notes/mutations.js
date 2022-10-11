@@ -37,4 +37,10 @@ export default {
   closeOpenFields(state, payload) {
     state.isCloseOpenFields = payload;
   },
+  restoreWelcomeNote(state, payload) {
+    state.notes.unshift(payload);
+  },
+  resetDefaultNote(state) {
+    state.defaultNote = null;
+  },
 };

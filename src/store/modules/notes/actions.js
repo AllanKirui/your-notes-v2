@@ -27,4 +27,12 @@ export default {
     // commit a mutation to close any open fields in NotesDetails
     context.commit("closeOpenFields", payload);
   },
+  restoreWelcomeNote(context, payload) {
+    // commit a mutation to restore the Welcome Note
+    context.commit("restoreWelcomeNote", payload);
+  },
+  resetDefaultNote(context) {
+    // commit a mutation to reset the 'defaultNote' state prop
+    context.commit("resetDefaultNote");
+  },
 };
