@@ -18,6 +18,10 @@ export default {
     let childIdx = payload.childTodoId;
 
     // update the 'text' prop
+    if (state.defaultTodo) {
+      state.todos[parentIdx - 1].contents[childIdx].text = payload.newText;
+      return;
+    }
     state.todos[parentIdx].contents[childIdx].text = payload.newText;
   },
   addNewTodo(state, payload) {
