@@ -16,6 +16,10 @@ export default {
     let parentIdx = payload.noteId;
 
     // update the 'text' prop
+    if (state.defaultNote) {
+      state.notes[parentIdx - 1].content = payload.newText;
+      return;
+    }
     state.notes[parentIdx].content = payload.newText;
   },
   addNewNote(state, payload) {
