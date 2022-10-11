@@ -16,14 +16,14 @@
         v-if="!isSearching && isShowMobileCounter"
         class="flex flex-ai-c flex-jc-sb"
       >
-        <h3 class="items-title">Notes</h3>
+        <h2 class="items-title">Notes</h2>
         <div class="counter-wrapper">
           <span class="items-title-counter"> {{ numOfNotes }} </span>
         </div>
       </div>
-      <h3 v-if="!isSearching && !isShowMobileCounter" class="items-title">
+      <h2 v-if="!isSearching && !isShowMobileCounter" class="items-title">
         Notes
-      </h3>
+      </h2>
       <div class="results-wrapper flex flex-ai-c flex-jc-sb" v-if="isSearching">
         <h4 class="items-title">{{ searchMessage }}</h4>
         <button
