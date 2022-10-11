@@ -13,14 +13,16 @@
   <!-- Todo title and progress bar -->
   <div v-if="hasTodo" class="heading-wrapper">
     <div class="heading-top flex flex-ai-c">
-      <button
-        class="back-btn"
-        title="Back to list of todos"
-        v-if="screenSize <= 768"
-        @click="resetSelectedTodo"
-      >
-        <span class="head"></span>
-      </button>
+      <div class="back-btn-wrapper">
+        <button
+          class="back-btn"
+          title="Back to list of todos"
+          v-if="screenSize <= 768"
+          @click="resetSelectedTodo"
+        >
+          <span class="head"></span>
+        </button>
+      </div>
       <h3 class="items-title">{{ selectedTodo.title }}</h3>
       <div class="top-controls flex flex-ai-c">
         <button

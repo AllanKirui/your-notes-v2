@@ -3,14 +3,16 @@
     <base-card :mode="cardStyle">
       <div class="title flex flex-ai-c flex-jc-sb">
         <h2 class="title-text">Settings</h2>
-        <button
-          class="back-btn"
-          title="All settings"
-          v-if="screenSize <= 768 && isMobileView && activeSide"
-          @click="removeActiveSide"
-        >
-          <span class="head"></span>
-        </button>
+        <div class="back-btn-wrapper">
+          <button
+            class="back-btn"
+            title="All settings"
+            v-if="screenSize <= 768 && isMobileView && activeSide"
+            @click="removeActiveSide"
+          >
+            <span class="head"></span>
+          </button>
+        </div>
       </div>
 
       <div class="options">

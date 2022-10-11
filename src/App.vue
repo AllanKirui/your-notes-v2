@@ -1209,11 +1209,17 @@ ul {
   }
 }
 
+.settings-wrapper .title .back-btn-wrapper,
+.heading-wrapper .back-btn-wrapper {
+  width: 1.875rem;
+  height: 1.875rem;
+}
+
 .settings-wrapper .title .back-btn,
 .heading-wrapper .back-btn {
   position: relative;
-  width: 1.5rem;
-  height: 1.5rem;
+  width: 100%;
+  height: 100%;
   background: transparent;
   border: none;
   border-radius: 50px;

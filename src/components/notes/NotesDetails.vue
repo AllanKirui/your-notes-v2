@@ -13,14 +13,16 @@
   <!-- Notes title -->
   <div v-if="hasNote" class="heading-wrapper">
     <div class="heading-top flex flex-ai-c">
-      <button
-        class="back-btn"
-        title="Back to list of notes"
-        v-if="screenSize <= 768"
-        @click="resetSelectedNote"
-      >
-        <span class="head"></span>
-      </button>
+      <div class="back-btn-wrapper">
+        <button
+          class="back-btn"
+          title="Back to list of notes"
+          v-if="screenSize <= 768"
+          @click="resetSelectedNote"
+        >
+          <span class="head"></span>
+        </button>
+      </div>
       <h3 class="items-title">{{ selectedNote.title }}</h3>
       <div class="top-controls">
         <button
