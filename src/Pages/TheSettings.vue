@@ -18,6 +18,7 @@
       <div class="options">
         <div class="options-links-wrapper">
           <ul class="options-links">
+            <!-- appearance link -->
             <li
               :class="[activeSide === 'appearance' ? 'active' : '', 'link']"
               title="Change appearance"
@@ -72,6 +73,7 @@
                 <span class="link-text">Appearance</span>
               </div>
             </li>
+            <!-- settings link -->
             <li
               :class="[activeSide === 'passwords' ? 'active' : '', 'link']"
               title="Change password"
@@ -100,6 +102,29 @@
                   <line x1="32" y1="46.6" x2="32" y2="51.83" />
                 </svg>
                 <span class="link-text">Passwords</span>
+              </div>
+            </li>
+            <!-- restore link -->
+            <li
+              :class="[activeSide === 'restoration' ? 'active' : '', 'link']"
+              title="Restore welcome note and todo"
+              @click="setActiveSide('restoration')"
+            >
+              <div class="flex flex-ai-c">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 64 64"
+                  stroke-width="3"
+                  stroke="currentColor"
+                  fill="none"
+                  width="25"
+                >
+                  <path d="M53.72,36.61A21.91,21.91,0,1,1,50.37,20.1" />
+                  <polyline points="51.72 7.85 50.85 20.78 37.92 19.9" />
+                  <path d="M53.72,36.61A21.91,21.91,0,1,1,50.37,20.1" />
+                  <polyline points="51.72 7.85 50.85 20.78 37.92 19.9" />
+                </svg>
+                <span class="link-text">Restore</span>
               </div>
             </li>
           </ul>
@@ -142,6 +167,28 @@
           <div class="content" v-else-if="activeSide === 'passwords'">
             <h3 class="content-title">Change Your Password</h3>
           </div>
+
+          <!-- restoration settings -->
+          <div class="content" v-else-if="activeSide === 'restoration'">
+            <h3 class="content-title">Restore Welcome Todo/Note</h3>
+            <p class="content-meta">
+              Here you can restore the <b>Welcome Todo</b> or
+              <b>Welcome Note</b> in case you chose to delete either or both of
+              them
+            </p>
+            <div class="content-btns-wrapper flex flex-ai-c flex-jc-c">
+              <button
+                :class="[
+                  defaultNote ? 'enabled' : 'disabled',
+                  'btn btn-restore-note',
+                ]"
+                title="Restore deleted note"
+                @click="restoreDefaults('notes')"
+              >
+                Restore Note
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </base-card>
@@ -150,6 +197,7 @@
 
 <script>
 export default {
+  emits: ["show-notification"],
   data() {
     return {
       activeSide: "appearance",
@@ -176,6 +224,9 @@ export default {
 
       return mode;
     },
+    defaultNote() {
+      return this.$store.getters["notes/defaultNote"];
+    },
   },
   methods: {
     setActiveSide(side) {
@@ -199,6 +250,23 @@ export default {
     },
     removeActiveSide() {
       this.activeSide = null;
+    },
+    restoreDefaults(item) {
+      if (item === "notes") {
+        if (!this.defaultNote) return;
+        this.restoreWelcomeNote();
+      }
+    },
+    restoreWelcomeNote() {
+      // dispatch an action to restore the Welcome Note
+      this.$store.dispatch("notes/restoreWelcomeNote", this.defaultNote);
+
+      // dispatch an action to reset the 'defaultNote' state prop
+      this.$store.dispatch("notes/resetDefaultNote");
+
+      // show a notification message
+      let message = "Welcome Note successfully restored";
+      this.$emit("show-notification", message);
     },
   },
   watch: {
@@ -303,6 +371,10 @@ export default {
   overflow-y: scroll;
 }
 
+.options-contents .content {
+  padding: 0 0.625rem;
+}
+
 @media (max-width: 768px) {
   .settings-wrapper {
     padding-top: 0;
@@ -349,6 +421,28 @@ export default {
 
 .content .content-meta {
   margin-top: 0.625rem;
+  line-height: 1.4;
+}
+
+.content .content-btns-wrapper {
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.content .content-btns-wrapper .btn-restore-note.disabled,
+.content .content-btns-wrapper .btn-restore-todo.disabled {
+  background-color: var(--color-platinum);
+  cursor: not-allowed;
+}
+
+.content .content-btns-wrapper .btn-restore-note,
+.content .content-btns-wrapper .btn-restore-todo {
+  background-color: var(--color-malachite);
+}
+
+.content .content-btns-wrapper .btn-restore-note:hover,
+.content .content-btns-wrapper .btn-restore-todo:hover {
+  background-color: var(--color-platinum);
 }
 
 .content .themes-wrapper {
