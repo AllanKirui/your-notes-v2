@@ -14,4 +14,7 @@ export default {
   openTodoId(state) {
     return state.openTodoId;
   },
+  defaultTodo(state) {
+    return state.defaultTodo;
+  },
 };

@@ -75,4 +75,10 @@ export default {
   setOpenTodoId(state, payload) {
     state.openTodoId = payload;
   },
+  restoreWelcomeTodo(state, payload) {
+    state.todos.unshift(payload);
+  },
+  resetDefaultTodo(state) {
+    state.defaultTodo = null;
+  },
 };

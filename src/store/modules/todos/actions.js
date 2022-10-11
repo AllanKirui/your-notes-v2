@@ -43,4 +43,12 @@ export default {
     // commit a mutation to set the open todo id
     context.commit("setOpenTodoId", payload);
   },
+  restoreWelcomeTodo(context, payload) {
+    // commit a mutation to restore the Welcome Todo
+    context.commit("restoreWelcomeTodo", payload);
+  },
+  resetDefaultTodo(context) {
+    // commit a mutation to reset the 'defaultTodo' state prop
+    context.commit("resetDefaultTodo");
+  },
 };
