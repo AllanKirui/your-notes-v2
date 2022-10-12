@@ -20,7 +20,7 @@
 <script>
 export default {
   props: ["id", "title", "content", "isDefault"],
-  inject: ["setTextLength", "globalFontSize"],
+  inject: ["setTextLength"],
   computed: {
     hoverTitle() {
       return "View " + this.title;
@@ -47,6 +47,9 @@ export default {
     },
     notesList() {
       return this.$store.getters["notes/notesList"];
+    },
+    globalFontSize() {
+      return this.$store.getters.globalFontSize;
     },
   },
   methods: {

@@ -1,5 +1,8 @@
 <template>
-  <header :class="themeClasses" :style="{ 'font-size': fontSize / 16 + 'rem' }">
+  <header
+    :class="themeClasses"
+    :style="{ 'font-size': globalFontSize / 16 + 'rem' }"
+  >
     <nav class="nav flex flex-ai-c flex-jc-sb">
       <div class="nav-left">
         <div class="nav-burger">
@@ -89,7 +92,7 @@
 
 <script>
 export default {
-  props: ["fontSize", "clearSearch", "isOverlayVisible", "isSearching"],
+  props: ["clearSearch", "isOverlayVisible", "isSearching"],
   emits: [
     "reset-cancel",
     "is-searching",
@@ -125,6 +128,9 @@ export default {
     },
     theme() {
       return this.$store.getters.theme;
+    },
+    globalFontSize() {
+      return this.$store.getters.globalFontSize;
     },
     themeClasses() {
       let classes = "header ";

@@ -121,7 +121,6 @@ import NotesDetails from "@/components/notes/NotesDetails.vue";
 export default {
   props: ["isModal", "activeSide", "isSearching", "searchMessage"],
   emits: ["close-modal", "show-notification", "cancel-search", "close-sidebar"],
-  inject: ["globalFontSize"],
   components: {
     NotesList,
     NotesDetails,
@@ -149,6 +148,9 @@ export default {
     },
     theme() {
       return this.$store.getters.theme;
+    },
+    globalFontSize() {
+      return this.$store.getters.globalFontSize;
     },
     cardStyle() {
       let mode = "";

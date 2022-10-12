@@ -59,7 +59,7 @@
 <script>
 export default {
   props: ["id", "title", "contents", "isDefault", "screenSize"],
-  inject: ["setTextLength", "globalFontSize"],
+  inject: ["setTextLength"],
   computed: {
     hoverTitle() {
       return "View " + this.title;
@@ -79,6 +79,9 @@ export default {
     },
     theme() {
       return this.$store.getters.theme;
+    },
+    globalFontSize() {
+      return this.$store.getters.globalFontSize;
     },
     status() {
       // return items which are checked over the total items

@@ -267,7 +267,7 @@ import { mapGetters } from "vuex";
 export default {
   emits: ["show-notification"],
   props: ["screenSize"],
-  inject: ["setTextLength", "globalFontSize"],
+  inject: ["setTextLength"],
   data() {
     return {
       hasTodo: false,
@@ -288,8 +288,7 @@ export default {
   },
   computed: {
     ...mapGetters("todos", ["selectedTodo", "isCloseOpenFields"]),
-    ...mapGetters(["greeting"]),
-    ...mapGetters(["theme"]),
+    ...mapGetters(["greeting", "theme", "globalFontSize"]),
     completedItemsFieldText() {
       return this.numOfCompletedItems > 1
         ? `${this.numOfCompletedItems} Completed items`
