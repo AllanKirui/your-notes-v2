@@ -14,6 +14,7 @@ export default createStore({
     return {
       greeting: "",
       theme: null,
+      globalFontSize: 14,
     };
   },
   mutations: {
@@ -22,6 +23,9 @@ export default createStore({
     },
     setTheme(state, payload) {
       state.theme = payload;
+    },
+    setFontSize(state, payload) {
+      state.globalFontSize = payload;
     },
   },
   actions: {
@@ -52,6 +56,9 @@ export default createStore({
     setTheme(context, payload) {
       context.commit("setTheme", payload);
     },
+    setFontSize(context, payload) {
+      context.commit("setFontSize", payload);
+    },
   },
   getters: {
     greeting(state) {
@@ -59,6 +66,9 @@ export default createStore({
     },
     theme(state) {
       return state.theme;
+    },
+    globalFontSize(state) {
+      return state.globalFontSize;
     },
   },
 });

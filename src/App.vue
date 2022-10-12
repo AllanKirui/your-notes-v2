@@ -6,7 +6,6 @@
   <!-- home page -->
   <the-header
     v-if="isLoggedIn"
-    :font-size="globalFontSize"
     :clear-search="isCancelSearch"
     :is-searching="isSearching"
     :isOverlayVisible="isOverlayVisible"
@@ -90,7 +89,6 @@ export default {
       newNotification: null,
       counter: 0,
       activeSide: null,
-      globalFontSize: 14,
       isCancelSearch: false,
       isSearching: false,
       searchMessage: "",
@@ -100,6 +98,9 @@ export default {
   computed: {
     theme() {
       return this.$store.getters.theme;
+    },
+    globalFontSize() {
+      return this.$store.getters.globalFontSize;
     },
     cardStyle() {
       let mode = "";
@@ -236,7 +237,6 @@ export default {
   provide() {
     return {
       setTextLength: this.setTextLength,
-      globalFontSize: this.globalFontSize,
     };
   },
   mounted() {
