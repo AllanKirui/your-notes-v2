@@ -20,6 +20,7 @@
               <span class="btn-text">{{ btnText }}</span>
             </div>
           </button>
+          <span class="tooltip">{{ `Create ${btnText}` }}</span>
         </div>
         <ul class="links">
           <li class="link">
@@ -47,6 +48,7 @@
                 </div>
               </div>
             </router-link>
+            <span class="tooltip">Todos</span>
           </li>
           <li class="link">
             <router-link to="/notes" title="Notes">
@@ -82,6 +84,7 @@
                 </div>
               </div>
             </router-link>
+            <span class="tooltip">Notes</span>
           </li>
         </ul>
       </div>
@@ -109,6 +112,7 @@
                 </div>
               </div>
             </router-link>
+            <span class="tooltip">Settings</span>
           </li>
           <li class="link">
             <!-- TODO: clear google token from local storage is not removed automatically
@@ -138,6 +142,7 @@ check localStorage in canIuse
                 </div>
               </div>
             </a>
+            <span class="tooltip">Logout</span>
           </li>
         </ul>
       </div>
@@ -384,7 +389,18 @@ export default {
   background: var(--color-russian-violet);
 }
 
+@media (min-width: 1025px) {
+  .btn-wrapper .tooltip,
+  .links .link .tooltip {
+    display: none;
+  }
+}
+
 @media (max-width: 1024px) {
+  .wrapper {
+    position: relative;
+  }
+
   .bg-image {
     background-size: 60px;
     background-position: 5px center;
@@ -409,6 +425,38 @@ export default {
 
   .links .link {
     margin-right: 0;
+    position: relative;
+  }
+
+  .btn-wrapper .tooltip,
+  .links .link .tooltip {
+    position: absolute;
+    top: 0;
+    left: 4.5rem;
+    transform: translateY(-50%);
+    width: 8rem;
+    height: 1.875rem;
+    border-radius: 8px;
+    text-align: center;
+    line-height: 1.875rem;
+    transition: 0s;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 3;
+  }
+
+  .wrapper.default-theme .btn-wrapper .tooltip,
+  .wrapper.default-theme .links .link .tooltip {
+    background-color: var(--color-cultured);
+    color: var(--color-graphite-black);
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  }
+
+  .wrapper.purplish-theme .btn-wrapper .tooltip,
+  .wrapper.purplish-theme .links .link .tooltip {
+    background-color: var(--color-spanish-pink);
+    color: var(--color-black-blue);
+    box-shadow: rgba(255, 122, 175, 0.3) 0px 3px 8px;
   }
 
   .links .link a {
@@ -417,6 +465,13 @@ export default {
 
   .links .link a .text-wrapper {
     display: none;
+  }
+
+  .btn-wrapper:hover .tooltip,
+  .links .link:hover .tooltip {
+    top: 50%;
+    transition: all 0.3s ease;
+    opacity: 1;
   }
 }
 
@@ -455,6 +510,11 @@ export default {
 
   .links .link {
     margin-right: 0.3125rem;
+  }
+
+  .btn-wrapper .tooltip,
+  .links .link .tooltip {
+    display: none;
   }
 
   .links .link a {

@@ -784,6 +784,10 @@ ul {
   .container {
     grid-template-columns: 60px 1fr;
   }
+
+  .content-wrapper {
+    z-index: 1;
+  }
 }
 
 @media (max-width: 768px) {
