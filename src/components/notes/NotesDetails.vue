@@ -209,7 +209,7 @@ export default {
       this.$store.dispatch("notes/resetSelectedNote");
 
       // emit an event to show notification message
-      let message = "Note deleted successfully";
+      let message = "Note deleted successfully （╯°□°）╯︵";
       this.$emit("show-notification", message);
 
       // reset props

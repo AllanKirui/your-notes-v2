@@ -44,7 +44,7 @@
           </svg>
         </button>
       </div>
-      <p class="no-results">Nothing found!</p>
+      <p class="no-results">Nothing found ¯\_(ツ)_/¯</p>
       <todo-list :screen-size="screenSize"></todo-list>
     </section>
 
@@ -195,7 +195,7 @@ export default {
 
       // show notification if the title or task field is empty
       if (!todoTitle || !todoTask) {
-        let message = "Please provide a title and one todo task";
+        let message = "Please provide a title and one todo task ◉_◉";
         this.showNotification(message);
         return;
       }
@@ -222,7 +222,7 @@ export default {
       this.openNewTodo(newTodo.id);
 
       // show success notification
-      let message = "Added todo successfully";
+      let message = "Added todo successfully \\ (•◡•) /";
       this.showNotification(message);
     },
     setId() {

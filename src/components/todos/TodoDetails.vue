@@ -475,7 +475,7 @@ export default {
       });
 
       // emit an event to show notification message
-      let message = "Todo deleted successfully";
+      let message = "Todo deleted successfully （╯°□°）╯︵";
       this.$emit("show-notification", message);
 
       // reset props

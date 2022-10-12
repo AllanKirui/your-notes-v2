@@ -290,7 +290,7 @@ export default {
       this.$store.dispatch("notes/resetDefaultNote");
 
       // show a notification message
-      let message = "Welcome Note successfully restored";
+      let message = "Welcome Note successfully restored ~(˘▾˘~)";
       this.$emit("show-notification", message);
     },
     restoreWelcomeTodo() {
@@ -301,7 +301,7 @@ export default {
       this.$store.dispatch("todos/resetDefaultTodo");
 
       // show a notification message
-      let message = "Welcome Todo successfully restored";
+      let message = "Welcome Todo successfully restored ~(˘▾˘~)";
       this.$emit("show-notification", message);
     },
   },

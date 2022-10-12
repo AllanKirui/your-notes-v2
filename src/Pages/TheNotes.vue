@@ -44,7 +44,7 @@
           </svg>
         </button>
       </div>
-      <p class="no-results">Nothing found!</p>
+      <p class="no-results">Nothing found ¯\_(ツ)_/¯</p>
       <notes-list></notes-list>
     </section>
 
@@ -198,7 +198,7 @@ export default {
 
       // show notification if the title or task field is empty
       if (!noteTitle || !noteContent) {
-        let message = "Please provide a title and content for the note";
+        let message = "Please provide a title and content for the note ◉_◉";
         this.showNotification(message);
         return;
       }
@@ -221,7 +221,7 @@ export default {
       this.openNewNote(newNote.id);
 
       // show success notification
-      let message = "Added note successfully";
+      let message = "Added note successfully \\ (•◡•) /";
       this.showNotification(message);
     },
     setId() {
