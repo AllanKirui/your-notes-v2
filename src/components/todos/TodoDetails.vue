@@ -314,7 +314,7 @@ export default {
 
       // for default theme
       if (!this.theme) {
-        style = "border-color: green";
+        style = "border-color: #1a1a1a";
       }
 
       // for purplish theme
