@@ -136,30 +136,65 @@
         >
           <!-- appearance settings -->
           <div class="content" v-if="activeSide === 'appearance'">
-            <h3 class="content-title">Choose Your Theme</h3>
-            <p class="content-meta">Select how Your Notes looks to you.</p>
-            <div class="themes-wrapper flex flex-jc-c flex-fw-w">
-              <div
-                :class="[!theme ? 'active' : '', 'wrapper']"
-                ref="defaultWrapper"
-                @click="setTheme('default')"
-              >
-                <div class="theme theme-1"></div>
-                <div class="theme-options flex flex-ai-c flex-jc-c">
+            <div class="font-settings">
+              <h3 class="content-title">Choose Your Font</h3>
+              <p class="content-meta">Select how text looks to you.</p>
+              <div class="font-wrapper flex flex-ai-c flex-jc-c">
+                <div
+                  class="font flex flex-ai-c flex-jc-c"
+                  :class="[globalFontSize === 14 ? 'active' : '']"
+                  @click="setFont('small')"
+                >
                   <span class="dot"></span>
-                  <span class="text">Default theme</span>
+                  <span class="text small">Aa</span>
+                </div>
+                <div
+                  class="font flex flex-ai-c flex-jc-c"
+                  :class="[globalFontSize === 16 ? 'active' : '']"
+                  @click="setFont('medium')"
+                >
+                  <span class="dot"></span>
+                  <span class="text medium">Aa</span>
+                </div>
+                <div
+                  class="font flex flex-ai-c flex-jc-c"
+                  :class="[globalFontSize === 18 ? 'active' : '']"
+                  @click="setFont('large')"
+                >
+                  <span class="dot"></span>
+                  <span class="text large">Aa</span>
                 </div>
               </div>
+            </div>
 
-              <div
-                :class="[theme === 'purplish' ? 'active' : '', 'wrapper']"
-                ref="purplishWrapper"
-                @click="setTheme('purplish')"
-              >
-                <div class="theme theme-2"></div>
-                <div class="theme-options flex flex-ai-c flex-jc-c">
-                  <span class="dot"></span>
-                  <span class="text">Purplish theme</span>
+            <hr :style="hrStyle" />
+
+            <div class="themes-settings">
+              <h3 class="content-title">Choose Your Theme</h3>
+              <p class="content-meta">Select how Your Notes looks to you.</p>
+              <div class="themes-wrapper flex flex-jc-c flex-fw-w">
+                <div
+                  :class="[!theme ? 'active' : '', 'wrapper']"
+                  ref="defaultWrapper"
+                  @click="setTheme('default')"
+                >
+                  <div class="theme theme-1"></div>
+                  <div class="theme-options flex flex-ai-c flex-jc-c">
+                    <span class="dot"></span>
+                    <span class="text">Default theme</span>
+                  </div>
+                </div>
+
+                <div
+                  :class="[theme === 'purplish' ? 'active' : '', 'wrapper']"
+                  ref="purplishWrapper"
+                  @click="setTheme('purplish')"
+                >
+                  <div class="theme theme-2"></div>
+                  <div class="theme-options flex flex-ai-c flex-jc-c">
+                    <span class="dot"></span>
+                    <span class="text">Purplish theme</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -221,6 +256,9 @@ export default {
     theme() {
       return this.$store.getters.theme;
     },
+    globalFontSize() {
+      return this.$store.getters.globalFontSize;
+    },
     cardStyle() {
       let mode = "";
 
@@ -242,6 +280,21 @@ export default {
     defaultNote() {
       return this.$store.getters["notes/defaultNote"];
     },
+    hrStyle() {
+      let style = "";
+
+      // for default theme
+      if (!this.theme) {
+        style = "border-color: #1a1a1a";
+      }
+
+      // for purplish theme
+      if (this.theme === "purplish") {
+        style = "border-color: #ff7aaf";
+      }
+
+      return style;
+    },
   },
   methods: {
     setActiveSide(side) {
@@ -262,6 +315,23 @@ export default {
 
       // dispatch an action to set any other selected theme
       this.$store.dispatch("setTheme", theme);
+    },
+    setFont(size) {
+      switch (size) {
+        // dispatch an action to set the selected font size
+        case "small":
+          this.$store.dispatch("setFontSize", 14); // 14px
+          break;
+        case "medium":
+          this.$store.dispatch("setFontSize", 16); // 16px
+          break;
+        case "large":
+          this.$store.dispatch("setFontSize", 18); // 18px
+          break;
+        default:
+          this.$store.dispatch("setFontSize", 14); // 14px
+          break;
+      }
     },
     checkWindowSize() {
       // listen to the resize event
@@ -488,6 +558,7 @@ export default {
   width: 100%;
 }
 
+.content .font-wrapper .font,
 .content .themes-wrapper .wrapper {
   cursor: pointer;
 }
@@ -518,31 +589,53 @@ export default {
   background-image: url("@/assets/img/purplish-theme.svg");
 }
 
+.content .font-wrapper {
+  gap: 1.25rem;
+  margin: 1rem 0;
+}
+
 .content .themes-wrapper .wrapper .theme-options {
   margin-top: 1rem;
 }
 
+.content .font-wrapper .font .text.small {
+  font-size: 0.875rem !important;
+}
+
+.content .font-wrapper .font .text.medium {
+  font-size: 1rem !important;
+}
+
+.content .font-wrapper .font .text.large {
+  font-size: 1.125rem !important;
+}
+
+.content .font-wrapper .font .dot,
 .content .themes-wrapper .wrapper .theme-options .dot {
-  width: 0.75rem;
-  height: 0.75rem;
+  width: 0.6rem;
+  height: 0.6rem;
   margin-right: 0.625rem;
   border-radius: 50px;
   outline-offset: 2px;
 }
 
+.default-theme .content .font-wrapper .font .dot,
 .default-theme .wrapper .theme-options .dot {
   outline: 2px solid var(--color-eerie-black);
 }
 
+.default-theme .content .font-wrapper .font.active .dot,
 .default-theme .wrapper.active .theme-options .dot {
   outline: 2px solid var(--color-eerie-black);
   background-color: var(--color-eerie-black);
 }
 
+.purplish-theme .content .font-wrapper .font .dot,
 .purplish-theme .wrapper .theme-options .dot {
   outline: 2px solid var(--color-tickle-me-pink);
 }
 
+.purplish-theme .content .font-wrapper .font.active .dot,
 .purplish-theme .wrapper.active .theme-options .dot {
   outline: 2px solid var(--color-tickle-me-pink);
   background-color: var(--color-tickle-me-pink);
