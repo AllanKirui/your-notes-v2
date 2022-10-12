@@ -141,6 +141,7 @@
             <div class="themes-wrapper flex flex-jc-c flex-fw-w">
               <div
                 :class="[!theme ? 'active' : '', 'wrapper']"
+                ref="defaultWrapper"
                 @click="setTheme('default')"
               >
                 <div class="theme theme-1"></div>
@@ -152,6 +153,7 @@
 
               <div
                 :class="[theme === 'purplish' ? 'active' : '', 'wrapper']"
+                ref="purplishWrapper"
                 @click="setTheme('purplish')"
               >
                 <div class="theme theme-2"></div>
@@ -247,10 +249,16 @@ export default {
     },
     setTheme(theme) {
       if (theme === "default") {
+        // scroll into view the selected theme
+        this.$refs.defaultWrapper.scrollIntoView();
+
         // dispatch an action to set the default theme
         this.$store.dispatch("setTheme", null);
         return;
       }
+
+      // scroll into view the selected theme
+      this.$refs.purplishWrapper.scrollIntoView();
 
       // dispatch an action to set any other selected theme
       this.$store.dispatch("setTheme", theme);
