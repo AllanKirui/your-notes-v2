@@ -20,7 +20,9 @@
               <span class="btn-text">{{ btnText }}</span>
             </div>
           </button>
-          <span class="tooltip">{{ `Create ${btnText}` }}</span>
+          <span class="tooltip" :style="{ width: tooltipWidth + 'px' }">{{
+            `Create ${btnText}`
+          }}</span>
         </div>
         <ul class="links">
           <li class="link">
@@ -158,7 +160,7 @@ export default {
   computed: {
     ...mapGetters("todos", ["numOfTodos"]),
     ...mapGetters("notes", ["numOfNotes"]),
-    ...mapGetters(["theme"]),
+    ...mapGetters(["theme", "globalFontSize"]),
     routeName() {
       return this.$route.name;
     },
@@ -187,6 +189,25 @@ export default {
       }
 
       return classes;
+    },
+    tooltipWidth() {
+      let width = 0;
+
+      switch (this.globalFontSize) {
+        case 14:
+          width = 128; // 128px
+          break;
+        case 16:
+          width = 144; // 144px
+          break;
+        case 18:
+          width = 160; // 160px
+          break;
+        default:
+          width = 128; // 128px
+          break;
+      }
+      return width;
     },
   },
   methods: {
