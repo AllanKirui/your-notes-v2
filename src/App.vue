@@ -740,6 +740,12 @@ ul {
   background-color: transparent;
 }
 
+@media (max-width: 640px) {
+  .notification-item .card {
+    width: calc(100vw - 4rem) !important;
+  }
+}
+
 .default-theme .notification-wrapper {
   color: var(--color-eerie-black);
 }
