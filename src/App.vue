@@ -283,6 +283,14 @@ export default {
   --color-tickle-me-pink: hsl(336, 100%, 76%);
   --color-russian-violet: hsl(267, 53%, 17%);
   /* end of theme 2 colors */
+
+  /* start of colors for 'bluetiful' theme */
+  --color-steel-blue: hsl(211, 27%, 18%);
+  --color-maximum-blue-green: hsl(186, 71%, 47%);
+  --color-lavender-gray: hsl(210, 6%, 79%);
+  --color-iron-gray: hsl(211, 11%, 37%);
+  --color-midnight-blue: hsl(211, 28%, 24%);
+  /* end of theme 3 colors */
 }
 
 html {
