@@ -35,6 +35,14 @@
               width="168"
               height="27.6"
             />
+            <img
+              v-else-if="theme === 'bluetiful'"
+              class="logo"
+              src="@/assets/img/logo-bluetiful.svg"
+              alt="your notes v2 logo"
+              width="168"
+              height="27.6"
+            />
             <h3 class="logo-text">Your Notes <i>v2</i></h3>
           </router-link>
         </div>
@@ -54,6 +62,13 @@
             v-else-if="theme === 'purplish'"
             class="search"
             src="@/assets/img/search.min-purplish.svg"
+            alt="search icon"
+            width="18"
+          />
+          <img
+            v-else-if="theme === 'bluetiful'"
+            class="search"
+            src="@/assets/img/search-bluetiful.svg"
             alt="search icon"
             width="18"
           />
@@ -80,6 +95,11 @@
             <img
               v-else-if="theme === 'purplish'"
               src="@/assets/img/dropdown.min-purplish.svg"
+              alt=" "
+            />
+            <img
+              v-else-if="theme === 'bluetiful'"
+              src="@/assets/img/dropdown-bluetiful.svg"
               alt=" "
             />
           </button>
@@ -148,6 +168,11 @@ export default {
       // for purplish theme
       if (this.theme === "purplish") {
         classes += "purplish-theme";
+      }
+
+      // for bluetiful theme
+      if (this.theme === "bluetiful") {
+        classes += "bluetiful-theme";
       }
 
       return classes;
@@ -357,6 +382,10 @@ export default {
   background-color: var(--color-black-blue);
 }
 
+.bluetiful-theme.header {
+  background-color: var(--color-steel-blue);
+}
+
 .nav {
   padding: 0 1.875rem;
   width: 100%;
@@ -405,6 +434,10 @@ export default {
   border-left: 2px solid var(--color-tickle-me-pink);
 }
 
+.bluetiful-theme .nav-search {
+  border-left: 2px solid var(--color-maximum-blue-green);
+}
+
 .nav-search img {
   margin-left: 0.75rem;
 }
@@ -430,6 +463,12 @@ export default {
 .purplish-theme .nav-search input,
 .purplish-theme .nav-search input::placeholder {
   color: rgba(253, 199, 189, 0.8);
+  letter-spacing: 0.2px;
+}
+
+.bluetiful-theme .nav-search input,
+.bluetiful-theme .nav-search input::placeholder {
+  color: var(--color-lavender-gray);
   letter-spacing: 0.2px;
 }
 
@@ -467,12 +506,20 @@ export default {
   color: var(--color-spanish-pink);
 }
 
+.bluetiful-theme .nav-avatar {
+  color: var(--color-lavender-gray);
+}
+
 .default-theme .nav-avatar .image-wrapper {
   background-color: var(--color-traffic-grey);
 }
 
 .purplish-theme .nav-avatar .image-wrapper {
   background-color: var(--color-russian-violet);
+}
+
+.bluetiful-theme .nav-avatar .image-wrapper {
+  background-color: var(--color-iron-gray);
 }
 
 .nav-avatar .image-wrapper .avatar {
@@ -526,6 +573,15 @@ export default {
   outline-offset: 5px;
 }
 
+.bluetiful-theme .nav-menu .menu-btn:hover {
+  outline: 1px solid var(--color-maximum-blue-green);
+}
+
+.bluetiful-theme .nav-menu .menu-btn:focus {
+  outline: 1px solid var(--color-iron-gray);
+  outline-offset: 5px;
+}
+
 /* media queries */
 @media (max-width: 768px) {
   header {
@@ -549,6 +605,10 @@ export default {
 
   .purplish-theme .nav {
     background-color: var(--color-russian-violet);
+  }
+
+  .bluetiful-theme .nav {
+    background-color: var(--color-midnight-blue);
   }
 
   .nav-left {
@@ -594,6 +654,10 @@ export default {
     background-color: var(--color-tickle-me-pink);
   }
 
+  .bluetiful-theme .nav-left .nav-burger .burger span {
+    background-color: var(--color-maximum-blue-green);
+  }
+
   .nav-left .nav-burger .burger span:not(:last-child) {
     margin-bottom: 5px;
   }
@@ -624,6 +688,7 @@ export default {
     margin-left: 0;
   }
 
+  .bluetiful-theme .nav-search,
   .purplish-theme .nav-search,
   .default-theme .nav-search {
     border: none;
