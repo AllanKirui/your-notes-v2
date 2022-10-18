@@ -29,4 +29,9 @@ export default {
   background-color: var(--color-black-blue);
   box-shadow: rgba(255, 122, 175, 0.3) 0px 3px 8px;
 }
+
+.bluetiful-theme {
+  background-color: var(--color-steel-blue);
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 3px 8px;
+}
 </style>
