@@ -158,6 +158,11 @@ export default {
         mode = "purplish-theme";
       }
 
+      // for bluetiful theme
+      if (this.theme === "bluetiful") {
+        mode = "bluetiful-theme";
+      }
+
       return mode;
     },
   },
@@ -324,6 +329,12 @@ export default {
   color: var(--color-spanish-pink);
 }
 
+.bluetiful-theme .item-edit-field .field {
+  border: 2px solid var(--color-maximum-blue-green);
+  outline-color: var(--color-maximum-blue-green);
+  color: var(--color-lavender-gray);
+}
+
 .edit-controls {
   position: relative;
   margin: 0.875rem auto 0;
@@ -362,6 +373,21 @@ export default {
 
 .purplish-theme .btn.btn-cancel:hover {
   background-color: var(--color-russian-violet);
+}
+
+.bluetiful-theme .btn.btn-edit,
+.bluetiful-theme .btn.btn-save {
+  background-color: var(--color-maximum-blue-green);
+  color: var(--color-eerie-black);
+}
+
+.bluetiful-theme .btn.btn-edit:hover,
+.bluetiful-theme .btn.btn-save:hover {
+  background-color: var(--color-lavender-gray);
+}
+
+.bluetiful-theme .btn.btn-cancel:hover {
+  background-color: var(--color-midnight-blue);
 }
 
 .buttons-enter-active {

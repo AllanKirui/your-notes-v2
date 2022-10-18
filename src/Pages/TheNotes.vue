@@ -165,6 +165,11 @@ export default {
         mode = "purplish-theme";
       }
 
+      // for bluetiful theme
+      if (this.theme === "bluetiful") {
+        mode = "bluetiful-theme";
+      }
+
       return mode;
     },
     mobileFlowStyle() {

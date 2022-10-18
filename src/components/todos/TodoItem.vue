@@ -35,6 +35,12 @@
             alt=" "
             width="14"
           />
+          <img
+            v-else-if="displayContent[index] && theme === 'bluetiful'"
+            src="@/assets/img/checkbox-bluetiful.svg"
+            alt=" "
+            width="14"
+          />
           <span>{{ setTodoItemText(index) }}</span>
         </li>
       </ul>

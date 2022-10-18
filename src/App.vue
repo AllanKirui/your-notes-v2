@@ -115,6 +115,11 @@ export default {
         mode = "purplish-theme";
       }
 
+      // for bluetiful theme
+      if (this.theme === "bluetiful") {
+        mode = "bluetiful-theme";
+      }
+
       return mode;
     },
     themeClasses() {
@@ -128,6 +133,11 @@ export default {
       // for purplish theme
       if (this.theme === "purplish") {
         classes += "purplish-theme";
+      }
+
+      // for bluetiful theme
+      if (this.theme === "bluetiful") {
+        classes += "bluetiful-theme";
       }
 
       return classes;
@@ -289,7 +299,7 @@ export default {
   --color-maximum-blue-green: hsl(186, 71%, 47%);
   --color-lavender-gray: hsl(210, 6%, 79%);
   --color-iron-gray: hsl(211, 11%, 37%);
-  --color-midnight-blue: hsl(211, 28%, 24%);
+  --color-midnight-blue: hsl(210, 28%, 24%);
   /* end of theme 3 colors */
 }
 
@@ -390,6 +400,7 @@ ul {
     background-color: rgba(26, 26, 26, 0.8);
   }
 
+  .bluetiful-theme .overlay.active,
   .purplish-theme .overlay.active {
     background-color: rgba(28, 11, 50, 0.8);
   }
@@ -402,6 +413,10 @@ ul {
 
 .purplish-theme {
   color: var(--color-spanish-pink);
+}
+
+.bluetiful-theme {
+  color: var(--color-lavender-gray);
 }
 
 /* scrollbar styles */
@@ -446,6 +461,19 @@ ul {
   background: var(--color-black-blue);
 }
 
+.bluetiful-theme
+  .content-wrapper
+  .content-items-details
+  .details-wrapper:hover::-webkit-scrollbar-track,
+.bluetiful-theme .content-wrapper .content-items:hover::-webkit-scrollbar-track,
+.bluetiful-theme
+  .content-wrapper
+  .content-items-details
+  .todo-creator-wrapper
+  .field:focus::-webkit-scrollbar-track {
+  background: var(--color-steel-blue);
+}
+
 .default-theme
   .content-wrapper
   .content-items-details
@@ -472,6 +500,20 @@ ul {
   .field:focus::-webkit-scrollbar-thumb {
   background: var(--color-tickle-me-pink);
   border: 0.12em solid var(--color-russian-violet);
+}
+
+.bluetiful-theme
+  .content-wrapper
+  .content-items-details
+  .details-wrapper:hover::-webkit-scrollbar-thumb,
+.bluetiful-theme .content-wrapper .content-items:hover::-webkit-scrollbar-thumb,
+.bluetiful-theme
+  .content-wrapper
+  .content-items-details
+  .todo-creator-wrapper
+  .field:focus::-webkit-scrollbar-thumb {
+  background: var(--color-iron-gray);
+  border: 0.12em solid var(--color-midnight-blue);
 }
 
 /* for browser support */
@@ -762,6 +804,10 @@ ul {
   color: var(--color-spanish-pink);
 }
 
+.bluetiful-theme .notification-wrapper {
+  color: var(--color-lavender-gray);
+}
+
 .notification-enter-from {
   opacity: 0;
   transform: translateX(-30px);
@@ -835,6 +881,10 @@ ul {
   color: var(--color-spanish-pink);
 }
 
+.content-wrapper.bluetiful-theme {
+  color: var(--color-lavender-gray);
+}
+
 .content-intro-wrapper {
   position: absolute;
   top: 0;
@@ -852,6 +902,11 @@ ul {
 .purplish-theme .content-intro-wrapper {
   background-color: var(--color-black-blue);
   border: 1px dotted var(--color-tickle-me-pink);
+}
+
+.bluetiful-theme .content-intro-wrapper {
+  background-color: var(--color-steel-blue);
+  border: 1px dotted var(--color-iron-gray);
 }
 
 .content-intro-wrapper .text {
@@ -897,6 +952,14 @@ ul {
   stroke: var(--color-black-blue);
 }
 
+.bluetiful-theme .content-items .results-wrapper .cancel-search-btn:hover {
+  background-color: var(--color-midnight-blue);
+}
+
+.bluetiful-theme .content-items .results-wrapper .cancel-search-btn:hover svg {
+  stroke: var(--color-lavender-gray);
+}
+
 .content-items .no-results {
   position: absolute;
   top: 50px;
@@ -912,6 +975,11 @@ ul {
 .purplish-theme .content-items {
   background-color: var(--color-black-blue);
   border: 1px dotted var(--color-tickle-me-pink);
+}
+
+.bluetiful-theme .content-items {
+  background-color: var(--color-steel-blue);
+  border: 1px dotted var(--color-iron-gray);
 }
 
 .content-items-details {
@@ -930,6 +998,11 @@ ul {
 .purplish-theme .content-items-details {
   background: var(--color-black-blue);
   border: 1px dotted var(--color-tickle-me-pink);
+}
+
+.bluetiful-theme .content-items-details {
+  background: var(--color-steel-blue);
+  border: 1px dotted var(--color-iron-gray);
 }
 
 .content-intro-wrapper .bg-images,
@@ -1016,6 +1089,11 @@ ul {
     url("@/assets/img/quill-bg-purplish.svg");
 }
 
+.bluetiful-theme .content-items-details .bg-images {
+  background-image: url("@/assets/img/text-bg-vertical-bluetiful.svg"),
+    url("@/assets/img/quill-bg-bluetiful.svg");
+}
+
 .default-theme .content-intro-wrapper .bg-images {
   background-image: url("@/assets/img/text-bg-horizontal.svg"),
     url("@/assets/img/quill-bg.svg");
@@ -1024,6 +1102,11 @@ ul {
 .purplish-theme .content-intro-wrapper .bg-images {
   background-image: url("@/assets/img/text-bg-horizontal-purplish.svg"),
     url("@/assets/img/quill-bg-purplish.svg");
+}
+
+.bluetiful-theme .content-intro-wrapper .bg-images {
+  background-image: url("@/assets/img/text-bg-horizontal-bluetiful.svg"),
+    url("@/assets/img/quill-bg-bluetiful.svg");
 }
 
 /* ---> start of Todo/Notes list styles */
@@ -1047,6 +1130,11 @@ ul {
 .purplish-theme .counter-wrapper {
   background-color: var(--color-tickle-me-pink);
   color: var(--color-black-blue);
+}
+
+.bluetiful-theme .counter-wrapper {
+  background-color: var(--color-midnight-blue);
+  color: var(--color-lavender-gray);
 }
 
 .items-title-counter {
@@ -1078,12 +1166,22 @@ ul {
   z-index: 2;
 }
 
+.bluetiful-theme .item-wrapper {
+  outline: 1px dotted var(--color-iron-gray);
+  background-color: var(--color-steel-blue);
+  z-index: 2;
+}
+
 .default-theme .item-wrapper.active {
   background-color: var(--color-white);
 }
 
 .purplish-theme .item-wrapper.active {
   background-color: var(--color-russian-violet);
+}
+
+.bluetiful-theme .item-wrapper.active {
+  background-color: var(--color-midnight-blue);
 }
 
 .item-wrapper.active .indicator span.active {
@@ -1111,6 +1209,15 @@ ul {
   );
 }
 
+.bluetiful-theme .item-wrapper.active .indicator span.active {
+  background: var(--color-iron-gray);
+  background: linear-gradient(
+    0deg,
+    rgb(84, 94, 105, 1) 0%,
+    rgb(198, 201, 205, 1) 100%
+  );
+}
+
 .text-wrapper {
   width: 100%;
 }
@@ -1127,6 +1234,12 @@ ul {
     rgb(253, 199, 189, 0.15) 0px 2px 6px 2px;
 }
 
+.bluetiful-theme .item-wrapper:hover {
+  background-color: var(--color-midnight-blue);
+  box-shadow: rgb(84, 94, 105, 0.3) 0px 1px 2px 0px,
+    rgb(84, 94, 105, 0.15) 0px 2px 6px 2px;
+}
+
 .default-theme .item-wrapper.default-item {
   background-color: var(--color-eerie-black);
   color: var(--color-honeydew);
@@ -1139,6 +1252,15 @@ ul {
 
 .purplish-theme .item-wrapper.default-item.active .indicator span.active {
   background: var(--color-spanish-pink);
+}
+
+.bluetiful-theme .item-wrapper.default-item {
+  background-color: var(--color-eerie-black);
+  color: var(--color-lavender-gray);
+}
+
+.bluetiful-theme .item-wrapper.default-item.active .indicator span.active {
+  background: var(--color-iron-gray);
 }
 
 .item-wrapper .bg-image {
@@ -1160,6 +1282,10 @@ ul {
 
 .purplish-theme .item-wrapper.default-item .bg-image {
   background-image: url("@/assets/img/quill-bg-sidebar-purplish-alt.svg");
+}
+
+.bluetiful-theme .item-wrapper.default-item .bg-image {
+  background-image: url("@/assets/img/quill-bg-sidebar-bluetiful.svg");
 }
 
 .default-theme .item-wrapper.default-item:hover {
@@ -1267,12 +1393,14 @@ ul {
   border: 2px solid var(--color-eerie-black);
 }
 
+.purplish-theme .heading-wrapper .back-btn .head,
 .purplish-theme .settings-wrapper .title .back-btn .head {
   border: 2px solid var(--color-spanish-pink);
 }
 
-.purplish-theme .heading-wrapper .back-btn .head {
-  border: 2px solid var(--color-spanish-pink);
+.bluetiful-theme .heading-wrapper .back-btn .head,
+.bluetiful-theme .settings-wrapper .title .back-btn .head {
+  border: 2px solid var(--color-maximum-blue-green);
 }
 
 .default-theme .settings-wrapper .title .back-btn:hover {
@@ -1281,6 +1409,10 @@ ul {
 
 .purplish-theme .settings-wrapper .title .back-btn:hover {
   background-color: var(--color-tickle-me-pink);
+}
+
+.bluetiful-theme .settings-wrapper .title .back-btn:hover {
+  background-color: var(--color-midnight-blue);
 }
 
 .default-theme .heading-wrapper .back-btn:hover {
@@ -1293,6 +1425,14 @@ ul {
 
 .purplish-theme .heading-wrapper .back-btn:hover .head {
   border: 2px solid var(--color-black-blue);
+}
+
+.bluetiful-theme .heading-wrapper .back-btn:hover {
+  background-color: var(--color-midnight-blue);
+}
+
+.bluetiful-theme .heading-wrapper .back-btn:hover .head {
+  border: 2px solid var(--color-maximum-blue-green);
 }
 
 .heading-wrapper .confirm-delete {
@@ -1352,6 +1492,15 @@ ul {
   background-color: var(--color-spanish-pink) !important;
 }
 
+.bluetiful-theme .heading-wrapper .confirm-delete-contents .delete-btn {
+  background-color: var(--color-midnight-blue) !important;
+  color: var(--color-lavender-gray);
+}
+
+.bluetiful-theme .heading-wrapper .confirm-delete-contents .delete-btn:hover {
+  background-color: var(--color-iron-gray) !important;
+}
+
 .delete-enter-active {
   animation: deleteWindow 0.3s ease-out;
 }
@@ -1388,6 +1537,12 @@ ul {
 .purplish-theme .top-controls .delete-note-btn:hover {
   background-color: var(--color-tickle-me-pink);
   color: var(--color-black-blue);
+}
+
+.bluetiful-theme .top-controls .delete-todo-btn:hover,
+.bluetiful-theme .top-controls .delete-note-btn:hover {
+  background-color: var(--color-midnight-blue);
+  color: var(--color-lavender-gray);
 }
 
 /* ---> end of Todo/Notes details styles */
@@ -1428,6 +1583,7 @@ ul {
   color: var(--color-eerie-black);
 }
 
+.bluetiful-theme .modal-form .input-wrapper,
 .purplish-theme .modal-form .input-wrapper {
   color: inherit;
 }
@@ -1453,6 +1609,12 @@ ul {
 .purplish-theme .modal-form .input-wrapper input::placeholder {
   font-weight: 400;
   color: rgba(253, 199, 189, 0.8);
+}
+
+.bluetiful-theme .modal-form .input-wrapper textarea::placeholder,
+.bluetiful-theme .modal-form .input-wrapper input::placeholder {
+  font-weight: 400;
+  color: rgba(198, 201, 205, 0.4);
 }
 
 .modal-form .input-wrapper textarea {
@@ -1488,6 +1650,10 @@ ul {
   background-color: var(--color-russian-violet);
 }
 
+.bluetiful-theme .modal-form .create-controls .btn.btn-cancel:hover {
+  background-color: var(--color-midnight-blue);
+}
+
 .default-theme .modal-form .create-controls .btn.btn-add:focus,
 .default-theme .modal-form .create-controls .btn.btn-cancel:focus {
   outline: 1px solid var(--color-traffic-grey);
@@ -1497,6 +1663,11 @@ ul {
 .default-theme .modal-form .create-controls .btn.btn-add:focus,
 .purplish-theme .modal-form .create-controls .btn.btn-cancel:focus {
   outline: 1px solid var(--color-tickle-me-pink);
+  outline-offset: 3px;
+}
+
+.bluetiful-theme .modal-form .create-controls .btn.btn-cancel:focus {
+  outline: 1px solid var(--color-midnight-blue);
   outline-offset: 3px;
 }
 
@@ -1515,6 +1686,15 @@ ul {
 
 .purplish-theme .modal-form .create-controls .btn.btn-add:hover {
   background-color: var(--color-spanish-pink);
+}
+
+.bluetiful-theme .modal-form .create-controls .btn.btn-add {
+  background-color: var(--color-maximum-blue-green);
+  color: var(--color-eerie-black);
+}
+
+.bluetiful-theme .modal-form .create-controls .btn.btn-add:hover {
+  background-color: var(--color-lavender-gray);
 }
 
 .modal-enter-active {
