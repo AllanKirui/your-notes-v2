@@ -790,6 +790,9 @@ export default {
 .purplish-theme .items .item .item-checkbox input[type="checkbox"] {
   background-color: transparent;
 }
+.bluetiful-theme .items .item .item-checkbox input[type="checkbox"] {
+  border: 0.15em solid var(--color-maximum-blue-green);
+}
 
 .items .item .item-checkbox input[type="checkbox"]::before {
   content: "";
@@ -822,6 +825,14 @@ export default {
 
 .default-theme .items .item .item-checkbox input[type="checkbox"]:hover {
   background-color: var(--color-platinum);
+}
+
+.purplish-theme .items .item .item-checkbox input[type="checkbox"]:hover {
+  background-color: var(--color-spanish-pink);
+}
+
+.bluetiful-theme .items .item .item-checkbox input[type="checkbox"]:hover {
+  background-color: var(--color-maximum-blue-green);
 }
 
 .item-text-wrapper {
