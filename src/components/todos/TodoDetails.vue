@@ -307,6 +307,11 @@ export default {
         mode = "purplish-theme";
       }
 
+      // for bluetiful theme
+      if (this.theme === "bluetiful") {
+        mode = "bluetiful-theme";
+      }
+
       return mode;
     },
     hrStyle() {
@@ -320,6 +325,11 @@ export default {
       // for purplish theme
       if (this.theme === "purplish") {
         style = "border-color: #ff7aaf";
+      }
+
+      // for bluetiful theme
+      if (this.theme === "bluetiful") {
+        style = "border-color: #545e69";
       }
 
       return style;
@@ -639,6 +649,10 @@ export default {
   background-color: var(--color-russian-violet);
 }
 
+.bluetiful-theme .progress-bar .bar-wrapper {
+  background-color: var(--color-midnight-blue);
+}
+
 .progress-bar .bar-wrapper .bar {
   height: 0.7em;
   transition: width 0.4s ease-in-out;
@@ -650,6 +664,10 @@ export default {
 
 .purplish-theme .progress-bar .bar-wrapper .bar {
   background-color: var(--color-tickle-me-pink);
+}
+
+.bluetiful-theme .progress-bar .bar-wrapper .bar {
+  background-color: var(--color-maximum-blue-green);
 }
 
 .heading-wrapper .contents-info {
@@ -679,6 +697,10 @@ export default {
   background-color: var(--color-russian-violet);
 }
 
+.bluetiful-theme .item:hover {
+  background-color: var(--color-midnight-blue);
+}
+
 .items li.animated {
   -webkit-animation-duration: 1.5s;
   animation-duration: 1.5s;
@@ -692,6 +714,10 @@ export default {
 
 .purplish-theme .items li.flash {
   animation-name: flashPurplish;
+}
+
+.bluetiful-theme .items li.flash {
+  animation-name: flashBluetifully;
 }
 
 @keyframes flash {
@@ -712,6 +738,20 @@ export default {
   0%,
   50% {
     background-color: var(--color-tickle-me-pink);
+  }
+  25%,
+  75% {
+    background: transparent;
+  }
+  100% {
+    background: transparent;
+  }
+}
+
+@keyframes flashBluetifully {
+  0%,
+  50% {
+    background-color: var(--color-midnight-blue);
   }
   25%,
   75% {
@@ -746,6 +786,7 @@ export default {
   background-color: var(--color-white);
 }
 
+.bluetiful-theme .items .item .item-checkbox input[type="checkbox"],
 .purplish-theme .items .item .item-checkbox input[type="checkbox"] {
   background-color: transparent;
 }
@@ -768,6 +809,11 @@ export default {
 .purplish-theme .items .item .item-checkbox input[type="checkbox"]::before {
   /* use box-shadow to color the tick inside the checkbox */
   box-shadow: inset 1em 1em var(--color-spanish-pink);
+}
+
+.bluetiful-theme .items .item .item-checkbox input[type="checkbox"]::before {
+  /* use box-shadow to color the tick inside the checkbox */
+  box-shadow: inset 1em 1em var(--color-maximum-blue-green);
 }
 
 .items .item .item-checkbox input[type="checkbox"]:checked::before {
@@ -805,6 +851,10 @@ export default {
   color: var(--color-spanish-pink);
 }
 
+.bluetiful-theme .item-text .item-details.completed {
+  color: var(--color-iron-gray);
+}
+
 .item-options .delete-item-btn {
   padding: 0.375rem 0.375rem 0.2rem !important;
   border-radius: 50px;
@@ -834,6 +884,14 @@ export default {
 
 .purplish-theme .item-options .delete-item-btn:hover svg {
   stroke: var(--color-black-blue);
+}
+
+.bluetiful-theme .item-options .delete-item-btn:hover {
+  background-color: var(--color-steel-blue);
+}
+
+.bluetiful-theme .item-options .delete-item-btn:hover svg {
+  stroke: var(--color-lavender-gray);
 }
 
 .todo-creator-wrapper {
@@ -866,6 +924,10 @@ export default {
   color: rgba(253, 199, 189, 0.8);
 }
 
+.bluetiful-theme .item-create-field .field::placeholder {
+  color: rgba(198, 201, 205, 0.4);
+}
+
 .default-theme .item-create-field .field,
 .default-theme .item-edit-field .field {
   border: 2px solid var(--color-dark-pastel-green);
@@ -879,6 +941,14 @@ export default {
   outline-color: var(--color-tickle-me-pink);
   background-color: var(--color-russian-violet);
   color: var(--color-spanish-pink);
+}
+
+.bluetiful-theme .item-create-field .field,
+.bluetiful-theme .item-edit-field .field {
+  border: 2px solid var(--color-maximum-blue-green);
+  outline-color: var(--color-maximum-blue-green);
+  background-color: var(--color-midnight-blue);
+  color: var(--color-lavender-gray);
 }
 
 .item-create-field .create-controls,
@@ -899,6 +969,13 @@ export default {
   color: var(--color-black-blue);
 }
 
+.bluetiful-theme .item-create-field .create-controls .btn.btn-add,
+.bluetiful-theme .item-edit-field .edit-controls .btn.btn-save,
+.bluetiful-theme .item-create-btn .btn.btn-add {
+  background-color: var(--color-maximum-blue-green);
+  color: var(--color-black-blue);
+}
+
 .default-theme .item-create-btn .btn.btn-add:hover,
 .default-theme .item-create-field .create-controls .btn.btn-add:hover,
 .default-theme .item-edit-field .edit-controls .btn.btn-save:hover {
@@ -909,6 +986,12 @@ export default {
 .purplish-theme .item-edit-field .edit-controls .btn.btn-save:hover,
 .purplish-theme .item-create-btn .btn.btn-add:hover {
   background-color: var(--color-spanish-pink);
+}
+
+.bluetiful-theme .item-create-field .create-controls .btn.btn-add:hover,
+.bluetiful-theme .item-edit-field .edit-controls .btn.btn-save:hover,
+.bluetiful-theme .item-create-btn .btn.btn-add:hover {
+  background-color: var(--color-lavender-gray);
 }
 
 .top-controls .delete-todo-btn,
@@ -933,5 +1016,16 @@ export default {
 .purplish-theme .item-create-field .create-controls .btn.btn-cancel:hover,
 .purplish-theme .hide-btn:hover {
   background-color: var(--color-russian-violet);
+}
+
+.bluetiful-theme .item-create-btn .btn.btn-cancel:hover,
+.bluetiful-theme .item-edit-field .edit-controls .btn.btn-cancel:hover {
+  background-color: var(--color-midnight-blue);
+}
+
+.bluetiful-theme .item-create-field .create-controls .btn.btn-cancel:hover,
+.bluetiful-theme .hide-btn:hover {
+  background-color: var(--color-midnight-blue);
+  color: var(--color-lavender-gray);
 }
 </style>
