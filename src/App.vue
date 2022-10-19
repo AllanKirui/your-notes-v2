@@ -387,7 +387,7 @@ ul {
 @media (max-width: 768px) {
   .overlay.active {
     position: absolute;
-    top: 0;
+    top: 80px;
     left: 0;
     width: 100vw;
     height: 100vh;
