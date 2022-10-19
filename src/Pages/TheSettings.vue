@@ -196,6 +196,18 @@
                     <span class="text">Purplish theme</span>
                   </div>
                 </div>
+
+                <div
+                  :class="[theme === 'bluetiful' ? 'active' : '', 'wrapper']"
+                  ref="bluetifulWrapper"
+                  @click="setTheme('bluetiful')"
+                >
+                  <div class="theme theme-3"></div>
+                  <div class="theme-options flex flex-ai-c flex-jc-c">
+                    <span class="dot"></span>
+                    <span class="text">Bluetiful theme</span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -272,6 +284,11 @@ export default {
         mode = "purplish-theme";
       }
 
+      // for bluetiful theme
+      if (this.theme === "bluetiful") {
+        mode = "bluetiful-theme";
+      }
+
       return mode;
     },
     defaultTodo() {
@@ -293,6 +310,11 @@ export default {
         style = "border-color: #ff7aaf";
       }
 
+      // for bluetiful theme
+      if (this.theme === "bluetiful") {
+        style = "border-color: #545e69";
+      }
+
       return style;
     },
   },
@@ -302,16 +324,17 @@ export default {
     },
     setTheme(theme) {
       if (theme === "default") {
-        // scroll into view the selected theme
-        this.$refs.defaultWrapper.scrollIntoView();
-
         // dispatch an action to set the default theme
         this.$store.dispatch("setTheme", null);
         return;
       }
 
-      // scroll into view the selected theme
-      this.$refs.purplishWrapper.scrollIntoView();
+      if (theme === "purplish") {
+        // dispatch an action to set the purplish theme
+        this.$store.dispatch("setTheme", "purplish");
+
+        return;
+      }
 
       // dispatch an action to set any other selected theme
       this.$store.dispatch("setTheme", theme);
@@ -417,6 +440,10 @@ export default {
   background-color: var(--color-spanish-pink);
 }
 
+.bluetiful-theme .settings-wrapper {
+  background-color: var(--color-midnight-blue);
+}
+
 .title {
   padding: 1rem 1.25rem;
 }
@@ -464,6 +491,16 @@ export default {
 
 .purplish-theme .options-links .link.active {
   background-color: var(--color-russian-violet);
+}
+
+.bluetiful-theme .options-links .link.active:hover,
+.bluetiful-theme .options-links .link:hover {
+  background-color: var(--color-lavender-gray);
+  color: var(--color-steel-blue);
+}
+
+.bluetiful-theme .options-links .link.active {
+  background-color: var(--color-midnight-blue);
 }
 
 .options-links .link div {
@@ -516,6 +553,10 @@ export default {
   background-color: var(--color-russian-violet);
 }
 
+.bluetiful-theme .options-contents {
+  background-color: var(--color-midnight-blue);
+}
+
 .content {
   text-align: center;
   margin-bottom: 1.875rem;
@@ -535,19 +576,19 @@ export default {
   margin-top: 2rem;
 }
 
-.content .content-btns-wrapper .btn-restore-note.disabled,
-.content .content-btns-wrapper .btn-restore-todo.disabled {
+.default-theme .content .content-btns-wrapper .btn-restore-note.disabled,
+.default-theme .content .content-btns-wrapper .btn-restore-todo.disabled {
   background-color: var(--color-platinum);
   cursor: not-allowed;
 }
 
-.content .content-btns-wrapper .btn-restore-note,
-.content .content-btns-wrapper .btn-restore-todo {
+.default-theme .content .content-btns-wrapper .btn-restore-note,
+.default-theme .content .content-btns-wrapper .btn-restore-todo {
   background-color: var(--color-malachite);
 }
 
-.content .content-btns-wrapper .btn-restore-note:hover,
-.content .content-btns-wrapper .btn-restore-todo:hover {
+.default-theme .content .content-btns-wrapper .btn-restore-note:hover,
+.default-theme .content .content-btns-wrapper .btn-restore-todo:hover {
   background-color: var(--color-platinum);
 }
 
@@ -581,12 +622,20 @@ export default {
   box-shadow: rgba(255, 122, 175, 0.3) 0px 3px 8px;
 }
 
+.bluetiful-theme .content .themes-wrapper .wrapper .theme {
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 3px 8px;
+}
+
 .content .themes-wrapper .wrapper .theme.theme-1 {
   background-image: url("@/assets/img/default-theme.svg");
 }
 
 .content .themes-wrapper .wrapper .theme.theme-2 {
   background-image: url("@/assets/img/purplish-theme.svg");
+}
+
+.content .themes-wrapper .wrapper .theme.theme-3 {
+  background-image: url("@/assets/img/bluetiful-theme.svg");
 }
 
 .content .font-wrapper {
@@ -639,5 +688,16 @@ export default {
 .purplish-theme .wrapper.active .theme-options .dot {
   outline: 2px solid var(--color-tickle-me-pink);
   background-color: var(--color-tickle-me-pink);
+}
+
+.bluetiful-theme .content .font-wrapper .font .dot,
+.bluetiful-theme .wrapper .theme-options .dot {
+  outline: 2px solid var(--color-maximum-blue-green);
+}
+
+.bluetiful-theme .content .font-wrapper .font.active .dot,
+.bluetiful-theme .wrapper.active .theme-options .dot {
+  outline: 2px solid var(--color-maximum-blue-green);
+  background-color: var(--color-maximum-blue-green);
 }
 </style>
