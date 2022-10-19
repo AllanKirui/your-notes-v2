@@ -592,6 +592,63 @@ export default {
   background-color: var(--color-platinum);
 }
 
+.purplish-theme .content .content-btns-wrapper .btn-restore-note.disabled,
+.purplish-theme .content .content-btns-wrapper .btn-restore-todo.disabled {
+  background-color: var(--color-black-blue);
+  color: var(--color-spanish-pink);
+  cursor: not-allowed;
+}
+
+.purplish-theme .content .content-btns-wrapper .btn-restore-note,
+.purplish-theme .content .content-btns-wrapper .btn-restore-todo {
+  background-color: var(--color-tickle-me-pink);
+  color: var(--color-black-blue);
+}
+
+.purplish-theme .content .content-btns-wrapper .btn-restore-note:hover,
+.purplish-theme .content .content-btns-wrapper .btn-restore-todo:hover {
+  background-color: var(--color-spanish-pink);
+  color: var(--color-black-blue);
+}
+
+.purplish-theme .content .content-btns-wrapper .btn-restore-note.disabled:hover,
+.purplish-theme
+  .content
+  .content-btns-wrapper
+  .btn-restore-todo.disabled:hover {
+  background-color: var(--color-black-blue);
+  color: var(--color-spanish-pink);
+}
+
+.bluetiful-theme .content .content-btns-wrapper .btn-restore-note.disabled,
+.bluetiful-theme .content .content-btns-wrapper .btn-restore-todo.disabled {
+  background-color: var(--color-steel-blue);
+  color: var(--color-lavender-gray);
+  cursor: not-allowed;
+}
+
+.bluetiful-theme .content .content-btns-wrapper .btn-restore-note,
+.bluetiful-theme .content .content-btns-wrapper .btn-restore-todo {
+  background-color: var(--color-maximum-blue-green);
+  color: var(--color-eerie-black);
+}
+
+.bluetiful-theme .content .content-btns-wrapper .btn-restore-note:hover,
+.bluetiful-theme .content .content-btns-wrapper .btn-restore-todo:hover {
+  background-color: var(--color-lavender-gray);
+}
+
+.bluetiful-theme
+  .content
+  .content-btns-wrapper
+  .btn-restore-note.disabled:hover,
+.bluetiful-theme
+  .content
+  .content-btns-wrapper
+  .btn-restore-todo.disabled:hover {
+  background-color: var(--color-steel-blue);
+}
+
 .content .themes-wrapper {
   gap: 1.25rem;
   margin-top: 1.875rem;
