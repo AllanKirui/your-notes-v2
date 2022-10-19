@@ -155,11 +155,6 @@ export default {
     themeClasses() {
       let classes = "header ";
 
-      // add 'overlay-active' class if overlay is active
-      if (this.isOverlay) {
-        classes += "overlay-active ";
-      }
-
       // for default theme
       if (!this.theme) {
         classes += "default-theme";
