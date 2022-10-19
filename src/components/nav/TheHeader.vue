@@ -22,7 +22,7 @@
             <img
               v-if="!theme"
               class="logo"
-              src="@/assets/img/logo.min.svg"
+              src="@/assets/img/logo-default.svg"
               alt="your notes v2 logo"
               width="168"
               height="27.6"
@@ -30,7 +30,7 @@
             <img
               v-else-if="theme === 'purplish'"
               class="logo"
-              src="@/assets/img/logo.min-purplish.svg"
+              src="@/assets/img/logo-purplish.svg"
               alt="your notes v2 logo"
               width="168"
               height="27.6"
@@ -54,14 +54,14 @@
           <img
             v-if="!theme"
             class="search"
-            src="@/assets/img/search.min.svg"
+            src="@/assets/img/search-default.svg"
             alt="search icon"
             width="18"
           />
           <img
             v-else-if="theme === 'purplish'"
             class="search"
-            src="@/assets/img/search.min-purplish.svg"
+            src="@/assets/img/search-purplish.svg"
             alt="search icon"
             width="18"
           />
@@ -91,10 +91,14 @@
         </div>
         <div class="nav-menu">
           <button class="menu-btn" title="show menu">
-            <img v-if="!theme" src="@/assets/img/dropdown.min.svg" alt=" " />
+            <img
+              v-if="!theme"
+              src="@/assets/img/dropdown-default.svg"
+              alt=" "
+            />
             <img
               v-else-if="theme === 'purplish'"
-              src="@/assets/img/dropdown.min-purplish.svg"
+              src="@/assets/img/dropdown-purplish.svg"
               alt=" "
             />
             <img

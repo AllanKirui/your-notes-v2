@@ -3,7 +3,7 @@
     <div class="logo flex flex-jc-c flex-ai-c">
       <div class="wrapper">
         <img
-          src="@/assets/img/logo.min.svg"
+          src="@/assets/img/logo-default.svg"
           alt="your notes v2 logo"
           class="logo-image"
           width="305"

@@ -17,7 +17,7 @@
           <!-- only show image for incomplete tasks on a todo -->
           <img
             v-if="displayContent[index] && !theme"
-            src="@/assets/img/checkbox-grey.svg"
+            src="@/assets/img/checkbox-default.svg"
             alt=" "
             width="14"
           />
@@ -25,7 +25,7 @@
             v-else-if="
               displayContent[index] && theme === 'purplish' && isDefault
             "
-            src="@/assets/img/checkbox-black-blue.svg"
+            src="@/assets/img/checkbox-purplish-alt.svg"
             alt=" "
             width="14"
           />

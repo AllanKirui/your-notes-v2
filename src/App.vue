@@ -763,8 +763,8 @@ ul {
   position: absolute;
   width: 100%;
   height: 100%;
-  background-image: url("./assets/img/bg-left.min.svg"),
-    url("./assets/img/bg-right.min.svg");
+  background-image: url("./assets/img/bg-left.svg"),
+    url("./assets/img/bg-right.svg");
   background-repeat: no-repeat, no-repeat;
   background-attachment: fixed, fixed;
   background-size: 368px, 368px;
@@ -1080,8 +1080,8 @@ ul {
 }
 
 .default-theme .content-items-details .bg-images {
-  background-image: url("@/assets/img/text-bg.svg"),
-    url("@/assets/img/quill-bg.svg");
+  background-image: url("@/assets/img/text-bg-vertical-default.svg"),
+    url("@/assets/img/quill-bg-default.svg");
 }
 
 .purplish-theme .content-items-details .bg-images {
@@ -1095,8 +1095,8 @@ ul {
 }
 
 .default-theme .content-intro-wrapper .bg-images {
-  background-image: url("@/assets/img/text-bg-horizontal.svg"),
-    url("@/assets/img/quill-bg.svg");
+  background-image: url("@/assets/img/text-bg-horizontal-default.svg"),
+    url("@/assets/img/quill-bg-default.svg");
 }
 
 .purplish-theme .content-intro-wrapper .bg-images {
@@ -1277,7 +1277,7 @@ ul {
 }
 
 .default-theme .item-wrapper.default-item .bg-image {
-  background-image: url("@/assets/img/quill-bg-sidebar.svg");
+  background-image: url("@/assets/img/quill-bg-sidebar-default.svg");
 }
 
 .purplish-theme .item-wrapper.default-item .bg-image {

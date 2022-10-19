@@ -291,7 +291,7 @@ export default {
 }
 
 .wrapper.default-theme .bg-image {
-  background-image: url("@/assets/img/quill-bg-sidebar.svg");
+  background-image: url("@/assets/img/quill-bg-sidebar-default.svg");
 }
 
 .wrapper.purplish-theme .bg-image {

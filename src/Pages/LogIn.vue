@@ -84,11 +84,7 @@
         <div class="meta-google">
           <p class="flex flex-ai-c flex-jc-c">
             Or log in with:
-            <img
-              src="@/assets/img/google.min.svg"
-              alt="google logo"
-              width="20"
-            />
+            <img src="@/assets/img/google.svg" alt="google logo" width="20" />
             <button @click="logInWithGoogle">Google</button>
           </p>
         </div>
