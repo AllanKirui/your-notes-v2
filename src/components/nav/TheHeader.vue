@@ -524,6 +524,7 @@ export default {
 .nav-avatar .image-wrapper .avatar {
   position: relative;
   z-index: 2;
+  max-width: 100%;
 }
 
 .nav-avatar .image-wrapper .initials {
