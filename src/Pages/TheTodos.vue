@@ -117,6 +117,16 @@
 <script>
 import TodoList from "@/components/todos/TodoList.vue";
 import TodoDetails from "@/components/todos/TodoDetails.vue";
+import { getAuth } from "firebase/auth";
+import {
+  db,
+  todosColRef,
+  addDocToCollection,
+  onSnapshotListener,
+  queryFn,
+  whereFn,
+  orderDataBy,
+} from "@/main.js";
 
 export default {
   props: ["isModal", "activeSide", "isSearching", "searchMessage"],
@@ -131,6 +141,7 @@ export default {
       screenSize: null,
       isShowMobileCounter: false,
       isShowMobileFlow: false,
+      newTodoId: null,
     };
   },
   computed: {
@@ -212,21 +223,25 @@ export default {
         title: todoTitle,
         contents: [],
         isHideCompleted: false,
+        authorId: getAuth().currentUser.uid,
       };
 
       // add the new task to the contents list
       newTodo.contents.push({ text: todoTask, isCompleted: false });
 
       // dispatch an action to add the new todo to the todos list
-      this.$store.dispatch("todos/addNewTodo", newTodo);
+      this.$store.dispatch("todos/addNewTodo", {
+        data: newTodo,
+        db: db,
+        colRef: todosColRef,
+        addDoc: addDocToCollection,
+      });
 
+      this.newTodoId = newTodo.id;
       this.isCreated = true;
 
       // close new todo modal
       this.closeModal();
-
-      // open the newly created todo
-      this.openNewTodo(newTodo.id);
 
       // show success notification
       let message = "Added todo successfully \\ (•◡•) /";
@@ -291,6 +306,35 @@ export default {
     cancelSearch() {
       this.$emit("cancel-search");
     },
+    getRealtimeTodoData() {
+      const uid = getAuth().currentUser.uid;
+
+      // perform a query to get the current user's todos
+      const queryRef = queryFn(
+        todosColRef,
+        whereFn("authorId", "==", uid),
+        orderDataBy("id")
+      );
+
+      // get collection data using onSnapshot (REALTIME)
+      // it takes in two arguments; the collection reference and a function that fires
+      // every time a snapshot changes and runs once initially to get data
+      onSnapshotListener(queryRef, (snapshot) => {
+        // dispatch an action to clear the current todo list before adding new data
+        this.$store.dispatch("todos/clearTodosList");
+
+        // dispatch an action to add the Welcome Todo along with the new data
+        this.$store.dispatch("todos/addWelcomeTodo");
+
+        snapshot.docs.forEach((todo) => {
+          // dispatch an action to set the todo data
+          this.$store.dispatch("todos/addRealtimeData", todo);
+        });
+
+        // open the newly created todo
+        if (this.todoList.length > 0) this.openNewTodo(this.newTodoId);
+      });
+    },
   },
   watch: {
     isModal(newValue) {
@@ -328,14 +372,18 @@ export default {
   },
   mounted() {
     this.checkWindowSize();
+    this.getRealtimeTodoData();
   },
   updated() {
     // scroll a newly created todo into view
-    if (this.isCreated) {
-      let newTodoEl = document.querySelector(
-        ".content-items .item-wrapper:last-child"
-      );
-      newTodoEl.scrollIntoView();
+    if (this.isCreated && this.todoList.length > 0) {
+      // after 100ms when the new element has been rendered in the DOM
+      setTimeout(() => {
+        let newTodoEl = document.querySelector(
+          ".content-items .item-wrapper:last-child"
+        );
+        newTodoEl.scrollIntoView();
+      }, 100);
 
       // reset props
       this.isCreated = false;

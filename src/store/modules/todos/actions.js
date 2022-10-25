@@ -51,4 +51,16 @@ export default {
     // commit a mutation to reset the 'defaultTodo' state prop
     context.commit("resetDefaultTodo");
   },
+  addRealtimeData(context, payload) {
+    // commit a mutation to get the todo data
+    context.commit("addRealtimeData", payload);
+  },
+  clearTodosList(context) {
+    // commit a mutation to clear the todos list
+    context.commit("clearTodosList");
+  },
+  addWelcomeTodo(context) {
+    // commit a mutation to include the Welcome Todo along with the new data
+    context.commit("addWelcomeTodo");
+  },
 };

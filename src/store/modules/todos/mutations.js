@@ -12,6 +12,8 @@ export default {
 
     // update the 'isCompleted' prop
     state.todos[parentIdx].contents[childIdx].isCompleted = status;
+
+    // TODO: use where clause to implement this for Firestore
   },
   saveChanges(state, payload) {
     let parentIdx = payload.parentTodoId;
@@ -24,9 +26,9 @@ export default {
     }
     state.todos[parentIdx].contents[childIdx].text = payload.newText;
   },
-  addNewTodo(state, payload) {
-    // add a new todo to the list of todos
-    state.todos.push(payload);
+  addNewTodo(_, payload) {
+    // add a new todo as a document to the firebase 'todos' collection
+    payload.addDoc(payload.colRef, payload.data);
   },
   addNewTodoTask(state, payload) {
     let parentIdx = payload.parentTodoId;
@@ -84,5 +86,17 @@ export default {
   },
   resetDefaultTodo(state) {
     state.defaultTodo = null;
+  },
+  addRealtimeData(state, payload) {
+    // spread the data to the new object and add the unique firestore id as well
+    state.todos.push({ ...payload.data(), fireId: payload.id });
+  },
+  clearTodosList(state) {
+    // clear the todos list before updating it with new data
+    state.todos = [];
+  },
+  addWelcomeTodo(state) {
+    // include the Welcome Todo along with new data
+    state.todos.push(state.welcomeTodo);
   },
 };
