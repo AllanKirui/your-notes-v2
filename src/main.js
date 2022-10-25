@@ -7,6 +7,15 @@ import BaseCard from "@/components/ui/BaseCard";
 
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  onSnapshot,
+  query,
+  where,
+  orderBy,
+} from "firebase/firestore";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -20,6 +29,17 @@ const firebaseConfig = {
 
 // Initialize Firebase
 initializeApp(firebaseConfig);
+
+// initialize Firestore services
+export const db = getFirestore();
+// get a collection reference
+export const todosColRef = collection(db, "todos");
+// export other firestore methods
+export const addDocToCollection = addDoc;
+export const queryFn = query;
+export const whereFn = where;
+export const onSnapshotListener = onSnapshot;
+export const orderDataBy = orderBy;
 
 const app = createApp(App);
 
