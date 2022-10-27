@@ -11,6 +11,10 @@ import {
   getFirestore,
   collection,
   addDoc,
+  setDoc,
+  doc,
+  updateDoc,
+  arrayUnion,
   onSnapshot,
   query,
   where,
@@ -40,6 +44,10 @@ export const queryFn = query;
 export const whereFn = where;
 export const onSnapshotListener = onSnapshot;
 export const orderDataBy = orderBy;
+export const _doc = doc;
+export const _setDoc = setDoc;
+export const _updateDoc = updateDoc;
+export const _arrayUnion = arrayUnion;
 
 const app = createApp(App);
 

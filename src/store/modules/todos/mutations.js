@@ -30,15 +30,25 @@ export default {
     // add a new todo as a document to the firebase 'todos' collection
     payload.addDoc(payload.colRef, payload.data);
   },
-  addNewTodoTask(state, payload) {
-    let parentIdx = payload.parentTodoId;
-    let newTask = {
+  addNewTodoTask(_, payload) {
+    const docRef = payload.doc(payload.db, "todos", payload.firestoreDocId);
+
+    let data = {
       text: payload.newTask,
       isCompleted: false,
     };
 
-    // add a new todo task to the 'contents' list
-    state.todos[parentIdx].contents.push(newTask);
+    // add a new todo task to the 'contents' list of the firestore document
+    payload
+      .updateDoc(docRef, {
+        contents: payload.arrayUnion(data),
+      })
+      .then(() => {
+        console.log("Added new task successfully");
+      })
+      .catch((error) => {
+        alert(`Something went wrong!\n${error}`);
+      });
   },
   resetSelectedTodo(state) {
     state.selectedTodo = null;

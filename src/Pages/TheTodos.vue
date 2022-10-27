@@ -57,6 +57,7 @@
       <todo-details
         :screen-size="screenSize"
         @show-notification="showNotification"
+        @selectedtodo-id="setSelectedTodo"
       ></todo-details>
     </section>
 
@@ -334,6 +335,9 @@ export default {
         // open the newly created todo
         if (this.todoList.length > 0) this.openNewTodo(this.newTodoId);
       });
+    },
+    setSelectedTodo(id) {
+      this.newTodoId = id;
     },
   },
   watch: {

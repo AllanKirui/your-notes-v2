@@ -263,9 +263,10 @@
 
 <script>
 import { mapGetters } from "vuex";
+import { db, _doc, _updateDoc, _arrayUnion } from "@/main.js";
 
 export default {
-  emits: ["show-notification"],
+  emits: ["show-notification", "selectedtodo-id"],
   props: ["screenSize"],
   inject: ["setTextLength"],
   data() {
@@ -284,6 +285,7 @@ export default {
       isHighlighted: false,
       isShowDeleteWindow: false,
       isMobileView: false,
+      firestoreDocId: null,
     };
   },
   computed: {
@@ -428,10 +430,15 @@ export default {
       if (newTask) {
         this.$store.dispatch({
           type: "todos/addNewTodoTask",
-          parentTodoId: this.parentTodoId,
+          firestoreDocId: this.firestoreDocId,
           newTask: newTask,
+          db: db,
+          doc: _doc,
+          updateDoc: _updateDoc,
+          arrayUnion: _arrayUnion,
         });
       }
+
       this.isCreated = true;
 
       // clear the field and re-focus on it
@@ -532,6 +539,10 @@ export default {
         this.hasSwitchedTodos = true;
         this.hasTodo = true;
         this.parentTodoId = newTodo.id;
+        this.firestoreDocId = newTodo.fireId; // firestore document ID
+
+        // emit the id of the selectedTodo
+        this.$emit("selectedtodo-id", this.parentTodoId);
 
         // reset props
         this.cancelEdits();
@@ -613,7 +624,7 @@ export default {
     }
 
     // scroll to the top when switching between different todos
-    if (this.hasSwitchedTodos) {
+    if (this.hasSwitchedTodos && this.selectedTodo) {
       document.querySelector(".details-wrapper").scrollTo(0, 0);
 
       // reset props
