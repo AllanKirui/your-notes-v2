@@ -60,7 +60,7 @@ export default {
     state.todos[parentIdx].isHideCompleted =
       !state.todos[parentIdx].isHideCompleted;
   },
-  deleteTodo(state, payload) {
+  async deleteTodo(state, payload) {
     // if a todo is deleted while in mobile view reset the following state props
     if (payload.isMobileView) {
       state.selectedTodo = null;
@@ -69,14 +69,24 @@ export default {
 
     let parentId = payload.id;
 
+    // TODO: handle, deleting, editing, restoring welcome todo/note
     // if todo is the default welcome todo, make a copy of it
     // allowing user to restore it later
     if (payload.isDefault) {
       state.defaultTodo = state.todos[parentId];
+      state.todos = state.todos.filter((todo) => todo.id !== parentId);
+      return;
     }
 
     // filter out the todo whose id matches the parent id
-    state.todos = state.todos.filter((todo) => todo.id !== parentId);
+    try {
+      // delete a todo with a matching firestore document id from the 'todos' collection
+      await payload.deleteDoc(
+        payload.doc(payload.db, "todos", payload.firestoreDocId)
+      );
+    } catch (error) {
+      alert(`Something went wrong!\n${error}`);
+    }
   },
   deleteTodoTask(state, payload) {
     let parentIdx = payload.parentTodoId;

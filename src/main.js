@@ -13,6 +13,7 @@ import {
   addDoc,
   doc,
   updateDoc,
+  deleteDoc,
   arrayUnion,
   onSnapshot,
   query,
@@ -46,6 +47,7 @@ export const _orderBy = orderBy;
 export const _doc = doc;
 export const _updateDoc = updateDoc;
 export const _arrayUnion = arrayUnion;
+export const _deleteDoc = deleteDoc;
 
 const app = createApp(App);
 

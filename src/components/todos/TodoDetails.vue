@@ -263,7 +263,7 @@
 
 <script>
 import { mapGetters } from "vuex";
-import { db, _doc, _updateDoc, _arrayUnion } from "@/main.js";
+import { db, _doc, _updateDoc, _arrayUnion, _deleteDoc } from "@/main.js";
 
 export default {
   emits: ["show-notification", "selectedtodo-id"],
@@ -486,8 +486,12 @@ export default {
       // dispatch an action to delete a todo from the list of todos
       this.$store.dispatch("todos/deleteTodo", {
         id: this.parentTodoId,
+        firestoreDocId: this.firestoreDocId,
         isDefault: this.selectedTodo.isDefault,
         isMobileView: this.isMobileView,
+        db: db,
+        doc: _doc,
+        deleteDoc: _deleteDoc,
       });
 
       // emit an event to show notification message
