@@ -263,7 +263,14 @@
 
 <script>
 import { mapGetters } from "vuex";
-import { db, _doc, _updateDoc, _arrayUnion, _deleteDoc } from "@/main.js";
+import {
+  db,
+  _doc,
+  _updateDoc,
+  _arrayUnion,
+  _deleteDoc,
+  _arrayRemove,
+} from "@/main.js";
 
 export default {
   emits: ["show-notification", "selectedtodo-id"],
@@ -507,6 +514,11 @@ export default {
         type: "todos/deleteTodoTask",
         parentTodoId: this.parentTodoId,
         childTodoId: index,
+        firestoreDocId: this.firestoreDocId,
+        db: db,
+        doc: _doc,
+        updateDoc: _updateDoc,
+        arrayRemove: _arrayRemove,
       });
 
       // close any open edit fields

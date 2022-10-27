@@ -15,6 +15,7 @@ import {
   updateDoc,
   deleteDoc,
   arrayUnion,
+  arrayRemove,
   onSnapshot,
   query,
   where,
@@ -48,6 +49,7 @@ export const _doc = doc;
 export const _updateDoc = updateDoc;
 export const _arrayUnion = arrayUnion;
 export const _deleteDoc = deleteDoc;
+export const _arrayRemove = arrayRemove;
 
 const app = createApp(App);
 

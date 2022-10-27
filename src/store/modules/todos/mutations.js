@@ -78,9 +78,8 @@ export default {
       return;
     }
 
-    // filter out the todo whose id matches the parent id
+    // delete a todo with a matching firestore document id from the 'todos' collection
     try {
-      // delete a todo with a matching firestore document id from the 'todos' collection
       await payload.deleteDoc(
         payload.doc(payload.db, "todos", payload.firestoreDocId)
       );
@@ -88,12 +87,21 @@ export default {
       alert(`Something went wrong!\n${error}`);
     }
   },
-  deleteTodoTask(state, payload) {
+  async deleteTodoTask(state, payload) {
     let parentIdx = payload.parentTodoId;
     let childIdx = payload.childTodoId;
+    let selectedTodo = state.todos.filter((todo) => todo.id === parentIdx)[0];
+    let data = selectedTodo.contents[childIdx];
+    const docRef = payload.doc(payload.db, "todos", payload.firestoreDocId);
 
-    // delete the task whose index matches the child index
-    state.todos[parentIdx].contents.splice(childIdx, 1);
+    // delete the selected todo task from the 'contents' list of the firestore document
+    try {
+      await payload.updateDoc(docRef, {
+        contents: payload.arrayRemove(data),
+      });
+    } catch (error) {
+      alert(`Something went wrong!\n${error}`);
+    }
   },
   closeOpenFields(state, payload) {
     state.isCloseOpenFields = payload;
