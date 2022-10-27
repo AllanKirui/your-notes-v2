@@ -39,11 +39,11 @@ export const db = getFirestore();
 // get a collection reference
 export const todosColRef = collection(db, "todos");
 // export other firestore methods
-export const addDocToCollection = addDoc;
-export const queryFn = query;
-export const whereFn = where;
-export const onSnapshotListener = onSnapshot;
-export const orderDataBy = orderBy;
+export const _addDoc = addDoc;
+export const _query = query;
+export const _where = where;
+export const _onSnapshot = onSnapshot;
+export const _orderBy = orderBy;
 export const _doc = doc;
 export const _setDoc = setDoc;
 export const _updateDoc = updateDoc;

@@ -122,11 +122,11 @@ import { getAuth } from "firebase/auth";
 import {
   db,
   todosColRef,
-  addDocToCollection,
-  onSnapshotListener,
-  queryFn,
-  whereFn,
-  orderDataBy,
+  _addDoc,
+  _onSnapshot,
+  _query,
+  _where,
+  _orderBy,
 } from "@/main.js";
 
 export default {
@@ -235,7 +235,7 @@ export default {
         data: newTodo,
         db: db,
         colRef: todosColRef,
-        addDoc: addDocToCollection,
+        addDoc: _addDoc,
       });
 
       this.newTodoId = newTodo.id;
@@ -311,16 +311,16 @@ export default {
       const uid = getAuth().currentUser.uid;
 
       // perform a query to get the current user's todos
-      const queryRef = queryFn(
+      const queryRef = _query(
         todosColRef,
-        whereFn("authorId", "==", uid),
-        orderDataBy("id")
+        _where("authorId", "==", uid),
+        _orderBy("id")
       );
 
       // get collection data using onSnapshot (REALTIME)
       // it takes in two arguments; the collection reference and a function that fires
       // every time a snapshot changes and runs once initially to get data
-      onSnapshotListener(queryRef, (snapshot) => {
+      _onSnapshot(queryRef, (snapshot) => {
         // dispatch an action to clear the current todo list before adding new data
         this.$store.dispatch("todos/clearTodosList");
 
