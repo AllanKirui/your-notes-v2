@@ -95,11 +95,23 @@ export default {
     state.selectedTodo = null;
     state.openTodoId = null;
   },
-  updateHiddenStatus(state, payload) {
+  async updateHiddenStatus(state, payload) {
     // toggle the hidden status of the selected todo
     let parentIdx = payload.parentTodoId;
     state.todos[parentIdx].isHideCompleted =
       !state.todos[parentIdx].isHideCompleted;
+
+    const docRef = payload.doc(payload.db, "todos", payload.firestoreDocId);
+
+    // update the 'isHideCompleted' prop of the selectedTodo in firestore
+    try {
+      // delete the task marked as incomplete from the 'contents' list of the firestore document
+      await payload.updateDoc(docRef, {
+        isHideCompleted: state.todos[parentIdx].isHideCompleted,
+      });
+    } catch (error) {
+      alert(`Something went wrong!\n${error}`);
+    }
   },
   async deleteTodo(state, payload) {
     // if a todo is deleted while in mobile view reset the following state props

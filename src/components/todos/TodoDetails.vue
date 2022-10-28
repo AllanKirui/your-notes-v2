@@ -466,15 +466,23 @@ export default {
       this.$store.dispatch({
         type: "todos/updateHiddenStatus",
         parentTodoId: this.parentTodoId,
+        firestoreDocId: this.firestoreDocId,
+        db: db,
+        doc: _doc,
+        updateDoc: _updateDoc,
       });
 
       if (this.hasCompletedItems) {
         if (!isHidden) {
-          // scroll completed items into view when 'show completed' button is clicked
-          this.$nextTick(() => {
-            let completedItems = document.querySelector(".completed-items");
-            completedItems.scrollIntoView();
-          });
+          // after 100ms when the realtime data has been rendered in the DOM
+          setTimeout(() => {
+            // scroll completed items into view when 'show completed' button is clicked
+            this.$nextTick(() => {
+              let completedItems = document.querySelector(".completed-items");
+              completedItems.scrollIntoView();
+              console.log("Scrolled into view");
+            });
+          }, 100);
         } else {
           // scroll incomplete items into view
           let incompleteItems = document.querySelector(".incomplete-items");
