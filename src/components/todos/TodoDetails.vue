@@ -412,6 +412,12 @@ export default {
         parentTodoId: this.parentTodoId,
         childTodoId: index,
         newText: updatedText,
+        firestoreDocId: this.firestoreDocId,
+        db: db,
+        doc: _doc,
+        updateDoc: _updateDoc,
+        arrayRemove: _arrayRemove,
+        arrayUnion: _arrayUnion,
       });
 
       // close the editing window by resetting props
@@ -480,7 +486,6 @@ export default {
             this.$nextTick(() => {
               let completedItems = document.querySelector(".completed-items");
               completedItems.scrollIntoView();
-              console.log("Scrolled into view");
             });
           }, 100);
         } else {

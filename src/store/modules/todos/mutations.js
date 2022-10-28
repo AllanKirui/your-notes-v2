@@ -56,16 +56,41 @@ export default {
       alert(`Something went wrong!\n${error}`);
     }
   },
-  saveChanges(state, payload) {
+  async saveChanges(state, payload) {
     let parentIdx = payload.parentTodoId;
     let childIdx = payload.childTodoId;
+    let oldData = {
+      text: state.todos[parentIdx].contents[childIdx].text,
+      isCompleted: false,
+    };
+    let newData = {
+      text: payload.newText,
+      isCompleted: false,
+    };
 
+    // TODO: handle logic for default todo
     // update the 'text' prop
-    if (state.defaultTodo) {
-      state.todos[parentIdx - 1].contents[childIdx].text = payload.newText;
-      return;
+    // if (state.defaultTodo) {
+    //   state.todos[parentIdx - 1].contents[childIdx].text = payload.newText;
+    //   return;
+    // }
+    // TODO: delete
+    // state.todos[parentIdx].contents[childIdx].text = payload.newText;
+
+    const docRef = payload.doc(payload.db, "todos", payload.firestoreDocId);
+
+    try {
+      // delete the old task from the 'contents' list of the firestore document
+      await payload.updateDoc(docRef, {
+        contents: payload.arrayRemove(oldData),
+      });
+      // delete the updated task to the 'contents' list of the firestore document
+      await payload.updateDoc(docRef, {
+        contents: payload.arrayUnion(newData),
+      });
+    } catch (error) {
+      alert(`Something went wrong!\n${error}`);
     }
-    state.todos[parentIdx].contents[childIdx].text = payload.newText;
   },
   addNewTodo(_, payload) {
     // add a new todo as a document to the firebase 'todos' collection
