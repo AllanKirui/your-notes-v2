@@ -392,6 +392,12 @@ export default {
         status: this.isChecked,
         parentTodoId: this.parentTodoId,
         childTodoId: index,
+        firestoreDocId: this.firestoreDocId,
+        db: db,
+        doc: _doc,
+        updateDoc: _updateDoc,
+        arrayRemove: _arrayRemove,
+        arrayUnion: _arrayUnion,
       });
 
       // reset prop

@@ -5,15 +5,56 @@ export default {
       (todo) => todo.id === payload.todoId
     )[0];
   },
-  updateCompletionStatus(state, payload) {
+  async updateCompletionStatus(state, payload) {
     let parentIdx = payload.parentTodoId;
     let childIdx = payload.childTodoId;
     let status = payload.status;
 
-    // update the 'isCompleted' prop
-    state.todos[parentIdx].contents[childIdx].isCompleted = status;
+    // get the task marked as completed
+    let completedTask = state.todos[parentIdx].contents[childIdx];
 
-    // TODO: use where clause to implement this for Firestore
+    // make a copy of the completed task
+    let copyOfCompletedTask = {};
+    Object.assign(copyOfCompletedTask, completedTask);
+    copyOfCompletedTask.isCompleted = true;
+
+    // make a copy of the task before it was marked as complete
+    let taskBeforeCompletion = {};
+    Object.assign(taskBeforeCompletion, completedTask);
+    taskBeforeCompletion.isCompleted = false;
+
+    const docRef = payload.doc(payload.db, "todos", payload.firestoreDocId);
+
+    // if the todo task has been marked as completed
+    if (!status) {
+      try {
+        // delete the task marked as complete from the 'contents' list of the firestore document
+        await payload.updateDoc(docRef, {
+          contents: payload.arrayRemove(copyOfCompletedTask),
+        });
+        // add the task marked as incomplete to the 'contents' list of the firestore document
+        await payload.updateDoc(docRef, {
+          contents: payload.arrayUnion(completedTask),
+        });
+      } catch (error) {
+        alert(`Something went wrong!\n${error}`);
+      }
+      return;
+    }
+
+    // if the todo task has been marked as incomplete
+    try {
+      // delete the task marked as incomplete from the 'contents' list of the firestore document
+      await payload.updateDoc(docRef, {
+        contents: payload.arrayRemove(taskBeforeCompletion),
+      });
+      // add the task marked as complete to the 'contents' list of the firestore document
+      await payload.updateDoc(docRef, {
+        contents: payload.arrayUnion(completedTask),
+      });
+    } catch (error) {
+      alert(`Something went wrong!\n${error}`);
+    }
   },
   saveChanges(state, payload) {
     let parentIdx = payload.parentTodoId;
