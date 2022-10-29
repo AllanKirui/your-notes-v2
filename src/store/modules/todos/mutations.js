@@ -97,11 +97,15 @@ export default {
 
     state.hasUpdatedTodoTask = true;
   },
-  addNewTodo(_, payload) {
-    // add a new todo as a document to the firebase 'todos' collection
-    payload.addDoc(payload.colRef, payload.data);
+  async addNewTodo(_, payload) {
+    try {
+      // add a new todo as a document to the firebase 'todos' collection
+      await payload.addDoc(payload.colRef, payload.data);
+    } catch (error) {
+      alert(`Something went wrong!\n${error}`);
+    }
   },
-  addNewTodoTask(_, payload) {
+  async addNewTodoTask(_, payload) {
     const docRef = payload.doc(payload.db, "todos", payload.firestoreDocId);
 
     let data = {
@@ -109,17 +113,14 @@ export default {
       isCompleted: false,
     };
 
-    // add a new todo task to the 'contents' list of the firestore document
-    payload
-      .updateDoc(docRef, {
+    try {
+      // add a new todo task to the 'contents' list of the firestore document
+      await payload.updateDoc(docRef, {
         contents: payload.arrayUnion(data),
-      })
-      .then(() => {
-        console.log("Added new task successfully");
-      })
-      .catch((error) => {
-        alert(`Something went wrong!\n${error}`);
       });
+    } catch (error) {
+      alert(`Something went wrong!\n${error}`);
+    }
   },
   resetSelectedTodo(state) {
     state.selectedTodo = null;
