@@ -17,4 +17,7 @@ export default {
   defaultTodo(state) {
     return state.defaultTodo;
   },
+  hasUpdatedTodoTask(state) {
+    return state.hasUpdatedTodoTask;
+  },
 };

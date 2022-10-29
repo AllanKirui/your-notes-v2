@@ -57,6 +57,9 @@ export default {
     }
   },
   async saveChanges(state, payload) {
+    // reset store props
+    state.hasUpdatedTodoTask = false;
+
     let parentIdx = payload.parentTodoId;
     let childIdx = payload.childTodoId;
     let oldData = {
@@ -91,6 +94,8 @@ export default {
     } catch (error) {
       alert(`Something went wrong!\n${error}`);
     }
+
+    state.hasUpdatedTodoTask = true;
   },
   addNewTodo(_, payload) {
     // add a new todo as a document to the firebase 'todos' collection

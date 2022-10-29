@@ -11,6 +11,7 @@ export default {
       selectedTodo: null,
       isCloseOpenFields: false,
       openTodoId: null,
+      hasUpdatedTodoTask: false,
       welcomeTodo: {
         id: 0,
         title: "Welcome to Todos",

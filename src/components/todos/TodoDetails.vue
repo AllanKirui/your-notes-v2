@@ -296,7 +296,11 @@ export default {
     };
   },
   computed: {
-    ...mapGetters("todos", ["selectedTodo", "isCloseOpenFields"]),
+    ...mapGetters("todos", [
+      "selectedTodo",
+      "isCloseOpenFields",
+      "hasUpdatedTodoTask",
+    ]),
     ...mapGetters(["greeting", "theme", "globalFontSize"]),
     completedItemsFieldText() {
       return this.numOfCompletedItems > 1
@@ -596,6 +600,21 @@ export default {
       if (newValue) {
         this.cancelEdits();
         this.cancelNewTodoTask();
+      }
+    },
+    hasUpdatedTodoTask(newValue) {
+      if (newValue) {
+        let updatedTaskEl = document.querySelector(
+          ".incomplete-items .items li:last-child"
+        );
+
+        updatedTaskEl.scrollIntoView();
+        updatedTaskEl.className = "animated flash";
+
+        // remove the animation classes
+        setTimeout(() => {
+          updatedTaskEl.className = "";
+        }, 1500);
       }
     },
   },
