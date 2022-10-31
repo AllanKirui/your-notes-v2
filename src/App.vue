@@ -257,7 +257,7 @@ export default {
       setTextLength: this.setTextLength,
     };
   },
-  mounted() {
+  beforeMount() {
     // check if a user is logged in
     auth = getAuth();
     onAuthStateChanged(auth, (user) => {
