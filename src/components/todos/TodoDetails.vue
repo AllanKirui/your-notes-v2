@@ -263,9 +263,11 @@
 
 <script>
 import { mapGetters } from "vuex";
+import { getAuth } from "firebase/auth";
 import {
   db,
   _doc,
+  _setDoc,
   _updateDoc,
   _arrayUnion,
   _deleteDoc,
@@ -515,12 +517,13 @@ export default {
 
       // dispatch an action to delete a todo from the list of todos
       this.$store.dispatch("todos/deleteTodo", {
-        id: this.parentTodoId,
-        firestoreDocId: this.firestoreDocId,
+        parentTodoId: this.parentTodoId,
+        firestoreDocId: this.firestoreDocId || getAuth().currentUser.uid,
         isDefault: this.selectedTodo.isDefault,
         isMobileView: this.isMobileView,
         db: db,
         doc: _doc,
+        setDoc: _setDoc,
         deleteDoc: _deleteDoc,
       });
 

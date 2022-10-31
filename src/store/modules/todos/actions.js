@@ -28,8 +28,15 @@ export default {
     context.commit("updateHiddenStatus", payload);
   },
   deleteTodo(context, payload) {
+    // destructurize the payload
+    let data = { ...payload };
+
+    // add new data
+    data.theme = context.rootState.theme;
+    data.fontSize = context.rootState.globalFontSize;
+
     // commit a mutation to delete a todo from the list of todos
-    context.commit("deleteTodo", payload);
+    context.commit("deleteTodo", data);
   },
   deleteTodoTask(context, payload) {
     // commit a mutation to delete a task from a todo

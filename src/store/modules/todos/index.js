@@ -12,6 +12,11 @@ export default {
       isCloseOpenFields: false,
       openTodoId: null,
       hasUpdatedTodoTask: false,
+      preferences: {
+        hasDeletedDefaultTodo: false,
+        fontSize: 14,
+        theme: null,
+      },
       welcomeTodo: {
         id: 0,
         title: "Welcome to Todos",

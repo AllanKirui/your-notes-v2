@@ -11,6 +11,7 @@ import {
   getFirestore,
   collection,
   addDoc,
+  setDoc,
   doc,
   updateDoc,
   deleteDoc,
@@ -39,8 +40,10 @@ initializeApp(firebaseConfig);
 export const db = getFirestore();
 // get a collection reference
 export const todosColRef = collection(db, "todos");
+export const preferencesColRef = collection(db, "preferences");
 // export other firestore methods
 export const _addDoc = addDoc;
+export const _setDoc = setDoc;
 export const _query = query;
 export const _where = where;
 export const _onSnapshot = onSnapshot;
