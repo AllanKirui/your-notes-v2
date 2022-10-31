@@ -15,6 +15,7 @@ export default createStore({
       greeting: "",
       theme: null,
       globalFontSize: 14,
+      hasDeletedDefaultTodo: false,
     };
   },
   mutations: {
@@ -26,6 +27,9 @@ export default createStore({
     },
     setFontSize(state, payload) {
       state.globalFontSize = payload;
+    },
+    updateDefaultTodoStatus(state, payload) {
+      state.hasDeletedDefaultTodo = payload;
     },
   },
   actions: {
@@ -59,6 +63,17 @@ export default createStore({
     setFontSize(context, payload) {
       context.commit("setFontSize", payload);
     },
+    updateDefaultTodoStatus(context, payload) {
+      context.commit("updateDefaultTodoStatus", payload);
+    },
+    setUserPreferences(context, payload) {
+      context.dispatch("setTheme", payload.theme);
+      context.dispatch("setFontSize", payload.fontSize);
+      context.dispatch(
+        "updateDefaultTodoStatus",
+        payload.hasDeletedDefaultTodo
+      );
+    },
   },
   getters: {
     greeting(state) {
@@ -69,6 +84,9 @@ export default createStore({
     },
     globalFontSize(state) {
       return state.globalFontSize;
+    },
+    hasDeletedDefaultTodo(state) {
+      return state.hasDeletedDefaultTodo;
     },
   },
 });
