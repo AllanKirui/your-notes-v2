@@ -67,6 +67,7 @@
 
 <script>
 import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { preferencesColRef, _doc, _onSnapshot } from "@/main.js";
 
 // import WelcomeHeader from "./components/nav/WelcomeHeader.vue";
 import TheHeader from "./components/nav/TheHeader.vue";
@@ -196,6 +197,13 @@ export default {
       this.isCancelSearch = true;
       this.isSearching = false;
     },
+    getRealtimePreferencesData(uid) {
+      // get collection data using onSnapshot (REALTIME)
+      _onSnapshot(_doc(preferencesColRef, uid), (doc) => {
+        // dispatch an action to set the current user's preferences if it exists
+        if (doc.data()) this.$store.dispatch("setUserPreferences", doc.data());
+      });
+    },
   },
   watch: {
     isLoggedIn(newValue) {
@@ -257,6 +265,8 @@ export default {
         this.isLoggedIn = true;
         // dispatch an action to store the authenticated user's data
         this.$store.dispatch("auth/createUserProfile", user);
+
+        this.getRealtimePreferencesData(user.uid);
       } else {
         this.isLoggedIn = false;
       }
