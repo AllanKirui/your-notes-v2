@@ -164,6 +164,9 @@ export default {
     globalFontSize() {
       return this.$store.getters.globalFontSize;
     },
+    hasDeletedDefaultTodo() {
+      return this.$store.getters.hasDeletedDefaultTodo;
+    },
     cardStyle() {
       let mode = "";
 
@@ -324,8 +327,10 @@ export default {
         // dispatch an action to clear the current todo list before adding new data
         this.$store.dispatch("todos/clearTodosList");
 
-        // dispatch an action to add the Welcome Todo along with the new data
-        this.$store.dispatch("todos/addWelcomeTodo");
+        if (!this.hasDeletedDefaultTodo) {
+          // dispatch an action to add the Welcome Todo along with the new data
+          this.$store.dispatch("todos/addWelcomeTodo");
+        }
 
         snapshot.docs.forEach((todo) => {
           // dispatch an action to set the todo data
