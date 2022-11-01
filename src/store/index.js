@@ -31,6 +31,36 @@ export default createStore({
     updateDefaultTodoStatus(state, payload) {
       state.hasDeletedDefaultTodo = payload;
     },
+    async updateUserPreferences(state, payload) {
+      let newPreferences = {
+        theme: state.theme,
+        fontSize: state.globalFontSize,
+        hasDeletedDefaultTodo: state.hasDeletedDefaultTodo,
+      };
+
+      // get a list of keys in the payload object
+      let payloadKeys = Object.keys(payload);
+
+      // check if the list of keys has the following keys
+      if (payloadKeys.includes("theme")) {
+        newPreferences.theme = payload.theme;
+      } else if (payloadKeys.includes("fontSize")) {
+        newPreferences.fontSize = payload.fontSize;
+      } else if (payloadKeys.includes("hasDeletedDefaultTodo")) {
+        newPreferences.hasDeletedDefaultTodo = payload.hasDeletedDefaultTodo;
+      }
+
+      // update the 'preferences' collection in firestore
+      try {
+        // add a new collection to Firestore called 'preferences', overwrite existing ones
+        await payload.setDoc(
+          payload.doc(payload.db, "preferences", payload.firestoreDocId),
+          newPreferences
+        );
+      } catch (error) {
+        alert(`Something went wrong!\n${error}`);
+      }
+    },
   },
   actions: {
     setGreeting(context) {
@@ -73,6 +103,9 @@ export default createStore({
         "updateDefaultTodoStatus",
         payload.hasDeletedDefaultTodo
       );
+    },
+    updateUserPreferences(context, payload) {
+      context.commit("updateUserPreferences", payload);
     },
   },
   getters: {

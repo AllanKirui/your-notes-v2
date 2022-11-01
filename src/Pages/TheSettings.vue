@@ -228,7 +228,7 @@
             <div class="content-btns-wrapper flex flex-ai-c flex-jc-c">
               <button
                 :class="[
-                  defaultTodo ? 'enabled' : 'disabled',
+                  hasDeletedDefaultTodo ? 'enabled' : 'disabled',
                   'btn btn-restore-todo',
                 ]"
                 title="Restore deleted todo"
@@ -255,6 +255,9 @@
 </template>
 
 <script>
+import { getAuth } from "firebase/auth";
+import { db, _doc, _setDoc } from "@/main.js";
+
 export default {
   emits: ["show-notification"],
   data() {
@@ -270,6 +273,9 @@ export default {
     },
     globalFontSize() {
       return this.$store.getters.globalFontSize;
+    },
+    hasDeletedDefaultTodo() {
+      return this.$store.getters.hasDeletedDefaultTodo;
     },
     cardStyle() {
       let mode = "";
@@ -290,9 +296,6 @@ export default {
       }
 
       return mode;
-    },
-    defaultTodo() {
-      return this.$store.getters["todos/defaultTodo"];
     },
     defaultNote() {
       return this.$store.getters["notes/defaultNote"];
@@ -323,38 +326,61 @@ export default {
       this.activeSide = side;
     },
     setTheme(theme) {
-      if (theme === "default") {
-        // dispatch an action to set the default theme
-        this.$store.dispatch("setTheme", null);
-        return;
+      let selectedTheme = "";
+
+      switch (theme) {
+        case "default":
+          selectedTheme = null;
+          break;
+        case "purplish":
+          selectedTheme = "purplish";
+          break;
+        case "bluetiful":
+          selectedTheme = "bluetiful";
+          break;
+        default:
+          selectedTheme = null;
+          break;
       }
 
-      if (theme === "purplish") {
-        // dispatch an action to set the purplish theme
-        this.$store.dispatch("setTheme", "purplish");
-
-        return;
-      }
-
-      // dispatch an action to set any other selected theme
-      this.$store.dispatch("setTheme", theme);
+      // dispatch an action to set the selected theme
+      this.$store.dispatch({
+        type: "updateUserPreferences",
+        theme: selectedTheme,
+        firestoreDocId: getAuth().currentUser.uid,
+        db: db,
+        doc: _doc,
+        setDoc: _setDoc,
+      });
     },
     setFont(size) {
+      let fontSize = null;
+
       switch (size) {
         // dispatch an action to set the selected font size
         case "small":
-          this.$store.dispatch("setFontSize", 14); // 14px
+          fontSize = 14; // 14px
           break;
         case "medium":
-          this.$store.dispatch("setFontSize", 16); // 16px
+          fontSize = 16; // 16px
           break;
         case "large":
-          this.$store.dispatch("setFontSize", 18); // 18px
+          fontSize = 18; // 18px
           break;
         default:
-          this.$store.dispatch("setFontSize", 14); // 14px
+          fontSize = 14; // 14px
           break;
       }
+
+      // dispatch an action to set the selected fontSize
+      this.$store.dispatch({
+        type: "updateUserPreferences",
+        fontSize: fontSize,
+        firestoreDocId: getAuth().currentUser.uid,
+        db: db,
+        doc: _doc,
+        setDoc: _setDoc,
+      });
     },
     checkWindowSize() {
       // listen to the resize event
@@ -371,7 +397,7 @@ export default {
         this.restoreWelcomeNote();
       }
       if (item === "todos") {
-        if (!this.defaultTodo) return;
+        if (!this.hasDeletedDefaultTodo) return;
         this.restoreWelcomeTodo();
       }
     },
@@ -388,10 +414,23 @@ export default {
     },
     restoreWelcomeTodo() {
       // dispatch an action to restore the Welcome Todo
-      this.$store.dispatch("todos/restoreWelcomeTodo", this.defaultTodo);
+      this.$store.dispatch({
+        type: "todos/restoreWelcomeTodo",
+        firestoreDocId: getAuth().currentUser.uid,
+        db: db,
+        doc: _doc,
+        setDoc: _setDoc,
+      });
 
-      // dispatch an action to reset the 'defaultTodo' state prop
-      this.$store.dispatch("todos/resetDefaultTodo");
+      // dispatch an action to update the 'hasDeletedDefaultTodo' state prop
+      this.$store.dispatch({
+        type: "updateUserPreferences",
+        hasDeletedDefaultTodo: false,
+        firestoreDocId: getAuth().currentUser.uid,
+        db: db,
+        doc: _doc,
+        setDoc: _setDoc,
+      });
 
       // show a notification message
       let message = "Welcome Todo successfully restored ~(˘▾˘~)";
