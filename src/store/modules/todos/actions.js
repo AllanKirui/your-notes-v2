@@ -51,12 +51,16 @@ export default {
     context.commit("setOpenTodoId", payload);
   },
   restoreWelcomeTodo(context, payload) {
+    let userPreferences = {
+      theme: context.rootState.theme,
+      fontSize: context.rootState.globalFontSize,
+      hasDeletedDefaultTodo: context.rootState.hasDeletedDefaultTodo,
+    };
+
+    payload.userPreferences = userPreferences;
+
     // commit a mutation to restore the Welcome Todo
     context.commit("restoreWelcomeTodo", payload);
-  },
-  resetDefaultTodo(context) {
-    // commit a mutation to reset the 'defaultTodo' state prop
-    context.commit("resetDefaultTodo");
   },
   addRealtimeData(context, payload) {
     // commit a mutation to get the todo data

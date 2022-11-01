@@ -164,7 +164,7 @@ export default {
       state.preferences.fontSize = data.fontSize;
 
       try {
-        // add a new collection to Firestore called 'preferences'
+        // add a new collection to Firestore called 'preferences', overwrite existing ones
         await data.setDoc(
           data.doc(data.db, "preferences", data.firestoreDocId),
           state.preferences
@@ -204,11 +204,23 @@ export default {
   setOpenTodoId(state, payload) {
     state.openTodoId = payload;
   },
-  restoreWelcomeTodo(state, payload) {
-    state.todos.unshift(payload);
-  },
-  resetDefaultTodo(state) {
-    state.defaultTodo = null;
+  async restoreWelcomeTodo(state, payload) {
+    state.todos.unshift(state.welcomeTodo);
+
+    // get the new preferences
+    let newPreferences = { ...payload.userPreferences };
+    newPreferences.hasDeletedDefaultTodo = false;
+
+    // update the 'preferences' collection in firestore
+    try {
+      // add a new collection to Firestore called 'preferences', overwrite existing ones
+      await payload.setDoc(
+        payload.doc(payload.db, "preferences", payload.firestoreDocId),
+        newPreferences
+      );
+    } catch (error) {
+      alert(`Something went wrong!\n${error}`);
+    }
   },
   addRealtimeData(state, payload) {
     // spread the data to the new object and add the unique firestore id as well
