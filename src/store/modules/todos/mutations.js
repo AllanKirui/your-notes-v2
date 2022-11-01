@@ -71,14 +71,11 @@ export default {
       isCompleted: false,
     };
 
-    // TODO: handle logic for default todo
-    // update the 'text' prop
-    // if (state.defaultTodo) {
-    //   state.todos[parentIdx - 1].contents[childIdx].text = payload.newText;
-    //   return;
-    // }
-    // TODO: delete
-    // state.todos[parentIdx].contents[childIdx].text = payload.newText;
+    // if the todo is the default Welcome Todo, update the 'text' prop
+    if (state.todos[parentIdx].isDefault) {
+      state.todos[parentIdx].contents[childIdx].text = payload.newText;
+      return;
+    }
 
     const docRef = payload.doc(payload.db, "todos", payload.firestoreDocId);
 
