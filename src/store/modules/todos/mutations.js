@@ -150,20 +150,22 @@ export default {
 
     let parentIdx = data.parentTodoId;
 
-    // TODO: handle, deleting, editing, restoring welcome todo/note
-    // if todo is the default welcome todo, make a copy of it
-    // allowing user to restore it later
+    // if todo is the default welcome todo, delete it and update
+    // the user preferences
     if (data.isDefault) {
       state.todos = state.todos.filter((todo) => todo.id !== parentIdx);
-      state.preferences.hasDeletedDefaultTodo = true;
-      state.preferences.theme = data.theme;
-      state.preferences.fontSize = data.fontSize;
+
+      let newPreferences = {
+        theme: data.theme,
+        fontSize: data.fontSize,
+        hasDeletedDefaultTodo: true,
+      };
 
       try {
         // add a new collection to Firestore called 'preferences', overwrite existing ones
         await data.setDoc(
           data.doc(data.db, "preferences", data.firestoreDocId),
-          state.preferences
+          newPreferences
         );
       } catch (error) {
         alert(`Something went wrong!\n${error}`);
