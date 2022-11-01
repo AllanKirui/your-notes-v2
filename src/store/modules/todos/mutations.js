@@ -11,13 +11,13 @@ import {
 } from "@/main.js";
 
 // a function that handles firebase errors
-const throwException = (error) => {
+const throwException = (error, location) => {
   let message = "";
 
   if (error.code && error.message) {
-    message = `Oops! It appears you've discovered an Epic Bug ◔ ⌣ ◔\n\nLocation: deleteTodo( ) fn\n\nError Code: ${error.code}\n\nReasons: ${error.message}`;
+    message = `Oops! It appears you've discovered an Epic Bug ◔ ⌣ ◔\n\nLocation: ${location}\n\nError Code: ${error.code}\n\nReasons: ${error.message}`;
   } else {
-    message = `Oops! It appears you've discovered an Epic Bug ◔ ⌣ ◔\n\nLocation: deleteTodo( ) fn\n\n${error}"`;
+    message = `Oops! It appears you've discovered an Epic Bug ◔ ⌣ ◔\n\nLocation: ${location}\n\n${error}"`;
   }
   alert(message);
 };
@@ -61,7 +61,7 @@ export default {
           contents: _arrayUnion(completedTask),
         });
       } catch (error) {
-        throwException(error);
+        throwException(error, "updateCompletionStatus( ) fn");
       }
       return;
     }
@@ -77,7 +77,7 @@ export default {
         contents: _arrayUnion(completedTask),
       });
     } catch (error) {
-      throwException(error);
+      throwException(error, "updateCompletionStatus( ) fn");
     }
   },
   async saveChanges(state, data) {
@@ -131,7 +131,7 @@ export default {
         contents: _arrayUnion(newData),
       });
     } catch (error) {
-      throwException(error);
+      throwException(error, "saveChanges( ) fn");
     }
 
     state.hasUpdatedTodoTask = true;
@@ -141,7 +141,7 @@ export default {
       // add a new todo as a document to the firebase 'todos' collection
       await _addDoc(todosColRef, payload);
     } catch (error) {
-      throwException(error);
+      throwException(error, "addNewTodo( ) fn");
     }
   },
   async addNewTodoTask(_, payload) {
@@ -158,7 +158,7 @@ export default {
         contents: _arrayUnion(data),
       });
     } catch (error) {
-      throwException(error);
+      throwException(error, "addNewTodoTask( ) fn");
     }
   },
   resetSelectedTodo(state) {
@@ -180,7 +180,7 @@ export default {
         isHideCompleted: state.todos[parentIdx].isHideCompleted,
       });
     } catch (error) {
-      throwException(error);
+      throwException(error, "updateHiddenStatus( ) fn");
     }
   },
   async deleteTodo(state, data) {
@@ -210,7 +210,7 @@ export default {
           newPreferences
         );
       } catch (error) {
-        throwException(error);
+        throwException(error, "deleteTodo( ) fn");
       }
       return;
     }
@@ -219,7 +219,7 @@ export default {
     try {
       await _deleteDoc(_doc(db, "todos", data.firestoreDocId));
     } catch (error) {
-      throwException(error);
+      throwException(error, "deleteTodo( ) fn");
     }
   },
   async deleteTodoTask(state, payload) {
@@ -235,7 +235,7 @@ export default {
         contents: _arrayRemove(data),
       });
     } catch (error) {
-      throwException(error);
+      throwException(error, "deleteTodoTask( ) fn");
     }
   },
   closeOpenFields(state, payload) {
@@ -259,7 +259,7 @@ export default {
         newPreferences
       );
     } catch (error) {
-      throwException(error);
+      throwException(error, "restoreWelcomeTodo( ) fn");
     }
   },
   addRealtimeData(state, payload) {
