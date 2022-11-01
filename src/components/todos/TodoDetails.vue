@@ -430,6 +430,15 @@ export default {
       if (this.isEditText) this.cancelEdits();
       this.isCreated = false;
 
+      // prevent the user from adding any task if it's the default Welcome Todo
+      if (this.selectedTodo.isDefault) {
+        let message = "Sorry! We don't allow that on this Welcome Todo (ง°ل͜°)ง";
+        this.$emit("show-notification", message);
+
+        this.cancelNewTodoTask();
+        return;
+      }
+
       let newTask = this.$refs.newTask.value.trim();
 
       // dispatch an action to add a new todo item
@@ -505,6 +514,14 @@ export default {
       this.hasTodo = false;
     },
     deleteTodoTask(index) {
+      // prevent the user from adding any task if it's the default Welcome Todo
+      if (this.selectedTodo.isDefault) {
+        let message = "Sorry! We don't allow that on this Welcome Todo (ง°ل͜°)ง";
+        this.$emit("show-notification", message);
+
+        return;
+      }
+
       // dispatch an action to delete a task from a todo
       this.$store.dispatch({
         type: "todos/deleteTodoTask",
