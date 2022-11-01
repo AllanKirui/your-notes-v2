@@ -119,15 +119,7 @@
 import TodoList from "@/components/todos/TodoList.vue";
 import TodoDetails from "@/components/todos/TodoDetails.vue";
 import { getAuth } from "firebase/auth";
-import {
-  db,
-  todosColRef,
-  _addDoc,
-  _onSnapshot,
-  _query,
-  _where,
-  _orderBy,
-} from "@/main.js";
+import { todosColRef, _onSnapshot, _query, _where, _orderBy } from "@/main.js";
 
 export default {
   props: ["isModal", "activeSide", "isSearching", "searchMessage"],
@@ -234,12 +226,7 @@ export default {
       newTodo.contents.push({ text: todoTask, isCompleted: false });
 
       // dispatch an action to add the new todo to the todos list
-      this.$store.dispatch("todos/addNewTodo", {
-        data: newTodo,
-        db: db,
-        colRef: todosColRef,
-        addDoc: _addDoc,
-      });
+      this.$store.dispatch("todos/addNewTodo", newTodo);
 
       this.newTodoId = newTodo.id;
       this.isCreated = true;

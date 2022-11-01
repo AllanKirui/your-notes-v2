@@ -264,15 +264,6 @@
 <script>
 import { mapGetters } from "vuex";
 import { getAuth } from "firebase/auth";
-import {
-  db,
-  _doc,
-  _setDoc,
-  _updateDoc,
-  _arrayUnion,
-  _deleteDoc,
-  _arrayRemove,
-} from "@/main.js";
 
 export default {
   emits: ["show-notification", "selectedtodo-id"],
@@ -399,11 +390,6 @@ export default {
         parentTodoId: this.parentTodoId,
         childTodoId: index,
         firestoreDocId: this.firestoreDocId,
-        db: db,
-        doc: _doc,
-        updateDoc: _updateDoc,
-        arrayRemove: _arrayRemove,
-        arrayUnion: _arrayUnion,
       });
 
       // reset prop
@@ -419,11 +405,6 @@ export default {
         childTodoId: index,
         newText: updatedText,
         firestoreDocId: this.firestoreDocId,
-        db: db,
-        doc: _doc,
-        updateDoc: _updateDoc,
-        arrayRemove: _arrayRemove,
-        arrayUnion: _arrayUnion,
       });
 
       // close the editing window by resetting props
@@ -457,10 +438,6 @@ export default {
           type: "todos/addNewTodoTask",
           firestoreDocId: this.firestoreDocId,
           newTask: newTask,
-          db: db,
-          doc: _doc,
-          updateDoc: _updateDoc,
-          arrayUnion: _arrayUnion,
         });
       }
 
@@ -479,9 +456,6 @@ export default {
         type: "todos/updateHiddenStatus",
         parentTodoId: this.parentTodoId,
         firestoreDocId: this.firestoreDocId,
-        db: db,
-        doc: _doc,
-        updateDoc: _updateDoc,
       });
 
       if (this.hasCompletedItems) {
@@ -521,10 +495,6 @@ export default {
         firestoreDocId: this.firestoreDocId || getAuth().currentUser.uid,
         isDefault: this.selectedTodo.isDefault,
         isMobileView: this.isMobileView,
-        db: db,
-        doc: _doc,
-        setDoc: _setDoc,
-        deleteDoc: _deleteDoc,
       });
 
       // emit an event to show notification message
@@ -541,10 +511,6 @@ export default {
         parentTodoId: this.parentTodoId,
         childTodoId: index,
         firestoreDocId: this.firestoreDocId,
-        db: db,
-        doc: _doc,
-        updateDoc: _updateDoc,
-        arrayRemove: _arrayRemove,
       });
 
       // close any open edit fields
