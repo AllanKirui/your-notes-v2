@@ -154,7 +154,6 @@ export default {
     // if todo is the default welcome todo, make a copy of it
     // allowing user to restore it later
     if (data.isDefault) {
-      state.defaultTodo = state.welcomeTodo;
       state.todos = state.todos.filter((todo) => todo.id !== parentIdx);
       state.preferences.hasDeletedDefaultTodo = true;
       state.preferences.theme = data.theme;

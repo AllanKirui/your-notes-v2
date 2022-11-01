@@ -14,9 +14,6 @@ export default {
   openTodoId(state) {
     return state.openTodoId;
   },
-  defaultTodo(state) {
-    return state.defaultTodo;
-  },
   hasUpdatedTodoTask(state) {
     return state.hasUpdatedTodoTask;
   },

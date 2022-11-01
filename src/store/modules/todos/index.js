@@ -7,7 +7,6 @@ export default {
   state() {
     return {
       todos: [],
-      defaultTodo: null,
       selectedTodo: null,
       isCloseOpenFields: false,
       openTodoId: null,
