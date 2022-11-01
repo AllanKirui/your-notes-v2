@@ -255,6 +255,12 @@ export default {
       // set id to be the current length of the todos list
       let newId = this.numOfTodos;
 
+      // if there are no todos and the default todo has been deleted,
+      // set the newId for a newly created todo to be 1
+      if (newId === 0 && this.hasDeletedDefaultTodo) {
+        newId = 1;
+      }
+
       // loop through each todo item and check for duplicate IDs
       this.todoList.forEach((todo) => {
         if (todo.id === newId) {
