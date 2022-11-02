@@ -131,7 +131,7 @@ import { getAuth } from "firebase/auth";
 
 export default {
   props: ["screenSize"],
-  emits: ["show-notification"],
+  emits: ["show-notification", "selectednote-id"],
   inject: ["setTextLength"],
   data() {
     return {
@@ -189,6 +189,7 @@ export default {
         type: "notes/saveChanges",
         noteId: this.noteId,
         newText: updatedText,
+        firestoreDocId: this.firestoreDocId,
       });
 
       // close the editing window by resetting props
@@ -251,6 +252,9 @@ export default {
         this.hasNote = true;
         this.noteId = newNote.id;
         this.firestoreDocId = newNote.fireId;
+
+        // emit the id of the selectedNote
+        this.$emit("selectednote-id", this.noteId);
 
         // reset props
         this.cancelEdits();

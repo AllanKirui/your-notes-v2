@@ -1,4 +1,12 @@
-import { db, _doc, notesColRef, _addDoc, _setDoc, _deleteDoc } from "@/main.js";
+import {
+  db,
+  _doc,
+  notesColRef,
+  _addDoc,
+  _setDoc,
+  _deleteDoc,
+  _updateDoc,
+} from "@/main.js";
 
 // a function that handles firebase errors
 const throwException = (error, location) => {
@@ -26,15 +34,22 @@ export default {
     state.selectedNote = null;
     state.openNoteId = null;
   },
-  saveChanges(state, payload) {
-    let parentIdx = payload.noteId;
+  async saveChanges(_, data) {
+    let newNote = data.newText;
 
-    // update the 'text' prop
-    if (state.defaultNote) {
-      state.notes[parentIdx - 1].content = payload.newText;
-      return;
+    const docRef = _doc(db, "notes", data.firestoreDocId);
+
+    try {
+      // if newNote is empty, don't add it
+      if (!newNote) return;
+
+      // update the value of the 'content' key in the firestore document
+      await _updateDoc(docRef, {
+        content: newNote,
+      });
+    } catch (error) {
+      throwException(error, "saveChanges( ) fn");
     }
-    state.notes[parentIdx].content = payload.newText;
   },
   async addNewNote(_, payload) {
     try {

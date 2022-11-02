@@ -57,6 +57,7 @@
       <notes-details
         :screenSize="screenSize"
         @show-notification="showNotification"
+        @selectednote-id="setSelectedNote"
       ></notes-details>
     </section>
 
@@ -329,6 +330,9 @@ export default {
         // open the newly created note
         if (this.notesList.length > 0) this.openNewNote(this.newNoteId);
       });
+    },
+    setSelectedNote(id) {
+      this.newNoteId = id;
     },
   },
   watch: {
