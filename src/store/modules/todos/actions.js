@@ -38,6 +38,7 @@ export default {
     // add new data
     data.theme = context.rootState.theme;
     data.fontSize = context.rootState.globalFontSize;
+    data.hasDeletedDefaultNote = context.rootState.hasDeletedDefaultNote;
 
     // commit a mutation to delete a todo from the list of todos
     context.commit("deleteTodo", data);
@@ -59,6 +60,7 @@ export default {
       theme: context.rootState.theme,
       fontSize: context.rootState.globalFontSize,
       hasDeletedDefaultTodo: context.rootState.hasDeletedDefaultTodo,
+      hasDeletedDefaultNote: context.rootState.hasDeletedDefaultNote,
     };
 
     payload.userPreferences = userPreferences;

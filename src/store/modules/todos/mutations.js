@@ -204,6 +204,7 @@ export default {
       let newPreferences = {
         theme: data.theme,
         fontSize: data.fontSize,
+        hasDeletedDefaultNote: data.hasDeletedDefaultNote,
         hasDeletedDefaultTodo: true,
       };
 

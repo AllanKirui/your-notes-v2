@@ -32,6 +32,9 @@ export default createStore({
     updateDefaultTodoStatus(state, payload) {
       state.hasDeletedDefaultTodo = payload;
     },
+    updateDefaultNoteStatus(state, payload) {
+      state.hasDeletedDefaultNote = payload;
+    },
     async updateUserPreferences(state, payload) {
       let newPreferences = {
         theme: state.theme,
@@ -97,12 +100,19 @@ export default createStore({
     updateDefaultTodoStatus(context, payload) {
       context.commit("updateDefaultTodoStatus", payload);
     },
+    updateDefaultNoteStatus(context, payload) {
+      context.commit("updateDefaultNoteStatus", payload);
+    },
     setUserPreferences(context, payload) {
       context.dispatch("setTheme", payload.theme);
       context.dispatch("setFontSize", payload.fontSize);
       context.dispatch(
         "updateDefaultTodoStatus",
         payload.hasDeletedDefaultTodo
+      );
+      context.dispatch(
+        "updateDefaultNoteStatus",
+        payload.hasDeletedDefaultNote
       );
     },
     updateUserPreferences(context, payload) {
