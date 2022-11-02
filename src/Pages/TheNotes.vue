@@ -155,6 +155,9 @@ export default {
     globalFontSize() {
       return this.$store.getters.globalFontSize;
     },
+    hasDeletedDefaultNote() {
+      return this.$store.getters.hasDeletedDefaultNote;
+    },
     cardStyle() {
       let mode = "";
 
@@ -237,6 +240,12 @@ export default {
       // set id to be the current length of the notes list
       let newId = this.numOfNotes;
 
+      // if there are no notes and the default note has been deleted,
+      // set the newId for a newly created note to be 1
+      if (newId === 0 && this.hasDeletedDefaultNote) {
+        newId = 1;
+      }
+
       // loop through each note item and check for duplicate IDs
       this.notesList.forEach((note) => {
         if (note.id === newId) {
@@ -307,10 +316,10 @@ export default {
         this.$store.dispatch("notes/clearNotesList");
 
         // TODO: add this
-        // if (!this.hasDeletedDefaultNote) {
-        // dispatch an action to add the Welcome Note along with the new data
-        this.$store.dispatch("notes/addWelcomeNote");
-        // }
+        if (!this.hasDeletedDefaultNote) {
+          // dispatch an action to add the Welcome Note along with the new data
+          this.$store.dispatch("notes/addWelcomeNote");
+        }
 
         snapshot.docs.forEach((note) => {
           // dispatch an action to set the note data

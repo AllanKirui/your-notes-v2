@@ -16,6 +16,7 @@ export default createStore({
       theme: null,
       globalFontSize: 14,
       hasDeletedDefaultTodo: false,
+      hasDeletedDefaultNote: false,
     };
   },
   mutations: {
@@ -120,6 +121,9 @@ export default createStore({
     },
     hasDeletedDefaultTodo(state) {
       return state.hasDeletedDefaultTodo;
+    },
+    hasDeletedDefaultNote(state) {
+      return state.hasDeletedDefaultNote;
     },
   },
 });

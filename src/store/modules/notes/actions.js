@@ -20,8 +20,14 @@ export default {
     context.commit("addNewNote", payload);
   },
   deleteNote(context, payload) {
+    let data = { ...payload };
+
+    data.theme = context.rootState.theme;
+    data.fontSize = context.rootState.globalFontSize;
+    data.hasDeletedDefaultTodo = context.rootState.hasDeletedDefaultTodo;
+
     // commit a mutation to delete a note from the list of notes
-    context.commit("deleteNote", payload);
+    context.commit("deleteNote", data);
   },
   closeOpenFields(context, payload) {
     // commit a mutation to close any open fields in NotesDetails
@@ -34,10 +40,6 @@ export default {
   addRealtimeData(context, payload) {
     // commit a mutation to get the notes data
     context.commit("addRealtimeData", payload);
-  },
-  resetDefaultNote(context) {
-    // commit a mutation to reset the 'defaultNote' state prop
-    context.commit("resetDefaultNote");
   },
   clearNotesList(context) {
     // commit a mutation to clear the notes list

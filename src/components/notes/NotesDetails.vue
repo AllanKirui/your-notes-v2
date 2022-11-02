@@ -127,6 +127,7 @@
 
 <script>
 import { mapGetters } from "vuex";
+import { getAuth } from "firebase/auth";
 
 export default {
   props: ["screenSize"],
@@ -139,6 +140,7 @@ export default {
       isHighlighted: false,
       noteId: null,
       isShowDeleteWindow: false,
+      firestoreDocId: null,
     };
   },
   computed: {
@@ -208,10 +210,8 @@ export default {
       this.$store.dispatch("notes/deleteNote", {
         id: this.noteId,
         isDefault: this.selectedNote.isDefault,
+        firestoreDocId: this.firestoreDocId || getAuth().currentUser.uid,
       });
-
-      // dispatch an action to reset the 'selectedNote' state prop
-      this.$store.dispatch("notes/resetSelectedNote");
 
       // emit an event to show notification message
       let message = "Note deleted successfully （╯°□°）╯︵";
@@ -250,6 +250,7 @@ export default {
       if (newNote) {
         this.hasNote = true;
         this.noteId = newNote.id;
+        this.firestoreDocId = newNote.fireId;
 
         // reset props
         this.cancelEdits();

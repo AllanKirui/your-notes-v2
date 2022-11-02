@@ -1,4 +1,4 @@
-import { notesColRef, _addDoc } from "@/main.js";
+import { db, _doc, notesColRef, _addDoc, _setDoc, _deleteDoc } from "@/main.js";
 
 // a function that handles firebase errors
 const throwException = (error, location) => {
@@ -44,26 +44,45 @@ export default {
       throwException(error, "addNewNote( ) fn");
     }
   },
-  deleteNote(state, payload) {
-    let parentId = payload.id;
+  async deleteNote(state, data) {
+    let parentId = data.id;
 
-    // if note is the default welcome note, make a copy of it
-    // allowing user to restore it later
-    if (payload.isDefault) {
-      state.defaultNote = state.notes[parentId];
+    // if note is the default welcome note, delete it and update
+    // the user preferences
+    if (data.isDefault) {
+      state.notes = state.notes.filter((note) => note.id !== parentId);
+
+      let newPreferences = {
+        theme: data.theme,
+        fontSize: data.fontSize,
+        hasDeletedDefaultTodo: data.hasDeletedDefaultTodo,
+        hasDeletedDefaultNote: true,
+      };
+
+      try {
+        // add a new collection to Firestore called 'preferences', overwrite existing ones
+        await _setDoc(
+          _doc(db, "preferences", data.firestoreDocId),
+          newPreferences
+        );
+      } catch (error) {
+        throwException(error, "deleteNote( ) fn");
+      }
+      return;
     }
 
-    // filter out the note whose id matches the parent id
-    state.notes = state.notes.filter((note) => note.id !== parentId);
+    // delete a note with a matching firestore document id from the 'notes' collection
+    try {
+      await _deleteDoc(_doc(db, "notes", data.firestoreDocId));
+    } catch (error) {
+      throwException(error, "deleteNote( ) fn");
+    }
   },
   closeOpenFields(state, payload) {
     state.isCloseOpenFields = payload;
   },
   restoreWelcomeNote(state, payload) {
     state.notes.unshift(payload);
-  },
-  resetDefaultNote(state) {
-    state.defaultNote = null;
   },
   addRealtimeData(state, payload) {
     // spread the data to the new object and add the unique firestore id as well
