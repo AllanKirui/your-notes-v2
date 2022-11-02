@@ -375,9 +375,12 @@ export default {
   },
   updated() {
     // scroll a newly created note into view
-    if (this.isCreated) {
-      let newNoteEl = document.querySelector(".content-items li:last-child");
-      newNoteEl.scrollIntoView();
+    if (this.isCreated && this.notesList.length > 0) {
+      // after 100ms when the new element has been rendered in the DOM
+      setTimeout(() => {
+        let newNoteEl = document.querySelector(".content-items li:last-child");
+        newNoteEl.scrollIntoView();
+      }, 100);
 
       // reset props
       this.isCreated = false;
