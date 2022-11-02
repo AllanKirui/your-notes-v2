@@ -256,7 +256,6 @@
 
 <script>
 import { getAuth } from "firebase/auth";
-import { db, _doc, _setDoc } from "@/main.js";
 
 export default {
   emits: ["show-notification"],
@@ -351,9 +350,6 @@ export default {
         type: "updateUserPreferences",
         theme: selectedTheme,
         firestoreDocId: getAuth().currentUser.uid,
-        db: db,
-        doc: _doc,
-        setDoc: _setDoc,
       });
     },
     setFont(size) {
@@ -380,9 +376,6 @@ export default {
         type: "updateUserPreferences",
         fontSize: fontSize,
         firestoreDocId: getAuth().currentUser.uid,
-        db: db,
-        doc: _doc,
-        setDoc: _setDoc,
       });
     },
     checkWindowSize() {
@@ -409,9 +402,6 @@ export default {
       this.$store.dispatch({
         type: "notes/restoreWelcomeNote",
         firestoreDocId: getAuth().currentUser.uid,
-        db: db,
-        doc: _doc,
-        setDoc: _setDoc,
       });
 
       // dispatch an action to update the 'hasDeletedDefaultNote' state prop
@@ -419,9 +409,6 @@ export default {
         type: "updateUserPreferences",
         hasDeletedDefaultNote: false,
         firestoreDocId: getAuth().currentUser.uid,
-        db: db,
-        doc: _doc,
-        setDoc: _setDoc,
       });
 
       // show a notification message
@@ -433,9 +420,6 @@ export default {
       this.$store.dispatch({
         type: "todos/restoreWelcomeTodo",
         firestoreDocId: getAuth().currentUser.uid,
-        db: db,
-        doc: _doc,
-        setDoc: _setDoc,
       });
 
       // dispatch an action to update the 'hasDeletedDefaultTodo' state prop
@@ -443,9 +427,6 @@ export default {
         type: "updateUserPreferences",
         hasDeletedDefaultTodo: false,
         firestoreDocId: getAuth().currentUser.uid,
-        db: db,
-        doc: _doc,
-        setDoc: _setDoc,
       });
 
       // show a notification message

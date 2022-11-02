@@ -4,6 +4,8 @@ import authModule from "@/store/modules/auth/index";
 import todoModule from "@/store/modules/todos/index";
 import notesModule from "@/store/modules/notes/index";
 
+import { db, _doc, _setDoc } from "@/main.js";
+
 export default createStore({
   modules: {
     auth: authModule,
@@ -60,8 +62,8 @@ export default createStore({
       // update the 'preferences' collection in firestore
       try {
         // add a new collection to Firestore called 'preferences', overwrite existing ones
-        await payload.setDoc(
-          payload.doc(payload.db, "preferences", payload.firestoreDocId),
+        await _setDoc(
+          _doc(db, "preferences", payload.firestoreDocId),
           newPreferences
         );
       } catch (error) {
