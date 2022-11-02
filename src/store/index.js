@@ -40,6 +40,7 @@ export default createStore({
         theme: state.theme,
         fontSize: state.globalFontSize,
         hasDeletedDefaultTodo: state.hasDeletedDefaultTodo,
+        hasDeletedDefaultNote: state.hasDeletedDefaultNote,
       };
 
       // get a list of keys in the payload object
@@ -52,6 +53,8 @@ export default createStore({
         newPreferences.fontSize = payload.fontSize;
       } else if (payloadKeys.includes("hasDeletedDefaultTodo")) {
         newPreferences.hasDeletedDefaultTodo = payload.hasDeletedDefaultTodo;
+      } else if (payloadKeys.includes("hasDeletedDefaultNote")) {
+        newPreferences.hasDeletedDefaultNote = payload.hasDeletedDefaultNote;
       }
 
       // update the 'preferences' collection in firestore

@@ -39,6 +39,15 @@ export default {
     context.commit("closeOpenFields", payload);
   },
   restoreWelcomeNote(context, payload) {
+    let userPreferences = {
+      theme: context.rootState.theme,
+      fontSize: context.rootState.globalFontSize,
+      hasDeletedDefaultTodo: context.rootState.hasDeletedDefaultTodo,
+      hasDeletedDefaultNote: context.rootState.hasDeletedDefaultNote,
+    };
+
+    payload.userPreferences = userPreferences;
+
     // commit a mutation to restore the Welcome Note
     context.commit("restoreWelcomeNote", payload);
   },

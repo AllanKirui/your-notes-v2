@@ -238,7 +238,7 @@
               </button>
               <button
                 :class="[
-                  defaultNote ? 'enabled' : 'disabled',
+                  hasDeletedDefaultNote ? 'enabled' : 'disabled',
                   'btn btn-restore-note',
                 ]"
                 title="Restore deleted note"
@@ -276,6 +276,9 @@ export default {
     },
     hasDeletedDefaultTodo() {
       return this.$store.getters.hasDeletedDefaultTodo;
+    },
+    hasDeletedDefaultNote() {
+      return this.$store.getters.hasDeletedDefaultNote;
     },
     cardStyle() {
       let mode = "";
@@ -393,7 +396,7 @@ export default {
     },
     restoreDefaults(item) {
       if (item === "notes") {
-        if (!this.defaultNote) return;
+        if (!this.hasDeletedDefaultNote) return;
         this.restoreWelcomeNote();
       }
       if (item === "todos") {
@@ -403,10 +406,23 @@ export default {
     },
     restoreWelcomeNote() {
       // dispatch an action to restore the Welcome Note
-      this.$store.dispatch("notes/restoreWelcomeNote", this.defaultNote);
+      this.$store.dispatch({
+        type: "notes/restoreWelcomeNote",
+        firestoreDocId: getAuth().currentUser.uid,
+        db: db,
+        doc: _doc,
+        setDoc: _setDoc,
+      });
 
-      // dispatch an action to reset the 'defaultNote' state prop
-      this.$store.dispatch("notes/resetDefaultNote");
+      // dispatch an action to update the 'hasDeletedDefaultNote' state prop
+      this.$store.dispatch({
+        type: "updateUserPreferences",
+        hasDeletedDefaultNote: false,
+        firestoreDocId: getAuth().currentUser.uid,
+        db: db,
+        doc: _doc,
+        setDoc: _setDoc,
+      });
 
       // show a notification message
       let message = "Welcome Note successfully restored ~(˘▾˘~)";

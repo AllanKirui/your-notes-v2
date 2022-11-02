@@ -22,7 +22,7 @@ const throwException = (error, location) => {
 
 export default {
   setSelectedNote(state, payload) {
-    // get the todo whose id matches the payload id
+    // get the note whose id matches the payload id
     state.selectedNote = state.notes.filter(
       (note) => note.id === payload.noteId
     )[0];
@@ -53,7 +53,7 @@ export default {
   },
   async addNewNote(_, payload) {
     try {
-      // add a new todo as a document to the firebase 'todos' collection
+      // add a new note as a document to the firebase 'notes' collection
       await _addDoc(notesColRef, payload);
     } catch (error) {
       throwException(error, "addNewNote( ) fn");
@@ -96,8 +96,23 @@ export default {
   closeOpenFields(state, payload) {
     state.isCloseOpenFields = payload;
   },
-  restoreWelcomeNote(state, payload) {
-    state.notes.unshift(payload);
+  async restoreWelcomeNote(state, payload) {
+    state.notes.unshift(state.welcomeNote);
+
+    // get the new preferences
+    let newPreferences = { ...payload.userPreferences };
+    newPreferences.hasDeletedDefaultNote = false;
+
+    // update the 'preferences' collection in firestore
+    try {
+      // add a new collection to Firestore called 'preferences', overwrite existing ones
+      await _setDoc(
+        _doc(db, "preferences", payload.firestoreDocId),
+        newPreferences
+      );
+    } catch (error) {
+      throwException(error, "restoreWelcomeNote( ) fn");
+    }
   },
   addRealtimeData(state, payload) {
     // spread the data to the new object and add the unique firestore id as well
