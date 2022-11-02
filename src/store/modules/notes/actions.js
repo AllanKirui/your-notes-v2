@@ -43,4 +43,8 @@ export default {
     // commit a mutation to clear the notes list
     context.commit("clearNotesList");
   },
+  addWelcomeNote(context) {
+    // commit a mutation to include the Welcome Note along with the new data
+    context.commit("addWelcomeNote");
+  },
 };

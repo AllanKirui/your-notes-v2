@@ -55,4 +55,8 @@ export default {
     // clear the notes list before updating it with new data
     state.notes = [];
   },
+  addWelcomeNote(state) {
+    // include the Welcome Note along with new data
+    state.notes.push(state.welcomeNote);
+  },
 };

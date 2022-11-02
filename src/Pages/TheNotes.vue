@@ -307,6 +307,12 @@ export default {
         // dispatch an action to clear the current notes list before adding new data
         this.$store.dispatch("notes/clearNotesList");
 
+        // TODO: add this
+        // if (!this.hasDeletedDefaultNote) {
+        // dispatch an action to add the Welcome Note along with the new data
+        this.$store.dispatch("notes/addWelcomeNote");
+        // }
+
         snapshot.docs.forEach((note) => {
           // dispatch an action to set the note data
           this.$store.dispatch("notes/addRealtimeData", note);
