@@ -8,7 +8,6 @@ export default {
     context.commit("updateCompletionStatus", payload);
   },
   saveChanges(context, payload) {
-    // destructure the payload
     let data = { ...payload };
 
     // attach new data
@@ -34,7 +33,6 @@ export default {
     context.commit("updateHiddenStatus", payload);
   },
   deleteTodo(context, payload) {
-    // destructurize the payload
     let data = { ...payload };
 
     // add new data
