@@ -299,9 +299,6 @@ export default {
 
       return mode;
     },
-    defaultNote() {
-      return this.$store.getters["notes/defaultNote"];
-    },
     hrStyle() {
       let style = "";
 

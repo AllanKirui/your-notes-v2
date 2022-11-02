@@ -7,7 +7,6 @@ export default {
   state() {
     return {
       notes: [],
-      defaultNote: null,
       selectedNote: null,
       isCloseOpenFields: false,
       openNoteId: null,
