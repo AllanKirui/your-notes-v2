@@ -217,18 +217,17 @@ export default {
         id: this.setId(),
         title: noteTitle,
         content: noteContent,
+        authorId: getAuth().currentUser.uid,
       };
 
       // dispatch an action to add the new note to the notes list
       this.$store.dispatch("notes/addNewNote", newNote);
 
+      this.newNoteId = newNote.id;
       this.isCreated = true;
 
       // close new note modal
       this.closeModal();
-
-      // open the newly created note
-      this.openNewNote(newNote.id);
 
       // show success notification
       let message = "Added note successfully \\ (•◡•) /";
@@ -317,6 +316,9 @@ export default {
           // dispatch an action to set the note data
           this.$store.dispatch("notes/addRealtimeData", note);
         });
+
+        // open the newly created note
+        if (this.notesList.length > 0) this.openNewNote(this.newNoteId);
       });
     },
   },

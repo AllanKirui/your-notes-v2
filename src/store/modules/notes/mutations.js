@@ -1,3 +1,17 @@
+import { notesColRef, _addDoc } from "@/main.js";
+
+// a function that handles firebase errors
+const throwException = (error, location) => {
+  let message = "";
+
+  if (error.code && error.message) {
+    message = `Oops! It appears you've discovered an Epic Bug ◔ ⌣ ◔\n\nLocation: ${location}\n\nError Code: ${error.code}\n\nReasons: ${error.message}`;
+  } else {
+    message = `Oops! It appears you've discovered an Epic Bug ◔ ⌣ ◔\n\nLocation: ${location}\n\n${error}"`;
+  }
+  alert(message);
+};
+
 export default {
   setSelectedNote(state, payload) {
     // get the todo whose id matches the payload id
@@ -22,9 +36,13 @@ export default {
     }
     state.notes[parentIdx].content = payload.newText;
   },
-  addNewNote(state, payload) {
-    // add a new note to the list of notes
-    state.notes.push(payload);
+  async addNewNote(_, payload) {
+    try {
+      // add a new todo as a document to the firebase 'todos' collection
+      await _addDoc(notesColRef, payload);
+    } catch (error) {
+      throwException(error, "addNewNote( ) fn");
+    }
   },
   deleteNote(state, payload) {
     let parentId = payload.id;
