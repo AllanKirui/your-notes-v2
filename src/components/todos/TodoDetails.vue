@@ -441,6 +441,8 @@ export default {
 
       let newTask = this.$refs.newTask.value.trim();
 
+      this.checkIfTaskExists(newTask);
+
       // dispatch an action to add a new todo item
       if (newTask) {
         this.$store.dispatch({
@@ -455,6 +457,24 @@ export default {
       // clear the field and re-focus on it
       this.$refs.newTask.value = "";
       this.$refs.newTask.focus();
+    },
+    checkIfTaskExists(task) {
+      let availableTasks = [];
+
+      this.selectedTodo.contents.forEach((item) => {
+        availableTasks.push(item.text);
+      });
+
+      // check if the new task already exists
+      if (availableTasks.includes(task)) {
+        let message = "Sorry! That task already exists (ง°ل͜°)ง";
+        this.$emit("show-notification", message);
+
+        // clear the field
+        this.$refs.newTask.value = "";
+
+        return;
+      }
     },
     setProgress(totalItems, completed) {
       return Math.round((completed / totalItems) * 100);
@@ -571,8 +591,11 @@ export default {
 
         // reset props
         this.cancelEdits();
-        this.cancelNewTodoTask();
         this.hideDeleteWindow();
+
+        // only close the add new todo task window if
+        // the 'isCreated' prop is false
+        if (!this.isCreated) this.cancelNewTodoTask();
       } else {
         this.hasTodo = false;
       }

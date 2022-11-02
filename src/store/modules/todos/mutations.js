@@ -126,6 +126,10 @@ export default {
       await _updateDoc(docRef, {
         contents: _arrayRemove(oldData),
       });
+
+      // if newData.text is empty, don't add it
+      if (!newData.text) return;
+
       // delete the updated task to the 'contents' list of the firestore document
       await _updateDoc(docRef, {
         contents: _arrayUnion(newData),
