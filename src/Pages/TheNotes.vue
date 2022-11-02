@@ -117,6 +117,8 @@
 <script>
 import NotesList from "@/components/notes/NotesList.vue";
 import NotesDetails from "@/components/notes/NotesDetails.vue";
+import { getAuth } from "firebase/auth";
+import { notesColRef, _onSnapshot, _query, _where, _orderBy } from "@/main.js";
 
 export default {
   props: ["isModal", "activeSide", "isSearching", "searchMessage"],
@@ -131,6 +133,7 @@ export default {
       screenSize: null,
       isShowMobileCounter: false,
       isShowMobileFlow: false,
+      newNoteId: false,
     };
   },
   computed: {
@@ -287,6 +290,29 @@ export default {
     cancelSearch() {
       this.$emit("cancel-search");
     },
+    getRealtimeNotesData() {
+      const uid = getAuth().currentUser.uid;
+
+      // perform a query to get the current user's notes
+      const queryRef = _query(
+        notesColRef,
+        _where("authorId", "==", uid),
+        _orderBy("id")
+      );
+
+      // get collection data using onSnapshot (REALTIME)
+      // it takes in two arguments; the collection reference and a function that fires
+      // every time a snapshot changes and runs once initially to get data
+      _onSnapshot(queryRef, (snapshot) => {
+        // dispatch an action to clear the current notes list before adding new data
+        this.$store.dispatch("notes/clearNotesList");
+
+        snapshot.docs.forEach((note) => {
+          // dispatch an action to set the note data
+          this.$store.dispatch("notes/addRealtimeData", note);
+        });
+      });
+    },
   },
   watch: {
     isModal(newValue) {
@@ -324,6 +350,7 @@ export default {
   },
   mounted() {
     this.checkWindowSize();
+    this.getRealtimeNotesData();
   },
   updated() {
     // scroll a newly created note into view

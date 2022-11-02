@@ -47,4 +47,12 @@ export default {
   resetDefaultNote(state) {
     state.defaultNote = null;
   },
+  addRealtimeData(state, payload) {
+    // spread the data to the new object and add the unique firestore id as well
+    state.notes.push({ ...payload.data(), fireId: payload.id });
+  },
+  clearNotesList(state) {
+    // clear the notes list before updating it with new data
+    state.notes = [];
+  },
 };

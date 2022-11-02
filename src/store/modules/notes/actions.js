@@ -31,8 +31,16 @@ export default {
     // commit a mutation to restore the Welcome Note
     context.commit("restoreWelcomeNote", payload);
   },
+  addRealtimeData(context, payload) {
+    // commit a mutation to get the notes data
+    context.commit("addRealtimeData", payload);
+  },
   resetDefaultNote(context) {
     // commit a mutation to reset the 'defaultNote' state prop
     context.commit("resetDefaultNote");
+  },
+  clearNotesList(context) {
+    // commit a mutation to clear the notes list
+    context.commit("clearNotesList");
   },
 };
