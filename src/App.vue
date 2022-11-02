@@ -1468,8 +1468,18 @@ ul {
   padding: 0.375rem 0.375rem 0.2rem !important;
 }
 
-.heading-wrapper .confirm-delete-title .close-btn:hover {
+.default-theme .heading-wrapper .confirm-delete-title .close-btn:hover {
   background-color: var(--color-clouds);
+}
+
+.purplish-theme .heading-wrapper .confirm-delete-title .close-btn:hover {
+  background-color: var(--color-tickle-me-pink);
+  color: var(--color-black-blue);
+}
+
+.bluetiful-theme .heading-wrapper .confirm-delete-title .close-btn:hover {
+  background-color: var(--color-midnight-blue);
+  color: var(--color-lavender-gray);
 }
 
 .heading-wrapper .confirm-delete-contents {
