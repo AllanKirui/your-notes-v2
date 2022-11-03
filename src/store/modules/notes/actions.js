@@ -12,13 +12,8 @@ export default {
     context.commit("resetSelectedNote");
   },
   saveChanges(context, payload) {
-    let data = { ...payload };
-
-    // attach new data
-    data.hasDeletedDefaultNote = context.rootState.hasDeletedDefaultNote;
-
     // commit a mutation to save changes made on a note
-    context.commit("saveChanges", data);
+    context.commit("saveChanges", payload);
   },
   addNewNote(context, payload) {
     // commit a mutation to add a new note to the list of notes

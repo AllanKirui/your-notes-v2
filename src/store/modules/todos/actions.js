@@ -8,13 +8,8 @@ export default {
     context.commit("updateCompletionStatus", payload);
   },
   saveChanges(context, payload) {
-    let data = { ...payload };
-
-    // attach new data
-    data.hasDeletedDefaultTodo = context.rootState.hasDeletedDefaultTodo;
-
     // commit a mutation to save changes made on a todo item
-    context.commit("saveChanges", data);
+    context.commit("saveChanges", payload);
   },
   addNewTodo(context, payload) {
     // commit a mutation to add a new todo to the list of todos
