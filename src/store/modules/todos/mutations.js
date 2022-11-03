@@ -84,20 +84,12 @@ export default {
     // reset store props
     state.hasUpdatedTodoTask = false;
 
-    let parentIdx = data.parentTodoId;
-    let childIdx = data.childTodoId;
-
-    // if the default Welcome Todo has been deleted, minus 1 from the 'parentIdx'
-    let parentIdxMinusOne = null;
-    if (data.hasDeletedDefaultTodo) {
-      parentIdxMinusOne = parentIdx - 1;
-    }
+    let selectedTodoIndex = state.listOfTodoIds.indexOf(state.selectedTodo.id);
+    let todoTaskIndex = data.childTodoId;
 
     // get the data before and after edits were made
     let oldData = {
-      text: data.hasDeletedDefaultTodo
-        ? state.todos[parentIdxMinusOne].contents[childIdx].text
-        : state.todos[parentIdx].contents[childIdx].text,
+      text: state.todos[selectedTodoIndex].contents[todoTaskIndex].text,
       isCompleted: false,
     };
     let newData = {
@@ -105,18 +97,11 @@ export default {
       isCompleted: false,
     };
 
-    // use the 'parentIdxMinusOne' variable if default Welcome Todo was deleted
-    if (data.hasDeletedDefaultTodo) {
-      if (state.todos[parentIdxMinusOne].isDefault) {
-        state.todos[parentIdxMinusOne].contents[childIdx].text = data.newText;
-        return;
-      }
-    } else {
-      // if the todo is the default Welcome Todo, update the 'text' prop
-      if (state.todos[parentIdx].isDefault) {
-        state.todos[parentIdx].contents[childIdx].text = data.newText;
-        return;
-      }
+    // if the todo is the default Welcome Todo, update the 'text' prop
+    if (state.todos[selectedTodoIndex].isDefault) {
+      state.todos[selectedTodoIndex].contents[todoTaskIndex].text =
+        data.newText;
+      return;
     }
 
     const docRef = _doc(db, "todos", data.firestoreDocId);
@@ -274,9 +259,15 @@ export default {
   clearTodosList(state) {
     // clear the todos list before updating it with new data
     state.todos = [];
+    state.listOfTodoIds = [];
   },
   addWelcomeTodo(state) {
     // include the Welcome Todo along with new data
     state.todos.push(state.welcomeTodo);
+  },
+  createListOfTodoIds(state) {
+    state.todos.forEach((todo) => {
+      state.listOfTodoIds.push(todo.id);
+    });
   },
 };
