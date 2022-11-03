@@ -128,11 +128,12 @@ export default {
       let index = this.todoList.indexOf(selectedTodo) + 1; // plus 1 since :nth-child() is not zero indexed
       let todoEl = document.querySelector(`.item-wrapper:nth-child(${index})`);
 
-      // for the first 3 elements, scroll the parent's sibling into view
+      // for the first 3 elements, scroll the parent's title element into view
       if (index < 4) {
         let todosWrapperEl = document.querySelector(".todos-wrapper");
-        let prevSibling = todosWrapperEl.previousElementSibling;
-        prevSibling.scrollIntoView();
+        let parentEl = todosWrapperEl.parentElement;
+        let titleEl = parentEl.querySelector(".items-title");
+        titleEl.scrollIntoView();
         return;
       }
 

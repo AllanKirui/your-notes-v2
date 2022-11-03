@@ -65,14 +65,16 @@ export default {
       let index = this.notesList.indexOf(selectedNote) + 1; // plus 1 since :nth-child() is not zero indexed
       let noteEl = document.querySelector(`.item-wrapper:nth-child(${index})`);
 
-      // scroll selected note item into view
-      // for the first 3 elements, scroll the parent's sibling into view
+      // for the first 3 elements, scroll the parent's title element into view
       if (index < 4) {
         let notesWrapperEl = document.querySelector(".notes-wrapper");
-        let prevSibling = notesWrapperEl.previousElementSibling;
-        prevSibling.scrollIntoView();
+        let parentEl = notesWrapperEl.parentElement;
+        let titleEl = parentEl.querySelector(".items-title");
+        titleEl.scrollIntoView();
         return;
       }
+
+      // for other elements, scroll selected note item into view
       noteEl.scrollIntoView();
     },
     setTextBasedOnFontSize(text) {
