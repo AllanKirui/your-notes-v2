@@ -34,10 +34,18 @@ export default {
     state.selectedNote = null;
     state.openNoteId = null;
   },
-  async saveChanges(_, data) {
-    let newNote = data.newText;
+  async saveChanges(state, payload) {
+    let newNote = payload.newText;
+    let selectedNoteId = payload.noteId;
 
-    const docRef = _doc(db, "notes", data.firestoreDocId);
+    // if the 'selectedNoteId' is 0 and there is no firestore document id,
+    // then the note is the default Welcome Note. Update it's 'content' prop
+    if (selectedNoteId === 0 && !payload.firestoreDocId) {
+      state.notes[selectedNoteId].content = payload.newText;
+      return;
+    }
+
+    const docRef = _doc(db, "notes", payload.firestoreDocId);
 
     try {
       // if newNote is empty, don't add it

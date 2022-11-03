@@ -80,12 +80,12 @@ export default {
       throwException(error, "updateCompletionStatus( ) fn");
     }
   },
-  async saveChanges(state, data) {
+  async saveChanges(state, payload) {
     // reset store props
     state.hasUpdatedTodoTask = false;
 
     let selectedTodoIndex = state.listOfTodoIds.indexOf(state.selectedTodo.id);
-    let todoTaskIndex = data.childTodoId;
+    let todoTaskIndex = payload.childTodoId;
 
     // get the data before and after edits were made
     let oldData = {
@@ -93,18 +93,18 @@ export default {
       isCompleted: false,
     };
     let newData = {
-      text: data.newText,
+      text: payload.newText,
       isCompleted: false,
     };
 
     // if the todo is the default Welcome Todo, update the 'text' prop
     if (state.todos[selectedTodoIndex].isDefault) {
       state.todos[selectedTodoIndex].contents[todoTaskIndex].text =
-        data.newText;
+        payload.newText;
       return;
     }
 
-    const docRef = _doc(db, "todos", data.firestoreDocId);
+    const docRef = _doc(db, "todos", payload.firestoreDocId);
 
     try {
       // delete the old task from the 'contents' list of the firestore document
