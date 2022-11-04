@@ -179,19 +179,16 @@ export default {
     themeClasses() {
       let classes = "wrapper ";
 
-      // for default theme
-      if (!this.theme) {
-        return (classes += "default-theme");
-      }
-
-      // for purplish theme
-      if (this.theme === "purplish") {
-        return (classes += "purplish-theme");
-      }
-
-      // for bluetiful theme
-      if (this.theme === "bluetiful") {
-        return (classes += "bluetiful-theme");
+      switch (this.theme) {
+        case "purplish":
+          classes += "purplish-theme";
+          break;
+        case "bluetiful":
+          classes += "bluetiful-theme";
+          break;
+        default:
+          classes += "default-theme";
+          break;
       }
 
       return classes;
