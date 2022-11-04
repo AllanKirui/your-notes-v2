@@ -173,12 +173,6 @@ export default {
     }
   },
   async deleteTodo(state, data) {
-    // if a todo is deleted while in mobile view reset the following state props
-    if (data.isMobileView) {
-      state.selectedTodo = null;
-      state.openTodoId = null;
-    }
-
     let parentIdx = data.parentTodoId;
 
     // if todo is the default welcome todo, delete it and update

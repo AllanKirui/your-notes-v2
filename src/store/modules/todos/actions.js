@@ -30,6 +30,9 @@ export default {
   deleteTodo(context, payload) {
     let data = { ...payload };
 
+    // if a todo is deleted while in mobile view reset the selected todo
+    if (data.isMobileView) context.dispatch("resetSelectedTodo");
+
     // add new data
     data.theme = context.rootState.theme;
     data.fontSize = context.rootState.globalFontSize;
