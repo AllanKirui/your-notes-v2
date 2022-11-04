@@ -116,6 +116,8 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 import NotesList from "@/components/notes/NotesList.vue";
 import NotesDetails from "@/components/notes/NotesDetails.vue";
 import { getAuth } from "firebase/auth";
@@ -140,27 +142,13 @@ export default {
     };
   },
   computed: {
-    notesList() {
-      return this.$store.getters["notes/notesList"];
-    },
-    numOfNotes() {
-      return this.$store.getters["notes/numOfNotes"];
-    },
-    selectedNote() {
-      return this.$store.getters["notes/selectedNote"];
-    },
-    greeting() {
-      return this.$store.getters.greeting;
-    },
-    theme() {
-      return this.$store.getters.theme;
-    },
-    globalFontSize() {
-      return this.$store.getters.globalFontSize;
-    },
-    hasDeletedDefaultNote() {
-      return this.$store.getters.hasDeletedDefaultNote;
-    },
+    ...mapGetters("notes", ["notesList", "numOfNotes", "selectedNote"]),
+    ...mapGetters([
+      "greeting",
+      "theme",
+      "globalFontSize",
+      "hasDeletedDefaultNote",
+    ]),
     cardStyle() {
       let mode = "";
 

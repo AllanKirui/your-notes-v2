@@ -147,8 +147,7 @@ export default {
   },
   computed: {
     ...mapGetters("notes", ["selectedNote", "isCloseOpenFields"]),
-    ...mapGetters(["greeting"]),
-    ...mapGetters(["theme"]),
+    ...mapGetters(["greeting", "theme"]),
     cardStyle() {
       let mode = "";
 
