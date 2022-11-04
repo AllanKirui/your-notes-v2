@@ -164,19 +164,16 @@ export default {
     cardStyle() {
       let mode = "";
 
-      // for default theme
-      if (!this.theme) {
-        mode = "default-theme";
-      }
-
-      // for purplish theme
-      if (this.theme === "purplish") {
-        mode = "purplish-theme";
-      }
-
-      // for bluetiful theme
-      if (this.theme === "bluetiful") {
-        mode = "bluetiful-theme";
+      switch (this.theme) {
+        case "purplish":
+          mode = "purplish-theme";
+          break;
+        case "bluetiful":
+          mode = "bluetiful-theme";
+          break;
+        default:
+          mode = "default-theme";
+          break;
       }
 
       return mode;

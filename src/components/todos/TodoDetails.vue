@@ -304,19 +304,16 @@ export default {
     cardStyle() {
       let mode = "";
 
-      // for default theme
-      if (!this.theme) {
-        mode = "default-theme";
-      }
-
-      // for purplish theme
-      if (this.theme === "purplish") {
-        mode = "purplish-theme";
-      }
-
-      // for bluetiful theme
-      if (this.theme === "bluetiful") {
-        mode = "bluetiful-theme";
+      switch (this.theme) {
+        case "purplish":
+          mode = "purplish-theme";
+          break;
+        case "bluetiful":
+          mode = "bluetiful-theme";
+          break;
+        default:
+          mode = "default-theme";
+          break;
       }
 
       return mode;
@@ -324,19 +321,16 @@ export default {
     hrStyle() {
       let style = "";
 
-      // for default theme
-      if (!this.theme) {
-        style = "border-color: #1a1a1a";
-      }
-
-      // for purplish theme
-      if (this.theme === "purplish") {
-        style = "border-color: #ff7aaf";
-      }
-
-      // for bluetiful theme
-      if (this.theme === "bluetiful") {
-        style = "border-color: #545e69";
+      switch (this.theme) {
+        case "purplish":
+          style = "border-color: #ff7aaf";
+          break;
+        case "bluetiful":
+          style = "border-color: #545e69";
+          break;
+        default:
+          style = "border-color: #1a1a1a";
+          break;
       }
 
       return style;
