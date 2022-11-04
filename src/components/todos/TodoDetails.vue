@@ -396,6 +396,15 @@ export default {
       this.isChecked = false;
     },
     saveEdits(index) {
+      // prevent the user from editing any task if it's the default Welcome Todo
+      if (this.selectedTodo.isDefault) {
+        let message = "Sorry! We don't allow that on this Welcome Todo (ง°ل͜°)ง";
+        this.$emit("show-notification", message);
+
+        this.cancelEdits();
+        return;
+      }
+
       let updatedText = this.$refs.editTask[0].value;
 
       // dispatch an action to save changes made on a todo item
@@ -408,8 +417,7 @@ export default {
       });
 
       // close the editing window by resetting props
-      this.selectedItem = null;
-      this.isEditText = false;
+      this.cancelEdits();
     },
     showNewTaskField() {
       // close the edit todo field if it's open
