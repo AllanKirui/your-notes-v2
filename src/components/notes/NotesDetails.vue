@@ -141,6 +141,7 @@ export default {
       noteId: null,
       isShowDeleteWindow: false,
       firestoreDocId: null,
+      isMobileView: false,
     };
   },
   computed: {
@@ -216,11 +217,17 @@ export default {
       this.isShowDeleteWindow = false;
     },
     deleteNote() {
+      // check if current screen size is for small devices
+      if (this.screenSize <= 768) {
+        this.isMobileView = true;
+      }
+
       // dispatch an action to delete a note from the list of notes
       this.$store.dispatch("notes/deleteNote", {
         id: this.noteId,
         isDefault: this.selectedNote.isDefault,
         firestoreDocId: this.firestoreDocId || getAuth().currentUser.uid,
+        isMobileView: this.isMobileView,
       });
 
       // emit an event to show notification message

@@ -22,6 +22,9 @@ export default {
   deleteNote(context, payload) {
     let data = { ...payload };
 
+    // if a note is deleted while in mobile view reset the following state props
+    if (data.isMobileView) context.dispatch("resetSelectedNote");
+
     data.theme = context.rootState.theme;
     data.fontSize = context.rootState.globalFontSize;
     data.hasDeletedDefaultTodo = context.rootState.hasDeletedDefaultTodo;
