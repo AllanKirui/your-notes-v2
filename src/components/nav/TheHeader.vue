@@ -115,6 +115,8 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
   name: "TheHeader",
   props: ["clearSearch", "isOverlayVisible", "isSearching"],
@@ -136,27 +138,10 @@ export default {
     routeName() {
       return this.$route.name;
     },
-    user() {
-      return this.$store.getters["auth/user"];
-    },
-    numOfTodos() {
-      return this.$store.getters["todos/numOfTodos"];
-    },
-    todoList() {
-      return this.$store.getters["todos/todoList"];
-    },
-    numOfNotes() {
-      return this.$store.getters["notes/numOfNotes"];
-    },
-    notesList() {
-      return this.$store.getters["notes/notesList"];
-    },
-    theme() {
-      return this.$store.getters.theme;
-    },
-    globalFontSize() {
-      return this.$store.getters.globalFontSize;
-    },
+    ...mapGetters(["theme", "globalFontSize"]),
+    ...mapGetters("auth", ["user"]),
+    ...mapGetters("todos", ["numOfTodos", "todoList"]),
+    ...mapGetters("notes", ["numOfNotes", "notesList"]),
     themeClasses() {
       let classes = "header ";
 

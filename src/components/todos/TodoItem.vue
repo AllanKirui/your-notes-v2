@@ -63,32 +63,21 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
   name: "TodoItem",
   props: ["id", "title", "contents", "isDefault", "screenSize"],
   inject: ["setTextLength"],
   computed: {
+    ...mapGetters(["theme", "globalFontSize"]),
+    ...mapGetters("todos", ["selectedTodo", "todoList", "openTodoId"]),
     hoverTitle() {
       return "View " + this.title;
     },
     displayContent() {
       // return items which are not marked as complete
       return this.contents.filter((item) => !item.isCompleted);
-    },
-    selectedTodo() {
-      return this.$store.getters["todos/selectedTodo"];
-    },
-    todoList() {
-      return this.$store.getters["todos/todoList"];
-    },
-    openTodoId() {
-      return this.$store.getters["todos/openTodoId"];
-    },
-    theme() {
-      return this.$store.getters.theme;
-    },
-    globalFontSize() {
-      return this.$store.getters.globalFontSize;
     },
     status() {
       // return items which are checked over the total items

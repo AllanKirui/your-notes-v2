@@ -18,16 +18,17 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
   name: "NotesItem",
   props: ["id", "title", "content", "isDefault"],
   inject: ["setTextLength"],
   computed: {
+    ...mapGetters(["globalFontSize"]),
+    ...mapGetters("notes", ["openNoteId", "notesList"]),
     hoverTitle() {
       return "View " + this.title;
-    },
-    openNoteId() {
-      return this.$store.getters["notes/openNoteId"];
     },
     noteClasses() {
       let classes = "";
@@ -45,12 +46,6 @@ export default {
       }
 
       return classes;
-    },
-    notesList() {
-      return this.$store.getters["notes/notesList"];
-    },
-    globalFontSize() {
-      return this.$store.getters.globalFontSize;
     },
   },
   methods: {

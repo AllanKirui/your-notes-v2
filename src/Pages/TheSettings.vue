@@ -255,6 +255,7 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import { getAuth } from "firebase/auth";
 
 export default {
@@ -268,18 +269,12 @@ export default {
     };
   },
   computed: {
-    theme() {
-      return this.$store.getters.theme;
-    },
-    globalFontSize() {
-      return this.$store.getters.globalFontSize;
-    },
-    hasDeletedDefaultTodo() {
-      return this.$store.getters.hasDeletedDefaultTodo;
-    },
-    hasDeletedDefaultNote() {
-      return this.$store.getters.hasDeletedDefaultNote;
-    },
+    ...mapGetters([
+      "theme",
+      "globalFontSize",
+      "hasDeletedDefaultTodo",
+      "hasDeletedDefaultNote",
+    ]),
     cardStyle() {
       let mode = "";
 

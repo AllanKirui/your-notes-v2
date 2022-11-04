@@ -116,6 +116,8 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 import TodoList from "@/components/todos/TodoList.vue";
 import TodoDetails from "@/components/todos/TodoDetails.vue";
 import { getAuth } from "firebase/auth";
@@ -140,27 +142,13 @@ export default {
     };
   },
   computed: {
-    todoList() {
-      return this.$store.getters["todos/todoList"];
-    },
-    numOfTodos() {
-      return this.$store.getters["todos/numOfTodos"];
-    },
-    selectedTodo() {
-      return this.$store.getters["todos/selectedTodo"];
-    },
-    greeting() {
-      return this.$store.getters.greeting;
-    },
-    theme() {
-      return this.$store.getters.theme;
-    },
-    globalFontSize() {
-      return this.$store.getters.globalFontSize;
-    },
-    hasDeletedDefaultTodo() {
-      return this.$store.getters.hasDeletedDefaultTodo;
-    },
+    ...mapGetters([
+      "greeting",
+      "theme",
+      "globalFontSize",
+      "hasDeletedDefaultTodo",
+    ]),
+    ...mapGetters("todos", ["todoList", "numOfTodos", "selectedTodo"]),
     cardStyle() {
       let mode = "";
 
