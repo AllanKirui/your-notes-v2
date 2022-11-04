@@ -134,7 +134,8 @@ export default {
       screenSize: null,
       isShowMobileCounter: false,
       isShowMobileFlow: false,
-      newNoteId: false,
+      newNoteId: null,
+      unsubscribeFromSnapshotListener: null,
     };
   },
   computed: {
@@ -312,24 +313,26 @@ export default {
       // get collection data using onSnapshot (REALTIME)
       // it takes in two arguments; the collection reference and a function that fires
       // every time a snapshot changes and runs once initially to get data
-      _onSnapshot(queryRef, (snapshot) => {
-        // dispatch an action to clear the current notes list before adding new data
-        this.$store.dispatch("notes/clearNotesList");
+      this.unsubscribeFromSnapshotListener = _onSnapshot(
+        queryRef,
+        (snapshot) => {
+          // dispatch an action to clear the current notes list before adding new data
+          this.$store.dispatch("notes/clearNotesList");
 
-        // TODO: add this
-        if (!this.hasDeletedDefaultNote) {
-          // dispatch an action to add the Welcome Note along with the new data
-          this.$store.dispatch("notes/addWelcomeNote");
+          if (!this.hasDeletedDefaultNote) {
+            // dispatch an action to add the Welcome Note along with the new data
+            this.$store.dispatch("notes/addWelcomeNote");
+          }
+
+          snapshot.docs.forEach((note) => {
+            // dispatch an action to set the note data
+            this.$store.dispatch("notes/addRealtimeData", note);
+          });
+
+          // open the newly created note
+          if (this.notesList.length > 0) this.openNewNote(this.newNoteId);
         }
-
-        snapshot.docs.forEach((note) => {
-          // dispatch an action to set the note data
-          this.$store.dispatch("notes/addRealtimeData", note);
-        });
-
-        // open the newly created note
-        if (this.notesList.length > 0) this.openNewNote(this.newNoteId);
-      });
+      );
     },
     setSelectedNote(id) {
       this.newNoteId = id;
@@ -385,6 +388,10 @@ export default {
       // reset props
       this.isCreated = false;
     }
+  },
+  unmounted() {
+    // unsubscribe from the real time listener
+    this.unsubscribeFromSnapshotListener();
   },
 };
 </script>
