@@ -182,6 +182,15 @@ export default {
       });
     },
     saveEdits() {
+      // prevent the user from editing the default Welcome Note
+      if (this.selectedNote.isDefault) {
+        let message = "Sorry! We don't allow that on this Welcome Note (ง°ل͜°)ง";
+        this.$emit("show-notification", message);
+
+        this.cancelEdits();
+        return;
+      }
+
       let updatedText = this.$refs.editNote.value.trim();
 
       // dispatch an action to save changes made on a note
