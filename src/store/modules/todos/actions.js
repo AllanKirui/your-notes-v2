@@ -78,8 +78,4 @@ export default {
     // commit a mutation to include the Welcome Todo along with the new data
     context.commit("addWelcomeTodo");
   },
-  createListOfTodoIds(context) {
-    // commit a mutation to create a list of todo ids
-    context.commit("createListOfTodoIds");
-  },
 };

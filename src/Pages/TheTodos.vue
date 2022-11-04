@@ -321,9 +321,6 @@ export default {
 
           // open the newly created todo
           if (this.todoList.length > 0) this.openNewTodo(this.newTodoId);
-
-          // add the id's of the todos to the 'listOfTodoIds' state prop
-          this.$store.dispatch("todos/createListOfTodoIds");
         }
       );
     },

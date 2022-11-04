@@ -244,15 +244,9 @@ export default {
   clearTodosList(state) {
     // clear the todos list before updating it with new data
     state.todos = [];
-    state.listOfTodoIds = [];
   },
   addWelcomeTodo(state) {
     // include the Welcome Todo along with new data
     state.todos.push(state.welcomeTodo);
-  },
-  createListOfTodoIds(state) {
-    state.todos.forEach((todo) => {
-      state.listOfTodoIds.push(todo.id);
-    });
   },
 };
