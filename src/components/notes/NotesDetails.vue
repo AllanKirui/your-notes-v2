@@ -296,11 +296,9 @@ export default {
     this.$store.dispatch("notes/resetSelectedNote");
   },
   beforeUpdate() {
-    const note = this.$store.getters["notes/selectedNote"];
-
-    if (note) {
+    if (this.selectedNote) {
       // dispatch an action to set the open note id
-      this.$store.dispatch("notes/setOpenNoteId", note.id);
+      this.$store.dispatch("notes/setOpenNoteId", this.selectedNote.id);
     }
   },
 };
