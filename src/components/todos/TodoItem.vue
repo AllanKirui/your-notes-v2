@@ -64,6 +64,7 @@
 
 <script>
 export default {
+  name: "TodoItem",
   props: ["id", "title", "contents", "isDefault", "screenSize"],
   inject: ["setTextLength"],
   computed: {

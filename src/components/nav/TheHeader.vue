@@ -116,6 +116,7 @@
 
 <script>
 export default {
+  name: "TheHeader",
   props: ["clearSearch", "isOverlayVisible", "isSearching"],
   emits: [
     "reset-cancel",

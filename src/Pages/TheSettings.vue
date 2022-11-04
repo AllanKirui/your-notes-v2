@@ -258,6 +258,7 @@
 import { getAuth } from "firebase/auth";
 
 export default {
+  name: "TheSettings",
   emits: ["show-notification"],
   data() {
     return {

@@ -266,6 +266,7 @@ import { mapGetters } from "vuex";
 import { getAuth } from "firebase/auth";
 
 export default {
+  name: "TodoDetails",
   emits: ["show-notification", "selectedtodo-id"],
   props: ["screenSize"],
   inject: ["setTextLength"],

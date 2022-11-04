@@ -18,6 +18,7 @@ import { mapGetters } from "vuex";
 import TodoItem from "@/components/todos/TodoItem.vue";
 
 export default {
+  name: "TodoList",
   props: ["screenSize"],
   components: {
     TodoItem,

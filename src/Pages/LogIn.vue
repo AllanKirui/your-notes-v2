@@ -98,6 +98,7 @@
 
 <script>
 export default {
+  name: "LogIn",
   data() {
     return {
       email: {

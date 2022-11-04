@@ -168,6 +168,7 @@
 
 <script>
 export default {
+  name: "SignUp",
   data() {
     return {
       username: {

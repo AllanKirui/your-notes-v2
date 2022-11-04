@@ -122,6 +122,7 @@ import { getAuth } from "firebase/auth";
 import { todosColRef, _onSnapshot, _query, _where, _orderBy } from "@/main.js";
 
 export default {
+  name: "TheTodos",
   props: ["isModal", "activeSide", "isSearching", "searchMessage"],
   emits: ["close-modal", "show-notification", "cancel-search", "close-sidebar"],
   components: {

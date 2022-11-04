@@ -19,6 +19,7 @@
 
 <script>
 export default {
+  name: "NotesItem",
   props: ["id", "title", "content", "isDefault"],
   inject: ["setTextLength"],
   computed: {

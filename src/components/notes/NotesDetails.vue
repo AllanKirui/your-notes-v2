@@ -130,6 +130,7 @@ import { mapGetters } from "vuex";
 import { getAuth } from "firebase/auth";
 
 export default {
+  name: "NotesDetails",
   props: ["screenSize"],
   emits: ["show-notification", "selectednote-id"],
   inject: ["setTextLength"],

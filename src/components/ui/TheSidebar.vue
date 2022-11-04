@@ -156,6 +156,7 @@ check localStorage in canIuse
 import { mapGetters } from "vuex";
 
 export default {
+  name: "TheSidebar",
   emits: ["show-modal", "close-sidebar"],
   computed: {
     ...mapGetters("todos", ["numOfTodos"]),

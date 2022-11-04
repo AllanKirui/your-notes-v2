@@ -17,6 +17,7 @@ import { mapGetters } from "vuex";
 import NotesItem from "@/components/notes/NotesItem.vue";
 
 export default {
+  name: "NotesList",
   components: { NotesItem },
   computed: {
     // tap into the 'notes' module and get the 'notesList' from the store
