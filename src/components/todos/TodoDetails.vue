@@ -382,7 +382,6 @@ export default {
       this.$store.dispatch({
         type: "todos/updateCompletionStatus",
         status: this.isChecked,
-        parentTodoId: this.parentTodoId,
         childTodoId: index,
         firestoreDocId: this.firestoreDocId,
       });
@@ -405,7 +404,6 @@ export default {
       // dispatch an action to save changes made on a todo item
       this.$store.dispatch({
         type: "todos/saveChanges",
-        parentTodoId: this.parentTodoId,
         childTodoId: index,
         newText: updatedText,
         firestoreDocId: this.firestoreDocId,
@@ -486,7 +484,6 @@ export default {
       // dispatch an action to set hidden status of completed tasks in a todo
       this.$store.dispatch({
         type: "todos/updateHiddenStatus",
-        parentTodoId: this.parentTodoId,
         firestoreDocId: this.firestoreDocId,
       });
 
@@ -523,7 +520,6 @@ export default {
 
       // dispatch an action to delete a todo from the list of todos
       this.$store.dispatch("todos/deleteTodo", {
-        parentTodoId: this.parentTodoId,
         firestoreDocId: this.firestoreDocId || getAuth().currentUser.uid,
         isDefault: this.selectedTodo.isDefault,
         isMobileView: this.isMobileView,
@@ -548,7 +544,6 @@ export default {
       // dispatch an action to delete a task from a todo
       this.$store.dispatch({
         type: "todos/deleteTodoTask",
-        parentTodoId: this.parentTodoId,
         childTodoId: index,
         firestoreDocId: this.firestoreDocId,
       });
