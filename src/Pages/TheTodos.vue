@@ -135,6 +135,7 @@ export default {
       isShowMobileCounter: false,
       isShowMobileFlow: false,
       newTodoId: null,
+      unsubscribeFromSnapshotListener: null,
     };
   },
   computed: {
@@ -316,26 +317,29 @@ export default {
       // get collection data using onSnapshot (REALTIME)
       // it takes in two arguments; the collection reference and a function that fires
       // every time a snapshot changes and runs once initially to get data
-      _onSnapshot(queryRef, (snapshot) => {
-        // dispatch an action to clear the current todo list before adding new data
-        this.$store.dispatch("todos/clearTodosList");
+      this.unsubscribeFromSnapshotListener = _onSnapshot(
+        queryRef,
+        (snapshot) => {
+          // dispatch an action to clear the current todo list before adding new data
+          this.$store.dispatch("todos/clearTodosList");
 
-        if (!this.hasDeletedDefaultTodo) {
-          // dispatch an action to add the Welcome Todo along with the new data
-          this.$store.dispatch("todos/addWelcomeTodo");
+          if (!this.hasDeletedDefaultTodo) {
+            // dispatch an action to add the Welcome Todo along with the new data
+            this.$store.dispatch("todos/addWelcomeTodo");
+          }
+
+          snapshot.docs.forEach((todo) => {
+            // dispatch an action to set the todo data
+            this.$store.dispatch("todos/addRealtimeData", todo);
+          });
+
+          // open the newly created todo
+          if (this.todoList.length > 0) this.openNewTodo(this.newTodoId);
+
+          // add the id's of the todos to the 'listOfTodoIds' state prop
+          this.$store.dispatch("todos/createListOfTodoIds");
         }
-
-        snapshot.docs.forEach((todo) => {
-          // dispatch an action to set the todo data
-          this.$store.dispatch("todos/addRealtimeData", todo);
-        });
-
-        // open the newly created todo
-        if (this.todoList.length > 0) this.openNewTodo(this.newTodoId);
-
-        // add the id's of the todos to the 'listOfTodoIds' state prop
-        this.$store.dispatch("todos/createListOfTodoIds");
-      });
+      );
     },
     setSelectedTodo(id) {
       this.newTodoId = id;
@@ -393,6 +397,10 @@ export default {
       // reset props
       this.isCreated = false;
     }
+  },
+  unmounted() {
+    // unsubscribe from the real time listener
+    this.unsubscribeFromSnapshotListener();
   },
 };
 </script>
