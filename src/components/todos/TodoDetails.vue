@@ -276,7 +276,7 @@ export default {
       isEditText: false,
       selectedItem: null,
       isChecked: false,
-      parentTodoId: null,
+      selectedTodoId: null,
       isCreateNewTask: false,
       isCreated: false,
       hasSwitchedTodos: false,
@@ -581,11 +581,11 @@ export default {
       if (newTodo) {
         this.hasSwitchedTodos = true;
         this.hasTodo = true;
-        this.parentTodoId = newTodo.id;
+        this.selectedTodoId = newTodo.id;
         this.firestoreDocId = newTodo.fireId; // firestore document ID
 
         // emit the id of the selectedTodo
-        this.$emit("selectedtodo-id", this.parentTodoId);
+        this.$emit("selectedtodo-id", this.selectedTodoId);
 
         // reset props
         this.cancelEdits();
