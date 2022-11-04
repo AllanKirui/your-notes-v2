@@ -639,7 +639,7 @@ export default {
     this.$store.dispatch("todos/resetSelectedTodo");
   },
   beforeUpdate() {
-    const todo = this.$store.getters["todos/selectedTodo"];
+    const todo = this.selectedTodo;
     if (!todo) return;
 
     let numOfItems = todo.contents.length;
