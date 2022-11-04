@@ -30,12 +30,12 @@ export default {
     )[0];
   },
   async updateCompletionStatus(state, payload) {
-    let parentIdx = payload.parentTodoId;
-    let childIdx = payload.childTodoId;
-    let status = payload.status;
+    let selectedTodo = state.selectedTodo;
+    let todoTaskIndex = payload.childTodoId;
+    let isCompleted = payload.status;
 
     // get the task marked as completed
-    let completedTask = state.todos[parentIdx].contents[childIdx];
+    let completedTask = selectedTodo.contents[todoTaskIndex];
 
     // make a copy of the completed task
     let copyOfCompletedTask = {};
@@ -49,8 +49,8 @@ export default {
 
     const docRef = _doc(db, "todos", payload.firestoreDocId);
 
-    // if the todo task has been marked as completed
-    if (!status) {
+    // if the todo task has been marked as incomplete
+    if (!isCompleted) {
       try {
         // delete the task marked as complete from the 'contents' list of the firestore document
         await _updateDoc(docRef, {
@@ -66,7 +66,7 @@ export default {
       return;
     }
 
-    // if the todo task has been marked as incomplete
+    // if the todo task has been marked as completed
     try {
       // delete the task marked as incomplete from the 'contents' list of the firestore document
       await _updateDoc(docRef, {
@@ -84,25 +84,18 @@ export default {
     // reset store props
     state.hasUpdatedTodoTask = false;
 
-    let selectedTodoIndex = state.listOfTodoIds.indexOf(state.selectedTodo.id);
+    let selectedTodo = state.selectedTodo;
     let todoTaskIndex = payload.childTodoId;
 
     // get the data before and after edits were made
     let oldData = {
-      text: state.todos[selectedTodoIndex].contents[todoTaskIndex].text,
+      text: selectedTodo.contents[todoTaskIndex].text,
       isCompleted: false,
     };
     let newData = {
       text: payload.newText,
       isCompleted: false,
     };
-
-    // if the todo is the default Welcome Todo, update the 'text' prop
-    if (state.todos[selectedTodoIndex].isDefault) {
-      state.todos[selectedTodoIndex].contents[todoTaskIndex].text =
-        payload.newText;
-      return;
-    }
 
     const docRef = _doc(db, "todos", payload.firestoreDocId);
 
@@ -156,9 +149,7 @@ export default {
   },
   async updateHiddenStatus(state, payload) {
     // toggle the hidden status of the selected todo
-    let parentIdx = payload.parentTodoId;
-    state.todos[parentIdx].isHideCompleted =
-      !state.todos[parentIdx].isHideCompleted;
+    state.selectedTodo.isHideCompleted = !state.selectedTodo.isHideCompleted;
 
     const docRef = _doc(db, "todos", payload.firestoreDocId);
 
@@ -166,19 +157,19 @@ export default {
     try {
       // delete the task marked as incomplete from the 'contents' list of the firestore document
       await _updateDoc(docRef, {
-        isHideCompleted: state.todos[parentIdx].isHideCompleted,
+        isHideCompleted: state.selectedTodo.isHideCompleted,
       });
     } catch (error) {
       throwException(error, "updateHiddenStatus( ) fn");
     }
   },
   async deleteTodo(state, data) {
-    let parentIdx = data.parentTodoId;
+    let selectedTodo = state.selectedTodo;
 
     // if todo is the default welcome todo, delete it and update
     // the user preferences
     if (data.isDefault) {
-      state.todos = state.todos.filter((todo) => todo.id !== parentIdx);
+      state.todos = state.todos.filter((todo) => todo.id !== selectedTodo.id);
 
       let newPreferences = {
         theme: data.theme,
@@ -207,10 +198,10 @@ export default {
     }
   },
   async deleteTodoTask(state, payload) {
-    let parentIdx = payload.parentTodoId;
-    let childIdx = payload.childTodoId;
-    let selectedTodo = state.todos.filter((todo) => todo.id === parentIdx)[0];
-    let data = selectedTodo.contents[childIdx];
+    let selectedTodo = state.selectedTodo;
+    let todoTaskIndex = payload.childTodoId;
+    let data = selectedTodo.contents[todoTaskIndex];
+
     const docRef = _doc(db, "todos", payload.firestoreDocId);
 
     // delete the selected todo task from the 'contents' list of the firestore document
