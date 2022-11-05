@@ -118,43 +118,46 @@
             </div>
 
             <div class="item-text-wrapper">
-              <div class="item-text" v-if="selectedItem !== index">
-                <span
-                  class="item-details"
-                  :class="{ completed: item.isCompleted }"
-                  @click="editText(index)"
-                  >{{ item.text }}</span
-                >
-              </div>
-              <!-- only show for the clicked todo item -->
-              <div
-                class="item-edit-field"
-                v-if="isEditText && selectedItem === index"
-              >
-                <textarea
-                  class="field"
-                  type="text"
-                  :value="item.text"
-                  ref="editTask"
-                  @input="$nextTick(autoResizeEditField)"
-                ></textarea>
-                <div class="edit-controls">
-                  <button
-                    class="btn btn-save"
-                    title="Save edits"
-                    @click="saveEdits(index)"
+              <!-- use the transition component to set a transtion when opening the edit task field-->
+              <transition name="editor">
+                <div class="item-text" v-if="selectedItem !== index">
+                  <span
+                    class="item-details"
+                    :class="{ completed: item.isCompleted }"
+                    @click="editText(index)"
+                    >{{ item.text }}</span
                   >
-                    Save
-                  </button>
-                  <button
-                    class="btn btn-cancel"
-                    title="Cancel edits"
-                    @click="cancelEdits"
-                  >
-                    Cancel
-                  </button>
                 </div>
-              </div>
+                <!-- only show for the clicked todo item -->
+                <div
+                  class="item-edit-field"
+                  v-else-if="isEditText && selectedItem === index"
+                >
+                  <textarea
+                    class="field"
+                    type="text"
+                    :value="item.text"
+                    ref="editTask"
+                    @input="$nextTick(autoResizeEditField)"
+                  ></textarea>
+                  <div class="edit-controls">
+                    <button
+                      class="btn btn-save"
+                      title="Save edits"
+                      @click="saveEdits(index)"
+                    >
+                      Save
+                    </button>
+                    <button
+                      class="btn btn-cancel"
+                      title="Cancel edits"
+                      @click="cancelEdits"
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              </transition>
             </div>
 
             <div
@@ -975,6 +978,20 @@ export default {
 
 .bluetiful-theme .item-options .delete-item-btn:hover svg {
   stroke: var(--color-lavender-gray);
+}
+
+.editor-enter-from {
+  opacity: 0;
+  transform: scale(0.9);
+}
+
+.editor-enter-active {
+  transition: all 0.15s ease-out;
+}
+
+.editor-enter-to {
+  opacity: 1;
+  transform: scale(1);
 }
 
 .todo-creator-wrapper {

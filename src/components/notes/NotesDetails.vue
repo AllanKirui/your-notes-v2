@@ -81,19 +81,22 @@
   <!-- Notes content -->
   <div v-if="hasNote" class="details-wrapper">
     <div class="item-text-wrapper">
-      <div v-if="!isEditText" class="item-text">
-        <span class="item-details" ref="noteContent"></span>
-      </div>
+      <!-- use the transition component to set a transtion when opening the edit task field-->
+      <transition name="editor">
+        <div v-if="!isEditText" class="item-text">
+          <span class="item-details" ref="noteContent"></span>
+        </div>
 
-      <div v-if="isEditText" class="item-edit-field">
-        <textarea
-          class="field"
-          :value="selectedNote.content"
-          style="max-height: calc(100vh - 250px)"
-          ref="editNote"
-          @input="$nextTick(autoResizeEditField)"
-        ></textarea>
-      </div>
+        <div v-else-if="isEditText" class="item-edit-field">
+          <textarea
+            class="field"
+            :value="selectedNote.content"
+            style="max-height: calc(100vh - 250px)"
+            ref="editNote"
+            @input="$nextTick(autoResizeEditField)"
+          ></textarea>
+        </div>
+      </transition>
     </div>
   </div>
 
@@ -425,5 +428,19 @@ export default {
     opacity: 1;
     transform: scale(1);
   }
+}
+
+.editor-enter-from {
+  opacity: 0;
+  transform: scale(0.9);
+}
+
+.editor-enter-active {
+  transition: all 0.15s ease-out;
+}
+
+.editor-enter-to {
+  opacity: 1;
+  transform: scale(1);
 }
 </style>
