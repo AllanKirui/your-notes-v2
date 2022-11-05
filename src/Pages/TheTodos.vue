@@ -12,6 +12,7 @@
     </div>
 
     <section class="content-items" v-if="numOfTodos">
+      <!-- section title with todo counter -->
       <div
         v-if="!isSearching && isShowMobileCounter"
         class="flex flex-ai-c flex-jc-sb"
@@ -21,9 +22,13 @@
           <span class="items-title-counter"> {{ numOfTodos }} </span>
         </div>
       </div>
+
+      <!-- section title without todo counter -->
       <h2 v-if="!isSearching && !isShowMobileCounter" class="items-title">
         Todos
       </h2>
+
+      <!-- search window -->
       <div class="results-wrapper flex flex-ai-c flex-jc-sb" v-if="isSearching">
         <h4 class="items-title">{{ searchMessage }}</h4>
         <button
@@ -45,6 +50,8 @@
         </button>
       </div>
       <p class="no-results">Nothing found ¯\_(ツ)_/¯</p>
+
+      <!-- list of todos -->
       <todo-list :screen-size="screenSize"></todo-list>
     </section>
 
@@ -112,6 +119,22 @@
         </base-card>
       </div>
     </transition>
+
+    <!-- add new todo button -->
+    <div class="btn-wrapper" v-if="(screenSize <= 768) & !selectedTodo">
+      <button
+        class="add-new-btn btn flex flex-ai-c flex-jc-c"
+        title="Create New Todo"
+        @click="$emit('show-modal', 'New Todo')"
+      >
+        <img
+          class="btn-img"
+          src="@/assets/img/add-icon.svg"
+          alt="create new icon"
+          width="18"
+        />
+      </button>
+    </div>
   </section>
 </template>
 
@@ -126,7 +149,13 @@ import { todosColRef, _onSnapshot, _query, _where, _orderBy } from "@/main.js";
 export default {
   name: "TheTodos",
   props: ["isModal", "activeSide", "isSearching", "searchMessage"],
-  emits: ["close-modal", "show-notification", "cancel-search", "close-sidebar"],
+  emits: [
+    "close-modal",
+    "show-notification",
+    "cancel-search",
+    "close-sidebar",
+    "show-modal",
+  ],
   components: {
     TodoList,
     TodoDetails,
