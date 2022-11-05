@@ -139,7 +139,7 @@ export default {
       hasNote: false,
       isEditText: false,
       isHighlighted: false,
-      noteId: null,
+      selectedNoteId: null,
       isShowDeleteWindow: false,
       firestoreDocId: null,
       isMobileView: false,
@@ -194,7 +194,6 @@ export default {
       // dispatch an action to save changes made on a note
       this.$store.dispatch({
         type: "notes/saveChanges",
-        noteId: this.noteId,
         newText: updatedText,
         firestoreDocId: this.firestoreDocId,
       });
@@ -221,7 +220,6 @@ export default {
 
       // dispatch an action to delete a note from the list of notes
       this.$store.dispatch("notes/deleteNote", {
-        id: this.noteId,
         isDefault: this.selectedNote.isDefault,
         firestoreDocId: this.firestoreDocId || getAuth().currentUser.uid,
         isMobileView: this.isMobileView,
@@ -263,11 +261,11 @@ export default {
     selectedNote(newNote) {
       if (newNote) {
         this.hasNote = true;
-        this.noteId = newNote.id;
+        this.selectedNoteId = newNote.id;
         this.firestoreDocId = newNote.fireId;
 
         // emit the id of the selectedNote
-        this.$emit("selectednote-id", this.noteId);
+        this.$emit("selectednote-id", this.selectedNoteId);
 
         // reset props
         this.cancelEdits();
