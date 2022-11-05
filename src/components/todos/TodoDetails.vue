@@ -662,9 +662,14 @@ export default {
   updated() {
     // scroll the item selected for edit into view
     if (this.isEditText) {
+      let todoTaskIndex = this.selectedItem + 1;
       let itemSelectedForEdit = document.querySelector(
-        `.incomplete-items .items li:nth-child(${this.selectedItem + 1})`
+        `.incomplete-items .items li:nth-child(${todoTaskIndex})`
       );
+
+      // don't scroll the first 3 elements into view
+      if (todoTaskIndex < 4) return;
+
       itemSelectedForEdit.scrollIntoView();
     }
 
