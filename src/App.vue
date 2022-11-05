@@ -1045,7 +1045,7 @@ ul {
   .content-wrapper .btn-wrapper {
     position: absolute;
     bottom: 20px;
-    right: 30px;
+    right: 20px;
     width: fit-content;
     z-index: 4;
   }
@@ -1379,7 +1379,6 @@ ul {
   }
 
   .details-wrapper {
-    margin: 0 0.875rem;
     padding: 0 0.375rem 1rem;
   }
 }
