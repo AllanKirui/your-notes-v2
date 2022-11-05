@@ -1444,6 +1444,7 @@ ul {
   top: 2.5rem;
   right: calc(2% + 10px);
   max-width: 18.75rem;
+  z-index: 3;
 }
 
 .heading-wrapper .confirm-delete-title {
