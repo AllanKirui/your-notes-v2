@@ -4,9 +4,13 @@
       <div class="bg-images"></div>
       <div class="text">
         <h3 class="intro-title">{{ greeting }}</h3>
-        <p class="intro-message-1">
+        <p v-if="screenSize >= 769" class="intro-message-1">
           Please click the <b>New Todo</b> button on the sidebar to create a new
           todo
+        </p>
+        <p v-else class="intro-message-1">
+          Please click the <b>New Todo</b> button on the sidebar or the
+          <b>Plus +</b> below to create a new todo
         </p>
       </div>
     </div>
