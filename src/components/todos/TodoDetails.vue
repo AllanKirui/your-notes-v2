@@ -524,8 +524,8 @@ export default {
       // dispatch an action to delete a todo from the list of todos
       this.$store.dispatch("todos/deleteTodo", {
         firestoreDocId: this.firestoreDocId || getAuth().currentUser.uid,
-        isDefault: this.selectedTodo.isDefault,
         isMobileView: this.isMobileView,
+        selectedTodo: this.selectedTodo,
       });
 
       // emit an event to show notification message

@@ -164,11 +164,13 @@ export default {
     }
   },
   async deleteTodo(state, data) {
-    let selectedTodo = state.selectedTodo;
+    // if the state contains a selectedTodo, use that.
+    // Otherwise, use the prop thats part of the 'data' object
+    let selectedTodo = state.selectedTodo || data.selectedTodo;
 
     // if todo is the default welcome todo, delete it and update
     // the user preferences
-    if (data.isDefault) {
+    if (selectedTodo.isDefault) {
       state.todos = state.todos.filter((todo) => todo.id !== selectedTodo.id);
 
       let newPreferences = {
