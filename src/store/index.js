@@ -63,11 +63,11 @@ export default createStore({
       try {
         // add a new collection to Firestore called 'preferences', overwrite existing ones
         await _setDoc(
-          _doc(db, "preferences", payload.firestoreDocId),
+          _doc(db, "preferences", "payload.firestoreDocId"),
           newPreferences
         );
       } catch (error) {
-        alert(`Something went wrong!\n${error}`);
+        throwException(error, "updateUserPreferences( ) fn");
       }
     },
   },
@@ -142,3 +142,15 @@ export default createStore({
     },
   },
 });
+
+// a function that handles firebase errors
+export const throwException = (error, location) => {
+  let message = "";
+
+  if (error.code && error.message) {
+    message = `Oops! It appears you've discovered an Epic Bug ◔ ⌣ ◔\n\nLocation: ${location}\n\nError Code: ${error.code}\n\nReasons: ${error.message}`;
+  } else {
+    message = `Oops! It appears you've discovered an Epic Bug ◔ ⌣ ◔\n\nLocation: ${location}\n\n${error}"`;
+  }
+  alert(message);
+};

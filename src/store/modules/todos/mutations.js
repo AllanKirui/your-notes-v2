@@ -10,17 +10,7 @@ import {
   _arrayUnion,
 } from "@/main.js";
 
-// a function that handles firebase errors
-const throwException = (error, location) => {
-  let message = "";
-
-  if (error.code && error.message) {
-    message = `Oops! It appears you've discovered an Epic Bug ◔ ⌣ ◔\n\nLocation: ${location}\n\nError Code: ${error.code}\n\nReasons: ${error.message}`;
-  } else {
-    message = `Oops! It appears you've discovered an Epic Bug ◔ ⌣ ◔\n\nLocation: ${location}\n\n${error}"`;
-  }
-  alert(message);
-};
+import { throwException } from "@/store/index.js";
 
 export default {
   setSelectedTodo(state, payload) {
