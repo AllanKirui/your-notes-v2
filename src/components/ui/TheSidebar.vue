@@ -117,13 +117,7 @@
             <span class="tooltip">Settings</span>
           </li>
           <li class="link">
-            <!-- TODO: clear google token from local storage is not removed automatically
-	window.localStorage.removeItem("token")
-	this.$router.push("/signup")
-
-check localStorage in canIuse 
--->
-            <a href="https://google.com" title="Logout">
+            <router-link to="/" @click="signUserOut">
               <div class="flex flex-ai-c flex-jc-c">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -143,7 +137,7 @@ check localStorage in canIuse
                   <span class="link-text">Logout</span>
                 </div>
               </div>
-            </a>
+            </router-link>
             <span class="tooltip">Logout</span>
           </li>
         </ul>
@@ -154,6 +148,9 @@ check localStorage in canIuse
 
 <script>
 import { mapGetters } from "vuex";
+import { getAuth, signOut } from "firebase/auth";
+
+let auth;
 
 export default {
   name: "TheSidebar",
@@ -239,6 +236,16 @@ export default {
       // show modal for the specified button i.e notes/todos
       this.$emit("show-modal", this.btnText);
     },
+    async signUserOut() {
+      try {
+        await signOut(auth);
+      } catch (error) {
+        alert("Oops! Something went terribly wrong ◔ ⌣ ◔");
+      }
+    },
+  },
+  mounted() {
+    auth = getAuth();
   },
 };
 </script>
