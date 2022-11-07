@@ -223,9 +223,9 @@ export default {
 
       // dispatch an action to delete a note from the list of notes
       this.$store.dispatch("notes/deleteNote", {
-        isDefault: this.selectedNote.isDefault,
         firestoreDocId: this.firestoreDocId || getAuth().currentUser.uid,
         isMobileView: this.isMobileView,
+        selectedNote: this.selectedNote,
       });
 
       // emit an event to show notification message

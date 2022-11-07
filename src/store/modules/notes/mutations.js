@@ -60,12 +60,14 @@ export default {
     }
   },
   async deleteNote(state, data) {
-    let parentId = data.id;
+    // if the state contains a selectedNote, use that.
+    // Otherwise, use the prop thats part of the 'data' object
+    let selectedNote = state.selectedNote || data.selectedNote;
 
     // if note is the default welcome note, delete it and update
     // the user preferences
-    if (data.isDefault) {
-      state.notes = state.notes.filter((note) => note.id !== parentId);
+    if (selectedNote.isDefault) {
+      state.notes = state.notes.filter((note) => note.id !== selectedNote.id);
 
       let newPreferences = {
         theme: data.theme,
