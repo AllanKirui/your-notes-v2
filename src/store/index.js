@@ -63,7 +63,7 @@ export default createStore({
       try {
         // add a new collection to Firestore called 'preferences', overwrite existing ones
         await _setDoc(
-          _doc(db, "preferences", "payload.firestoreDocId"),
+          _doc(db, "preferences", payload.firestoreDocId),
           newPreferences
         );
       } catch (error) {
