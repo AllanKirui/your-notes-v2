@@ -1,76 +1,78 @@
 <template>
   <!-- signup/login pages -->
-  <!-- <WelcomeHeader v-if="!isLoggedIn" /> -->
-  <router-view name="authn" v-if="!isLoggedIn"></router-view>
+  <template v-if="!isLoggedIn">
+    <WelcomeHeader />
+    <router-view name="authn"></router-view>
+  </template>
 
   <!-- home page -->
-  <the-header
-    v-if="isLoggedIn"
-    :clear-search="isCancelSearch"
-    :is-searching="isSearching"
-    :isOverlayVisible="isOverlayVisible"
-    @is-searching="setSearchingStatus"
-    @set-message="setSearchMessage"
-    @remove-message="resetSearchingStatus"
-    @reset-cancel="resetCancelProp"
-    @toggle-overlay="toggleOverlay"
-    @cancel-search="cancelSearch"
-  ></the-header>
-  <div
-    :class="themeClasses"
-    v-if="isLoggedIn"
-    :style="{ 'font-size': globalFontSize / 16 + 'rem' }"
-  >
-    <!-- TODO: settings page and menu should handle theme switching -->
-    <the-sidebar
-      :class="isOverlayVisible ? 'sidebar-shown' : ''"
-      @show-modal="showInputModal"
-      @close-sidebar="hideOverlay"
-    ></the-sidebar>
-    <router-view
-      :is-modal="isShowInputModal"
-      :active-side="activeSide"
+  <template v-else>
+    <the-header
+      :clear-search="isCancelSearch"
       :is-searching="isSearching"
-      :search-message="searchMessage"
-      @close-modal="closeInputModal"
-      @show-notification="showNotification"
+      :isOverlayVisible="isOverlayVisible"
+      @is-searching="setSearchingStatus"
+      @set-message="setSearchMessage"
+      @remove-message="resetSearchingStatus"
+      @reset-cancel="resetCancelProp"
+      @toggle-overlay="toggleOverlay"
       @cancel-search="cancelSearch"
-      @close-sidebar="hideOverlay"
-      @show-modal="showInputModal"
-    ></router-view>
+    ></the-header>
+    <div
+      :class="themeClasses"
+      :style="{ 'font-size': globalFontSize / 16 + 'rem' }"
+    >
+      <!-- TODO: settings page and menu should handle theme switching -->
+      <the-sidebar
+        :class="isOverlayVisible ? 'sidebar-shown' : ''"
+        @show-modal="showInputModal"
+        @close-sidebar="hideOverlay"
+      ></the-sidebar>
+      <router-view
+        :is-modal="isShowInputModal"
+        :active-side="activeSide"
+        :is-searching="isSearching"
+        :search-message="searchMessage"
+        @close-modal="closeInputModal"
+        @show-notification="showNotification"
+        @cancel-search="cancelSearch"
+        @close-sidebar="hideOverlay"
+        @show-modal="showInputModal"
+      ></router-view>
 
-    <!-- use the transition-group component to animate the notifications -->
-    <div class="notification-wrapper">
-      <transition-group tag="ul" name="notification">
-        <li
-          class="notification-item"
-          v-for="(notification, index) in notificationQueue"
-          :key="index"
-          :style="`position: absolute; bottom: ${index * 50}px`"
-        >
-          <base-card :mode="cardStyle">
-            <p class="message">{{ notification.message }}</p>
-          </base-card>
-        </li>
-      </transition-group>
+      <!-- use the transition-group component to animate the notifications -->
+      <div class="notification-wrapper">
+        <transition-group tag="ul" name="notification">
+          <li
+            class="notification-item"
+            v-for="(notification, index) in notificationQueue"
+            :key="index"
+            :style="`position: absolute; bottom: ${index * 50}px`"
+          >
+            <base-card :mode="cardStyle">
+              <p class="message">{{ notification.message }}</p>
+            </base-card>
+          </li>
+        </transition-group>
+      </div>
+
+      <!-- use the teleport component to render the overlay in the body tag -->
+      <teleport to="body">
+        <div
+          :class="[isOverlayVisible ? 'active' : '', 'overlay']"
+          title="Hide Options"
+          @click="hideOverlay"
+        ></div>
+      </teleport>
     </div>
-
-    <!-- use the teleport component to render the overlay in the body tag -->
-    <teleport to="body">
-      <div
-        :class="[isOverlayVisible ? 'active' : '', 'overlay']"
-        title="Hide Options"
-        @click="hideOverlay"
-      ></div>
-    </teleport>
-  </div>
+  </template>
 </template>
 
 <script>
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { preferencesColRef, _doc, _onSnapshot } from "@/main.js";
 
-// import WelcomeHeader from "./components/nav/WelcomeHeader.vue";
+import WelcomeHeader from "./components/nav/WelcomeHeader.vue";
 import TheHeader from "./components/nav/TheHeader.vue";
 import TheSidebar from "./components/ui/TheSidebar.vue";
 
@@ -79,7 +81,7 @@ let auth;
 export default {
   name: "App",
   components: {
-    // WelcomeHeader,
+    WelcomeHeader,
     TheHeader,
     TheSidebar,
   },
@@ -219,6 +221,14 @@ export default {
     },
     $route(newRoute) {
       if (newRoute) {
+        let bodyEl = document.querySelector("body");
+
+        if (newRoute.name === "signup" || newRoute.name === "login") {
+          bodyEl.classList.add("overflow-scroll");
+        } else {
+          bodyEl.classList.remove("overflow-scroll");
+        }
+
         // reset props
         this.isShowInputModal = false;
         this.resetSearchingStatus();
@@ -326,6 +336,11 @@ body {
   padding: 0;
   background-color: var(--color-cultured);
   overflow: hidden;
+}
+
+body.overflow-scroll {
+  overflow-x: hidden;
+  overflow-y: scroll;
 }
 
 h1,
