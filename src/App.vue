@@ -1,12 +1,12 @@
 <template>
   <!-- signup/login pages -->
-  <template v-if="!isLoggedIn">
+  <template v-if="!isAuthenticated && !isLoggedIn">
     <WelcomeHeader />
     <router-view name="authn"></router-view>
   </template>
 
   <!-- home page -->
-  <template v-else>
+  <template v-if="isAuthenticated && isLoggedIn">
     <the-header
       :clear-search="isCancelSearch"
       :is-searching="isSearching"
@@ -88,6 +88,7 @@ export default {
   data() {
     return {
       isLoggedIn: false,
+      isAuthenticated: false,
       isShowInputModal: false,
       notificationQueue: [],
       newNotification: null,
@@ -263,17 +264,27 @@ export default {
     };
   },
   beforeMount() {
+    // get user data from local storage
+    let storedData = JSON.parse(localStorage.getItem("yourNotesPreferences"));
+
+    if (storedData) {
+      this.isLoggedIn = storedData.isLoggedIn;
+    }
+
     // check if a user is logged in
     auth = getAuth();
     onAuthStateChanged(auth, (user) => {
       if (user) {
         this.isLoggedIn = true;
+        this.isAuthenticated = true;
+
         // dispatch an action to store the authenticated user's data
         this.$store.dispatch("auth/createUserProfile", user);
 
         this.getRealtimePreferencesData(user.uid);
       } else {
         this.isLoggedIn = false;
+        this.isAuthenticated = false;
       }
     });
   },

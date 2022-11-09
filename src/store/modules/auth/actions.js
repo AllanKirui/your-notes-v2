@@ -85,8 +85,14 @@ export default {
     const provider = new GoogleAuthProvider();
     signInWithPopup(getAuth(), provider)
       .then(() => {
-        // dispatch an action to store an authenticated user's data
-        // context.dispatch("createUserProfile", getAuth().currentUser);
+        // store some user properties to local storage
+        let userProps = {
+          isLoggedIn: true,
+          numOfTodos: 1,
+          numOfNotes: 1,
+        };
+
+        localStorage.setItem("yourNotesPreferences", JSON.stringify(userProps));
       })
       .catch((error) => {
         console.log(error);
