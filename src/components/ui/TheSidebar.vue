@@ -237,6 +237,11 @@ export default {
       this.$emit("show-modal", this.btnText);
     },
     async signUserOut() {
+      // dispatch an action to update the user data stored locally
+      this.$store.dispatch("updateLocalStorageData", {
+        isLoggedIn: false,
+      });
+
       try {
         await signOut(auth);
       } catch (error) {
