@@ -391,6 +391,14 @@ export default {
         this.isShowMobileFlow = true;
       }
     },
+    numOfTodos(newValue) {
+      if (newValue) {
+        // dispatch an action to update the user data stored locally
+        this.$store.dispatch("updateLocalStorageData", {
+          numOfTodos: newValue,
+        });
+      }
+    },
   },
   beforeMount() {
     this.screenSize = window.innerWidth;
