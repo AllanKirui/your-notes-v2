@@ -6,6 +6,9 @@ import notesModule from "@/store/modules/notes/index";
 
 import { db, _doc, _setDoc } from "@/main.js";
 
+// get user data stored locally
+let storedData = JSON.parse(localStorage.getItem("yourNotesPreferences"));
+
 export default createStore({
   modules: {
     auth: authModule,
@@ -15,8 +18,8 @@ export default createStore({
   state() {
     return {
       greeting: "",
-      theme: null,
-      globalFontSize: 14,
+      theme: storedData.theme || null,
+      globalFontSize: storedData.fontSize || 14,
       hasDeletedDefaultTodo: false,
       hasDeletedDefaultNote: false,
     };
@@ -37,34 +40,13 @@ export default createStore({
     updateDefaultNoteStatus(state, payload) {
       state.hasDeletedDefaultNote = payload;
     },
-    async updateUserPreferences(state, payload) {
-      let newPreferences = {
-        theme: state.theme,
-        fontSize: state.globalFontSize,
-        hasDeletedDefaultTodo: state.hasDeletedDefaultTodo,
-        hasDeletedDefaultNote: state.hasDeletedDefaultNote,
-      };
-
-      // get a list of keys in the payload object
-      let payloadKeys = Object.keys(payload);
-
-      // check if the list of keys has the following keys
-      if (payloadKeys.includes("theme")) {
-        newPreferences.theme = payload.theme;
-      } else if (payloadKeys.includes("fontSize")) {
-        newPreferences.fontSize = payload.fontSize;
-      } else if (payloadKeys.includes("hasDeletedDefaultTodo")) {
-        newPreferences.hasDeletedDefaultTodo = payload.hasDeletedDefaultTodo;
-      } else if (payloadKeys.includes("hasDeletedDefaultNote")) {
-        newPreferences.hasDeletedDefaultNote = payload.hasDeletedDefaultNote;
-      }
-
+    async updateUserPreferences(_, payload) {
       // update the 'preferences' collection in firestore
       try {
         // add a new collection to Firestore called 'preferences', overwrite existing ones
         await _setDoc(
           _doc(db, "preferences", payload.firestoreDocId),
-          newPreferences
+          payload.newPreferences
         );
       } catch (error) {
         throwException(error, "updateUserPreferences( ) fn");
@@ -72,6 +54,63 @@ export default createStore({
     },
   },
   actions: {
+    updateLocalStorageData(context, payload) {
+      let numOfTodos, numOfNotes;
+      let storedData = JSON.parse(localStorage.getItem("yourNotesPreferences"));
+
+      // perform check to get the correct number of todos
+      if (storedData.numOfTodos && !context.state.hasDeletedDefaultTodo) {
+        numOfTodos = storedData.numOfTodos;
+      } else if (context.state.hasDeletedDefaultTodo) {
+        if (storedData.numOfTodos - 1 < 0) {
+          numOfTodos = 0;
+        } else {
+          numOfTodos = storedData.numOfTodos - 1;
+        }
+      } else {
+        numOfTodos = context.rootState.todos.todos.length;
+      }
+
+      // perform check to get the correct number of todos
+      if (storedData.numOfNotes && !context.state.hasDeletedDefaultNote) {
+        numOfNotes = storedData.numOfNotes;
+      } else if (context.state.hasDeletedDefaultNote) {
+        if (storedData.numOfNotes - 1 < 0) {
+          numOfNotes = 0;
+        } else {
+          numOfNotes = storedData.numOfNotes - 1;
+        }
+      } else {
+        numOfNotes = context.rootState.notes.notes.length;
+      }
+
+      // store some user properties to local storage
+      let userProps = {
+        isLoggedIn: true,
+        numOfTodos: numOfTodos,
+        numOfNotes: numOfNotes,
+        theme: storedData.theme || null,
+        fontSize: storedData.fontSize || 14,
+      };
+
+      let payloadKeys = Object.keys(payload);
+
+      payloadKeys.forEach((key) => {
+        if (key === "isLoggedIn") {
+          userProps.isLoggedIn = payload.isLoggedIn;
+        } else if (key === "numOfTodos") {
+          userProps.numOfTodos = payload.numOfTodos;
+        } else if (key === "numOfNotes") {
+          userProps.numOfNotes = payload.numOfNotes;
+        } else if (key === "theme") {
+          userProps.theme = payload.theme;
+        } else if (key === "fontSize") {
+          userProps.fontSize = payload.fontSize;
+        }
+      });
+
+      localStorage.setItem("yourNotesPreferences", JSON.stringify(userProps));
+    },
     setGreeting(context) {
       let today = new Date();
       let hour = today.getHours();
@@ -119,9 +158,51 @@ export default createStore({
         "updateDefaultNoteStatus",
         payload.hasDeletedDefaultNote
       );
+
+      // dispatch an action to update the user data stored locally
+      context.dispatch("updateLocalStorageData", {
+        theme: payload.theme,
+        fontSize: payload.fontSize,
+      });
     },
     updateUserPreferences(context, payload) {
-      context.commit("updateUserPreferences", payload);
+      let newPreferences = {
+        theme: context.rootState.theme,
+        fontSize: context.rootState.globalFontSize,
+        hasDeletedDefaultTodo: context.rootState.hasDeletedDefaultTodo,
+        hasDeletedDefaultNote: context.rootState.hasDeletedDefaultNote,
+      };
+
+      // get a list of keys in the payload object
+      let payloadKeys = Object.keys(payload);
+
+      // check if the list of keys has the following keys
+      if (payloadKeys.includes("theme")) {
+        newPreferences.theme = payload.theme;
+        // dispatch an action to update the user data stored locally
+        context.dispatch(
+          "updateLocalStorageData",
+          { theme: payload.theme },
+          { root: true }
+        );
+      } else if (payloadKeys.includes("fontSize")) {
+        newPreferences.fontSize = payload.fontSize;
+        // dispatch an action to update the user data stored locally
+        context.dispatch(
+          "updateLocalStorageData",
+          { fontSize: payload.fontSize },
+          { root: true }
+        );
+      } else if (payloadKeys.includes("hasDeletedDefaultTodo")) {
+        newPreferences.hasDeletedDefaultTodo = payload.hasDeletedDefaultTodo;
+      } else if (payloadKeys.includes("hasDeletedDefaultNote")) {
+        newPreferences.hasDeletedDefaultNote = payload.hasDeletedDefaultNote;
+      }
+
+      context.commit("updateUserPreferences", {
+        firestoreDocId: payload.firestoreDocId,
+        newPreferences: newPreferences,
+      });
     },
   },
   getters: {
