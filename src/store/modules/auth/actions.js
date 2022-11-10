@@ -40,6 +40,9 @@ export default {
   signIn(context, payload) {
     signInWithEmailAndPassword(getAuth(), payload.email, payload.password)
       .then(() => {
+        // TODO: store user data locally as shown in with Google
+        // TODO: what if multiple user's sign in on the same computer,
+        // will one user's sign in overwite another user's preferences?
         // TODO: redirect the user to the todo page
         // TODO: show loading spinner
         // dispatch an action to store an authenticated user's data
@@ -80,19 +83,25 @@ export default {
         }
       });
   },
-  signInWithGoogle() {
+  signInWithGoogle(context) {
     // create a provider when the sign in button is clicked
     const provider = new GoogleAuthProvider();
     signInWithPopup(getAuth(), provider)
       .then(() => {
-        // store some user properties to local storage
-        let userProps = {
-          isLoggedIn: true,
-          numOfTodos: 1,
-          numOfNotes: 1,
-        };
+        let storedData = JSON.parse(
+          localStorage.getItem("yourNotesPreferences")
+        );
 
-        localStorage.setItem("yourNotesPreferences", JSON.stringify(userProps));
+        // dispatch an action to update the user data stored locally
+        context.dispatch(
+          "updateLocalStorageData",
+          {
+            isLoggedIn: true,
+            theme: storedData.theme || null,
+            fontSize: storedData.fontSize || 14,
+          },
+          { root: true }
+        );
       })
       .catch((error) => {
         console.log(error);
