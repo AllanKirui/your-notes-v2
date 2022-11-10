@@ -387,6 +387,14 @@ export default {
         this.isShowMobileFlow = true;
       }
     },
+    numOfNotes(newValue) {
+      if (newValue) {
+        // dispatch an action to update the user data stored locally
+        this.$store.dispatch("updateLocalStorageData", {
+          numOfNotes: newValue,
+        });
+      }
+    },
   },
   beforeMount() {
     this.screenSize = window.innerWidth;
