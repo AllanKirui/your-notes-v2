@@ -472,6 +472,7 @@ export default {
   padding: 0;
   max-width: 50rem;
   height: fit-content;
+  max-height: calc(100vh - 140px);
 }
 
 .purplish-theme .settings-wrapper {
@@ -548,7 +549,7 @@ export default {
 .options-contents {
   grid-column: 2;
   grid-row: 1;
-  max-height: 470px;
+  max-height: calc(100vh - 202px);
   overflow-y: scroll;
 }
 
