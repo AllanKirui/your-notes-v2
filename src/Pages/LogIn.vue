@@ -129,7 +129,7 @@ export default {
       }
 
       this.login();
-      this.clearForm();
+      this.resetPasswordVisibility();
     },
     validateInputs() {
       this.formIsValid = true;
@@ -179,10 +179,8 @@ export default {
     togglePassword() {
       this.isPwdVisible = !this.isPwdVisible;
     },
-    clearForm() {
+    resetPasswordVisibility() {
       this.isPwdVisible = false;
-      this.email.val = "";
-      this.password.val = "";
     },
     login() {
       // dispatch an action to sign in an existing user

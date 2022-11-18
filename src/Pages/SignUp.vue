@@ -210,7 +210,7 @@ export default {
       }
 
       this.register();
-      this.clearForm();
+      this.resetPasswordVisibility();
     },
     validateInputs() {
       this.formIsValid = true;
@@ -282,13 +282,9 @@ export default {
     toggleConfirmPassword() {
       this.isConfirmPwdVisible = !this.isConfirmPwdVisible;
     },
-    clearForm() {
+    resetPasswordVisibility() {
       this.isPwdVisible = false;
       this.isConfirmPwdVisible = false;
-      this.username.val = "";
-      this.email.val = "";
-      this.password.val = "";
-      this.confirmPassword.val = "";
     },
     register() {
       // dispatch an action to register a user
