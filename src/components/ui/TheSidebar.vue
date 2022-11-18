@@ -158,7 +158,7 @@ let auth;
 
 export default {
   name: "TheSidebar",
-  emits: ["show-modal", "close-sidebar"],
+  emits: ["show-modal", "close-sidebar", "remove-listener"],
   data() {
     return {
       storedNumOfNotes: 0,
@@ -247,6 +247,9 @@ export default {
       this.$emit("show-modal", this.btnText);
     },
     async signUserOut() {
+      // emit a custom event to remove real-time snapshot listener
+      this.$emit("remove-listener");
+
       // dispatch an action to update the user data stored locally
       this.$store.dispatch("updateLocalStorageData", {
         isLoggedIn: false,

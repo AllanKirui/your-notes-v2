@@ -27,6 +27,7 @@
         :class="isOverlayVisible ? 'sidebar-shown' : ''"
         @show-modal="showInputModal"
         @close-sidebar="hideOverlay"
+        @remove-listener="unsubscribeFromSnapshotListener"
       ></the-sidebar>
       <router-view
         :is-modal="isShowInputModal"
@@ -98,6 +99,7 @@ export default {
       isSearching: false,
       searchMessage: "",
       isOverlayVisible: false,
+      unsubscribeFromSnapshotListener: null,
     };
   },
   computed: {
@@ -197,10 +199,14 @@ export default {
     },
     getRealtimePreferencesData(uid) {
       // get collection data using onSnapshot (REALTIME)
-      _onSnapshot(_doc(preferencesColRef, uid), (doc) => {
-        // dispatch an action to set the current user's preferences if it exists
-        if (doc.data()) this.$store.dispatch("setUserPreferences", doc.data());
-      });
+      this.unsubscribeFromSnapshotListener = _onSnapshot(
+        _doc(preferencesColRef, uid),
+        (doc) => {
+          // dispatch an action to set the current user's preferences if it exists
+          if (doc.data())
+            this.$store.dispatch("setUserPreferences", doc.data());
+        }
+      );
     },
   },
   watch: {
