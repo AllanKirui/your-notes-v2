@@ -144,6 +144,7 @@
                   class="font flex flex-ai-c flex-jc-c"
                   :class="[globalFontSize === 14 ? 'active' : '']"
                   @click="setFont('small')"
+                  title="Small"
                 >
                   <span class="dot"></span>
                   <span class="text small">Aa</span>
@@ -152,6 +153,7 @@
                   class="font flex flex-ai-c flex-jc-c"
                   :class="[globalFontSize === 16 ? 'active' : '']"
                   @click="setFont('medium')"
+                  title="Medium"
                 >
                   <span class="dot"></span>
                   <span class="text medium">Aa</span>
@@ -160,6 +162,7 @@
                   class="font flex flex-ai-c flex-jc-c"
                   :class="[globalFontSize === 18 ? 'active' : '']"
                   @click="setFont('large')"
+                  title="Large"
                 >
                   <span class="dot"></span>
                   <span class="text large">Aa</span>
