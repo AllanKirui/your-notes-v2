@@ -18,8 +18,8 @@ export default createStore({
   state() {
     return {
       greeting: "",
-      theme: storedData.theme || null,
-      globalFontSize: storedData.fontSize || 14,
+      theme: storedData ? storedData.theme : null,
+      globalFontSize: storedData ? storedData.fontSize : 14,
       hasDeletedDefaultTodo: false,
       hasDeletedDefaultNote: false,
     };
@@ -55,40 +55,33 @@ export default createStore({
   },
   actions: {
     updateLocalStorageData(context, payload) {
-      let numOfTodos, numOfNotes;
       let storedData = JSON.parse(localStorage.getItem("yourNotesPreferences"));
 
-      // perform check to get the correct number of todos
-      if (storedData.numOfTodos && !context.state.hasDeletedDefaultTodo) {
-        numOfTodos = storedData.numOfTodos;
-      } else if (context.state.hasDeletedDefaultTodo) {
-        if (storedData.numOfTodos - 1 < 0) {
-          numOfTodos = 0;
-        } else {
-          numOfTodos = storedData.numOfTodos - 1;
-        }
-      } else {
-        numOfTodos = context.rootState.todos.todos.length;
-      }
+      // create a local storage object for a first time user
+      if (!storedData) {
+        let firstTimeUserProps = {
+          isLoggedIn: true,
+          numOfTodos: context.rootState.todos.todos.length,
+          numOfNotes: context.rootState.notes.notes.length,
+          theme: null,
+          fontSize: 14,
+        };
 
-      // perform check to get the correct number of todos
-      if (storedData.numOfNotes && !context.state.hasDeletedDefaultNote) {
-        numOfNotes = storedData.numOfNotes;
-      } else if (context.state.hasDeletedDefaultNote) {
-        if (storedData.numOfNotes - 1 < 0) {
-          numOfNotes = 0;
-        } else {
-          numOfNotes = storedData.numOfNotes - 1;
-        }
-      } else {
-        numOfNotes = context.rootState.notes.notes.length;
+        localStorage.setItem(
+          "yourNotesPreferences",
+          JSON.stringify(firstTimeUserProps)
+        );
+
+        return;
       }
 
       // store some user properties to local storage
       let userProps = {
         isLoggedIn: true,
-        numOfTodos: numOfTodos,
-        numOfNotes: numOfNotes,
+        numOfTodos:
+          storedData.numOfTodos || context.rootState.todos.todos.length,
+        numOfNotes:
+          storedData.numOfNotes || context.rootState.notes.notes.length,
         theme: storedData.theme || null,
         fontSize: storedData.fontSize || 14,
       };
