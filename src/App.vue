@@ -231,9 +231,9 @@ export default {
         let bodyEl = document.querySelector("body");
 
         if (newRoute.name === "signup" || newRoute.name === "login") {
-          bodyEl.classList.add("overflow-scroll");
+          bodyEl.className = "overflow-scroll scrollbar-hidden";
         } else {
-          bodyEl.classList.remove("overflow-scroll");
+          bodyEl.className = "";
         }
 
         // reset props
@@ -462,6 +462,10 @@ ul {
 /* scrollbar styles */
 ::-webkit-scrollbar {
   width: 0.7em;
+}
+
+body.scrollbar-hidden::-webkit-scrollbar {
+  width: 0;
 }
 
 ::-webkit-scrollbar-track {
