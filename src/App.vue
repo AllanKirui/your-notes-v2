@@ -282,6 +282,9 @@ export default {
         this.$store.dispatch("auth/createUserProfile", user);
 
         this.getRealtimePreferencesData(user.uid);
+
+        // create a local storage object for a first time user
+        this.$store.dispatch("updateLocalStorageData", {});
       } else {
         this.isLoggedIn = false;
         this.isAuthenticated = false;
