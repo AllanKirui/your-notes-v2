@@ -9,7 +9,7 @@ import {
 import { throwException } from "@/store/index.js";
 
 export default {
-  async createAccount(_, payload) {
+  async createAccount(context, payload) {
     try {
       await createUserWithEmailAndPassword(
         getAuth(),
@@ -20,6 +20,14 @@ export default {
       // TODO: redirect the user to the todo page
       // TODO: show loading spinner
     } catch (error) {
+      if (error.code === "auth/email-already-in-use") {
+        context.commit("setError", {
+          message: "This email is already in use!",
+          field: "email",
+        });
+        return;
+      }
+
       throwException(error, "createUserWithEmailAndPassword( ) fn");
     }
   },
@@ -33,7 +41,6 @@ export default {
       // TODO: redirect the user to the todo page
       // TODO: show loading spinner
     } catch (error) {
-      // alert("Oops! Problem signing in with Google. Refresh the page and try again.");
       throwException(error, "createAccountWithGoogle( ) fn");
     }
   },

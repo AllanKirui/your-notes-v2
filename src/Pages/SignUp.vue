@@ -196,6 +196,11 @@ export default {
       isConfirmPwdVisible: false,
     };
   },
+  computed: {
+    error() {
+      return this.$store.getters["auth/error"];
+    },
+  },
   methods: {
     submitForm() {
       this.validateInputs();
@@ -296,6 +301,15 @@ export default {
     registerWithGoogle() {
       // dispatch an action to register a user with their existing Google account
       this.$store.dispatch("auth/createAccountWithGoogle");
+    },
+  },
+  watch: {
+    error(newValue) {
+      // handle errors from Firebase
+      if (newValue && newValue.field === "email") {
+        this.email.errorMessage = newValue.message;
+        this.setErrorState("email");
+      }
     },
   },
 };
