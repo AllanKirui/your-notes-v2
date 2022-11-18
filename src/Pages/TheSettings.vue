@@ -269,6 +269,8 @@ export default {
     };
   },
   computed: {
+    ...mapGetters("todos", ["numOfTodos"]),
+    ...mapGetters("notes", ["numOfNotes"]),
     ...mapGetters([
       "theme",
       "globalFontSize",
@@ -378,10 +380,20 @@ export default {
       if (item === "notes") {
         if (!this.hasDeletedDefaultNote) return;
         this.restoreWelcomeNote();
+
+        // dispatch an action to update the user data stored locally
+        this.$store.dispatch("updateLocalStorageData", {
+          numOfNotes: this.numOfNotes,
+        });
       }
       if (item === "todos") {
         if (!this.hasDeletedDefaultTodo) return;
         this.restoreWelcomeTodo();
+
+        // dispatch an action to update the user data stored locally
+        this.$store.dispatch("updateLocalStorageData", {
+          numOfTodos: this.numOfTodos,
+        });
       }
     },
     restoreWelcomeNote() {
