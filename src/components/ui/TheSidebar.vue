@@ -46,7 +46,9 @@
                 </svg>
                 <div class="text-wrapper flex flex-jc-sb">
                   <span class="link-text">Todos</span>
-                  <span class="link-counter">{{ numOfTodos }}</span>
+                  <span class="link-counter">{{
+                    numOfTodos || storedNumOfTodos
+                  }}</span>
                 </div>
               </div>
             </router-link>
@@ -82,7 +84,9 @@
                 </svg>
                 <div class="text-wrapper flex flex-jc-sb">
                   <span class="link-text">Notes</span>
-                  <span class="link-counter">{{ numOfNotes }}</span>
+                  <span class="link-counter">{{
+                    numOfNotes || storedNumOfNotes
+                  }}</span>
                 </div>
               </div>
             </router-link>
@@ -155,6 +159,12 @@ let auth;
 export default {
   name: "TheSidebar",
   emits: ["show-modal", "close-sidebar"],
+  data() {
+    return {
+      storedNumOfNotes: 0,
+      storedNumOfTodos: 0,
+    };
+  },
   computed: {
     ...mapGetters("todos", ["numOfTodos"]),
     ...mapGetters("notes", ["numOfNotes"]),
@@ -249,13 +259,43 @@ export default {
       }
     },
   },
+  watch: {
+    numOfNotes(newValue) {
+      if (newValue === 0) {
+        this.storedNumOfNotes = 0;
+
+        // dispatch an action to update the user data stored locally
+        this.$store.dispatch("updateLocalStorageData", {
+          numOfNotes: 0,
+        });
+      }
+    },
+    numOfTodos(newValue) {
+      if (newValue === 0) {
+        this.storedNumOfTodos = 0;
+
+        // dispatch an action to update the user data stored locally
+        this.$store.dispatch("updateLocalStorageData", {
+          numOfTodos: 0,
+        });
+      }
+    },
+  },
   mounted() {
     auth = getAuth();
+
+    // read user data from localStorage, if any
+    let storedData = JSON.parse(localStorage.getItem("yourNotesPreferences"));
+
+    if (storedData) {
+      this.storedNumOfNotes = storedData.numOfNotes;
+      this.storedNumOfTodos = storedData.numOfTodos;
+    }
   },
 };
 </script>
 
-.<style scoped>
+<style scoped>
 .wrapper {
   position: sticky;
   top: 0;
