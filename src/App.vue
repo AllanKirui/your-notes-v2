@@ -1581,15 +1581,17 @@ body.scrollbar-hidden::-webkit-scrollbar {
   background-color: var(--color-iron-gray) !important;
 }
 
+.menu-enter-active,
 .delete-enter-active {
-  animation: deleteWindow 0.3s ease-out;
+  animation: popWindow 0.3s ease-out;
 }
 
+.menu-leave-active,
 .delete-leave-active {
-  animation: deleteWindow 0.3s ease-in reverse;
+  animation: popWindow 0.3s ease-in reverse;
 }
 
-@keyframes deleteWindow {
+@keyframes popWindow {
   0% {
     opacity: 0;
     transform: scale(0.8);
