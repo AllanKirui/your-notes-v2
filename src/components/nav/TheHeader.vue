@@ -83,34 +83,59 @@
 
       <div class="nav-right">
         <div class="nav-avatar">
+          <div class="image-wrapper" :title="user.displayName">
+            <img class="avatar" :src="user.photoURL" alt=" " />
+            <span class="initials">{{ setInitials(user.displayName) }}</span>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <div class="nav-menu">
+      <base-card :mode="cardStyle">
+        <button class="btn close-btn" title="Close" @click="hideDeleteWindow">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 64 64"
+            stroke-width="4.5"
+            stroke="currentColor"
+            fill="none"
+            class="duration-300 transform transition-all"
+            style="width: 14px; height: 14px"
+          >
+            <path d="M8.06 8.06l47.35 47.88M55.94 8.06L8.59 55.94"></path>
+          </svg>
+        </button>
+        <div class="menu-top">
           <div class="image-wrapper">
             <img class="avatar" :src="user.photoURL" alt=" " />
             <span class="initials">{{ setInitials(user.displayName) }}</span>
           </div>
-          <p class="username">{{ user.displayName }}</p>
+          <div class="profile-wrapper">
+            <p class="username">{{ user.displayName }}</p>
+            <p class="email">{{ user.email }}</p>
+          </div>
         </div>
-        <div class="nav-menu">
-          <button class="menu-btn" title="show menu">
-            <img
-              v-if="!theme"
-              src="@/assets/img/dropdown-default.svg"
-              alt=" "
-            />
-            <img
-              v-else-if="theme === 'purplish'"
-              src="@/assets/img/dropdown-purplish.svg"
-              alt=" "
-            />
-            <img
-              v-else-if="theme === 'bluetiful'"
-              src="@/assets/img/dropdown-bluetiful.svg"
-              alt=" "
-            />
-          </button>
-          <!-- TODO: menu goes here-->
+
+        <div class="menu-bottom">
+          <div class="options-links-wrapper">
+            <ul class="options-links">
+              <li class="link">
+                <button class="btn link-btn" title="Settings">Settings</button>
+              </li>
+              <li class="link">
+                <button class="btn link-btn" title="What's new?">
+                  What's new?
+                </button>
+              </li>
+              <li class="link">
+                <button class="btn link-btn" title="Logout">Logout</button>
+              </li>
+            </ul>
+          </div>
         </div>
-      </div>
-    </nav>
+      </base-card>
+    </div>
   </header>
 </template>
 
@@ -142,6 +167,23 @@ export default {
     ...mapGetters("auth", ["user"]),
     ...mapGetters("todos", ["numOfTodos", "todoList"]),
     ...mapGetters("notes", ["numOfNotes", "notesList"]),
+    cardStyle() {
+      let mode = "";
+
+      switch (this.theme) {
+        case "purplish":
+          mode = "purplish-theme";
+          break;
+        case "bluetiful":
+          mode = "bluetiful-theme";
+          break;
+        default:
+          mode = "default-theme";
+          break;
+      }
+
+      return mode;
+    },
     themeClasses() {
       let classes = "header ";
 
@@ -454,23 +496,6 @@ export default {
   letter-spacing: 0.2px;
 }
 
-.nav-right {
-  display: grid;
-  grid-template-columns: 1fr 1.25rem;
-  grid-template-rows: 1fr;
-  gap: 0.625rem;
-  align-items: center;
-}
-
-.nav-avatar {
-  grid-column: 1;
-  display: grid;
-  grid-template-columns: auto minmax(5rem, auto);
-  grid-template-rows: 1fr;
-  gap: 0.875rem;
-  align-items: center;
-}
-
 .nav-avatar .image-wrapper {
   grid-column: 1;
   position: relative;
@@ -492,14 +517,18 @@ export default {
   color: var(--color-lavender-gray);
 }
 
+.default-theme .menu-top .image-wrapper,
 .default-theme .nav-avatar .image-wrapper {
   background-color: var(--color-traffic-grey);
 }
 
+.purplish-theme .menu-top,
+.purplish-theme .menu-top .image-wrapper,
 .purplish-theme .nav-avatar .image-wrapper {
   background-color: var(--color-russian-violet);
 }
 
+.bluetiful-theme .menu-top .image-wrapper,
 .bluetiful-theme .nav-avatar .image-wrapper {
   background-color: var(--color-iron-gray);
 }
@@ -521,49 +550,160 @@ export default {
   z-index: 1;
 }
 
-.nav-avatar .username {
-  grid-column: 2;
-}
-
+/* start of nav menu styles */
 .nav-menu {
-  grid-column: 2;
-  width: 1.25rem;
-  height: 1.25rem;
+  position: absolute;
+  top: 70px;
+  right: 50px;
+  z-index: 2;
 }
 
-.nav-menu .menu-btn {
-  background: transparent;
-  border: none;
-  outline: none;
-  cursor: pointer;
+.nav-menu .card {
+  padding: 0;
+  position: relative;
 }
 
-.default-theme .nav-menu .menu-btn:hover {
-  outline: 2px solid var(--color-traffic-grey);
+.nav-menu .card .close-btn {
+  position: absolute;
+  top: 0.675rem;
+  right: 0.675rem;
+  padding: 0.375rem 0.375rem 0.2rem;
+  z-index: 3;
 }
 
-.default-theme .nav-menu .menu-btn:focus {
+.default-theme .nav-menu .close-btn {
+  color: var(--color-cultured);
+}
+
+.default-theme .nav-menu .close-btn:hover {
+  background-color: var(--color-graphite-black);
+}
+
+.purplish-theme .nav-menu .close-btn:hover {
+  background-color: var(--color-black-blue);
+}
+
+.bluetiful-theme .nav-menu .close-btn:hover {
+  background-color: var(--color-steel-blue);
+  color: var(--color-lavender-gray);
+}
+
+.nav-menu .menu-top {
+  padding: 1.375rem 0.75rem 0.75rem;
+  position: relative;
+}
+
+.menu-top .image-wrapper {
+  position: absolute;
+  top: 1.45rem;
+  left: 0.75rem;
+  width: 5rem;
+  height: 5rem;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.default-theme .menu-top {
+  background-color: var(--color-eerie-black);
+  color: var(--color-cultured);
+}
+
+.bluetiful-theme .menu-top {
+  background-color: var(--color-midnight-blue);
+}
+
+.default-theme .menu-top .image-wrapper {
   outline: 1px solid var(--color-traffic-grey);
-  outline-offset: 5px;
 }
 
-.purplish-theme .nav-menu .menu-btn:hover {
-  outline: 1px solid var(--color-tickle-me-pink);
+.purplish-theme .menu-top .image-wrapper {
+  outline: 1px solid var(--color-russian-violet);
 }
 
-.purplish-theme .nav-menu .menu-btn:focus {
-  outline: 1px solid var(--color-spanish-pink);
-  outline-offset: 5px;
-}
-
-.bluetiful-theme .nav-menu .menu-btn:hover {
-  outline: 1px solid var(--color-maximum-blue-green);
-}
-
-.bluetiful-theme .nav-menu .menu-btn:focus {
+.bluetiful-theme .menu-top .image-wrapper {
   outline: 1px solid var(--color-iron-gray);
-  outline-offset: 5px;
 }
+
+.menu-top .image-wrapper .avatar {
+  position: relative;
+  z-index: 2;
+  max-width: 100%;
+}
+
+.menu-top .image-wrapper .initials {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.75rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  z-index: 1;
+}
+
+.menu-top .profile-wrapper {
+  margin-left: 6rem;
+  margin-top: 0.5rem;
+}
+
+.menu-top .profile-wrapper .username {
+  font-weight: 500;
+}
+
+.menu-top .profile-wrapper .email {
+  margin-top: 4px;
+  font-size: 12px;
+}
+
+.menu-bottom {
+  padding-top: 2.5rem;
+}
+
+.options-links-wrapper .options-links .link .link-btn {
+  padding: 0.5rem 0.75rem;
+  width: 100%;
+  text-align: left;
+  border-radius: 0;
+}
+
+.options-links-wrapper .options-links .link:not(:first-child) {
+  margin-top: 0.3rem;
+}
+
+.options-links-wrapper .options-links .link:nth-child(2) {
+  margin-bottom: 0.875rem;
+}
+
+.default-theme .options-links-wrapper .options-links .link:last-child {
+  border-top: 1px solid var(--color-traffic-grey);
+}
+
+.purplish-theme .options-links-wrapper .options-links .link:last-child {
+  border-top: 1px solid var(--color-russian-violet);
+}
+
+.bluetiful-theme .options-links-wrapper .options-links .link:last-child {
+  border-top: 1px solid var(--color-midnight-blue);
+}
+
+.options-links-wrapper .options-links .link:last-child .link-btn {
+  margin: 0.275rem 0;
+}
+
+.default-theme .options-links .link .link-btn:hover {
+  background-color: var(--color-graphite-black);
+  color: var(--color-cultured);
+}
+
+.purplish-theme .options-links .link .link-btn:hover {
+  background-color: var(--color-spanish-pink);
+  color: var(--color-black-blue);
+}
+
+.bluetiful-theme .options-links .link .link-btn:hover {
+  background-color: var(--color-midnight-blue);
+}
+/* end of nav menu styles */
 
 /* media queries */
 @media (max-width: 768px) {
@@ -685,7 +825,7 @@ export default {
     grid-template-columns: 1fr;
   }
 
-  .nav-right .nav-menu,
+  /* .nav-right .nav-menu, */
   .nav-right .nav-avatar .username {
     display: none;
   }
