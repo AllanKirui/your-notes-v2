@@ -82,7 +82,7 @@
       </div>
 
       <div class="nav-right">
-        <div class="nav-avatar">
+        <div class="nav-avatar" @click="toggleMenu">
           <div class="image-wrapper" :title="user.displayName">
             <img class="avatar" :src="user.photoURL" alt=" " />
             <span class="initials">{{ setInitials(user.displayName) }}</span>
@@ -91,51 +91,55 @@
       </div>
     </nav>
 
-    <div class="nav-menu">
-      <base-card :mode="cardStyle">
-        <button class="btn close-btn" title="Close" @click="hideDeleteWindow">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 64 64"
-            stroke-width="4.5"
-            stroke="currentColor"
-            fill="none"
-            class="duration-300 transform transition-all"
-            style="width: 14px; height: 14px"
-          >
-            <path d="M8.06 8.06l47.35 47.88M55.94 8.06L8.59 55.94"></path>
-          </svg>
-        </button>
-        <div class="menu-top">
-          <div class="image-wrapper">
-            <img class="avatar" :src="user.photoURL" alt=" " />
-            <span class="initials">{{ setInitials(user.displayName) }}</span>
+    <transition name="menu">
+      <div class="nav-menu" id="nav-menu" v-if="isMenuOpen">
+        <base-card :mode="cardStyle">
+          <button class="btn close-btn" title="Close" @click="toggleMenu">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 64 64"
+              stroke-width="4.5"
+              stroke="currentColor"
+              fill="none"
+              class="duration-300 transform transition-all"
+              style="width: 14px; height: 14px"
+            >
+              <path d="M8.06 8.06l47.35 47.88M55.94 8.06L8.59 55.94"></path>
+            </svg>
+          </button>
+          <div class="menu-top">
+            <div class="image-wrapper">
+              <img class="avatar" :src="user.photoURL" alt=" " />
+              <span class="initials">{{ setInitials(user.displayName) }}</span>
+            </div>
+            <div class="profile-wrapper">
+              <p class="username">{{ user.displayName }}</p>
+              <p class="email">{{ user.email }}</p>
+            </div>
           </div>
-          <div class="profile-wrapper">
-            <p class="username">{{ user.displayName }}</p>
-            <p class="email">{{ user.email }}</p>
-          </div>
-        </div>
 
-        <div class="menu-bottom">
-          <div class="options-links-wrapper">
-            <ul class="options-links">
-              <li class="link">
-                <button class="btn link-btn" title="Settings">Settings</button>
-              </li>
-              <li class="link">
-                <button class="btn link-btn" title="What's new?">
-                  What's new?
-                </button>
-              </li>
-              <li class="link">
-                <button class="btn link-btn" title="Logout">Logout</button>
-              </li>
-            </ul>
+          <div class="menu-bottom">
+            <div class="options-links-wrapper">
+              <ul class="options-links">
+                <li class="link">
+                  <button class="btn link-btn" title="Settings">
+                    Settings
+                  </button>
+                </li>
+                <li class="link">
+                  <button class="btn link-btn" title="What's new?">
+                    What's new?
+                  </button>
+                </li>
+                <li class="link">
+                  <button class="btn link-btn" title="Logout">Logout</button>
+                </li>
+              </ul>
+            </div>
           </div>
-        </div>
-      </base-card>
-    </div>
+        </base-card>
+      </div>
+    </transition>
   </header>
 </template>
 
@@ -157,6 +161,7 @@ export default {
     return {
       isSidebarOpen: false,
       isOverlay: false,
+      isMenuOpen: false,
     };
   },
   computed: {
@@ -335,6 +340,9 @@ export default {
       });
     },
     runSearch() {
+      // reset props
+      this.isMenuOpen = false;
+
       // emit an event to set searching status and search message
       this.$emit("is-searching");
       this.$emit("set-message", this.$refs.search.value.trim().toLowerCase());
@@ -351,12 +359,16 @@ export default {
         this.$refs.search.value = "";
       }
     },
+    toggleMenu() {
+      this.isMenuOpen = !this.isMenuOpen;
+    },
   },
   watch: {
     $route(newRoute) {
-      // if there's a new route, clear the search field
+      // if there's a new route, clear the search field, close the menu
       if (newRoute) {
         this.cancelSearch();
+        this.isMenuOpen = false;
       }
     },
     clearSearch(newValue) {
@@ -385,6 +397,26 @@ export default {
         // reset props
         this.isOverlay = false;
         this.isSidebarOpen = false;
+      } else {
+        this.isMenuOpen = false;
+      }
+    },
+    isMenuOpen(newValue) {
+      if (newValue) {
+        let self = this;
+
+        window.addEventListener("click", (e) => {
+          // close dropdown when clicked outside
+          if (!self.$el.contains(e.target)) {
+            self.isMenuOpen = false;
+          }
+        });
+
+        // reset props
+        this.isOverlay = false;
+        this.isSidebarOpen = false;
+        // emit a custom event to hide the overlay
+        this.$emit("toggle-overlay", this.isOverlay);
       }
     },
   },
@@ -503,6 +535,7 @@ export default {
   height: 2rem;
   border-radius: 50%;
   overflow: hidden;
+  cursor: pointer;
 }
 
 .default-theme .nav-avatar {
