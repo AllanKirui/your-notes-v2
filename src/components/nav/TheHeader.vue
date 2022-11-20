@@ -122,12 +122,22 @@
             <div class="options-links-wrapper">
               <ul class="options-links">
                 <li class="link">
-                  <button class="btn link-btn" title="Settings">
+                  <button
+                    class="btn link-btn"
+                    title="Settings"
+                    @click="goToSettings"
+                  >
                     Settings
                   </button>
                 </li>
                 <li class="link">
-                  <button class="btn link-btn" title="Logout">Logout</button>
+                  <button
+                    class="btn link-btn"
+                    title="Logout"
+                    @click="signUserOut"
+                  >
+                    Logout
+                  </button>
                 </li>
               </ul>
             </div>
@@ -140,6 +150,9 @@
 
 <script>
 import { mapGetters } from "vuex";
+import { getAuth, signOut } from "firebase/auth";
+
+let auth;
 
 export default {
   name: "TheHeader",
@@ -151,6 +164,7 @@ export default {
     "remove-message",
     "toggle-overlay",
     "cancel-search",
+    "remove-listener",
   ],
   data() {
     return {
@@ -357,6 +371,31 @@ export default {
     toggleMenu() {
       this.isMenuOpen = !this.isMenuOpen;
     },
+    goToSettings() {
+      // go to the settings route
+      this.$router.push("/settings");
+
+      // close the menu
+      this.isMenuOpen = false;
+    },
+    async signUserOut() {
+      // go to the signup route
+      this.$router.push("/");
+
+      // emit a custom event to remove real-time snapshot listener
+      this.$emit("remove-listener");
+
+      // dispatch an action to update the user data stored locally
+      this.$store.dispatch("updateLocalStorageData", {
+        isLoggedIn: false,
+      });
+
+      try {
+        await signOut(auth);
+      } catch (error) {
+        alert("Oops! Something went terribly wrong ◔ ⌣ ◔");
+      }
+    },
   },
   watch: {
     $route(newRoute) {
@@ -414,6 +453,9 @@ export default {
         this.$emit("toggle-overlay", this.isOverlay);
       }
     },
+  },
+  mounted() {
+    auth = getAuth();
   },
 };
 </script>
