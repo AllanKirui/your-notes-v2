@@ -141,6 +141,9 @@
                 </li>
               </ul>
             </div>
+            <div class="meta-membership" v-if="dateJoined">
+              <small>{{ dateJoined }}</small>
+            </div>
           </div>
         </base-card>
       </div>
@@ -171,6 +174,7 @@ export default {
       isSidebarOpen: false,
       isOverlay: false,
       isMenuOpen: false,
+      dateJoined: null,
     };
   },
   computed: {
@@ -396,6 +400,55 @@ export default {
         alert("Oops! Something went terribly wrong ◔ ⌣ ◔");
       }
     },
+    getDateJoined(auth) {
+      let timestamp = +auth.currentUser.metadata.createdAt;
+      let dateList = new Date(timestamp).toString().split(" ");
+      let year = dateList[3]; // holds the year
+      let month = dateList[1].toLowerCase(); // holds the month
+
+      switch (month) {
+        case "jan":
+          month = "January";
+          break;
+        case "feb":
+          month = "February";
+          break;
+        case "mar":
+          month = "March";
+          break;
+        case "apr":
+          month = "April";
+          break;
+        case "may":
+          month = "May";
+          break;
+        case "jun":
+          month = "June";
+          break;
+        case "jul":
+          month = "July";
+          break;
+        case "aug":
+          month = "August";
+          break;
+        case "sep":
+          month = "September";
+          break;
+        case "oct":
+          month = "October";
+          break;
+        case "nov":
+          month = "November";
+          break;
+        case "dec":
+          month = "December";
+          break;
+      }
+
+      if (!month || !year) return;
+
+      this.dateJoined = `Member since ${month}, ${year}`;
+    },
   },
   watch: {
     $route(newRoute) {
@@ -456,6 +509,8 @@ export default {
   },
   mounted() {
     auth = getAuth();
+
+    this.getDateJoined(auth);
   },
 };
 </script>
@@ -761,6 +816,11 @@ export default {
 
 .bluetiful-theme .options-links .link .link-btn:hover {
   background-color: var(--color-midnight-blue);
+}
+
+.meta-membership {
+  padding: 0.3rem 0;
+  text-align: center;
 }
 /* end of nav menu styles */
 
