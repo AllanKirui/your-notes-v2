@@ -127,11 +127,6 @@
                   </button>
                 </li>
                 <li class="link">
-                  <button class="btn link-btn" title="What's new?">
-                    What's new?
-                  </button>
-                </li>
-                <li class="link">
                   <button class="btn link-btn" title="Logout">Logout</button>
                 </li>
               </ul>
@@ -689,22 +684,15 @@ export default {
 }
 
 .menu-bottom {
-  padding-top: 2.5rem;
+  padding-top: 2rem;
 }
 
 .options-links-wrapper .options-links .link .link-btn {
+  margin: 0.275rem 0;
   padding: 0.5rem 0.75rem;
   width: 100%;
   text-align: left;
   border-radius: 0;
-}
-
-.options-links-wrapper .options-links .link:not(:first-child) {
-  margin-top: 0.3rem;
-}
-
-.options-links-wrapper .options-links .link:nth-child(2) {
-  margin-bottom: 0.875rem;
 }
 
 .default-theme .options-links-wrapper .options-links .link:last-child {
@@ -717,10 +705,6 @@ export default {
 
 .bluetiful-theme .options-links-wrapper .options-links .link:last-child {
   border-top: 1px solid var(--color-midnight-blue);
-}
-
-.options-links-wrapper .options-links .link:last-child .link-btn {
-  margin: 0.275rem 0;
 }
 
 .default-theme .options-links .link .link-btn:hover {
