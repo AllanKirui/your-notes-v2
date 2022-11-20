@@ -17,6 +17,7 @@
       @reset-cancel="resetCancelProp"
       @toggle-overlay="toggleOverlay"
       @cancel-search="cancelSearch"
+      @remove-listener="unsubscribeFromSnapshotListener"
     ></the-header>
     <div
       :class="themeClasses"
