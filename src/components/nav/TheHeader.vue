@@ -688,6 +688,18 @@ export default {
   position: relative;
 }
 
+@media (max-width: 540px) {
+  .nav-menu {
+    right: 0;
+    left: 0;
+  }
+
+  .nav-menu .card {
+    margin: 0 auto;
+    width: 95%;
+  }
+}
+
 .nav-menu .card .close-btn {
   position: absolute;
   top: 0.675rem;
