@@ -566,6 +566,7 @@ export default {
     margin: 0;
     border-radius: 0;
     height: calc(100vh - 80px);
+    max-height: 100%;
   }
 
   .options {
