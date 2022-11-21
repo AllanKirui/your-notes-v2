@@ -15,6 +15,21 @@
       </div>
     </div>
 
+    <!-- Loading spinner -->
+    <div
+      v-if="!numOfTodos && storedNumOfTodos > 0"
+      class="spinner-wrapper spinner-overlay flex flex-jc-c flex-ai-c flex-fd-c"
+    >
+      <div class="spinner">
+        <div class="outer-ring"></div>
+        <div class="inner-ring"></div>
+      </div>
+
+      <div class="spinner-text">
+        <p>Fetching Your Todos</p>
+      </div>
+    </div>
+
     <section class="content-items" v-if="numOfTodos">
       <!-- section title with todo counter -->
       <div
@@ -172,6 +187,7 @@ export default {
       isShowMobileFlow: false,
       newTodoId: null,
       unsubscribeFromSnapshotListener: null,
+      storedNumOfTodos: 0,
     };
   },
   computed: {
@@ -406,6 +422,13 @@ export default {
   mounted() {
     this.checkWindowSize();
     this.getRealtimeTodoData();
+
+    // read user data from localStorage, if any
+    let storedData = JSON.parse(localStorage.getItem("yourNotesPreferences"));
+
+    if (storedData) {
+      this.storedNumOfTodos = storedData.numOfTodos;
+    }
   },
   updated() {
     // scroll a newly created todo into view

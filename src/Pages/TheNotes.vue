@@ -15,6 +15,21 @@
       </div>
     </div>
 
+    <!-- Loading spinner -->
+    <div
+      v-if="!numOfNotes && storedNumOfNotes > 0"
+      class="spinner-wrapper spinner-overlay flex flex-jc-c flex-ai-c flex-fd-c"
+    >
+      <div class="spinner">
+        <div class="outer-ring"></div>
+        <div class="inner-ring"></div>
+      </div>
+
+      <div class="spinner-text">
+        <p>Fetching Your Notes</p>
+      </div>
+    </div>
+
     <section class="content-items" v-if="numOfNotes">
       <!-- section title with notes counter -->
       <div
@@ -172,6 +187,7 @@ export default {
       isShowMobileFlow: false,
       newNoteId: null,
       unsubscribeFromSnapshotListener: null,
+      storedNumOfNotes: 0,
     };
   },
   computed: {
@@ -402,6 +418,13 @@ export default {
   mounted() {
     this.checkWindowSize();
     this.getRealtimeNotesData();
+
+    // read user data from localStorage, if any
+    let storedData = JSON.parse(localStorage.getItem("yourNotesPreferences"));
+
+    if (storedData) {
+      this.storedNumOfNotes = storedData.numOfNotes;
+    }
   },
   updated() {
     // scroll a newly created note into view
