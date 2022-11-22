@@ -127,6 +127,42 @@
                 <span class="link-text">Restore</span>
               </div>
             </li>
+            <!-- feedback link -->
+            <li
+              :class="[activeSide === 'feedback' ? 'active' : '', 'link']"
+              title="Give some feedback"
+              @click="setActiveSide('feedback')"
+            >
+              <div class="flex flex-ai-c">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 64 64"
+                  stroke-width="3"
+                  stroke="currentColor"
+                  fill="none"
+                  width="25"
+                >
+                  <circle cx="32" cy="32" r="25.74" stroke-linecap="round" />
+                  <path
+                    d="M43.38 38.63a13.54 13.54 0 0 1-11.46 6.61 13.51 13.51 0 0 1-11.3-6.34"
+                    stroke-linecap="round"
+                  />
+                  <circle
+                    cx="23.62"
+                    cy="25.5"
+                    r="1.12"
+                    stroke-linecap="round"
+                  />
+                  <circle
+                    cx="40.36"
+                    cy="25.5"
+                    r="1.12"
+                    stroke-linecap="round"
+                  />
+                </svg>
+                <span class="link-text">Feedback</span>
+              </div>
+            </li>
           </ul>
         </div>
 
@@ -134,7 +170,7 @@
           class="options-contents"
           :style="{ display: activeSide ? 'initial' : 'none' }"
         >
-          <!-- appearance settings -->
+          <!-- appearance options -->
           <div class="content" v-if="activeSide === 'appearance'">
             <div class="font-settings">
               <h3 class="content-title">Choose Your Font</h3>
@@ -215,12 +251,12 @@
             </div>
           </div>
 
-          <!-- password settings -->
+          <!-- password options -->
           <div class="content" v-else-if="activeSide === 'passwords'">
             <h3 class="content-title">Change Your Password</h3>
           </div>
 
-          <!-- restoration settings -->
+          <!-- restoration options -->
           <div class="content" v-else-if="activeSide === 'restoration'">
             <h3 class="content-title">Restore Welcome Todo/Note</h3>
             <p class="content-meta">
@@ -231,7 +267,7 @@
             <div class="content-btns-wrapper flex flex-ai-c flex-jc-c">
               <button
                 :class="[
-                  hasDeletedDefaultTodo ? 'enabled' : 'disabled',
+                  hasDeletedDefaultTodo ? '' : 'disabled',
                   'btn btn-restore-todo',
                 ]"
                 title="Restore deleted todo"
@@ -241,7 +277,7 @@
               </button>
               <button
                 :class="[
-                  hasDeletedDefaultNote ? 'enabled' : 'disabled',
+                  hasDeletedDefaultNote ? '' : 'disabled',
                   'btn btn-restore-note',
                 ]"
                 title="Restore deleted note"
@@ -249,6 +285,63 @@
               >
                 Restore Note
               </button>
+            </div>
+          </div>
+
+          <!-- feedback options -->
+          <div class="content" v-else-if="activeSide === 'feedback'">
+            <h3 class="content-title">Your Feedback</h3>
+            <p class="content-meta">Hello 👋</p>
+            <p class="content-meta">
+              You are welcome to submit any feedback about the app. Feel free to
+              share your thoughts about what you liked or disliked about your
+              experience with the app. If you discover any bugs 🐞, please let
+              me know 😊
+            </p>
+            <div class="feedback-form-wrapper">
+              <form @submit.prevent="sendFeedback" ref="feedbackForm">
+                <div class="form-control">
+                  <label for="name">Name</label>
+                  <input
+                    id="name"
+                    class="name-field"
+                    type="text"
+                    name="user_name"
+                    placeholder="Your name"
+                    ref="name"
+                    :value="user.displayName"
+                  />
+                </div>
+                <div class="form-control">
+                  <label for="email">Email</label>
+                  <input
+                    id="email"
+                    class="name-field"
+                    type="email"
+                    name="reply_to"
+                    placeholder="Your email"
+                    ref="email"
+                  />
+                </div>
+                <div class="form-control">
+                  <textarea
+                    class="feedback-field"
+                    type="text"
+                    placeholder="Your thoughts..."
+                    ref="feedback"
+                    name="message"
+                  ></textarea>
+                </div>
+                <div class="submit-btn-wrapper">
+                  <button
+                    class="btn btn-submit"
+                    type="submit"
+                    title="Send feedback"
+                  >
+                    Send
+                  </button>
+                </div>
+              </form>
             </div>
           </div>
         </div>
@@ -260,6 +353,7 @@
 <script>
 import { mapGetters } from "vuex";
 import { getAuth } from "firebase/auth";
+import emailjs from "@emailjs/browser";
 
 export default {
   name: "TheSettings",
@@ -272,6 +366,7 @@ export default {
     };
   },
   computed: {
+    ...mapGetters("auth", ["user"]),
     ...mapGetters("todos", ["numOfTodos"]),
     ...mapGetters("notes", ["numOfNotes"]),
     ...mapGetters([
@@ -434,6 +529,57 @@ export default {
       // show a notification message
       let message = "Welcome Todo successfully restored ~(˘▾˘~)";
       this.$emit("show-notification", message);
+    },
+    async sendFeedback() {
+      const publicKey = "ZolnAdhiE6jxfpo3y";
+      const templateId = "template_yoje1h5";
+      const serviceId = "service_p7rmvdk";
+
+      let feedback = this.$refs.feedback.value.trim();
+      let username = this.$refs.name.value.trim();
+      let email = this.$refs.email.value.trim();
+      let feedbackForm = this.$refs.feedbackForm;
+
+      // validate user inputs
+      if (username && feedback && this.isEmail(email)) {
+        try {
+          let res = await emailjs.sendForm(
+            serviceId,
+            templateId,
+            feedbackForm,
+            publicKey
+          );
+          console.log("success!", res);
+        } catch (error) {
+          alert("Oops! Something went wrong ◔ ⌣ ◔\nTry refreshing the page");
+        }
+        // show success notification
+        let message =
+          "Thank you for your feedback. I'll get back to you as soon as possible ~(˘▾˘~)";
+        this.$emit("show-notification", message);
+
+        // clear fields
+        this.$refs.email.value = "";
+        this.$refs.feedback.value = "";
+
+        return;
+      }
+
+      // show error notifcation
+      let message;
+      if (!this.isEmail(email)) {
+        message = "Please provide a valid email address (ง°ل͜°)ง";
+        this.$emit("show-notification", message);
+      } else if (!username) {
+        message = "Please provide a username (ง°ل͜°)ง";
+        this.$emit("show-notification", message);
+      } else if (!feedback) {
+        message = "There's no point in sending a blank message (ง°ل͜°)ง";
+        this.$emit("show-notification", message);
+      }
+    },
+    isEmail(email) {
+      return /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/.test(email);
     },
   },
   watch: {
@@ -796,5 +942,73 @@ export default {
 .bluetiful-theme .wrapper.active .theme-options .dot {
   outline: 2px solid var(--color-maximum-blue-green);
   background-color: var(--color-maximum-blue-green);
+}
+
+.feedback-form-wrapper {
+  margin-top: 2rem;
+}
+
+.submit-btn-wrapper,
+.form-control {
+  margin-left: auto;
+  margin-right: auto;
+  width: 90%;
+}
+
+.feedback-field {
+  padding: 0.5rem;
+  width: 100%;
+  height: auto;
+  min-height: 5rem;
+  border-radius: 5px;
+  font-family: inherit;
+  font-size: inherit;
+  overflow-y: auto;
+  overflow-wrap: break-word;
+  resize: none;
+}
+
+.bluetiful-theme label {
+  display: none;
+}
+
+.bluetiful-theme .name-field {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+.bluetiful-theme .name-field,
+.bluetiful-theme .feedback-field {
+  border: 2px solid var(--color-maximum-blue-green);
+  outline-color: var(--color-maximum-blue-green);
+  background-color: var(--color-midnight-blue);
+  color: var(--color-lavender-gray);
+  font-size: inherit;
+}
+
+.bluetiful-theme .name-field::placeholder,
+.bluetiful-theme .feedback-field::placeholder {
+  color: rgba(198, 201, 205, 0.5);
+}
+
+.btn-submit {
+  width: 100%;
+  padding: 0.5rem;
+}
+
+.bluetiful-theme .btn-submit {
+  background-color: var(--color-steel-blue);
+  color: var(--color-lavender-gray);
+}
+
+.bluetiful-theme .btn-submit:hover {
+  background-color: var(--color-maximum-blue-green);
+  color: var(--color-eerie-black);
+}
+
+.bluetiful-theme .btn-submit.disabled {
+  background-color: var(--color-steel-blue);
+  color: var(--color-lavender-gray);
+  cursor: not-allowed;
 }
 </style>
