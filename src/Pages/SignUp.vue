@@ -167,6 +167,7 @@
 </template>
 
 <script>
+// import { getAuth } from "firebase/auth";
 export default {
   name: "SignUp",
   data() {
@@ -307,6 +308,21 @@ export default {
         this.setErrorState("email");
       }
     },
+  },
+  beforeRouteEnter(to, from, next) {
+    // read user data from localStorage, if any
+    let storedData = JSON.parse(localStorage.getItem("yourNotesPreferences"));
+
+    if (storedData) {
+      if (to.name === "signup" && storedData.isLoggedIn) {
+        // if the user is logged in prevent access to the 'signup' route
+        // by redirecting the to the 'todos'route
+        next("/todos");
+      } else {
+        // otherwise allow access to the 'signup' route
+        next();
+      }
+    }
   },
 };
 </script>
