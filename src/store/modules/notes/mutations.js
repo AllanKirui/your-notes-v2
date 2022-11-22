@@ -34,8 +34,10 @@ export default {
       if (!newNote) return;
 
       // update the value of the 'content' key in the firestore document
+      // and update the timestamp
       await _updateDoc(docRef, {
         content: newNote,
+        edited: payload.dateEdited,
       });
     } catch (error) {
       throwException(error, "saveChanges( ) fn");

@@ -209,6 +209,14 @@ export default {
         }
       );
     },
+    setDate() {
+      let dateList = new Date().toString().split(" ");
+      let year = dateList[3]; // holds the year
+      let date = dateList[2]; // holds the date
+      let month = dateList[1]; // holds the month
+
+      return `${month} ${date}, ${year}`;
+    },
   },
   watch: {
     isLoggedIn(newValue) {
@@ -268,6 +276,7 @@ export default {
   provide() {
     return {
       setTextLength: this.setTextLength,
+      setDate: this.setDate,
     };
   },
   beforeMount() {

@@ -99,8 +99,10 @@ export default {
       if (!newData.text) return;
 
       // add the updated task to the 'contents' list of the firestore document
+      // and update the timestamp
       await _updateDoc(docRef, {
         contents: _arrayUnion(newData),
+        edited: payload.dateEdited,
       });
     } catch (error) {
       throwException(error, "saveChanges( ) fn");
@@ -126,8 +128,10 @@ export default {
 
     try {
       // add a new todo task to the 'contents' list of the firestore document
+      // and update the timestamp
       await _updateDoc(docRef, {
         contents: _arrayUnion(data),
+        edited: payload.dateEdited,
       });
     } catch (error) {
       throwException(error, "addNewTodoTask( ) fn");
@@ -145,7 +149,6 @@ export default {
 
     // update the 'isHideCompleted' prop of the selectedTodo in firestore
     try {
-      // delete the task marked as incomplete from the 'contents' list of the firestore document
       await _updateDoc(docRef, {
         isHideCompleted: state.selectedTodo.isHideCompleted,
       });

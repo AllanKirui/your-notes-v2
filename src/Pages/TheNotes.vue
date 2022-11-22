@@ -168,6 +168,7 @@ import { notesColRef, _onSnapshot, _query, _where, _orderBy } from "@/main.js";
 export default {
   name: "TheNotes",
   props: ["isModal", "activeSide", "isSearching", "searchMessage"],
+  inject: ["setDate"],
   emits: [
     "close-modal",
     "show-notification",
@@ -258,6 +259,8 @@ export default {
         title: noteTitle,
         content: noteContent,
         authorId: getAuth().currentUser.uid,
+        created: this.setDate(),
+        edited: null,
       };
 
       // dispatch an action to add the new note to the notes list

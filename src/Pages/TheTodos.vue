@@ -168,6 +168,7 @@ import { todosColRef, _onSnapshot, _query, _where, _orderBy } from "@/main.js";
 export default {
   name: "TheTodos",
   props: ["isModal", "activeSide", "isSearching", "searchMessage"],
+  inject: ["setDate"],
   emits: [
     "close-modal",
     "show-notification",
@@ -256,6 +257,8 @@ export default {
         contents: [],
         isHideCompleted: false,
         authorId: getAuth().currentUser.uid,
+        created: this.setDate(),
+        edited: null,
       };
 
       // add the new task to the contents list
