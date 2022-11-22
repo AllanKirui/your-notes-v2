@@ -12,26 +12,35 @@
 
   <!-- Notes title -->
   <div v-if="hasNote" class="heading-wrapper">
-    <div class="heading-top flex flex-ai-c">
-      <div class="back-btn-wrapper">
-        <button
-          class="back-btn"
-          title="Back to list of notes"
-          v-if="screenSize <= 768"
-          @click="resetSelectedNote"
-        >
-          <span class="head"></span>
-        </button>
+    <div class="heading-top flex flex-fd-c">
+      <!-- container for back-btn, title, controls -->
+      <div class="flex flex-ai-c">
+        <div class="back-btn-wrapper" v-if="screenSize <= 768">
+          <button
+            class="back-btn"
+            title="Back to list of notes"
+            @click="resetSelectedNote"
+          >
+            <span class="head"></span>
+          </button>
+        </div>
+        <h3 class="items-title">{{ selectedNote.title }}</h3>
+        <div class="top-controls">
+          <button
+            class="btn delete-note-btn"
+            title="Delete note"
+            @click="showDeleteWindow"
+          >
+            Delete
+          </button>
+        </div>
       </div>
-      <h3 class="items-title">{{ selectedNote.title }}</h3>
-      <div class="top-controls">
-        <button
-          class="btn delete-note-btn"
-          title="Delete note"
-          @click="showDeleteWindow"
+      <!-- container for timestamp -->
+      <div class="timestamps flex" v-if="selectedNote.created">
+        <small class="date-created">Created: {{ selectedNote.created }}</small>
+        <small class="date-edited" v-if="selectedNote.edited"
+          >, Edited: {{ selectedNote.edited }}</small
         >
-          Delete
-        </button>
       </div>
     </div>
 
@@ -136,7 +145,7 @@ export default {
   name: "NotesDetails",
   props: ["screenSize"],
   emits: ["show-notification", "selectednote-id"],
-  inject: ["setTextLength"],
+  inject: ["setTextLength", "setDate"],
   data() {
     return {
       hasNote: false,
@@ -199,6 +208,7 @@ export default {
         type: "notes/saveChanges",
         newText: updatedText,
         firestoreDocId: this.firestoreDocId,
+        dateEdited: this.setDate(),
       });
 
       // close the editing window by resetting props
@@ -306,6 +316,11 @@ export default {
 </script>
 
 <style scoped>
+.timestamps {
+  opacity: 0.8;
+  margin-left: auto;
+}
+
 .item-text-wrapper {
   line-height: 1.4;
 }

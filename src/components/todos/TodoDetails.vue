@@ -12,38 +12,47 @@
 
   <!-- Todo title and progress bar -->
   <div v-if="hasTodo" class="heading-wrapper">
-    <div class="heading-top flex flex-ai-c">
-      <div class="back-btn-wrapper">
-        <button
-          class="back-btn"
-          title="Back to list of todos"
-          v-if="screenSize <= 768"
-          @click="resetSelectedTodo"
-        >
-          <span class="head"></span>
-        </button>
+    <div class="heading-top flex flex-fd-c">
+      <!-- container for back-btn, title, controls -->
+      <div class="flex flex-ai-c">
+        <div class="back-btn-wrapper" v-if="screenSize <= 768">
+          <button
+            class="back-btn"
+            title="Back to list of todos"
+            @click="resetSelectedTodo"
+          >
+            <span class="head"></span>
+          </button>
+        </div>
+        <h3 class="items-title">{{ selectedTodo.title }}</h3>
+        <div class="top-controls flex flex-ai-c">
+          <button
+            v-if="hasCompletedItems"
+            @click="toggleCompletedItems(selectedTodo.isHideCompleted)"
+            class="btn hide-btn"
+            :title="
+              selectedTodo.isHideCompleted
+                ? 'Hide completed tasks'
+                : 'Show completed tasks'
+            "
+          >
+            {{ selectedTodo.isHideCompleted ? "Hide" : "Show" }} completed
+          </button>
+          <button
+            class="btn delete-todo-btn"
+            title="Delete todo"
+            @click="showDeleteWindow"
+          >
+            Delete
+          </button>
+        </div>
       </div>
-      <h3 class="items-title">{{ selectedTodo.title }}</h3>
-      <div class="top-controls flex flex-ai-c">
-        <button
-          v-if="hasCompletedItems"
-          @click="toggleCompletedItems(selectedTodo.isHideCompleted)"
-          class="btn hide-btn"
-          :title="
-            selectedTodo.isHideCompleted
-              ? 'Hide completed tasks'
-              : 'Show completed tasks'
-          "
+      <!-- container for timestamp -->
+      <div class="timestamps flex" v-if="selectedTodo.created">
+        <small class="date-created">Created: {{ selectedTodo.created }}</small>
+        <small class="date-edited" v-if="selectedTodo.edited"
+          >, Edited: {{ selectedTodo.edited }}</small
         >
-          {{ selectedTodo.isHideCompleted ? "Hide" : "Show" }} completed
-        </button>
-        <button
-          class="btn delete-todo-btn"
-          title="Delete todo"
-          @click="showDeleteWindow"
-        >
-          Delete
-        </button>
       </div>
     </div>
 
@@ -272,7 +281,7 @@ export default {
   name: "TodoDetails",
   emits: ["show-notification", "selectedtodo-id"],
   props: ["screenSize"],
-  inject: ["setTextLength"],
+  inject: ["setTextLength", "setDate"],
   data() {
     return {
       hasTodo: false,
@@ -410,6 +419,7 @@ export default {
         childTodoId: index,
         newText: updatedText,
         firestoreDocId: this.firestoreDocId,
+        dateEdited: this.setDate(),
       });
 
       // close the editing window by resetting props
@@ -453,6 +463,7 @@ export default {
           type: "todos/addNewTodoTask",
           firestoreDocId: this.firestoreDocId,
           newTask: newTask,
+          dateEdited: this.setDate(),
         });
       }
 
@@ -704,6 +715,11 @@ export default {
 </script>
 
 <style scoped>
+.timestamps {
+  opacity: 0.8;
+  margin-left: auto;
+}
+
 .progress-bar {
   position: relative;
   gap: 10px;
