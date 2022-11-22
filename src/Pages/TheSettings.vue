@@ -354,6 +354,7 @@
 import { mapGetters } from "vuex";
 import { getAuth } from "firebase/auth";
 import emailjs from "@emailjs/browser";
+import * as emailConfig from "../../email-config.js";
 
 export default {
   name: "TheSettings",
@@ -531,10 +532,6 @@ export default {
       this.$emit("show-notification", message);
     },
     async sendFeedback() {
-      const publicKey = "ZolnAdhiE6jxfpo3y";
-      const templateId = "template_yoje1h5";
-      const serviceId = "service_p7rmvdk";
-
       let feedback = this.$refs.feedback.value.trim();
       let username = this.$refs.name.value.trim();
       let email = this.$refs.email.value.trim();
@@ -543,13 +540,12 @@ export default {
       // validate user inputs
       if (username && feedback && this.isEmail(email)) {
         try {
-          let res = await emailjs.sendForm(
-            serviceId,
-            templateId,
+          await emailjs.sendForm(
+            emailConfig.serviceId,
+            emailConfig.templateId,
             feedbackForm,
-            publicKey
+            emailConfig.publicKey
           );
-          console.log("success!", res);
         } catch (error) {
           alert("Oops! Something went wrong ◔ ⌣ ◔\nTry refreshing the page");
         }
