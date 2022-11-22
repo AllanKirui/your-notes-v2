@@ -15,5 +15,6 @@ export default createRouter({
     { name: "todos", path: "/todos", component: TheTodos },
     { name: "notes", path: "/notes", component: TheNotes },
     { name: "settings", path: "/settings", component: TheSettings },
+    { path: "/:notFound(.*)", redirect: "/signup" },
   ],
 });
