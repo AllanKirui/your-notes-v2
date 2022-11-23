@@ -940,6 +940,7 @@ export default {
   background-color: var(--color-maximum-blue-green);
 }
 
+/* feedback form styles */
 .feedback-form-wrapper {
   margin-top: 2rem;
 }
@@ -964,22 +965,64 @@ export default {
   resize: none;
 }
 
-.bluetiful-theme label {
+label {
   display: none;
 }
 
-.bluetiful-theme .name-field {
+.name-field {
   padding-left: 0.5rem;
   padding-right: 0.5rem;
+}
+
+.name-field,
+.feedback-field {
+  font-size: inherit;
+}
+
+.default-theme .name-field,
+.default-theme .feedback-field {
+  border: 2px solid var(--color-eerie-black);
+  background-color: var(--color-white);
+  color: var(--color-eerie-black);
+}
+
+.default-theme .name-field:focus,
+.default-theme .feedback-field:focus {
+  outline: 1px solid var(--color-eerie-black);
+}
+
+.default-theme .name-field::placeholder,
+.default-theme .feedback-field::placeholder {
+  color: var(--color-traffic-grey);
+}
+
+.purplish-theme .name-field,
+.purplish-theme .feedback-field {
+  border: 2px solid var(--color-tickle-me-pink);
+  background-color: var(--color-russian-violet);
+  color: var(--color-spanish-pink);
+}
+
+.purplish-theme .name-field:focus,
+.purplish-theme .feedback-field:focus {
+  outline: 1px solid var(--color-tickle-me-pink);
+}
+
+.purplish-theme .name-field::placeholder,
+.purplish-theme .feedback-field::placeholder {
+  color: rgba(253, 199, 189, 0.6);
 }
 
 .bluetiful-theme .name-field,
 .bluetiful-theme .feedback-field {
   border: 2px solid var(--color-maximum-blue-green);
-  outline-color: var(--color-maximum-blue-green);
   background-color: var(--color-midnight-blue);
   color: var(--color-lavender-gray);
-  font-size: inherit;
+}
+
+.bluetiful-theme .name-field:focus,
+.bluetiful-theme .feedback-field:focus {
+  outline: 1px solid var(--color-maximum-blue-green);
 }
 
 .bluetiful-theme .name-field::placeholder,
@@ -992,6 +1035,40 @@ export default {
   padding: 0.5rem;
 }
 
+.default-theme .btn-submit {
+  background-color: var(--color-eerie-black);
+  color: var(--color-clouds);
+}
+
+.default-theme .btn-submit:hover {
+  background-color: var(--color-dark-pastel-green);
+  color: var(--color-eerie-black);
+}
+
+.default-theme .btn-submit:focus {
+  outline: 2px solid var(--color-dark-pastel-green);
+  outline-offset: 2px;
+  background-color: var(--color-dark-pastel-green);
+  color: var(--color-eerie-black);
+}
+
+.purplish-theme .btn-submit {
+  background-color: var(--color-black-blue);
+  color: var(--color-spanish-pink);
+}
+
+.purplish-theme .btn-submit:hover {
+  background-color: var(--color-tickle-me-pink);
+  color: var(--color-black-blue);
+}
+
+.purplish-theme .btn-submit:focus {
+  outline: 2px solid var(--color-tickle-me-pink);
+  outline-offset: 2px;
+  background-color: var(--color-tickle-me-pink);
+  color: var(--color-black-blue);
+}
+
 .bluetiful-theme .btn-submit {
   background-color: var(--color-steel-blue);
   color: var(--color-lavender-gray);
@@ -1002,9 +1079,10 @@ export default {
   color: var(--color-eerie-black);
 }
 
-.bluetiful-theme .btn-submit.disabled {
-  background-color: var(--color-steel-blue);
-  color: var(--color-lavender-gray);
-  cursor: not-allowed;
+.bluetiful-theme .btn-submit:focus {
+  outline: 2px solid var(--color-maximum-blue-green);
+  outline-offset: 2px;
+  background-color: var(--color-maximum-blue-green);
+  color: var(--color-eerie-black);
 }
 </style>
