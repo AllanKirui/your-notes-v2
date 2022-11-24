@@ -163,6 +163,40 @@
                 <span class="link-text">Feedback</span>
               </div>
             </li>
+            <!-- about link -->
+            <li
+              :class="[activeSide === 'about' ? 'active' : '', 'link']"
+              title="About Your Notes"
+              @click="setActiveSide('about')"
+            >
+              <div class="flex flex-ai-c">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 64 64"
+                  stroke-width="3"
+                  stroke="currentColor"
+                  fill="none"
+                  width="25"
+                >
+                  <line
+                    x1="32.06"
+                    y1="17.55"
+                    x2="32.06"
+                    y2="16.88"
+                    stroke-linecap="round"
+                  />
+                  <line
+                    x1="32.06"
+                    y1="45.3"
+                    x2="32.06"
+                    y2="24.87"
+                    stroke-linecap="round"
+                  />
+                  <circle cx="32" cy="32" r="24.25" stroke-linecap="round" />
+                </svg>
+                <span class="link-text">About</span>
+              </div>
+            </li>
           </ul>
         </div>
 
@@ -342,6 +376,116 @@
                   </button>
                 </div>
               </form>
+            </div>
+          </div>
+
+          <!-- about options -->
+          <div class="content grid" v-else-if="activeSide === 'about'">
+            <div class="content-top">
+              <h3 class="content-title">About Your Notes</h3>
+              <p class="content-meta">
+                <b>Your Notes v2</b> is an updated version of <b>Your Notes</b>,
+                an app I had created when I was just starting out coding.
+              </p>
+              <p class="content-meta">
+                Version 2 of the app features a better UI/UX experience, better
+                code architecture, Firebase integration and everything I've
+                learnt since building the first version of the app.
+              </p>
+            </div>
+            <div class="content-bottom flex flex-jc-sb flex-ai-c">
+              <div class="left">
+                <a
+                  href="https://firebase.google.com"
+                  title="Firebase"
+                  target="_blank"
+                >
+                  <img
+                    v-if="!theme"
+                    class="logo"
+                    src="@/assets/img/firebase-logo-default.svg"
+                    alt="Firebase logo"
+                    width="100"
+                    height="44.6"
+                  />
+                  <img
+                    v-else-if="theme === 'purplish'"
+                    class="logo"
+                    src="@/assets/img/firebase-logo-purplish.svg"
+                    alt="Firebase logo"
+                    width="100"
+                    height="44.6"
+                  />
+                  <img
+                    v-else-if="theme === 'bluetiful'"
+                    class="logo"
+                    src="@/assets/img/firebase-logo-bluetiful.svg"
+                    alt="Firebase logo"
+                    width="100"
+                    height="44.6"
+                  />
+                </a>
+              </div>
+              <div class="right flex flex-ai-c">
+                <!-- vuejs link -->
+                <a href="https://vuejs.org" title="Vue.js" target="_blank">
+                  <img
+                    v-if="!theme"
+                    class="logo"
+                    src="@/assets/img/vue-logo-default.svg"
+                    alt="Vue.js logo"
+                    width="28"
+                    height="24"
+                  />
+                  <img
+                    v-else-if="theme === 'purplish'"
+                    class="logo"
+                    src="@/assets/img/vue-logo-purplish.svg"
+                    alt="Vue.js logo"
+                    width="28"
+                    height="24"
+                  />
+                  <img
+                    v-else-if="theme === 'bluetiful'"
+                    class="logo"
+                    src="@/assets/img/vue-logo-bluetiful.svg"
+                    alt="Vue.js logo"
+                    width="28"
+                    height="24"
+                  />
+                </a>
+                <!-- github link -->
+                <a
+                  href="https://github.com/AllanKirui"
+                  title="View project repo"
+                  target="_blank"
+                >
+                  <img
+                    v-if="!theme"
+                    class="logo"
+                    src="@/assets/img/github-logo-default.svg"
+                    alt="GitHub logo"
+                    width="28"
+                    height="28"
+                  />
+                  <img
+                    v-else-if="theme === 'purplish'"
+                    class="logo"
+                    src="@/assets/img/github-logo-purplish.svg"
+                    alt="GitHub logo"
+                    width="28"
+                    height="28"
+                  />
+                  <img
+                    v-else-if="theme === 'bluetiful'"
+                    class="logo"
+                    src="@/assets/img/github-logo-bluetiful.svg"
+                    alt="GitHub logo"
+                    width="28"
+                    height="28"
+                  />
+                </a>
+              </div>
             </div>
           </div>
         </div>
@@ -751,6 +895,31 @@ export default {
 .content .content-meta {
   margin-top: 0.625rem;
   line-height: 1.4;
+}
+
+.content.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 60px;
+  height: 90%;
+}
+
+.content .content-top {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.content .content-bottom {
+  grid-column: 1;
+  grid-row: 2;
+}
+
+.content .content-bottom .right {
+  gap: 10px;
+}
+
+.content .content-bottom a {
+  color: inherit;
 }
 
 .content .content-btns-wrapper {
