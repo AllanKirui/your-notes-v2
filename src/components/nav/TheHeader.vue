@@ -84,7 +84,12 @@
       <div class="nav-right">
         <div class="nav-avatar" @click="toggleMenu">
           <div class="image-wrapper" :title="user.displayName">
-            <img class="avatar" :src="user.photoURL" alt=" " />
+            <img
+              v-if="userPhotoURL"
+              class="avatar"
+              :src="userPhotoURL"
+              alt=" "
+            />
             <span class="initials">{{ setInitials(user.displayName) }}</span>
           </div>
         </div>
@@ -109,7 +114,12 @@
           </button>
           <div class="menu-top">
             <div class="image-wrapper">
-              <img class="avatar" :src="user.photoURL" alt=" " />
+              <img
+                v-if="userPhotoURL"
+                class="avatar"
+                :src="userPhotoURL"
+                alt=" "
+              />
               <span class="initials">{{ setInitials(user.displayName) }}</span>
             </div>
             <div class="profile-wrapper">
@@ -232,6 +242,24 @@ export default {
       }
 
       return { isVisible: isSearch, placeholderName: name };
+    },
+    userPhotoURL() {
+      let url = "";
+
+      // use the 'photoURL' from Google if it's available
+      if (this.user.photoURL) {
+        url = this.user.photoURL;
+      } else {
+        // create a custom avatar from https://avatars.dicebear.com
+        if (this.user.displayName) {
+          let firstWordInUsername = this.user.displayName.split(" ")[0];
+          url = `https://avatars.dicebear.com/api/bottts/${firstWordInUsername}.svg`;
+        } else {
+          url = "";
+        }
+      }
+
+      return url;
     },
   },
   methods: {
