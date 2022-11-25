@@ -136,4 +136,8 @@ export default {
     // commit a mutation to update the 'user' state obj
     context.commit("setUser", user);
   },
+  updateUserProfile(context, payload) {
+    // commit a mutation to update the 'user' state obj
+    context.commit("updateUserProfile", payload);
+  },
 };
