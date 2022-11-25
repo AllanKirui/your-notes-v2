@@ -17,8 +17,18 @@ export default {
         payload.password
       );
 
-      // TODO: redirect the user to the todo page
-      // TODO: show loading spinner
+      // TODO: clear existing local storage object (do this also when existing users log in)
+      // TODO: store a new local storage object for the newly created user as in sign in with GOOGLE below
+
+      // dispatch an action to store username in a Firestore collection
+      context.dispatch(
+        "updateUsernameCollection",
+        {
+          username: payload.username,
+          firestoreDocId: getAuth().currentUser.uid,
+        },
+        { root: true }
+      );
     } catch (error) {
       if (error.code === "auth/email-already-in-use") {
         context.commit("setError", {
