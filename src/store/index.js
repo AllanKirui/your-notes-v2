@@ -121,7 +121,10 @@ export default createStore({
       let trimmedName = "";
 
       // if name is multi-worded, use the first word of the name
-      let wordsInName = context.state.auth.user.displayName.split(" ");
+      let wordsInName = context.state.auth.user.displayName
+        ? context.state.auth.user.displayName.split(" ")
+        : "You".split();
+
       if (wordsInName.length > 0) {
         trimmedName = wordsInName[0];
       }
