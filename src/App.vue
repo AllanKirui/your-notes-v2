@@ -72,7 +72,12 @@
 
 <script>
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { preferencesColRef, _doc, _onSnapshot } from "@/main.js";
+import {
+  preferencesColRef,
+  _doc,
+  _onSnapshot,
+  usernamesColRef,
+} from "@/main.js";
 
 import WelcomeHeader from "./components/nav/WelcomeHeader.vue";
 import TheHeader from "./components/nav/TheHeader.vue";
@@ -209,6 +214,17 @@ export default {
         }
       );
     },
+    getRealtimeUsernameData(uid) {
+      // get collection data using onSnapshot (REALTIME)
+      this.unsubscribeFromSnapshotListener = _onSnapshot(
+        _doc(usernamesColRef, uid),
+        (doc) => {
+          // dispatch an action to set the current user's profile
+          if (doc.data())
+            this.$store.dispatch("auth/updateUserProfile", doc.data());
+        }
+      );
+    },
     setDate() {
       let dateList = new Date().toString().split(" ");
       let year = dateList[3]; // holds the year
@@ -298,6 +314,7 @@ export default {
         this.$store.dispatch("auth/createUserProfile", user);
 
         this.getRealtimePreferencesData(user.uid);
+        this.getRealtimeUsernameData(user.uid);
 
         // create a local storage object for a first time user
         this.$store.dispatch("updateLocalStorageData", {});
