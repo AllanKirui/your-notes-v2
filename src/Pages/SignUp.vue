@@ -167,7 +167,6 @@
 </template>
 
 <script>
-// import { getAuth } from "firebase/auth";
 export default {
   name: "SignUp",
   data() {
@@ -293,6 +292,7 @@ export default {
         type: "auth/createAccount",
         email: this.email.val,
         password: this.password.val,
+        username: this.username.val,
       });
     },
     registerWithGoogle() {

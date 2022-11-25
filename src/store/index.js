@@ -52,6 +52,16 @@ export default createStore({
         throwException(error, "updateUserPreferences( ) fn");
       }
     },
+    async updateUsernameCollection(_, payload) {
+      try {
+        await _setDoc(
+          _doc(db, "usernames", payload.firestoreDocId),
+          payload.username
+        );
+      } catch (error) {
+        throwException(error, "updateUsernameCollection( ) fn");
+      }
+    },
   },
   actions: {
     updateLocalStorageData(context, payload) {
@@ -195,6 +205,15 @@ export default createStore({
       context.commit("updateUserPreferences", {
         firestoreDocId: payload.firestoreDocId,
         newPreferences: newPreferences,
+      });
+    },
+    updateUsernameCollection(context, payload) {
+      let username = { username: payload.username };
+
+      // commit a mutation to store username in a Firestore collection
+      context.commit("updateUsernameCollection", {
+        username: username,
+        firestoreDocId: payload.firestoreDocId,
       });
     },
   },
