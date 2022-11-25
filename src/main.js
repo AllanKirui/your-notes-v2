@@ -42,6 +42,7 @@ export const db = getFirestore();
 export const todosColRef = collection(db, "todos");
 export const preferencesColRef = collection(db, "preferences");
 export const notesColRef = collection(db, "notes");
+export const usernamesColRef = collection(db, "usernames");
 // export other firestore methods
 export const _addDoc = addDoc;
 export const _setDoc = setDoc;
