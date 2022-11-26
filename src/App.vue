@@ -17,7 +17,7 @@
       @reset-cancel="resetCancelProp"
       @toggle-overlay="toggleOverlay"
       @cancel-search="cancelSearch"
-      @remove-listener="unsubscribeFromSnapshotListener"
+      @remove-listener="unsubscribeFromSnapshotListeners"
     ></the-header>
     <div
       :class="themeClasses"
@@ -28,7 +28,7 @@
         :class="isOverlayVisible ? 'sidebar-shown' : ''"
         @show-modal="showInputModal"
         @close-sidebar="hideOverlay"
-        @remove-listener="unsubscribeFromSnapshotListener"
+        @remove-listener="unsubscribeFromSnapshotListeners"
       ></the-sidebar>
       <router-view
         :is-modal="isShowInputModal"
@@ -105,7 +105,8 @@ export default {
       isSearching: false,
       searchMessage: "",
       isOverlayVisible: false,
-      unsubscribeFromSnapshotListener: null,
+      unsubscribeFromPreferencesListener: null,
+      unsubscribeFromUsernameListener: null,
     };
   },
   computed: {
@@ -205,7 +206,7 @@ export default {
     },
     getRealtimePreferencesData(uid) {
       // get collection data using onSnapshot (REALTIME)
-      this.unsubscribeFromSnapshotListener = _onSnapshot(
+      this.unsubscribeFromPreferencesListener = _onSnapshot(
         _doc(preferencesColRef, uid),
         (doc) => {
           // dispatch an action to set the current user's preferences if it exists
@@ -216,7 +217,7 @@ export default {
     },
     getRealtimeUsernameData(uid) {
       // get collection data using onSnapshot (REALTIME)
-      this.unsubscribeFromSnapshotListener = _onSnapshot(
+      this.unsubscribeFromUsernameListener = _onSnapshot(
         _doc(usernamesColRef, uid),
         (doc) => {
           // dispatch an action to set the current user's profile
@@ -232,6 +233,11 @@ export default {
       let month = dateList[1]; // holds the month
 
       return `${month} ${date}, ${year}`;
+    },
+    unsubscribeFromSnapshotListeners() {
+      // unsubscribe from Firestore's realtime listeners
+      this.unsubscribeFromPreferencesListener();
+      this.unsubscribeFromUsernameListener();
     },
   },
   watch: {
