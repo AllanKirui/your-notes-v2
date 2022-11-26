@@ -322,6 +322,8 @@ export default {
         // otherwise allow access to the 'signup' route
         next();
       }
+    } else {
+      next();
     }
   },
 };
