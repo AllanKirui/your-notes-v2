@@ -253,6 +253,7 @@ export default {
       // dispatch an action to update the user data stored locally
       this.$store.dispatch("updateLocalStorageData", {
         isLoggedIn: false,
+        uid: getAuth().currentUser.uid,
       });
 
       try {
