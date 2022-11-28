@@ -62,38 +62,50 @@ export default createStore({
         throwException(error, "updateUsernameCollection( ) fn");
       }
     },
+    updateStateData(state) {
+      state.theme = null;
+      state.globalFontSize = 14;
+    },
   },
   actions: {
+    updateStateData(context) {
+      // set the theme and fontsize for new users to the defaults
+      context.commit("updateStateData");
+    },
     updateLocalStorageData(context, payload) {
-      let storedData = JSON.parse(localStorage.getItem("yourNotesPreferences"));
-
       // create a local storage object for a first time user
-      if (!storedData) {
+      if (payload.isNewAccount) {
         let firstTimeUserProps = {
           isLoggedIn: true,
-          numOfTodos: context.rootState.todos.todos.length,
-          numOfNotes: context.rootState.notes.notes.length,
+          numOfTodos: 1,
+          numOfNotes: 1,
           theme: null,
           fontSize: 14,
         };
 
+        // store the new user's UID and user props
         localStorage.setItem(
           "yourNotesPreferences",
           JSON.stringify(firstTimeUserProps)
         );
+        localStorage.setItem("yourNotesUID", JSON.stringify(payload.uid));
 
         return;
       }
 
-      // store some user properties to local storage
+      // otherwise, update the user props for the existing user
+      let storedData = JSON.parse(localStorage.getItem("yourNotesPreferences"));
+
       let userProps = {
         isLoggedIn: true,
-        numOfTodos:
-          storedData.numOfTodos || context.rootState.todos.todos.length,
-        numOfNotes:
-          storedData.numOfNotes || context.rootState.notes.notes.length,
-        theme: storedData.theme || null,
-        fontSize: storedData.fontSize || 14,
+        numOfTodos: storedData
+          ? storedData.numOfTodos
+          : context.rootState.todos.todos.length,
+        numOfNotes: storedData
+          ? storedData.numOfNotes
+          : context.rootState.notes.notes.length,
+        theme: storedData ? storedData.theme : null,
+        fontSize: storedData ? storedData.fontSize : 14,
       };
 
       let payloadKeys = Object.keys(payload);
@@ -113,6 +125,8 @@ export default createStore({
       });
 
       localStorage.setItem("yourNotesPreferences", JSON.stringify(userProps));
+      if (payload.uid)
+        localStorage.setItem("yourNotesUID", JSON.stringify(payload.uid));
     },
     setGreeting(context) {
       let today = new Date();
