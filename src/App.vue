@@ -321,9 +321,6 @@ export default {
 
         this.getRealtimePreferencesData(user.uid);
         this.getRealtimeUsernameData(user.uid);
-
-        // create a local storage object for a first time user
-        this.$store.dispatch("updateLocalStorageData", {});
       } else {
         this.isLoggedIn = false;
         this.isAuthenticated = false;
