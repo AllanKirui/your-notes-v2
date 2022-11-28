@@ -1,6 +1,6 @@
 <template>
   <div v-if="!hasNote" class="intro-wrapper">
-    <h3 class="intro-title">{{ greeting }}</h3>
+    <h3 class="intro-title">{{ setGreeting(user.displayName) }}</h3>
     <p class="intro-message-1">
       Please select a note from the <b>Notes</b> panel to continue working on an
       existing note
@@ -145,7 +145,7 @@ export default {
   name: "NotesDetails",
   props: ["screenSize"],
   emits: ["show-notification", "selectednote-id"],
-  inject: ["setTextLength", "setDate"],
+  inject: ["setTextLength", "setDate", "setGreeting"],
   data() {
     return {
       hasNote: false,
@@ -159,7 +159,8 @@ export default {
   },
   computed: {
     ...mapGetters("notes", ["selectedNote", "isCloseOpenFields"]),
-    ...mapGetters(["greeting", "theme"]),
+    ...mapGetters(["theme"]),
+    ...mapGetters("auth", ["user"]),
     cardStyle() {
       let mode = "";
 
@@ -297,10 +298,6 @@ export default {
         this.cancelEdits();
       }
     },
-  },
-  beforeMount() {
-    // dispatch an action to set the greeting
-    this.$store.dispatch("setGreeting");
   },
   mounted() {
     // dispatch an action to reset the 'selectedNote' state prop

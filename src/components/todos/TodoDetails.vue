@@ -1,6 +1,6 @@
 <template>
   <div v-if="!hasTodo" class="intro-wrapper">
-    <h3 class="intro-title">{{ greeting }}</h3>
+    <h3 class="intro-title">{{ setGreeting(user.displayName) }}</h3>
     <p class="intro-message-1">
       Please select a todo from the <b>Todos</b> panel to continue working on an
       existing todo
@@ -281,7 +281,7 @@ export default {
   name: "TodoDetails",
   emits: ["show-notification", "selectedtodo-id"],
   props: ["screenSize"],
-  inject: ["setTextLength", "setDate"],
+  inject: ["setTextLength", "setDate", "setGreeting"],
   data() {
     return {
       hasTodo: false,
@@ -307,7 +307,8 @@ export default {
       "isCloseOpenFields",
       "hasUpdatedTodoTask",
     ]),
-    ...mapGetters(["greeting", "theme", "globalFontSize"]),
+    ...mapGetters(["theme", "globalFontSize"]),
+    ...mapGetters("auth", ["user"]),
     completedItemsFieldText() {
       return this.numOfCompletedItems > 1
         ? `${this.numOfCompletedItems} Completed items`
@@ -638,10 +639,6 @@ export default {
         }, 1500);
       }
     },
-  },
-  beforeMount() {
-    // dispatch an action to set the greeting
-    this.$store.dispatch("setGreeting");
   },
   mounted() {
     // dispatch an action to reset the 'selectedTodo' state prop

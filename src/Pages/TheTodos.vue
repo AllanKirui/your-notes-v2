@@ -3,7 +3,7 @@
     <div v-if="!numOfTodos" class="content-intro-wrapper">
       <div class="bg-images"></div>
       <div class="text">
-        <h3 class="intro-title">{{ greeting }}</h3>
+        <h3 class="intro-title">{{ setGreeting(user.displayName) }}</h3>
         <p v-if="screenSize >= 769" class="intro-message-1">
           Please click the <b>New Todo</b> button on the sidebar to create a new
           todo
@@ -168,7 +168,7 @@ import { todosColRef, _onSnapshot, _query, _where, _orderBy } from "@/main.js";
 export default {
   name: "TheTodos",
   props: ["isModal", "activeSide", "isSearching", "searchMessage"],
-  inject: ["setDate"],
+  inject: ["setGreeting", "setDate"],
   emits: [
     "close-modal",
     "show-notification",
@@ -192,12 +192,8 @@ export default {
     };
   },
   computed: {
-    ...mapGetters([
-      "greeting",
-      "theme",
-      "globalFontSize",
-      "hasDeletedDefaultTodo",
-    ]),
+    ...mapGetters("auth", ["user"]),
+    ...mapGetters(["theme", "globalFontSize", "hasDeletedDefaultTodo"]),
     ...mapGetters("todos", ["todoList", "numOfTodos", "selectedTodo"]),
     cardStyle() {
       let mode = "";

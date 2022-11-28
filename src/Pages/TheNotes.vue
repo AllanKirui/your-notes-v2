@@ -3,7 +3,7 @@
     <div class="content-intro-wrapper" v-if="!numOfNotes">
       <div class="bg-images"></div>
       <div class="text">
-        <h3 class="intro-title">{{ greeting }}</h3>
+        <h3 class="intro-title">{{ setGreeting(user.displayName) }}</h3>
         <p v-if="screenSize >= 769" class="intro-message-1">
           Please click the <b>New Note</b> button on the sidebar to create a new
           note
@@ -168,7 +168,7 @@ import { notesColRef, _onSnapshot, _query, _where, _orderBy } from "@/main.js";
 export default {
   name: "TheNotes",
   props: ["isModal", "activeSide", "isSearching", "searchMessage"],
-  inject: ["setDate"],
+  inject: ["setGreeting", "setDate"],
   emits: [
     "close-modal",
     "show-notification",
@@ -192,13 +192,9 @@ export default {
     };
   },
   computed: {
+    ...mapGetters("auth", ["user"]),
     ...mapGetters("notes", ["notesList", "numOfNotes", "selectedNote"]),
-    ...mapGetters([
-      "greeting",
-      "theme",
-      "globalFontSize",
-      "hasDeletedDefaultNote",
-    ]),
+    ...mapGetters(["theme", "globalFontSize", "hasDeletedDefaultNote"]),
     cardStyle() {
       let mode = "";
 
