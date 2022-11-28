@@ -520,8 +520,8 @@ export default {
       if (newValue) {
         let self = this;
 
+        // close menu when elements outside it are clicked outside
         window.addEventListener("click", (e) => {
-          // close dropdown when clicked outside
           if (!self.$el.contains(e.target)) {
             self.isMenuOpen = false;
           }
@@ -530,6 +530,7 @@ export default {
         // reset props
         this.isOverlay = false;
         this.isSidebarOpen = false;
+
         // emit a custom event to hide the overlay
         this.$emit("toggle-overlay", this.isOverlay);
       }
