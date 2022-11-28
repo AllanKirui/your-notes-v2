@@ -670,12 +670,14 @@ export default {
   color: var(--color-lavender-gray);
 }
 
-.default-theme .menu-top .image-wrapper,
-.default-theme .nav-avatar .image-wrapper {
+.default-theme .menu-top .image-wrapper {
   background-color: var(--color-traffic-grey);
 }
 
-.purplish-theme .menu-top,
+.default-theme .nav-avatar .image-wrapper {
+  background-color: var(--color-graphite-black);
+}
+
 .purplish-theme .menu-top .image-wrapper,
 .purplish-theme .nav-avatar .image-wrapper {
   background-color: var(--color-russian-violet);
@@ -683,7 +685,7 @@ export default {
 
 .bluetiful-theme .menu-top .image-wrapper,
 .bluetiful-theme .nav-avatar .image-wrapper {
-  background-color: var(--color-iron-gray);
+  background-color: var(--color-midnight-blue);
 }
 
 .nav-avatar .image-wrapper .avatar {
@@ -773,7 +775,23 @@ export default {
   color: var(--color-cultured);
 }
 
+.default-theme .menu-top img {
+  background-color: var(--color-graphite-black);
+}
+
+.purplish-theme .menu-top {
+  background-color: var(--color-russian-violet);
+}
+
+.purplish-theme .menu-top img {
+  background-color: var(--color-black-blue);
+}
+
 .bluetiful-theme .menu-top {
+  background-color: var(--color-midnight-blue);
+}
+
+.bluetiful-theme .menu-top img {
   background-color: var(--color-midnight-blue);
 }
 
