@@ -40,7 +40,10 @@ export default {
         edited: payload.dateEdited,
       });
     } catch (error) {
-      throwException(error, "saveChanges( ) fn");
+      throwException(
+        error,
+        "saveChanges( ) fn in store/modules/notes/mutations"
+      );
     }
   },
   async addNewNote(_, payload) {
@@ -48,7 +51,10 @@ export default {
       // add a new note as a document to the firebase 'notes' collection
       await _addDoc(notesColRef, payload);
     } catch (error) {
-      throwException(error, "addNewNote( ) fn");
+      throwException(
+        error,
+        "addNewNote( ) fn in store/modules/notes/mutations"
+      );
     }
   },
   async deleteNote(state, data) {
@@ -75,7 +81,10 @@ export default {
           newPreferences
         );
       } catch (error) {
-        throwException(error, "deleteNote( ) fn");
+        throwException(
+          error,
+          "deleteNote( ) fn in store/modules/notes/mutations"
+        );
       }
       return;
     }
@@ -84,7 +93,10 @@ export default {
     try {
       await _deleteDoc(_doc(db, "notes", data.firestoreDocId));
     } catch (error) {
-      throwException(error, "deleteNote( ) fn");
+      throwException(
+        error,
+        "deleteNote( ) fn in store/modules/notes/mutations"
+      );
     }
   },
   closeOpenFields(state, payload) {
@@ -105,7 +117,10 @@ export default {
         newPreferences
       );
     } catch (error) {
-      throwException(error, "restoreWelcomeNote( ) fn");
+      throwException(
+        error,
+        "restoreWelcomeNote( ) fn in store/modules/notes/mutations"
+      );
     }
   },
   addRealtimeData(state, payload) {

@@ -45,7 +45,7 @@ export default createStore({
           payload.newPreferences
         );
       } catch (error) {
-        throwException(error, "updateUserPreferences( ) fn");
+        throwException(error, "updateUserPreferences( ) fn in store/index");
       }
     },
     async updateUsernameCollection(_, payload) {
@@ -55,7 +55,7 @@ export default createStore({
           payload.username
         );
       } catch (error) {
-        throwException(error, "updateUsernameCollection( ) fn");
+        throwException(error, "updateUsernameCollection( ) fn in store/index");
       }
     },
     updateStateData(state) {

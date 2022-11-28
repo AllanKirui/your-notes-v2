@@ -68,7 +68,10 @@ export default {
         return;
       }
 
-      throwException(error, "createUserWithEmailAndPassword( ) fn");
+      throwException(
+        error,
+        "createUserWithEmailAndPassword( ) fn in store/modules/auth/actions"
+      );
     }
   },
   async createAccountWithGoogle(context) {
@@ -111,7 +114,10 @@ export default {
         { root: true }
       );
     } catch (error) {
-      throwException(error, "createAccountWithGoogle( ) fn");
+      throwException(
+        error,
+        "createAccountWithGoogle( ) fn in store/modules/auth/actions"
+      );
     }
   },
   async signIn(context, payload) {
@@ -273,7 +279,10 @@ export default {
       // store the logged in user's UID locally
       localStorage.setItem("yourNotesUID", JSON.stringify(uid));
     } catch (error) {
-      throwException(error, "signInWithGoogle( ) fn");
+      throwException(
+        error,
+        "signInWithGoogle( ) fn in store/modules/auth/actions"
+      );
     }
   },
   createUserProfile(context, payload) {

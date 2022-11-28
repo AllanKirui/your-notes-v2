@@ -55,7 +55,11 @@ export default {
           contents: _arrayUnion(completedTask),
         });
       } catch (error) {
-        throwException(error, "updateCompletionStatus( ) fn");
+        // first
+        throwException(
+          error,
+          "updateCompletionStatus( ) fn in store/modules/todos/mutations"
+        );
       }
       return;
     }
@@ -72,7 +76,10 @@ export default {
         contents: _arrayUnion(completedTask),
       });
     } catch (error) {
-      throwException(error, "updateCompletionStatus( ) fn");
+      throwException(
+        error,
+        "updateCompletionStatus( ) fn in store/modules/todos/mutations"
+      );
     }
   },
   async saveChanges(state, payload) {
@@ -110,7 +117,10 @@ export default {
         edited: payload.dateEdited,
       });
     } catch (error) {
-      throwException(error, "saveChanges( ) fn");
+      throwException(
+        error,
+        "saveChanges( ) fn in store/modules/todos/mutations"
+      );
     }
 
     state.hasUpdatedTodoTask = true;
@@ -120,7 +130,10 @@ export default {
       // add a new todo as a document to the firebase 'todos' collection
       await _addDoc(todosColRef, payload);
     } catch (error) {
-      throwException(error, "addNewTodo( ) fn");
+      throwException(
+        error,
+        "addNewTodo( ) fn in store/modules/todos/mutations"
+      );
     }
   },
   async addNewTodoTask(_, payload) {
@@ -139,7 +152,10 @@ export default {
         edited: payload.dateEdited,
       });
     } catch (error) {
-      throwException(error, "addNewTodoTask( ) fn");
+      throwException(
+        error,
+        "addNewTodoTask( ) fn in store/modules/todos/mutations"
+      );
     }
   },
   resetSelectedTodo(state) {
@@ -161,7 +177,10 @@ export default {
         isHideCompleted: state.selectedTodo.isHideCompleted,
       });
     } catch (error) {
-      throwException(error, "updateHiddenStatus( ) fn");
+      throwException(
+        error,
+        "updateHiddenStatus( ) fn in store/modules/todos/mutations"
+      );
     }
   },
   async deleteTodo(state, data) {
@@ -188,7 +207,10 @@ export default {
           newPreferences
         );
       } catch (error) {
-        throwException(error, "deleteTodo( ) fn");
+        throwException(
+          error,
+          "deleteTodo( ) fn in store/modules/todos/mutations"
+        );
       }
       return;
     }
@@ -197,7 +219,10 @@ export default {
     try {
       await _deleteDoc(_doc(db, "todos", data.firestoreDocId));
     } catch (error) {
-      throwException(error, "deleteTodo( ) fn");
+      throwException(
+        error,
+        "deleteTodo( ) fn in store/modules/todos/mutations"
+      );
     }
   },
   async deleteTodoTask(state, payload) {
@@ -213,7 +238,10 @@ export default {
         contents: _arrayRemove(data),
       });
     } catch (error) {
-      throwException(error, "deleteTodoTask( ) fn");
+      throwException(
+        error,
+        "deleteTodoTask( ) fn in store/modules/todos/mutations"
+      );
     }
   },
   closeOpenFields(state, payload) {
@@ -237,7 +265,10 @@ export default {
         newPreferences
       );
     } catch (error) {
-      throwException(error, "restoreWelcomeTodo( ) fn");
+      throwException(
+        error,
+        "restoreWelcomeTodo( ) fn in store/modules/todos/mutations"
+      );
     }
   },
   addRealtimeData(state, payload) {
