@@ -542,13 +542,13 @@ export default {
 
       switch (this.theme) {
         case "purplish":
-          style = "border-color: #ff7aaf";
+          style = "background-color: #ff7aaf; border: none; height: 2px";
           break;
         case "bluetiful":
-          style = "border-color: #545e69";
+          style = "background-color: #545e69; border: none; height: 2px";
           break;
         default:
-          style = "border-color: #1a1a1a";
+          style = "background-color: #525252; border: none; height: 2px";
           break;
       }
 
