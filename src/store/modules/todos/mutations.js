@@ -24,6 +24,9 @@ export default {
     let todoTaskIndex = payload.childTodoId;
     let isCompleted = payload.status;
 
+    // check if the selected todo is the default welcome todo
+    if (selectedTodo.isDefault) return;
+
     // get the task marked as completed
     let completedTask = selectedTodo.contents[todoTaskIndex];
 
@@ -144,6 +147,9 @@ export default {
   async updateHiddenStatus(state, payload) {
     // toggle the hidden status of the selected todo
     state.selectedTodo.isHideCompleted = !state.selectedTodo.isHideCompleted;
+
+    // check if the selected todo is the default welcome todo
+    if (state.selectedTodo.isDefault) return;
 
     const docRef = _doc(db, "todos", payload.firestoreDocId);
 
