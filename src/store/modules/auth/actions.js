@@ -10,6 +10,9 @@ import { throwException } from "@/store/index.js";
 
 export default {
   async createAccount(context, payload) {
+    // clear any existing local storage Objects
+    localStorage.removeItem("yourNotesPreferences");
+
     try {
       await createUserWithEmailAndPassword(
         getAuth(),
@@ -17,8 +20,35 @@ export default {
         payload.password
       );
 
-      // TODO: clear existing local storage object (do this also when existing users log in)
-      // TODO: store a new local storage object for the newly created user as in sign in with GOOGLE below
+      let uid = getAuth().currentUser.uid;
+      let storedUID = JSON.parse(localStorage.getItem("yourNotesUID"));
+
+      // check if there is a stored UID and whether it matches the current user's ID
+      if (storedUID) {
+        if (storedUID !== uid) {
+          // dispatch an action to clear any existing todos from the list of todos
+          context.dispatch("todos/clearTodosList", {}, { root: true });
+
+          // dispatch an action to clear any existing notes from the list of notes
+          context.dispatch("notes/clearNotesList", {}, { root: true });
+
+          // clear the local storage object holding the UID
+          localStorage.removeItem("yourNotesUID");
+        }
+      }
+
+      // dispatch an action to update the state data
+      context.dispatch("updateStateData", {}, { root: true });
+
+      // dispatch an action to store the new user's data locally
+      context.dispatch(
+        "updateLocalStorageData",
+        {
+          uid: uid,
+          isNewAccount: true,
+        },
+        { root: true }
+      );
 
       // dispatch an action to store username in a Firestore collection
       context.dispatch(
@@ -41,15 +71,45 @@ export default {
       throwException(error, "createUserWithEmailAndPassword( ) fn");
     }
   },
-  async createAccountWithGoogle() {
+  async createAccountWithGoogle(context) {
+    // clear any existing local storage Objects
+    localStorage.removeItem("yourNotesPreferences");
+
     // create a provider when the sign in button is clicked
     const provider = new GoogleAuthProvider();
 
     try {
       await signInWithPopup(getAuth(), provider);
 
-      // TODO: redirect the user to the todo page
-      // TODO: show loading spinner
+      let uid = getAuth().currentUser.uid;
+      let storedUID = JSON.parse(localStorage.getItem("yourNotesUID"));
+
+      // check if there is a stored UID and whether it matches the current user's ID
+      if (storedUID) {
+        if (storedUID !== uid) {
+          // dispatch an action to clear any existing todos from the list of todos
+          context.dispatch("todos/clearTodosList", {}, { root: true });
+
+          // dispatch an action to clear any existing notes from the list of notes
+          context.dispatch("notes/clearNotesList", {}, { root: true });
+
+          // clear the local storage object holding the UID
+          localStorage.removeItem("yourNotesUID");
+        }
+      }
+
+      // dispatch an action to update the state data
+      context.dispatch("updateStateData", {}, { root: true });
+
+      // dispatch an action to store the new user's data locally
+      context.dispatch(
+        "updateLocalStorageData",
+        {
+          uid: uid,
+          isNewAccount: true,
+        },
+        { root: true }
+      );
     } catch (error) {
       throwException(error, "createAccountWithGoogle( ) fn");
     }
@@ -62,11 +122,59 @@ export default {
         payload.password
       );
 
-      // TODO: store user data locally as shown in with Google
-      // TODO: what if multiple user's sign in on the same computer,
-      // will one user's sign in overwite another user's preferences?
-      // TODO: redirect the user to the todo page
-      // TODO: show loading spinner
+      let uid = getAuth().currentUser.uid;
+      let storedData = JSON.parse(localStorage.getItem("yourNotesPreferences"));
+      let storedUID = JSON.parse(localStorage.getItem("yourNotesUID"));
+
+      // check if there is a stored UID and whether it matches the current user's ID
+      if (storedUID) {
+        if (storedUID !== uid) {
+          // dispatch an action to clear any existing todos from the list of todos
+          context.dispatch("todos/clearTodosList", {}, { root: true });
+
+          // dispatch an action to clear any existing notes from the list of notes
+          context.dispatch("notes/clearNotesList", {}, { root: true });
+
+          // dispatch an action to update the state data
+          context.dispatch("updateStateData", {}, { root: true });
+
+          // clear any existing local storage Objects
+          localStorage.removeItem("yourNotesPreferences");
+          localStorage.removeItem("yourNotesUID");
+        } else {
+          // dispatch an action to update the user data stored locally
+          context.dispatch(
+            "updateLocalStorageData",
+            {
+              isLoggedIn: true,
+              theme: storedData ? storedData.theme : null,
+              fontSize: storedData ? storedData.fontSize : 14,
+              uid: uid,
+            },
+            { root: true }
+          );
+
+          // store the logged in user's UID locally
+          localStorage.setItem("yourNotesUID", JSON.stringify(uid));
+        }
+
+        return;
+      }
+
+      // dispatch an action to update the user data stored locally
+      context.dispatch(
+        "updateLocalStorageData",
+        {
+          isLoggedIn: true,
+          theme: null,
+          fontSize: 14,
+          uid: uid,
+        },
+        { root: true }
+      );
+
+      // store the logged in user's UID locally
+      localStorage.setItem("yourNotesUID", JSON.stringify(uid));
     } catch (error) {
       switch (error.code) {
         case "auth/invalid-email":
@@ -108,18 +216,62 @@ export default {
     try {
       await signInWithPopup(getAuth(), provider);
 
+      let uid = getAuth().currentUser.uid;
       let storedData = JSON.parse(localStorage.getItem("yourNotesPreferences"));
+      let storedUID = JSON.parse(localStorage.getItem("yourNotesUID"));
+
+      // check if there is a stored UID and whether it matches the current user's ID
+      if (storedUID) {
+        if (storedUID !== uid) {
+          // dispatch an action to clear any existing todos from the list of todos
+          context.dispatch("todos/clearTodosList", {}, { root: true });
+
+          // dispatch an action to clear any existing notes from the list of notes
+          context.dispatch("notes/clearNotesList", {}, { root: true });
+
+          // dispatch an action to update the state data
+          context.dispatch("updateStateData", {}, { root: true });
+
+          // dispatch an action to update the display name
+          context.dispatch("updateUserProfile", { username: null });
+
+          // clear any existing local storage Objects
+          localStorage.removeItem("yourNotesPreferences");
+          localStorage.removeItem("yourNotesUID");
+        } else {
+          // dispatch an action to update the user data stored locally
+          context.dispatch(
+            "updateLocalStorageData",
+            {
+              isLoggedIn: true,
+              theme: storedData ? storedData.theme : null,
+              fontSize: storedData ? storedData.fontSize : 14,
+              uid: uid,
+            },
+            { root: true }
+          );
+
+          // store the logged in user's UID locally
+          localStorage.setItem("yourNotesUID", JSON.stringify(uid));
+        }
+
+        return;
+      }
 
       // dispatch an action to update the user data stored locally
       context.dispatch(
         "updateLocalStorageData",
         {
           isLoggedIn: true,
-          theme: storedData.theme || null,
-          fontSize: storedData.fontSize || 14,
+          theme: null,
+          fontSize: 14,
+          uid: uid,
         },
         { root: true }
       );
+
+      // store the logged in user's UID locally
+      localStorage.setItem("yourNotesUID", JSON.stringify(uid));
     } catch (error) {
       throwException(error, "signInWithGoogle( ) fn");
     }
