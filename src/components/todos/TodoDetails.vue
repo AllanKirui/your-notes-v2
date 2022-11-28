@@ -397,6 +397,7 @@ export default {
         status: this.isChecked,
         childTodoId: index,
         firestoreDocId: this.firestoreDocId,
+        dateEdited: this.setDate(),
       });
 
       // reset prop

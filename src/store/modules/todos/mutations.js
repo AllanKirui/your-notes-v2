@@ -48,6 +48,7 @@ export default {
         // delete the task marked as complete from the 'contents' list of the firestore document
         await _updateDoc(docRef, {
           contents: _arrayRemove(copyOfCompletedTask),
+          edited: payload.dateEdited,
         });
         // add the task marked as incomplete to the 'contents' list of the firestore document
         await _updateDoc(docRef, {
@@ -64,6 +65,7 @@ export default {
       // delete the task marked as incomplete from the 'contents' list of the firestore document
       await _updateDoc(docRef, {
         contents: _arrayRemove(taskBeforeCompletion),
+        edited: payload.dateEdited,
       });
       // add the task marked as complete to the 'contents' list of the firestore document
       await _updateDoc(docRef, {
