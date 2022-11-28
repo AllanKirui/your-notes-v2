@@ -152,6 +152,30 @@ export default {
     },
   },
   methods: {
+    setGreeting(name) {
+      let today = new Date();
+      let hour = today.getHours();
+      let greeting = "";
+      let trimmedName = "";
+
+      // if name is multi-worded, use the first word of the name
+      let wordsInName = name ? name.split(" ") : "You".split();
+
+      if (wordsInName.length > 0) {
+        trimmedName = wordsInName[0];
+      }
+
+      // set an appropriate greeting based on the time
+      if (hour >= 16) {
+        greeting = `Good evening, ${trimmedName}`;
+      } else if (hour >= 12) {
+        greeting = `Good afternoon, ${trimmedName}`;
+      } else if (hour >= 0) {
+        greeting = `Good morning, ${trimmedName}`;
+      }
+
+      return greeting;
+    },
     showInputModal(side) {
       this.isShowInputModal = true;
       this.activeSide = side;
@@ -297,6 +321,7 @@ export default {
   },
   provide() {
     return {
+      setGreeting: this.setGreeting,
       setTextLength: this.setTextLength,
       setDate: this.setDate,
     };
