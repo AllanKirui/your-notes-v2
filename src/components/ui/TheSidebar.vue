@@ -512,7 +512,7 @@ export default {
   background: var(--color-midnight-blue);
 }
 
-@media (min-width: 1025px) {
+@media (min-width: 1024px) {
   .btn-wrapper .tooltip,
   .links .link .tooltip {
     display: none;
