@@ -58,6 +58,18 @@ export const _arrayRemove = arrayRemove;
 
 const app = createApp(App);
 
+// listen for navigation and check if the user is online
+router.beforeEach(function offlineHandler(to, from, next) {
+  const isOnline = navigator?.onLine ?? true;
+
+  if (isOnline) {
+    next();
+  } else {
+    // pass the target path as the payload
+    store.dispatch("app/setOfflineMode", to.fullPath);
+  }
+});
+
 app.component("base-card", BaseCard);
 
 app.use(router);
