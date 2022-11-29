@@ -1,12 +1,12 @@
 <template>
   <!-- signup/login pages -->
-  <template v-if="!isAuthenticated && !isLoggedIn">
+  <template v-if="!isAuthenticated && !isLoggedIn && isOnline">
     <WelcomeHeader />
     <router-view name="authn"></router-view>
   </template>
 
   <!-- home page -->
-  <template v-if="isAuthenticated && isLoggedIn">
+  <template v-if="isAuthenticated && isLoggedIn && isOnline">
     <the-header
       :clear-search="isCancelSearch"
       :is-searching="isSearching"
@@ -68,6 +68,11 @@
       </teleport>
     </div>
   </template>
+
+  <!-- Offline page -->
+  <template v-if="!isOnline">
+    <offline-page></offline-page>
+  </template>
 </template>
 
 <script>
@@ -82,6 +87,7 @@ import {
 import WelcomeHeader from "./components/nav/WelcomeHeader.vue";
 import TheHeader from "./components/nav/TheHeader.vue";
 import TheSidebar from "./components/ui/TheSidebar.vue";
+import OfflinePage from "./components/nav/OfflinePage.vue";
 
 let auth;
 
@@ -91,6 +97,7 @@ export default {
     WelcomeHeader,
     TheHeader,
     TheSidebar,
+    OfflinePage,
   },
   data() {
     return {
@@ -110,6 +117,9 @@ export default {
     };
   },
   computed: {
+    isOnline() {
+      return this.$store.getters["app/isOnline"];
+    },
     theme() {
       return this.$store.getters.theme;
     },
