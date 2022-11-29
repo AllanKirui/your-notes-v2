@@ -3,6 +3,7 @@ import { createStore } from "vuex";
 import authModule from "@/store/modules/auth/index";
 import todoModule from "@/store/modules/todos/index";
 import notesModule from "@/store/modules/notes/index";
+import appModule from "@/store/modules/app/index";
 
 import { db, _doc, _setDoc } from "@/main.js";
 
@@ -14,6 +15,7 @@ export default createStore({
     auth: authModule,
     todos: todoModule,
     notes: notesModule,
+    app: appModule,
   },
   state() {
     return {
