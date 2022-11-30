@@ -3,6 +3,8 @@ import App from "./App.vue";
 import router from "@/router/index";
 import store from "@/store/index";
 
+import "@/assets/styles/main.css";
+
 import BaseCard from "@/components/ui/BaseCard";
 
 // Import the functions you need from the SDKs you need
