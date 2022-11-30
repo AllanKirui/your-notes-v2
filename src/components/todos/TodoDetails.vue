@@ -11,179 +11,78 @@
   </div>
 
   <!-- Todo title and progress bar -->
-  <div v-if="hasTodo" class="heading-wrapper">
-    <div class="heading-top flex flex-fd-c">
-      <!-- container for back-btn, title, controls -->
-      <div class="flex flex-ai-c">
-        <div class="back-btn-wrapper" v-if="screenSize <= 768">
-          <button
-            class="back-btn"
-            title="Back to list of todos"
-            @click="resetSelectedTodo"
-          >
-            <span class="head"></span>
-          </button>
-        </div>
-        <h3 class="items-title">{{ selectedTodo.title }}</h3>
-        <div class="top-controls flex flex-ai-c">
-          <button
-            v-if="hasCompletedItems"
-            @click="toggleCompletedItems(selectedTodo.isHideCompleted)"
-            class="btn hide-btn"
-            :title="
-              selectedTodo.isHideCompleted
-                ? 'Hide completed tasks'
-                : 'Show completed tasks'
-            "
-          >
-            {{ selectedTodo.isHideCompleted ? "Hide" : "Show" }} completed
-          </button>
-          <button
-            class="btn delete-todo-btn"
-            title="Delete todo"
-            @click="showDeleteWindow"
-          >
-            Delete
-          </button>
-        </div>
-      </div>
-      <!-- container for timestamp -->
-      <div class="timestamps flex" v-if="selectedTodo.created">
-        <small class="date-created">Created: {{ selectedTodo.created }}</small>
-        <small class="date-edited" v-if="selectedTodo.edited"
-          >, Edited: {{ selectedTodo.edited }}</small
-        >
-      </div>
-    </div>
-
-    <div class="heading-bottom progress-bar flex flex-ai-c">
-      <span class="percentage">{{ progress }}%</span>
-      <div class="bar-wrapper flex flex-ai-c">
-        <span class="bar" :style="{ width: progress + '%' }"></span>
-      </div>
-    </div>
-
-    <!-- use the transition component to animate the delete window-->
-    <transition name="delete">
-      <div class="confirm-delete" v-if="isShowDeleteWindow">
-        <base-card :mode="cardStyle">
-          <div class="confirm-delete-title flex flex-ai-c flex-jc-sb">
-            <span class="title"
-              >Delete {{ setTextBasedOnFontSize(selectedTodo.title) }}</span
-            >
+  <div v-else>
+    <div class="heading-wrapper">
+      <div class="heading-top flex flex-fd-c">
+        <!-- container for back-btn, title, controls -->
+        <div class="flex flex-ai-c">
+          <div class="back-btn-wrapper" v-if="screenSize <= 768">
             <button
-              class="btn close-btn"
-              title="Close"
-              @click="hideDeleteWindow"
+              class="back-btn"
+              title="Back to list of todos"
+              @click="resetSelectedTodo"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 64 64"
-                stroke-width="4.5"
-                stroke="currentColor"
-                fill="none"
-                class="duration-300 transform transition-all"
-                style="width: 14px; height: 14px"
-              >
-                <path d="M8.06 8.06l47.35 47.88M55.94 8.06L8.59 55.94"></path>
-              </svg>
+              <span class="head"></span>
             </button>
           </div>
-          <div class="confirm-delete-contents">
-            <p class="message">
-              Deleting a todo is a permanent action which cannot be undone.
-            </p>
+          <h3 class="items-title">{{ selectedTodo.title }}</h3>
+          <div class="top-controls flex flex-ai-c">
             <button
-              class="btn delete-btn"
+              v-if="hasCompletedItems"
+              @click="toggleCompletedItems(selectedTodo.isHideCompleted)"
+              class="btn hide-btn"
+              :title="
+                selectedTodo.isHideCompleted
+                  ? 'Hide completed tasks'
+                  : 'Show completed tasks'
+              "
+            >
+              {{ selectedTodo.isHideCompleted ? "Hide" : "Show" }} completed
+            </button>
+            <button
+              class="btn delete-todo-btn"
               title="Delete todo"
-              @click="deleteTodo"
+              @click="showDeleteWindow"
             >
-              Delete todo
+              Delete
             </button>
           </div>
-        </base-card>
+        </div>
+        <!-- container for timestamp -->
+        <div class="timestamps flex" v-if="selectedTodo.created">
+          <small class="date-created"
+            >Created: {{ selectedTodo.created }}</small
+          >
+          <small class="date-edited" v-if="selectedTodo.edited"
+            >, Edited: {{ selectedTodo.edited }}</small
+          >
+        </div>
       </div>
-    </transition>
 
-    <!-- show this if there are no tasks in a todo -->
-    <div v-if="!selectedTodo.contents.length" class="contents-info">
-      <p>This todo is empty, please add some new tasks</p>
-    </div>
-  </div>
+      <div class="heading-bottom progress-bar flex flex-ai-c">
+        <span class="percentage">{{ progress }}%</span>
+        <div class="bar-wrapper flex flex-ai-c">
+          <span class="bar" :style="{ width: progress + '%' }"></span>
+        </div>
+      </div>
 
-  <div v-if="hasTodo" class="details-wrapper">
-    <!-- list of uncompleted items -->
-    <div class="incomplete-items">
-      <ul class="items">
-        <li v-for="(item, index) of selectedTodo.contents" :key="index">
-          <!-- only shows incomplete items -->
-          <div class="item flex" v-if="!item.isCompleted">
-            <div class="item-checkbox">
-              <input
-                type="checkbox"
-                v-model="item.isCompleted"
-                @change="checkHandler(index, item.isCompleted)"
-              />
-            </div>
-
-            <div class="item-text-wrapper">
-              <!-- use the transition component to set a transtion when opening the edit task field-->
-              <transition name="editor">
-                <div class="item-text" v-if="selectedItem !== index">
-                  <span
-                    class="item-details"
-                    :class="{ completed: item.isCompleted }"
-                    @click="editText(index)"
-                    >{{ item.text }}</span
-                  >
-                </div>
-                <!-- only show for the clicked todo item -->
-                <div
-                  class="item-edit-field"
-                  v-else-if="isEditText && selectedItem === index"
-                >
-                  <textarea
-                    class="field"
-                    type="text"
-                    :value="item.text"
-                    ref="editTask"
-                    @input="$nextTick(autoResizeEditField)"
-                  ></textarea>
-                  <div class="edit-controls">
-                    <button
-                      class="btn btn-save"
-                      title="Save edits"
-                      @click="saveEdits(index)"
-                    >
-                      Save
-                    </button>
-                    <button
-                      class="btn btn-cancel"
-                      title="Cancel edits"
-                      @click="cancelEdits"
-                    >
-                      Cancel
-                    </button>
-                  </div>
-                </div>
-              </transition>
-            </div>
-
-            <div
-              :class="[
-                isEditText && selectedItem === index ? 'visible' : '',
-                'item-options',
-              ]"
-            >
+      <!-- use the transition component to animate the delete window-->
+      <transition name="delete">
+        <div class="confirm-delete" v-if="isShowDeleteWindow">
+          <base-card :mode="cardStyle">
+            <div class="confirm-delete-title flex flex-ai-c flex-jc-sb">
+              <span class="title"
+                >Delete {{ setTextBasedOnFontSize(selectedTodo.title) }}</span
+              >
               <button
-                class="btn delete-item-btn"
-                title="Delete task"
-                @click="deleteTodoTask(index)"
+                class="btn close-btn"
+                title="Close"
+                @click="hideDeleteWindow"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 64 64"
-                  stroke-width="5"
+                  stroke-width="4.5"
                   stroke="currentColor"
                   fill="none"
                   class="duration-300 transform transition-all"
@@ -193,81 +92,188 @@
                 </svg>
               </button>
             </div>
-          </div>
-        </li>
-      </ul>
+            <div class="confirm-delete-contents">
+              <p class="message">
+                Deleting a todo is a permanent action which cannot be undone.
+              </p>
+              <button
+                class="btn delete-btn"
+                title="Delete todo"
+                @click="deleteTodo"
+              >
+                Delete todo
+              </button>
+            </div>
+          </base-card>
+        </div>
+      </transition>
+
+      <!-- show this if there are no tasks in a todo -->
+      <div v-if="!selectedTodo.contents.length" class="contents-info">
+        <p>This todo is empty, please add some new tasks</p>
+      </div>
     </div>
 
-    <!-- list of completed items -->
-    <div
-      class="completed-items"
-      v-if="hasCompletedItems && selectedTodo.isHideCompleted"
-    >
-      <br />
-      <hr :style="hrStyle" />
-      <p>{{ completedItemsFieldText }}</p>
-      <ul class="items completed">
-        <li v-for="(item, index) of selectedTodo.contents" :key="index">
-          <!-- only shows completed items -->
-          <div class="item flex" v-if="item.isCompleted">
-            <div class="item-checkbox">
-              <input
-                type="checkbox"
-                v-model="item.isCompleted"
-                @change="checkHandler(index, item.isCompleted)"
-              />
-            </div>
+    <div class="details-wrapper">
+      <!-- list of uncompleted items -->
+      <div class="incomplete-items">
+        <ul class="items">
+          <li v-for="(item, index) of selectedTodo.contents" :key="index">
+            <!-- only shows incomplete items -->
+            <div class="item flex" v-if="!item.isCompleted">
+              <div class="item-checkbox">
+                <input
+                  type="checkbox"
+                  v-model="item.isCompleted"
+                  @change="checkHandler(index, item.isCompleted)"
+                />
+              </div>
 
-            <div class="item-text-wrapper">
-              <div class="item-text" v-if="selectedItem !== index">
-                <span
-                  class="item-details"
-                  :class="{ completed: item.isCompleted }"
-                  @click="editText(index)"
-                  >{{ item.text }}</span
+              <div class="item-text-wrapper">
+                <!-- use the transition component to set a transtion when opening the edit task field-->
+                <transition name="editor">
+                  <div class="item-text" v-if="selectedItem !== index">
+                    <span
+                      class="item-details"
+                      :class="{ completed: item.isCompleted }"
+                      @click="editText(index)"
+                      >{{ item.text }}</span
+                    >
+                  </div>
+                  <!-- only show for the clicked todo item -->
+                  <div
+                    class="item-edit-field"
+                    v-else-if="isEditText && selectedItem === index"
+                  >
+                    <textarea
+                      class="field"
+                      type="text"
+                      :value="item.text"
+                      ref="editTask"
+                      @input="$nextTick(autoResizeEditField)"
+                    ></textarea>
+                    <div class="edit-controls">
+                      <button
+                        class="btn btn-save"
+                        title="Save edits"
+                        @click="saveEdits(index)"
+                      >
+                        Save
+                      </button>
+                      <button
+                        class="btn btn-cancel"
+                        title="Cancel edits"
+                        @click="cancelEdits"
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  </div>
+                </transition>
+              </div>
+
+              <div
+                :class="[
+                  isEditText && selectedItem === index ? 'visible' : '',
+                  'item-options',
+                ]"
+              >
+                <button
+                  class="btn delete-item-btn"
+                  title="Delete task"
+                  @click="deleteTodoTask(index)"
                 >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 64 64"
+                    stroke-width="5"
+                    stroke="currentColor"
+                    fill="none"
+                    class="duration-300 transform transition-all"
+                    style="width: 14px; height: 14px"
+                  >
+                    <path
+                      d="M8.06 8.06l47.35 47.88M55.94 8.06L8.59 55.94"
+                    ></path>
+                  </svg>
+                </button>
               </div>
             </div>
-          </div>
-        </li>
-      </ul>
-    </div>
-  </div>
+          </li>
+        </ul>
+      </div>
 
-  <!-- field to create a new todo task -->
-  <div v-if="hasTodo" class="todo-creator-wrapper">
-    <div class="item-create-btn" v-if="!isCreateNewTask">
-      <button
-        class="btn btn-add"
-        title="Add new task"
-        @click="showNewTaskField"
+      <!-- list of completed items -->
+      <div
+        class="completed-items"
+        v-if="hasCompletedItems && selectedTodo.isHideCompleted"
       >
-        Add new task
-      </button>
+        <br />
+        <hr :style="hrStyle" />
+        <p>{{ completedItemsFieldText }}</p>
+        <ul class="items completed">
+          <li v-for="(item, index) of selectedTodo.contents" :key="index">
+            <!-- only shows completed items -->
+            <div class="item flex" v-if="item.isCompleted">
+              <div class="item-checkbox">
+                <input
+                  type="checkbox"
+                  v-model="item.isCompleted"
+                  @change="checkHandler(index, item.isCompleted)"
+                />
+              </div>
+
+              <div class="item-text-wrapper">
+                <div class="item-text" v-if="selectedItem !== index">
+                  <span
+                    class="item-details"
+                    :class="{ completed: item.isCompleted }"
+                    @click="editText(index)"
+                    >{{ item.text }}</span
+                  >
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
     </div>
 
-    <div class="item-create-field" v-if="isCreateNewTask">
-      <textarea
-        class="field"
-        type="text"
-        ref="newTask"
-        placeholder="Add new todo task"
-      ></textarea>
-      <div class="create-controls">
+    <!-- field to create a new todo task -->
+    <div class="todo-creator-wrapper">
+      <div class="item-create-btn" v-if="!isCreateNewTask">
         <button
           class="btn btn-add"
           title="Add new task"
-          @click="addNewTodoTask"
+          @click="showNewTaskField"
         >
           Add new task
         </button>
-        <button
-          class="btn btn-cancel"
-          title="Cancel"
-          @click="cancelNewTodoTask"
-        >
-          Cancel
-        </button>
+      </div>
+
+      <div class="item-create-field" v-if="isCreateNewTask">
+        <textarea
+          class="field"
+          type="text"
+          ref="newTask"
+          placeholder="Add new todo task"
+        ></textarea>
+        <div class="create-controls">
+          <button
+            class="btn btn-add"
+            title="Add new task"
+            @click="addNewTodoTask"
+          >
+            Add new task
+          </button>
+          <button
+            class="btn btn-cancel"
+            title="Cancel"
+            @click="cancelNewTodoTask"
+          >
+            Cancel
+          </button>
+        </div>
       </div>
     </div>
   </div>

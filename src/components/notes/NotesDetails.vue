@@ -10,130 +10,134 @@
     </p>
   </div>
 
-  <!-- Notes title -->
-  <div v-if="hasNote" class="heading-wrapper">
-    <div class="heading-top flex flex-fd-c">
-      <!-- container for back-btn, title, controls -->
-      <div class="flex flex-ai-c">
-        <div class="back-btn-wrapper" v-if="screenSize <= 768">
-          <button
-            class="back-btn"
-            title="Back to list of notes"
-            @click="resetSelectedNote"
-          >
-            <span class="head"></span>
-          </button>
-        </div>
-        <h3 class="items-title">{{ selectedNote.title }}</h3>
-        <div class="top-controls">
-          <button
-            class="btn delete-note-btn"
-            title="Delete note"
-            @click="showDeleteWindow"
-          >
-            Delete
-          </button>
-        </div>
-      </div>
-      <!-- container for timestamp -->
-      <div class="timestamps flex" v-if="selectedNote.created">
-        <small class="date-created">Created: {{ selectedNote.created }}</small>
-        <small class="date-edited" v-if="selectedNote.edited"
-          >, Edited: {{ selectedNote.edited }}</small
-        >
-      </div>
-    </div>
-
-    <!-- use the transition component to animate the delete window-->
-    <transition name="delete">
-      <div class="confirm-delete" v-if="isShowDeleteWindow">
-        <base-card :mode="cardStyle">
-          <div class="confirm-delete-title flex flex-ai-c flex-jc-sb">
-            <span class="title"
-              >Delete {{ setTextLength(selectedNote.title, 20) }}</span
-            >
+  <div v-else>
+    <!-- Notes title -->
+    <div class="heading-wrapper">
+      <div class="heading-top flex flex-fd-c">
+        <!-- container for back-btn, title, controls -->
+        <div class="flex flex-ai-c">
+          <div class="back-btn-wrapper" v-if="screenSize <= 768">
             <button
-              class="btn close-btn"
-              title="Close"
-              @click="hideDeleteWindow"
+              class="back-btn"
+              title="Back to list of notes"
+              @click="resetSelectedNote"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 64 64"
-                stroke-width="4.5"
-                stroke="currentColor"
-                fill="none"
-                class="duration-300 transform transition-all"
-                style="width: 14px; height: 14px"
-              >
-                <path d="M8.06 8.06l47.35 47.88M55.94 8.06L8.59 55.94"></path>
-              </svg>
+              <span class="head"></span>
             </button>
           </div>
-          <div class="confirm-delete-contents">
-            <p class="message">
-              Deleting a note is a permanent action which cannot be undone.
-            </p>
+          <h3 class="items-title">{{ selectedNote.title }}</h3>
+          <div class="top-controls">
             <button
-              class="btn delete-btn"
+              class="btn delete-note-btn"
               title="Delete note"
-              @click="deleteNote"
+              @click="showDeleteWindow"
             >
-              Delete note
+              Delete
             </button>
           </div>
-        </base-card>
-      </div>
-    </transition>
-  </div>
-
-  <!-- Notes content -->
-  <div v-if="hasNote" class="details-wrapper">
-    <div class="item-text-wrapper">
-      <!-- use the transition component to set a transtion when opening the edit task field-->
-      <transition name="editor">
-        <div v-if="!isEditText" class="item-text">
-          <span class="item-details" ref="noteContent"></span>
         </div>
+        <!-- container for timestamp -->
+        <div class="timestamps flex" v-if="selectedNote.created">
+          <small class="date-created"
+            >Created: {{ selectedNote.created }}</small
+          >
+          <small class="date-edited" v-if="selectedNote.edited"
+            >, Edited: {{ selectedNote.edited }}</small
+          >
+        </div>
+      </div>
 
-        <div v-else-if="isEditText" class="item-edit-field">
-          <textarea
-            class="field"
-            :value="selectedNote.content"
-            style="max-height: calc(100vh - 250px)"
-            ref="editNote"
-            @input="$nextTick(autoResizeEditField)"
-          ></textarea>
+      <!-- use the transition component to animate the delete window-->
+      <transition name="delete">
+        <div class="confirm-delete" v-if="isShowDeleteWindow">
+          <base-card :mode="cardStyle">
+            <div class="confirm-delete-title flex flex-ai-c flex-jc-sb">
+              <span class="title"
+                >Delete {{ setTextLength(selectedNote.title, 20) }}</span
+              >
+              <button
+                class="btn close-btn"
+                title="Close"
+                @click="hideDeleteWindow"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 64 64"
+                  stroke-width="4.5"
+                  stroke="currentColor"
+                  fill="none"
+                  class="duration-300 transform transition-all"
+                  style="width: 14px; height: 14px"
+                >
+                  <path d="M8.06 8.06l47.35 47.88M55.94 8.06L8.59 55.94"></path>
+                </svg>
+              </button>
+            </div>
+            <div class="confirm-delete-contents">
+              <p class="message">
+                Deleting a note is a permanent action which cannot be undone.
+              </p>
+              <button
+                class="btn delete-btn"
+                title="Delete note"
+                @click="deleteNote"
+              >
+                Delete note
+              </button>
+            </div>
+          </base-card>
         </div>
       </transition>
     </div>
-  </div>
 
-  <!-- edit controls -->
-  <div v-if="hasNote" class="edit-controls flex flex-jc-sb">
-    <!-- use the transition component to animate the switching of buttons -->
-    <transition name="buttons" mode="out-in">
-      <button
-        v-if="!isEditText"
-        class="btn btn-edit"
-        title="Edit note"
-        @click="editText"
-      >
-        Edit
-      </button>
-      <div v-else-if="isEditText">
-        <button class="btn btn-save" title="Save edits" @click="saveEdits">
-          Save
-        </button>
-        <button
-          class="btn btn-cancel"
-          title="Cancel edits"
-          @click="cancelEdits"
-        >
-          Cancel
-        </button>
+    <!-- Notes content -->
+    <div class="details-wrapper">
+      <div class="item-text-wrapper">
+        <!-- use the transition component to set a transtion when opening the edit task field-->
+        <transition name="editor">
+          <div v-if="!isEditText" class="item-text">
+            <span class="item-details" ref="noteContent"></span>
+          </div>
+
+          <div v-else-if="isEditText" class="item-edit-field">
+            <textarea
+              class="field"
+              :value="selectedNote.content"
+              style="max-height: calc(100vh - 250px)"
+              ref="editNote"
+              @input="$nextTick(autoResizeEditField)"
+            ></textarea>
+          </div>
+        </transition>
       </div>
-    </transition>
+    </div>
+
+    <!-- edit controls -->
+    <div class="edit-controls flex flex-jc-sb">
+      <!-- use the transition component to animate the switching of buttons -->
+      <transition name="buttons" mode="out-in">
+        <button
+          v-if="!isEditText"
+          class="btn btn-edit"
+          title="Edit note"
+          @click="editText"
+        >
+          Edit
+        </button>
+        <div v-else-if="isEditText">
+          <button class="btn btn-save" title="Save edits" @click="saveEdits">
+            Save
+          </button>
+          <button
+            class="btn btn-cancel"
+            title="Cancel edits"
+            @click="cancelEdits"
+          >
+            Cancel
+          </button>
+        </div>
+      </transition>
+    </div>
   </div>
 </template>
 
