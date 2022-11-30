@@ -261,6 +261,11 @@ export default {
   position: relative;
 }
 
+.logo .wrapper {
+  display: grid;
+  place-items: center;
+}
+
 .default-theme .logo {
   background-color: var(--color-eerie-black);
 }
@@ -307,8 +312,8 @@ export default {
 .logo-text {
   position: absolute;
   top: 50%;
-  left: 10%;
   transform: translateY(-50%);
+  width: 100%;
   text-align: center;
   z-index: 1;
 }
