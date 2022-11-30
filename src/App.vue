@@ -2,7 +2,13 @@
   <!-- signup/login pages -->
   <template v-if="!isAuthenticated && !isLoggedIn && isOnline">
     <WelcomeHeader />
-    <router-view name="authn"></router-view>
+    <!-- use the transition component and slotProps to animate components -->
+    <router-view name="authn" v-slot="slotProps">
+      <transition name="route" mode="out-in">
+        <component :is="slotProps.Component"></component>
+      </transition>
+    </router-view>
+    <!-- <router-view name="authn"></router-view> -->
   </template>
 
   <!-- home page -->
@@ -23,7 +29,6 @@
       :class="themeClasses"
       :style="{ 'font-size': globalFontSize / 16 + 'rem' }"
     >
-      <!-- TODO: settings page and menu should handle theme switching -->
       <the-sidebar
         :class="isOverlayVisible ? 'sidebar-shown' : ''"
         @show-modal="showInputModal"
@@ -985,6 +990,24 @@ body.scrollbar-hidden::-webkit-scrollbar {
   background-size: 368px, 368px;
   background-position: left bottom, right bottom;
   z-index: 1;
+}
+
+.route-enter-from,
+.route-leave-to {
+  opacity: 0;
+}
+
+.route-enter-active {
+  transition: opacity 0.15s ease-out;
+}
+
+.route-leave-active {
+  transition: opacity 0.15s ease-in;
+}
+
+.route-enter-to,
+.route-leave-from {
+  opacity: 1;
 }
 /* end of sign up, login page styles */
 
