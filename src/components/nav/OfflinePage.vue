@@ -197,7 +197,7 @@
     </div>
     <p class="title">Connect to the internet</p>
     <p class="message">You're offline. Check your connection.</p>
-    <button class="btn btn-retry">Retry</button>
+    <button class="btn btn-retry" @click="reloadPage">Retry</button>
   </div>
 </template>
 
@@ -240,6 +240,9 @@ export default {
       const currentPath = this.$route.fullPath;
 
       if (targetPath !== currentPath) this.$router.replace(targetPath);
+    },
+    reloadPage() {
+      location.reload();
     },
   },
   beforeMount() {
