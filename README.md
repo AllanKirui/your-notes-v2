@@ -163,7 +163,7 @@ Screenshot of the **Notes** page running on my **local development server**.
 
 Screenshot of the **Notes** page running on my **local development server**.
 
-- Who said you can't have fun while programming? This particular screenshot shows one of the errors that might occur when try to communicate with **Firestore**. However, it is highly unlikely that a user will ever experience this type of error, unless they are dabbling in the **source code**. Hence, why I dubbed the error an '**_Epic Bug_**' 😅
+- Who said you can't have fun while programming? This particular screenshot shows one of the errors that might occur when trying to communicate with **Firestore**. However, it is highly unlikely that a user will ever experience this type of error, unless they are dabbling in the **source code**. Hence, why I dubbed the error an '**_Epic Bug_**' 😅
 
 ---
 
@@ -177,6 +177,17 @@ Screenshot of the **Todos** page running on my **local development server**.
 - As for user's who choose to sign up with **Google**, the profile photo from their Google account, if any, would be used instead. However, if they haven't set any profile photo, they too would get an **avatar** generated for them. #MadeWith🧡
 
 ---
+
+<br/>
+
+![](./src/assets/markdown_images/app-tree-1.png)
+![](./src/assets/markdown_images/app-tree-2.png)
+![](./src/assets/markdown_images/app-tree-3.png)
+![](./src/assets/markdown_images/app-tree-4.png)
+
+Screenshots of the **App Tree**.
+
+- They show an overview of the components, how they relate to each other and also describes some of the attached functionality.
 
 <br/>
 
