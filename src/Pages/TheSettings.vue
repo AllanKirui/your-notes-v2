@@ -73,37 +73,6 @@
                 <span class="link-text">Appearance</span>
               </div>
             </li>
-            <!-- settings link -->
-            <li
-              :class="[activeSide === 'passwords' ? 'active' : '', 'link']"
-              title="Change password"
-              @click="setActiveSide('passwords')"
-            >
-              <div class="flex flex-ai-c">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 64 64"
-                  stroke-width="3"
-                  stroke="currentColor"
-                  fill="none"
-                  width="25"
-                >
-                  <rect
-                    x="12.34"
-                    y="25.5"
-                    width="39.32"
-                    height="30.95"
-                    rx="1.5"
-                  />
-                  <path
-                    d="M32,7.55h0A11.29,11.29,0,0,1,43.29,18.84V25.5a0,0,0,0,1,0,0H20.71a0,0,0,0,1,0,0V18.84A11.29,11.29,0,0,1,32,7.55Z"
-                  />
-                  <circle cx="32" cy="42.83" r="3.76" />
-                  <line x1="32" y1="46.6" x2="32" y2="51.83" />
-                </svg>
-                <span class="link-text">Passwords</span>
-              </div>
-            </li>
             <!-- restore link -->
             <li
               :class="[activeSide === 'restoration' ? 'active' : '', 'link']"
@@ -283,11 +252,6 @@
                 </div>
               </div>
             </div>
-          </div>
-
-          <!-- password options -->
-          <div class="content" v-else-if="activeSide === 'passwords'">
-            <h3 class="content-title">Change Your Password</h3>
           </div>
 
           <!-- restoration options -->
