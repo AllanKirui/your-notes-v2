@@ -153,9 +153,20 @@
           <small
             >There are no Terms and Conditions for this application. I just
             created it to get some coding practice. Feel free to share and/or
-            clone the project from GitHub. Your credentials and data are secured
-            by the authentication service offered by Firebase.<br />Built with
-            Firebase.</small
+            clone the project from
+            <a
+              class="meta-terms-links"
+              href="https://github.com/AllanKirui/your-notes-v2"
+              target="_blank"
+              >GitHub</a
+            >. Your credentials and data are secured by the authentication
+            service offered by Firebase.<br />Built with
+            <a
+              class="meta-terms-links"
+              href="https://firebase.google.com/"
+              target="_blank"
+              >Firebase</a
+            >.</small
           >
         </div>
         <div class="meta-login">
