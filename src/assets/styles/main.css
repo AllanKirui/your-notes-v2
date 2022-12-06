@@ -526,6 +526,15 @@ body.scrollbar-hidden::-webkit-scrollbar {
   color: var(--color-traffic-grey);
 }
 
+.meta-terms-links {
+  color: var(--color-eerie-black);
+  font-weight: 500;
+}
+
+.meta-terms-links:hover {
+  text-decoration: underline;
+}
+
 .meta-google img,
 .meta-google button {
   margin-left: 0.3125rem;
