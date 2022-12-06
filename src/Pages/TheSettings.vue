@@ -384,8 +384,14 @@
             <div class="content-top">
               <h3 class="content-title">About Your Notes</h3>
               <p class="content-meta">
-                <b>Your Notes v2</b> is an updated version of <b>Your Notes</b>,
-                an app I had created when I was just starting out coding.
+                <b>Your Notes v2</b> is an updated version of
+                <a
+                  class="meta-link"
+                  :class="linkStyle"
+                  href="https://github.com/AllanKirui/YourNotes"
+                  target="_blank"
+                  >Your Notes</a
+                >, an app I had created when I was just starting out coding.
               </p>
               <p class="content-meta">
                 Version 2 of the app features a better UI/UX experience, better
@@ -520,6 +526,23 @@ export default {
       "hasDeletedDefaultTodo",
       "hasDeletedDefaultNote",
     ]),
+    linkStyle() {
+      let mode = "";
+
+      switch (this.theme) {
+        case "purplish":
+          mode = "purplish-theme";
+          break;
+        case "bluetiful":
+          mode = "bluetiful-theme";
+          break;
+        default:
+          mode = "default-theme";
+          break;
+      }
+
+      return mode;
+    },
     cardStyle() {
       let mode = "";
 
@@ -895,6 +918,25 @@ export default {
 .content .content-meta {
   margin-top: 0.625rem;
   line-height: 1.4;
+}
+
+.content .content-meta .meta-link:hover {
+  text-decoration: underline;
+}
+
+.content .content-meta .meta-link.default-theme {
+  color: var(--color-eerie-black);
+  font-weight: 500;
+}
+
+.content .content-meta .meta-link.purplish-theme {
+  color: var(--color-tickle-me-pink);
+  font-weight: 500;
+}
+
+.content .content-meta .meta-link.bluetiful-theme {
+  color: var(--color-maximum-blue-green);
+  font-weight: 500;
 }
 
 .content.grid {
