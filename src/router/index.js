@@ -9,12 +9,24 @@ import TheSettings from "@/pages/TheSettings.vue";
 export default createRouter({
   history: createWebHistory(),
   routes: [
-    { path: "/", redirect: "/signup" },
-    { name: "signup", path: "/signup", components: { authn: SignUp } },
-    { name: "login", path: "/login", components: { authn: LogIn } },
-    { name: "todos", path: "/todos", component: TheTodos },
-    { name: "notes", path: "/notes", component: TheNotes },
-    { name: "settings", path: "/settings", component: TheSettings },
-    { path: "/:notFound(.*)", redirect: "/signup" },
+    { path: "/", redirect: "/your-notes-v2/signup" },
+    {
+      name: "signup",
+      path: "/your-notes-v2/signup",
+      components: { authn: SignUp },
+    },
+    {
+      name: "login",
+      path: "/your-notes-v2/login",
+      components: { authn: LogIn },
+    },
+    { name: "todos", path: "/your-notes-v2/todos", component: TheTodos },
+    { name: "notes", path: "/your-notes-v2/notes", component: TheNotes },
+    {
+      name: "settings",
+      path: "/your-notes-v2/settings",
+      component: TheSettings,
+    },
+    { path: "/:notFound(.*)", redirect: "/your-notes-v2/signup" },
   ],
 });
