@@ -170,7 +170,9 @@
           >
         </div>
         <div class="meta-login">
-          <router-link to="/login">Already have an account?</router-link>
+          <router-link to="/your-notes-v2/login"
+            >Already have an account?</router-link
+          >
         </div>
       </div>
     </div>

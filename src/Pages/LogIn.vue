@@ -89,7 +89,9 @@
           </p>
         </div>
         <div class="meta-login">
-          <router-link to="/signup">Sign up for an account</router-link>
+          <router-link to="/your-notes-v2/signup"
+            >Sign up for an account</router-link
+          >
         </div>
       </div>
     </div>

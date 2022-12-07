@@ -26,7 +26,7 @@
         </div>
         <ul class="links">
           <li class="link">
-            <router-link to="/todos" title="Todos">
+            <router-link to="/your-notes-v2/todos" title="Todos">
               <div class="flex flex-ai-c flex-jc-c">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -55,7 +55,7 @@
             <span class="tooltip">Todos</span>
           </li>
           <li class="link">
-            <router-link to="/notes" title="Notes">
+            <router-link to="/your-notes-v2/notes" title="Notes">
               <div class="flex flex-ai-c flex-jc-c">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -98,7 +98,7 @@
       <div class="sidebar-bottom">
         <ul class="links">
           <li class="link">
-            <router-link to="/settings" title="Settings">
+            <router-link to="/your-notes-v2/settings" title="Settings">
               <div class="flex flex-ai-c flex-jc-c">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
