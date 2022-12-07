@@ -280,7 +280,7 @@ The time I spent working on this project was a worthwhile way for me to continue
 - **progressive web applications**
   - I'm not an expert in PWAs, but through [Ahmad Karimzade's article](https://medium.com/@ahmadkzx/vue-offline-page-fbae11e7c3b7) on creating a Vue offline page, I was able to add simple PWA functionality to **Your Notes v2**.
 
-I'm glad I chose to make an updated version of **Your Notes**. I was able to add many of the lacking features from the original version. **Your Notes v2** features a better UI/UX experience, improved code architecture, Firebase integration, and so much more ☺️
+I'm glad I chose to make an updated version of **Your Notes**. I was able to add many of the lacking features from the original version. **Your Notes v2** features a better UI/UX experience, improved code architecture, Firebase integration, and everything I've learnt since making the original version ☺️
 
 <br/>
 
