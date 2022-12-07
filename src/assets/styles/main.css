@@ -515,6 +515,12 @@ body.scrollbar-hidden::-webkit-scrollbar {
   color: var(--color-eerie-black);
 }
 
+.meta-google button:focus,
+.submit-button button:focus {
+  outline: 2px solid var(--color-traffic-grey);
+  outline-offset: 3px;
+}
+
 .meta {
   margin-top: 1.875rem;
   margin-bottom: 2.5rem;
