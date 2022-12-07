@@ -10,6 +10,7 @@ export default createRouter({
   history: createWebHistory(),
   routes: [
     { path: "/", redirect: "/your-notes-v2/signup" },
+    { path: "/your-notes-v2/", redirect: "/your-notes-v2/signup" },
     {
       name: "signup",
       path: "/your-notes-v2/signup",
