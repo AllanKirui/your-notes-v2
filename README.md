@@ -137,7 +137,6 @@ Screenshot of the **Notes** page running on my **local development server**.
 <br/>
 
 ![](./src/assets/markdown_images/10.png)
-![](./src/assets/markdown_images/11.png)
 
 Screenshots of the **Notes** page running on my **local development server**.
 
@@ -162,7 +161,7 @@ Screenshot of the **Notes** page running on my **local development server**.
 
 Screenshot of the **Notes** page running on my **local development server**.
 
-- Who said you can't have fun while programming? This particular screenshot shows one of the errors that might occur when trying to communicate with **Firestore**. However, it is highly unlikely that a user will ever experience this type of error, unless they are dabbling in the **source code**. Hence, why I dubbed the error an '**_Epic Bug_**' 😅
+- Who said you can't have fun while programming? This particular screenshot shows one of the errors that might occur when trying to communicate with **Firestore** 😅
 
 ---
 
