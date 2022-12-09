@@ -179,6 +179,16 @@ Screenshot of the **Todos** page running on my **local development server**.
 
 <br/>
 
+![](./src/assets/markdown_images/15.png)
+
+Screenshot of the **OfflinePage**.
+
+- It shows how the offline page looks when it shows up due to low or no Internet connectivity. It also follows the user's preferred theme.
+
+---
+
+<br/>
+
 ![](./src/assets/markdown_images/app-tree-1.png)
 ![](./src/assets/markdown_images/app-tree-2.png)
 ![](./src/assets/markdown_images/app-tree-3.png)
