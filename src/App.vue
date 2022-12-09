@@ -8,7 +8,6 @@
         <component :is="slotProps.Component"></component>
       </transition>
     </router-view>
-    <!-- <router-view name="authn"></router-view> -->
   </template>
 
   <!-- home page -->
@@ -281,7 +280,6 @@ export default {
   },
   watch: {
     isLoggedIn(newValue) {
-      // TODO: refine this logic - defect, causes reload to push to "/todos"
       if (newValue) {
         // push to todos route if logged in and going to "/signup" or "/login"
         if (this.$route.name === "signup" || this.$route.name === "login") {

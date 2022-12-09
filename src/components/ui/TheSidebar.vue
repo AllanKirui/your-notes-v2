@@ -10,7 +10,6 @@
             @click="create"
           >
             <div class="flex flex-ai-c">
-              <!-- TODO: switch to using an svg to make use currentColor for the stroke-->
               <img
                 class="btn-img"
                 src="@/assets/img/add-icon.svg"

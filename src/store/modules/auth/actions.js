@@ -196,7 +196,6 @@ export default {
           });
           break;
         case "auth/wrong-password":
-          // TODO: Show 'forgot password' link
           context.commit("setError", {
             message: "Incorrect password",
             field: "password",

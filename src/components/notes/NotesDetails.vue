@@ -185,7 +185,6 @@ export default {
   },
   methods: {
     editText() {
-      // TODO: reset props as in TodoDetails
       this.isHighlighted = false;
       this.isShowDeleteWindow = false;
 
