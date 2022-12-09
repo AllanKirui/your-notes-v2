@@ -285,7 +285,7 @@ export default {
       if (newValue) {
         // push to todos route if logged in and going to "/signup" or "/login"
         if (this.$route.name === "signup" || this.$route.name === "login") {
-          this.$router.push("/todos");
+          this.$router.push("/your-notes-v2/todos");
           return;
         }
 
@@ -293,7 +293,7 @@ export default {
         if (this.$route.name !== "todos") return;
 
         // Redirect users who successfully register to the todos page
-        this.$router.push("/todos");
+        this.$router.push("/your-notes-v2/todos");
       }
     },
     $route(newRoute) {

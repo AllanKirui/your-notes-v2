@@ -236,7 +236,7 @@ export default {
 
       // if route is not notes or todos, switch to todos route
       if (this.$route.name !== "notes" && this.$route.name !== "todos") {
-        this.$router.push("/todos");
+        this.$router.push("/your-notes-v2/todos");
 
         // show modal for creating todos
         this.$emit("show-modal", "newTodoFromSettings");

@@ -330,7 +330,7 @@ export default {
       if (to.name === "signup" && storedData.isLoggedIn) {
         // if the user is logged in prevent access to the 'signup' route
         // by redirecting the to the 'todos'route
-        next("/todos");
+        next("/your-notes-v2/todos");
       } else {
         // otherwise allow access to the 'signup' route
         next();

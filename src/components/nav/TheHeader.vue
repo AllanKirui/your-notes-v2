@@ -18,7 +18,7 @@
         </div>
 
         <div class="nav-logo">
-          <router-link to="/todos" title="Home">
+          <router-link to="/your-notes-v2/todos" title="Home">
             <img
               v-if="!theme"
               class="logo"
@@ -405,7 +405,7 @@ export default {
     },
     goToSettings() {
       // go to the settings route
-      this.$router.push("/settings");
+      this.$router.push("/your-notes-v2/settings");
 
       // close the menu
       this.isMenuOpen = false;
