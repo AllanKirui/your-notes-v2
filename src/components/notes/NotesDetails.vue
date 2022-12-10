@@ -95,7 +95,7 @@
       <div class="item-text-wrapper">
         <!-- use the transition component to set a transtion when opening the edit task field-->
         <transition name="editor">
-          <div v-if="!isEditText" class="item-text">
+          <div v-if="!isEditText" class="item-text" @click="editText">
             <span class="item-details" ref="noteContent"></span>
           </div>
 
@@ -323,6 +323,10 @@ export default {
 
 .item-text-wrapper {
   line-height: 1.4;
+}
+
+.item-text-wrapper .item-text {
+  cursor: pointer;
 }
 
 .details-wrapper {
