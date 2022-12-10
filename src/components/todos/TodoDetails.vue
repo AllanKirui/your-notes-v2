@@ -115,7 +115,7 @@
     </div>
 
     <div class="details-wrapper">
-      <!-- list of uncompleted items -->
+      <!-- list of incomplete items -->
       <div class="incomplete-items">
         <ul class="items">
           <li v-for="(item, index) of selectedTodo.contents" :key="index">
