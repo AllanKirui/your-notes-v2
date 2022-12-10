@@ -228,7 +228,6 @@
                   <span
                     class="item-details"
                     :class="{ completed: item.isCompleted }"
-                    @click="editText(index)"
                     >{{ item.text }}</span
                   >
                 </div>
