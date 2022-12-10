@@ -349,8 +349,10 @@ body.scrollbar-hidden::-webkit-scrollbar {
 }
 
 .form-wrapper {
-  width: 20.625rem;
-  margin: 2.5rem auto 0;
+  margin: 2.5rem auto;
+  padding: 0.875rem;
+  max-width: 20.625rem;
+  width: 100%;
   text-align: center;
   z-index: 2;
 }
@@ -515,7 +517,6 @@ body.scrollbar-hidden::-webkit-scrollbar {
   color: var(--color-eerie-black);
 }
 
-.meta-google button:focus,
 .submit-button button:focus {
   outline: 2px solid var(--color-traffic-grey);
   outline-offset: 3px;
@@ -523,7 +524,6 @@ body.scrollbar-hidden::-webkit-scrollbar {
 
 .meta {
   margin-top: 1.875rem;
-  margin-bottom: 2.5rem;
   font-size: 0.875rem;
 }
 
@@ -556,6 +556,7 @@ body.scrollbar-hidden::-webkit-scrollbar {
   cursor: pointer;
 }
 
+.meta-google button:focus,
 .meta-google button:hover {
   border-bottom: 1px solid var(--color-eerie-black);
 }
@@ -1603,6 +1604,6 @@ body.scrollbar-hidden::-webkit-scrollbar {
 
 @media (max-width: 704px) {
   .intro-images {
-    background: var(--color-clouds);
+    background: var(--color-cultured);
   }
 }
