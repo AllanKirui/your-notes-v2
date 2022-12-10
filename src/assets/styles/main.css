@@ -350,7 +350,6 @@ body.scrollbar-hidden::-webkit-scrollbar {
 
 .form-wrapper {
   margin: 2.5rem auto;
-  padding: 0.875rem;
   max-width: 20.625rem;
   width: 100%;
   text-align: center;
@@ -1605,5 +1604,9 @@ body.scrollbar-hidden::-webkit-scrollbar {
 @media (max-width: 704px) {
   .intro-images {
     background: var(--color-cultured);
+  }
+
+  .form-wrapper {
+    padding: 0 0.625rem;
   }
 }
