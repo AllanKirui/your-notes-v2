@@ -20,25 +20,8 @@
         <div class="nav-logo">
           <router-link to="/your-notes-v2/todos" title="Home">
             <img
-              v-if="!theme"
               class="logo"
-              src="@/assets/img/logo-default.svg"
-              alt="your notes v2 logo"
-              width="168"
-              height="27.6"
-            />
-            <img
-              v-else-if="theme === 'purplish'"
-              class="logo"
-              src="@/assets/img/logo-purplish.svg"
-              alt="your notes v2 logo"
-              width="168"
-              height="27.6"
-            />
-            <img
-              v-else-if="theme === 'bluetiful'"
-              class="logo"
-              src="@/assets/img/logo-bluetiful.svg"
+              :src="require(`@/assets/img/${logoSrc}`)"
               alt="your notes v2 logo"
               width="168"
               height="27.6"
@@ -52,23 +35,8 @@
           v-if="search.isVisible && search.placeholderName === routeName"
         >
           <img
-            v-if="!theme"
             class="search"
-            src="@/assets/img/search-default.svg"
-            alt="search icon"
-            width="18"
-          />
-          <img
-            v-else-if="theme === 'purplish'"
-            class="search"
-            src="@/assets/img/search-purplish.svg"
-            alt="search icon"
-            width="18"
-          />
-          <img
-            v-else-if="theme === 'bluetiful'"
-            class="search"
-            src="@/assets/img/search-bluetiful.svg"
+            :src="require(`@/assets/img/${searchIconSrc}`)"
             alt="search icon"
             width="18"
           />
@@ -260,6 +228,28 @@ export default {
       }
 
       return url;
+    },
+    logoSrc() {
+      let logoName = "logo-default.svg";
+
+      if (this.theme === "purplish") {
+        logoName = "logo-purplish.svg";
+      } else if (this.theme === "bluetiful") {
+        logoName = "logo-bluetiful.svg";
+      }
+
+      return logoName;
+    },
+    searchIconSrc() {
+      let iconName = "search-default.svg";
+
+      if (this.theme === "purplish") {
+        iconName = "search-purplish.svg";
+      } else if (this.theme === "bluetiful") {
+        iconName = "search-bluetiful.svg";
+      }
+
+      return iconName;
     },
   },
   methods: {

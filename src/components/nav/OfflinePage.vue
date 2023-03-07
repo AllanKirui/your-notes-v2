@@ -3,24 +3,7 @@
     <div class="logo flex flex-jc-c flex-ai-c">
       <div class="wrapper">
         <img
-          v-if="!theme"
-          src="@/assets/img/logo-default.svg"
-          alt="your notes v2 logo"
-          class="logo-image"
-          width="205"
-          height="35"
-        />
-        <img
-          v-else-if="theme === 'purplish'"
-          src="@/assets/img/logo-purplish.svg"
-          alt="your notes v2 logo"
-          class="logo-image"
-          width="185"
-          height="31.5"
-        />
-        <img
-          v-else-if="theme === 'bluetiful'"
-          src="@/assets/img/logo-bluetiful.svg"
+          :src="require(`@/assets/img/${logoSrc}`)"
           alt="your notes v2 logo"
           class="logo-image"
           width="205"
@@ -224,6 +207,17 @@ export default {
       }
 
       return classes;
+    },
+    logoSrc() {
+      let logoName = "logo-default.svg";
+
+      if (this.theme === "purplish") {
+        logoName = "logo-purplish.svg";
+      } else if (this.theme === "bluetiful") {
+        logoName = "logo-bluetiful.svg";
+      }
+
+      return logoName;
     },
   },
   methods: {

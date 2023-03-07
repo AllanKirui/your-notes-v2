@@ -371,25 +371,8 @@
                   target="_blank"
                 >
                   <img
-                    v-if="!theme"
                     class="logo"
-                    src="@/assets/img/firebase-logo-default.svg"
-                    alt="Firebase logo"
-                    width="100"
-                    height="44.6"
-                  />
-                  <img
-                    v-else-if="theme === 'purplish'"
-                    class="logo"
-                    src="@/assets/img/firebase-logo-purplish.svg"
-                    alt="Firebase logo"
-                    width="100"
-                    height="44.6"
-                  />
-                  <img
-                    v-else-if="theme === 'bluetiful'"
-                    class="logo"
-                    src="@/assets/img/firebase-logo-bluetiful.svg"
+                    :src="require(`@/assets/img/${firebaseLogoSrc}`)"
                     alt="Firebase logo"
                     width="100"
                     height="44.6"
@@ -400,25 +383,8 @@
                 <!-- vuejs link -->
                 <a href="https://vuejs.org" title="Vue.js" target="_blank">
                   <img
-                    v-if="!theme"
                     class="logo"
-                    src="@/assets/img/vue-logo-default.svg"
-                    alt="Vue.js logo"
-                    width="28"
-                    height="24"
-                  />
-                  <img
-                    v-else-if="theme === 'purplish'"
-                    class="logo"
-                    src="@/assets/img/vue-logo-purplish.svg"
-                    alt="Vue.js logo"
-                    width="28"
-                    height="24"
-                  />
-                  <img
-                    v-else-if="theme === 'bluetiful'"
-                    class="logo"
-                    src="@/assets/img/vue-logo-bluetiful.svg"
+                    :src="require(`@/assets/img/${vueLogoSrc}`)"
                     alt="Vue.js logo"
                     width="28"
                     height="24"
@@ -431,25 +397,8 @@
                   target="_blank"
                 >
                   <img
-                    v-if="!theme"
                     class="logo"
-                    src="@/assets/img/github-logo-default.svg"
-                    alt="GitHub logo"
-                    width="28"
-                    height="28"
-                  />
-                  <img
-                    v-else-if="theme === 'purplish'"
-                    class="logo"
-                    src="@/assets/img/github-logo-purplish.svg"
-                    alt="GitHub logo"
-                    width="28"
-                    height="28"
-                  />
-                  <img
-                    v-else-if="theme === 'bluetiful'"
-                    class="logo"
-                    src="@/assets/img/github-logo-bluetiful.svg"
+                    :src="require(`@/assets/img/${githubLogoSrc}`)"
                     alt="GitHub logo"
                     width="28"
                     height="28"
@@ -540,6 +489,39 @@ export default {
       }
 
       return style;
+    },
+    firebaseLogoSrc() {
+      let logoName = "firebase-logo-default.svg";
+
+      if (this.theme === "purplish") {
+        logoName = "firebase-logo-purplish.svg";
+      } else if (this.theme === "bluetiful") {
+        logoName = "firebase-logo-bluetiful.svg";
+      }
+
+      return logoName;
+    },
+    vueLogoSrc() {
+      let logoName = "vue-logo-default.svg";
+
+      if (this.theme === "purplish") {
+        logoName = "vue-logo-purplish.svg";
+      } else if (this.theme === "bluetiful") {
+        logoName = "vue-logo-bluetiful.svg";
+      }
+
+      return logoName;
+    },
+    githubLogoSrc() {
+      let logoName = "github-logo-default.svg";
+
+      if (this.theme === "purplish") {
+        logoName = "github-logo-purplish.svg";
+      } else if (this.theme === "bluetiful") {
+        logoName = "github-logo-bluetiful.svg";
+      }
+
+      return logoName;
     },
   },
   methods: {
