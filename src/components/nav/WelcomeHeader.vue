@@ -9,7 +9,7 @@
           width="305"
           height="52"
         />
-        <h2 class="logo-text">Your Notes <i>v2</i></h2>
+        <h1 class="logo-text">Your Notes <i>v2</i></h1>
       </div>
     </div>
   </header>

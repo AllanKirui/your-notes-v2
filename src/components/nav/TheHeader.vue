@@ -26,7 +26,7 @@
               width="168"
               height="27.6"
             />
-            <h3 class="logo-text">Your Notes <i>v2</i></h3>
+            <h1 class="logo-text">Your Notes <i>v2</i></h1>
           </router-link>
         </div>
         <!-- search bar visible only for routes with searchable content -->
@@ -585,6 +585,7 @@ export default {
   transform: translateY(-50%);
   color: var(--color-cultured);
   text-align: center;
+  font-size: inherit;
   z-index: 1;
 }
 
