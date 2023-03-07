@@ -1158,6 +1158,10 @@ body.scrollbar-hidden::-webkit-scrollbar {
   letter-spacing: 0.5px;
 }
 
+.title-wrapper .item-title {
+  font-size: inherit;
+}
+
 .text-wrapper-notes,
 .item-list {
   margin-top: 0.5rem;
