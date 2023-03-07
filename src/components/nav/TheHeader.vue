@@ -56,7 +56,7 @@
               v-if="userPhotoURL"
               class="avatar"
               :src="userPhotoURL"
-              alt=" "
+              :alt="`avatar of ${user.displayName}`"
             />
             <span class="initials">{{ setInitials(user.displayName) }}</span>
           </div>
@@ -86,7 +86,7 @@
                 v-if="userPhotoURL"
                 class="avatar"
                 :src="userPhotoURL"
-                alt=" "
+                :alt="`avatar of ${user.displayName}`"
               />
               <span class="initials">{{ setInitials(user.displayName) }}</span>
             </div>
