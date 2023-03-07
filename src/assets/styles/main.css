@@ -1120,6 +1120,7 @@ body.scrollbar-hidden::-webkit-scrollbar {
   position: absolute;
   width: 100%;
   height: 80%;
+  z-index: 1;
 }
 
 .item-wrapper.default-item .bg-image {
@@ -1146,7 +1147,8 @@ body.scrollbar-hidden::-webkit-scrollbar {
   box-shadow: none;
 }
 
-.item-wrapper.default-item .text-wrapper {
+.item-wrapper .text-wrapper,
+.item-wrapper .indicator {
   position: relative;
   z-index: 2;
 }
