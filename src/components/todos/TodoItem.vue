@@ -16,29 +16,9 @@
         <li class="item flex flex-ai-c" v-for="(_, index) in 3" :key="index">
           <!-- only show image for incomplete tasks on a todo -->
           <img
-            v-if="displayContent[index] && !theme"
-            src="@/assets/img/checkbox-default.svg"
-            alt=" "
-            width="14"
-          />
-          <img
-            v-else-if="
-              displayContent[index] && theme === 'purplish' && isDefault
-            "
-            src="@/assets/img/checkbox-purplish-alt.svg"
-            alt=" "
-            width="14"
-          />
-          <img
-            v-else-if="displayContent[index] && theme === 'purplish'"
-            src="@/assets/img/checkbox-purplish.svg"
-            alt=" "
-            width="14"
-          />
-          <img
-            v-else-if="displayContent[index] && theme === 'bluetiful'"
-            src="@/assets/img/checkbox-bluetiful.svg"
-            alt=" "
+            v-if="displayContent[index]"
+            :src="require(`@/assets/img/${checkboxIconSrc}`)"
+            alt="checkbox icon"
             width="14"
           />
           <span>{{ setTodoItemText(index) }}</span>
@@ -103,6 +83,19 @@ export default {
       }
 
       return classes;
+    },
+    checkboxIconSrc() {
+      let iconName = "checkbox-default.svg";
+
+      if (this.isDefault && this.theme === "purplish") {
+        iconName = "checkbox-purplish-alt.svg";
+      } else if (this.theme === "purplish") {
+        iconName = "checkbox-purplish.svg";
+      } else if (this.theme === "bluetiful") {
+        iconName = "checkbox-bluetiful.svg";
+      }
+
+      return iconName;
     },
   },
   methods: {
