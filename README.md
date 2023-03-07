@@ -328,6 +328,8 @@ Going forward, I want to continue learning more about frontend development and t
 
 - [Medium](https://medium.com/@ahmadkzx/vue-offline-page-fbae11e7c3b7) - Vue Offline Page by **Ahmad Karimzade**
 
+- [Medium](https://huishun.medium.com/how-to-deploy-a-vue-js-application-with-dynamic-routing-on-github-pages-3d36f4644e54) - How to Deploy a Vue.js Application with Dynamic Routing on GitHub Pages by **Hui Shun Chua**
+
 - [Web AIM contrast checker](https://webaim.org/resources/contrastchecker/) - Web accessibility in mind
 
 - [Forge icons](https://icons.theforgesmith.com/) - 300+ right mix of SVG icons for your project.
