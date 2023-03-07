@@ -9,7 +9,7 @@
           width="205"
           height="35"
         />
-        <h3 class="logo-text">Your Notes <i>v2</i></h3>
+        <h1 class="logo-text">Your Notes <i>v2</i></h1>
       </div>
     </div>
   </header>
@@ -309,6 +309,7 @@ export default {
   transform: translateY(-50%);
   width: 100%;
   text-align: center;
+  font-size: inherit;
   z-index: 1;
 }
 

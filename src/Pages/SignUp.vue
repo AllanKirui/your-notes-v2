@@ -10,7 +10,7 @@
     <div class="intro-images"></div>
 
     <div class="form-wrapper">
-      <h2 class="title">Sign Up</h2>
+      <h3 class="title">Sign Up</h3>
       <p class="tagline">Looks like you're new! Please create an account.</p>
 
       <form @submit.prevent="submitForm" novalidate>

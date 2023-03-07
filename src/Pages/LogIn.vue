@@ -10,7 +10,7 @@
     <div class="intro-images"></div>
 
     <div class="form-wrapper">
-      <h2 class="title">Log In</h2>
+      <h3 class="title">Log In</h3>
       <p class="tagline">Pick up where you left off!</p>
 
       <form @submit.prevent="submitForm" novalidate>
