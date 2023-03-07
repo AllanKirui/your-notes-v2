@@ -8,7 +8,7 @@
 
     <div class="text-wrapper">
       <div class="title-wrapper flex flex-jc-sb">
-        <h4 class="item-title">{{ title }}</h4>
+        <h3 class="item-title">{{ title }}</h3>
         <span class="item-status">{{ status }}</span>
       </div>
       <ul class="item-list">

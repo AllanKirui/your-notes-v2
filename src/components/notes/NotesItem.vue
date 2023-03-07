@@ -8,7 +8,7 @@
 
     <div class="text-wrapper">
       <div class="title-wrapper">
-        <h4 class="item-title">{{ title }}</h4>
+        <h3 class="item-title">{{ title }}</h3>
       </div>
       <div class="text-wrapper-notes">
         <p class="text-contents">{{ setTextBasedOnFontSize(content) }}</p>
